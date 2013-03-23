@@ -1,0 +1,46 @@
+<% content_for :bodyclass do %>devise<% end %>
+
+<% if user_signed_in? %>
+
+  <div class="span4 centered offset4" style="padding-top: 40px;">
+    <h2> &nbsp; <%= link_to (image_tag image_path("admin.png"), alt: "Admin"), users_path, class: "colorize" %></h2>
+    <h2>Administration</h2>
+    <div class="btn-group" style="text-align: left;">
+      <button data-toggle="dropdown" class="btn btn-primary btn-bubble btn-large dropdown-toggle">MANAGE <span class="caret"></span></button>
+      <ul class="dropdown-menu" style="text-align: left;">
+      </ul>
+    </div>
+  </div>
+
+<% else %>
+
+
+<div class="row">
+  <div class="panel">
+
+    <%= form_for("user", url: user_session_path, html: {class: "form-horizontal"}) do |f| %>
+
+      <legend>Chagrin Falls LPDC</legend>
+      
+      <div class="control-group">
+	<%= f.label :email, class: "control-label" %>
+	<div class="controls"><%= f.email_field :email, placeholder: "user@example.com", autofocus: true %></div>
+      </div>
+      
+      <div class="control-group">
+	<%= f.label :password, class: "control-label" %>
+	<div class="controls"><%= f.password_field :password %></div>
+      </div>
+      
+      <div class="control-group">
+	<div class="controls">
+	  <%= f.submit "Sign in", disable_data_with: "Signing in...", class: "btn btn-primary", tabindex: "3" %> &nbsp;
+	  <label tabindex="2" class="checkbox" style="display: inline-block;width: 100px;"><%= f.check_box :remember_me %> Remember Me</label>
+	</div>
+      </div>
+    <% end %>
+      
+  </div>
+</div>
+
+<% end %>

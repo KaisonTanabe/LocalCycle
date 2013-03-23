@@ -1,0 +1,16 @@
+<div id="form-nav">
+<h6>Forms for <span style="color: #555;"><%= @student.full_name %></span>:</h6>
+<div class="btn-group btn-group-vertical">
+  <% keys = steps.keys.reverse %>
+  <% n = keys.length; %>
+  <% steps.keys.each do |k| %>
+    <% unless student_signed_in? and !@form.has_attribute?("#{steps[k]}_s_signature") %>
+      <%= link_to raw((@form.send("#{steps[k]}_step?") ? '<i class="icon-chevron-right icon-white"></i> ' : "") + k), wizard_path(steps[k].to_sym), class: "btn btn-large" + @form.wizard_btn_class(k, steps) %>
+    <% end %>
+    <% n -= 1 %>
+  <% end %>
+</div>
+<h6>Last updated: <span style="color: #555;"><%= @form.updated_at.strftime("%m/%d/%Y") %></span><br />
+By: <%= @form.last_updater %> </h6>
+<p><a href="javascript:window.print()" class="btn btn-small"><span class="icon-print"></span> Print this form</a></p>
+</div>

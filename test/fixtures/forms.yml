@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  exp_date: 2012-06-28
+  completed: false
+  student_signed: false
+
+two:
+  exp_date: 2012-06-28
+  completed: false
+  student_signed: false

@@ -1,0 +1,75 @@
+<legend>Signatures</legend>
+<p class="agreement"><%= local_assigns[:text].nil? ? "" : raw(text) %></p>
+
+<% if ALL_CAN_SIGN %>
+
+
+<% if @form.has_attribute?(@form.status + "_p_signature") %>
+<div class="control-group">
+  <%= f.label (@form.status + "_p_signature").to_sym, PARENT_LABEL.capitalize + " Signature: ", class: "control-label" %>
+  <div class="controls controls-row">
+    <% if student_signed_in? %>
+      <%= f.text_field (@form.status + "_p_signature").to_sym, title: "Parent must login to sign.", class: "span4 sig", disabled: "true" %>
+    <% else %>
+      <%= f.text_field (@form.status + "_p_signature").to_sym, title: "Please sign here...", class: "span4 sig" %>
+      <%= f.hidden_field (@form.status + "_p_signature_date").to_sym, value: Date.today %>
+      <span class="help-inline">Today's date is <strong><%= Date.today.strftime("%b %-d, %Y") %></strong>.</span>
+      <% if parent_signed_in? %>
+        <span class="help-block">Your digital signature MUST match your name: <strong><%= current_parent.full_name %></strong>
+      <% end %>
+      </span>
+    <% end %>
+  </div>
+</div>
+<% end %>
+<% if AUTHENTICATABLE_STUDENTS and @form.has_attribute?(@form.status + "_s_signature") %>
+  <div class="control-group">
+    <%= f.label (@form.status + "_s_signature").to_sym, STUDENT_LABEL.capitalize + " Signature: ", class: "control-label" %>
+    <div class="controls controls-row">
+      <%= f.text_field (@form.status + "_s_signature").to_sym, title: "Please sign here...", class: "span4 sig" %>
+      <%= f.hidden_field (@form.status + "_s_signature_date").to_sym, value: Date.today %>
+      <span class="help-inline">Today's date is <strong><%= Date.today.strftime("%b %-d, %Y") %></strong>.</span>
+      <span class="help-block">Digital signature MUST match <%= STUDENT_LABEL %>'s name: <strong><%= @student.full_name %></strong></span>
+    </div>
+  </div>
+<% end %>
+
+
+
+<% else %>
+
+
+<% if @form.has_attribute?(@form.status + "_p_signature") %>
+<div class="control-group">
+  <%= f.label (@form.status + "_p_signature").to_sym, PARENT_LABEL.capitalize + " Signature: ", class: "control-label" %>
+  <div class="controls controls-row">
+    <% if parent_signed_in? %>
+      
+      <%= f.text_field (@form.status + "_p_signature").to_sym, :title => "Please sign here...", :class => "span4 sig" %>
+      <%= f.hidden_field (@form.status + "_p_signature_date").to_sym, :value => Date.today %>
+      <span class="help-inline">Today's date is <strong><%= Date.today.strftime("%b %-d, %Y") %></strong>.</span>
+      <span class="help-block">Your digital signature MUST match your name: <strong><%= current_parent.full_name %></strong></span>
+    <% else %>
+      <%= f.text_field (@form.status + "_p_signature").to_sym, :title => "Parent must login to sign.", :class => "span4 sig", :disabled => "true" %>
+    <% end %> 
+  </div>
+</div>
+<% end %>
+<% if AUTHENTICATABLE_STUDENTS and @form.has_attribute?(@form.status + "_s_signature") %>
+  <div class="control-group">
+    <%= f.label (@form.status + "_s_signature").to_sym, STUDENT_LABEL.capitalize + " Signature: ", class: "control-label" %>
+    <div class="controls controls-row">
+      <% if student_signed_in? %>
+        <%= f.text_field (@form.status + "_s_signature").to_sym, :title => "Please sign here...", :class => "span4 sig" %>
+	<%= f.hidden_field (@form.status + "_s_signature_date").to_sym, :value => Date.today %>
+	<span class="help-inline">Today's date is <strong><%= Date.today.strftime("%b %-d, %Y") %></strong>.</span>
+	<span class="help-block">Your digital signature MUST match your name: <strong><%= current_student.full_name %></strong></span>
+      <% else %>
+        <%= f.text_field (@form.status + "_s_signature").to_sym, :title => "Student must login to sign.", :class => "span4 sig", :disabled => "true" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+
+<% end %>

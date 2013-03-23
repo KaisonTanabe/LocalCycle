@@ -1,0 +1,6 @@
+    <%= link_to raw('<span class="label label-success">Parent signed</span>'), form_build_path(f, :demo_sample) %> by <strong><%= f.send(step + "_p_signature") %></strong> on <em><%= f.send(step + "_p_signature_date").strftime("%b %-d, %Y") %></em>
+    <% if AUTHENTICATABLE_STUDENTS and f.has_attribute?(step + "_s_signature") and f.send(step + "_s_signed?") %>
+      <br /><%= link_to raw('<span class="label label-success">Student signed</span>'), form_build_path(f, :demo_sample) %> by <strong><%= f.send(step + "_s_signature") %></strong> on <em><%= f.send(step + "_s_signature_date").strftime("%b %-d, %Y") %></em>
+    <% else %>
+      <br /><span class="label label-important">Unsigned by student</span>
+    <% end %>

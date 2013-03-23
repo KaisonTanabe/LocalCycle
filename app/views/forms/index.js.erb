@@ -1,0 +1,5 @@
+document.title = "<%= escape_javascript("Filter Forms by #{(params[:sort] || 'title').titleize}") %> | FinalForms";
+$('#forms-ajax').html('<%= escape_javascript(render("forms")) %>');
+$('#pagination').html('<%= escape_javascript(will_paginate @forms) %>');
+$('#sorters').html('<%= escape_javascript(render("sorters")) %>');
+$('#forms_count').html('<%= escape_javascript(render("forms_count")) %>');

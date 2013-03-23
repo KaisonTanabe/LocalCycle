@@ -1,0 +1,22 @@
+<div class="control-group">
+  <label class="control-label"><%= SEASONS.key(season) + " " + (season == 2 ? SCHOOL_YEAR["start"].year.to_s + "/" + SCHOOL_YEAR["end"].year.to_s : (season == 3 ? SCHOOL_YEAR["end"].year.to_s : SCHOOL_YEAR["start"].year.to_s)) %></label>
+  <div class="controls controls-row">
+    <% teams = TEAM_AGE_RANGEABLE ? Team.where("season = ? AND year = ? AND youngest <= ? AND oldest >= ? AND gender = ?", season, SCHOOL_YEAR["start"].year, grade, grade, gender) : Team.where("season = ? AND year = ? AND gender = ?", season, SCHOOL_YEAR["start"].year, gender) %>
+    <% teams.each do |team| -%>
+      <label for='<%= "team_#{team.id}" %>' class="checkbox inline">
+	<%= check_box_tag "student[team_ids][]", team.id, @student.teams.include?(team), {disabled: team.closed?, id: "team_#{team.id}"} %> <%= team.full_team_name %><br />
+	<% if team.cap %>
+	  (<%= team.full? ? "full" : (team.cap - team.students.count).to_s + " spots left" %>)
+	<% end %>
+        <% if @student.teams.include?(team) and team.closed? %>
+          <%= hidden_field_tag "student[team_ids][]", team.id %>
+        <% end %>
+      </label>
+    <% end -%>
+  </div>
+
+  <!-- Preserve old teams by including teams not in this year -->
+  <% @student.teams.where("year != ?", CURRENT_SCHOOL_YEAR).each do |t| %>
+    <%= hidden_field_tag "student[team_ids][]", team.id %>
+  <% end %>
+</div>

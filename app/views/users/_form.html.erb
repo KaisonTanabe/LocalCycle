@@ -1,0 +1,54 @@
+<%= form_for(@user, html: { multipart: true, class: "form-horizontal" }) do |f| %>
+  
+    <legend></legend>
+    <%= render partial: 'partials/errors', locals: {obj: @user} %>
+        
+    <div class="control-group">
+      <%= f.label :first_name, "Name: ", class: "req control-label" %>
+      <div class="controls controls-row">
+	<%= f.text_field :first_name, placeholder: "First", class: "span2" %>
+	<%= f.text_field :last_name, placeholder: "Last", class: "span2" %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :email, "Email Address: ", class: "req control-label" %>
+      <div class="controls controls-row">
+	<%= f.email_field :email, placeholder: "user@example.com", class: "span4" %>
+	<% if !@user.new_record? %><span class="help-block">You will be logged out and prompted to confirm email if changed.</span><% end %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :pin, "Educator PIN: ", class: "req control-label" %>
+      <div class="controls controls-row">
+	<%= f.text_field :pin, class: "span4" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :phone, "Phone Number: ", class: "req control-label" %>
+      <div class="controls controls-row">
+	<%= f.text_field :phone, placeholder: "(123) 555-5555", class: "span4" %>
+      </div>
+    </div>
+
+    <% if current_user.admin? %>
+      <div class="control-group">
+	<%= f.label :pin, "Role: ", class: "req control-label" %>
+	<div class="controls controls-row">
+	  <%= f.select :role, ROLES, class: "span4" %>
+	</div>
+      </div>
+
+      <div class="control-group">
+	<%= f.label :notes, "Notes: ", class: "req control-label" %>
+	<div class="controls controls-row"><%= f.text_area :notes, rows: 4, class: "span4" %>
+	  <span class="help-block">Scratch space for other information linked to this user.</span>
+	</div>
+      </div>
+    <% end %>
+
+    <%= render partial: 'partials/submit', locals: {f: f, text: 'User'} %>
+
+  <% end %>
+

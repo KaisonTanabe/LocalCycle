@@ -1,0 +1,28 @@
+
+  <div class="btn-toolbar visible-desktop">
+    <div class="btn-group">
+      <%= link_to raw('<i class="icon-file icon-white"></i> Review Forms'), forms_path(user: user.last_name), title: "Review user's forms", class: "btn btn-small btn-primary" %>
+    </div>
+    <div class="btn-group">
+      <%= link_to raw('<i class="icon-edit"></i> Edit'), edit_user_path(user), title: "Edit user info", class: "btn btn-small" %>
+      <%= (link_to raw('<i class="icon-trash"></i>'), user_path(user, full_params.to_hash), data: {confirm: "Are you sure you want to permanently delete this user and all their information?"}, title: "Delete this user from the system", method: :delete, class: "btn btn-small") %>
+      <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
+	<i class="icon-bell"></i><span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+	<li><%= link_to raw('<i class="icon-user"></i> Prompt'), prompt_user_path(user), title: "Send email to user prompting them to login and complete forms." %></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="btn-group hidden-desktop">
+    <%= link_to raw('<i class="icon-file icon-white"></i>'), forms_path(user: user.last_name), title: "Review user's forms", class: "btn btn-small btn-primary" %>
+      <%= link_to raw('<i class="icon-edit"></i>'), edit_user_path(user), title: "Edit user info", class: "btn btn-small" %>
+      <%= (link_to raw('<i class="icon-trash"></i>'), user_path(user, full_params.to_hash), data: {confirm: "Are you sure you want to permanently delete this user and all their information?"}, title: "Delete this user from the system", method: :delete, class: "btn btn-small") %>
+      <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
+	<i class="icon-bell"></i><span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+	<li><%= link_to raw('<i class="icon-user"></i> Prompt'), prompt_user_path(user), title: "Send email to user prompting them to login and complete forms." %></li>
+      </ul>
+  </div>

@@ -1,0 +1,14 @@
+<div id="submit-group" class="control-group">
+  <div class="controls">
+  <% if defined?(override) and !override.blank? %>
+    <%= f.submit override, disable_data_with: "Submitting...", class: "btn btn-primary" %>
+  <% else %>
+    <% if f.object.new_record? %>
+      <%= f.submit "Create "+text, disable_data_with: "Submitting...", class: "btn btn-primary" %>
+    <% else %>
+      <%= f.submit "Update "+text, disable_data_with: "Submitting...", class: "btn btn-primary" %>
+    <% end %>
+  <% end %>
+  &nbsp; <%= link_to 'Go Back', :back %>
+  </div>
+</div>

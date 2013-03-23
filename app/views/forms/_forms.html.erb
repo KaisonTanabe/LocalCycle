@@ -1,0 +1,29 @@
+    <% if @forms.any? %>
+      <% @forms.each do |form| %>
+        <%= content_tag_for :tr, form, class: (form.form_status) do %>
+        <td class='status <%= (params[:sort] == "forms.status") ? "sorted" : "" %>'>
+	  <% if current_user.educator? or FormReview.where(form_id: form.id, user_id: current_user.id).approved.any? or FormReview.where(form_id: form.id, user_id: current_user.id).denied.any? %>
+	    <%= raw(form.vote_count) %>
+	  <% else %>
+	    <%= link_to raw("<span class='icon-white icon-file'></span> Review"), edit_form_path(form), class: "btn btn-primary" %>
+	  <% end %>
+	</td>
+	<td class='type <%= (params[:sort] == "type") ? "sorted" : "" %>'>
+	  <%= link_to form.title, edit_form_path(form) %>
+	</td>
+	<td class='user <%= (params[:sort] == "user") ? "sorted" : "" %>'>
+	  <% if current_user.admin? %>
+	    <%= link_to form.user.formal_name, edit_user_path(form.user) %>
+	  <% else %>
+	    <%= form.user.formal_name %>
+	  <% end %>
+	</td>
+	<td>
+	  <%= render partial: "buttons", locals: {form: form} %>
+	</td>
+        <% end %>
+      <% end %>
+
+    <% else %>
+      <tr><td colspan="4"><em>No matching forms...</em></td></tr>
+    <% end %>

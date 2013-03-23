@@ -1,0 +1,29 @@
+<tr class="input-row">
+  <%= form_tag(forms_path, id: "form-filter", method: :get, remote: true) do %>
+
+    <%#= hidden_field_tag(:per_page, @per_page) %>
+    <%= hidden_field_tag(:sort, params[:sort]) unless params[:sort].blank? %>
+    <%= hidden_field_tag(:direction, params[:direction]) unless params[:direction].blank? %>
+ 
+    <% status_options = [['Requiring Review','requiring_review']]
+       status_options << ['Denied Forms','denied']
+       status_options << ['Approved Forms','approved']
+       status_options << ['Pending Votes','pending_votes'] %>
+
+    <td><%= select_tag :status, options_for_select(status_options, params[:status].blank? ? '' : params[:status]), prompt: "By status...", style: "width: 150px;" %></td>
+
+    <td><%= select_tag :type, options_for_select(FORM_TYPES.map{ |f| [f.first, f.last]}, params[:type].blank? ? '' : params[:type]), prompt: "By type...", style: "width: 150px;" %></td>
+
+    <td><%= text_field_tag :user,  params[:user].blank? ? '' : params[:user], placeholder: "By user...", style: "width: 150px;" %></td>
+    <td>
+      <div class="btn-group pull-right" style="margin-left: 10px;">
+	<button class="btn btn-inverse"><i class="icon-list-alt icon-white"></i> Export...</button>
+	<button class="btn dropdown-toggle btn-inverse" data-toggle="dropdown">
+	  <span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu">
+	</ul>
+      </div>
+    </td>
+  <% end %>
+</tr>

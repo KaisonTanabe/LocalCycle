@@ -1,0 +1,22 @@
+  <div class="row">
+    <div class="span12">
+      <h1>All Users</h1>
+    </div>
+  </div>
+
+  <div class="row-fluid">
+    <table id="userAdminTable" class="table table-condensed table-hover">
+
+      <thead id="sorters">
+	<%= render "sorters" %>
+      </thead>
+
+      <tbody id="users-ajax">
+	<%= render "users" %>
+      </tbody>
+
+    </table>
+
+    <div id="pagination"><%= will_paginate @users %></div>
+
+  </div>

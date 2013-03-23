@@ -1,0 +1,392 @@
+/*
+
+	/////////////////////////////////////////////////////////////
+
+	Copyright (c) 2012, Golden Orb, LLC. All rights reserved.
+	-------------------------------------------------------------
+	LICENSED FOR USE UNDER A CREATIVE LICENSE AGREEMENT
+	-------------------------------------------------------------
+	This document, and all creative material associated herein,
+	is protected under copyright law to be used exclusively with
+	the Content Management Systems of Golden Orb, LLC.
+	-------------------------------------------------------------
+	You can read the full creative license agreement at:
+	http://www.goldenorbventure.com/license
+	-------------------------------------------------------------
+
+	Author - Macklin Chaffee
+
+	/////////////////////////////////////////////////////////////
+
+*/
+
+@import "bootstrap";
+@import "partials/classes";
+@import "partials/devise";
+
+
+/* =============================================================================
+   Defaults
+   ========================================================================== */
+
+hr { box-shadow: 0 1px 1px #fff; }
+
+legend { border-bottom: 1px solid #ccc; }
+
+/* General Site Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: "museo_sans_500regular", "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+h1 { 
+    margin-top: 0; 
+    #ecard-list { font-size: 20px; }
+}
+h6 {
+    text-transform: uppercase;
+    color: #999;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+a { 
+    text-decoration: none;
+    color: $lightColor;
+    -o-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -webkit-transition: all 0.2s ease-out;
+
+    &:hover { color: $darkColor; }
+    &:focus { outline: none; }
+    &:hover, &:active { outline: 0; }
+    .caret {
+	margin-top: 8px;
+	margin-left: 2px;
+    }
+}
+
+table {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    tr.input-row {
+	background-color: #FAFAFA;
+	background-image: -moz-linear-gradient(center top , #FAFAFA, #EFEFEF);
+	border: 1px solid #DDDDDD;
+	border-radius: 2px 2px 0 0;
+	box-shadow: none;
+	height: 20px;
+	margin-bottom: -1px;
+	overflow: hidden;
+	padding: 10px;
+	input, button, select {
+	    margin: 2px 0;
+	}
+	.break {
+	    border-left: 1px solid #FCFCFC;
+	    border-right: 1px solid #DDDDDD;
+	    margin: -11px 10px -10px;
+	    padding: 11px 0 10px;
+	}
+    }
+
+    td.name {
+	max-width: 135px;
+    }
+}
+
+input.parsley-success, textarea.parsley-success {
+    color: #468847 !important;
+    background-color: #DFF0D8 !important;
+    border: 1px solid #D6E9C6 !important;
+}
+input.parsley-error, textarea.parsley-error {
+    color: #B94A48 !important;
+    background-color: #F2DEDE !important;
+    border: 1px solid #EED3D7 !important;
+}
+ul.parsley-error-list {
+    font-size: 11px;
+    margin: 2px;
+    list-style-type:none; 
+}
+ul.parsley-error-list li {
+    line-height: 11px;
+}
+
+.hasPlaceholder {
+    color: #999 !important;
+}
+
+/* =============================================================================
+   Layout
+   ========================================================================== */
+
+body {
+    padding-top: 40px;
+    min-width: 360px;
+    background: url("bg.jpg") 0 0 repeat scroll;
+    font-size: 13px;
+    text-shadow: 0 1px 1px #fff;
+}
+
+header {
+    a.brand {
+	margin-top: 3px;
+	width: 300px;
+    }
+}
+
+
+#main {
+    padding: 20px 0 40px;
+}
+
+#debug {
+    border-top: 1px solid #ddd;
+    background: #eee;
+    padding: 20px;
+}
+
+
+
+/* =============================================================================
+   Pages
+   ========================================================================== */
+body.devise {
+    background: url("bg-login.jpg");
+    background-size: cover;
+    header, footer { display: none; }
+    .panel {
+	background-color: rgba(255,255,255,0.75);
+	@include border-radius(12px);
+	padding:20px;
+	border: 4px solid #fff;
+	margin: 150px auto 0;
+	max-width: 450px;
+	&.wide {
+	    max-width: 800px;
+	    margin-top: 100px;
+	}
+	legend {
+	    padding: 10px 0 10px;
+	    text-indent: 80px;
+	    font-weight: bold;
+	    background: url("http://www.caachagrin.com/websites/caa/templates/caa/template/tiger.png") 0 0 no-repeat;
+	}
+    }
+}
+
+
+body.form {
+    h1 {
+	margin-bottom: 10px;
+    }
+    
+    .btn-group-vertical {    
+	.btn-large:first-child {
+	    border-radius: 6px 0 0 0;
+	}
+	.btn-large:last-child {
+	    border-radius: 0 0 0 6px;
+	}
+    }
+
+    .btn-group-vertical .btn-large [class^="icon-"], .btn-group-vertical .btn-large [class*=" icon-"] {
+	margin-top: 0;
+    }
+}
+
+
+
+/* =============================================================================
+   Bootstrap Overrides
+   ========================================================================== */
+
+.pagination .prev.disabled a {
+    background-color: whiteSmoke;
+}
+
+.control-label {
+    font-weight: bold;
+}
+
+.btn-bubble {
+    font-weight: bold;
+    font-size: 16px;
+    padding: 8px 14px;
+    letter-spacing: 1px;
+    @include border-radius(20px);
+}
+
+.alert-gray {
+    background-color: #eee;
+    border-color: #ddd;
+    color: #777;
+}
+
+.table {
+    ul {
+	list-style: none;
+	margin: 0;
+    }
+    tr {
+	color: #333;
+	&.warning td {
+	    background-color: #fcf8e3;
+	}
+	.btn-toolbar {
+	    margin: 0 0 -5px;
+	}
+	td {
+	    vertical-align: middle;
+	}
+    }
+}
+
+.help-block {
+    clear: both;
+    padding-top: 5px;
+}
+
+.btn-group-vertical {
+    display: block;
+    .btn {
+	border-radius: 0 0 0 0;
+	width: auto;
+	display: block;
+	float: none;
+	text-align: left;
+	overflow: hidden;
+    }
+    .btn + .btn {
+	margin-left: 0;
+	margin-top: -1px;
+    }
+    .btn:first-child {
+	border-radius: 4px 4px 0 0;
+    }
+    .btn:last-child {
+	border-radius: 0 0 4px 4px;
+    }
+    .btn-large:first-child {
+	border-radius: 6px 6px 0 0;
+    }
+    .btn-large:last-child {
+	border-radius: 0 0 6px 6px;
+    }
+}
+
+.btn-primary {
+    font-weight: bold;
+}
+.btn-group > .btn {
+    font-size: 14px;
+}
+.btn-group > .btn-small {
+    font-size: 11px;
+}
+
+/* =============================================================================
+   Bootstrap Additions
+   ========================================================================== */
+
+.checkbox.inline {
+    min-width: 190px;
+}
+
+.controls-row .select2-container {
+    margin-left: 0;
+}
+
+.controls-date {
+    select { width: 109px; }
+    select + select { margin-left: 20px; }
+}
+
+input, select, textarea, .checkbox, .radio {
+     &.fieldWithErrors {
+	border-color: #B94A48;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+	color: #B94A48;
+	&:focus {
+	    border-color: #953B39;
+	    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 6px #D59392;
+	}
+    }
+}
+
+.icon-parent {
+    background: url("icon-parent.png");
+    &.icon-white {
+	background: url("icon-parent-white.png");	
+    }
+}
+.icon-student {
+    background: url("icon-student.png");
+    &.icon-white {
+	background: url("icon-student-white.png");	
+    }
+}
+
+.controls-inline {
+    display: inline !important;
+}
+.controls-row [class*="span"] {
+    float: none;
+}
+
+
+
+/* ==|== media queries ======================================================
+   PLACEHOLDER Media Queries for Responsive Design.
+   These override the primary ('mobile first') styles
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (max-width: 767px) {
+    tr.visible-phone {
+	display: table-row !important;
+    }
+    body.form {
+	.btn-group-vertical {
+	    .btn:first-child {
+		border-radius: 4px 4px 0 0;
+	    }
+	    .btn:last-child {
+		border-radius: 0 0 4px 4px;
+	    }
+	    .btn-large:first-child {
+		border-radius: 6px 6px 0 0;
+	    }
+	    .btn-large:last-child {
+		border-radius: 0 0 6px 6px;
+	    }
+	}
+    }
+}
+
+
+
+/* ==|== print styles =======================================================
+   Print styles.
+   Inlined to avoid required HTTP connection: h5bp.com/r
+   ========================================================================== */
+
+@media print {
+    * { background: transparent !important; color: black !important; text-shadow: none !important; filter:none !important; -ms-filter: none !important; } /* Black prints faster: h5bp.com/s */
+  a, a:visited { text-decoration: underline; }
+  
+  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }  /* Don't show links for images, or javascript/internal links */
+  pre, blockquote { border: 1px solid #999; page-break-inside: avoid; }
+  thead { display: table-header-group; } /* h5bp.com/t */
+  tr, img { page-break-inside: avoid; }
+  img { max-width: 100% !important; }
+  @page { margin: 0.5cm; }
+  p, h2, h3 { orphans: 3; widows: 3; }
+  h2, h3 { page-break-after: avoid; }
+  header {display: none;}
+
+  #submit-group, #form-nav, div.btn-group.pull-right { display: none; }
+}
+
+@import "bootstrap-responsive";
+

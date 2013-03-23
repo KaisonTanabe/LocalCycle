@@ -1,0 +1,11 @@
+    <% if f.object.new_record? %>
+      <div class="controls controls-row child-field" style="margin-bottom: 5px;">
+	<%= f.file_field :attachment, rows: 4, class: "span4" %>
+      </div>
+    <% else %>
+      <div class="controls controls-row child-field" style="padding: 5px;" >
+	<strong><%= link_to f.object.attachment_file_name, f.object.attachment.url %></strong>
+	<span class="help-inline"><%= link_to raw('<span class="icon-white icon-remove"></span> Remove'), 'javascript:void(0)', class: 'remove-old-child btn btn-mini btn-inverse' %></span>
+	<%= f.hidden_field :_destroy, class: 'destroy-field', value: '0' %>
+      </div>
+    <% end %>

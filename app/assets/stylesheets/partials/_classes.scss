@@ -1,0 +1,68 @@
+$lightColor: #f66f02;
+$darkColor: #cc4304;
+$secondColor: #4e4e50;
+
+@font-face {
+    font-family: 'museo_sans_500regular';
+    src: url('museosans_500-webfont.eot');
+    src: url('museosans_500-webfont.eot?#iefix') format('embedded-opentype'),
+         url('museosans_500-webfont.woff') format('woff'),
+         url('museosans_500-webfont.ttf') format('truetype'),
+         url('museosans_500-webfont.svg#museo_sans_500regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'museo_sans_500italic';
+    src: url('museosans_500_italic-webfont.eot');
+    src: url('museosans_500_italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('museosans_500_italic-webfont.woff') format('woff'),
+         url('museosans_500_italic-webfont.ttf') format('truetype'),
+         url('museosans_500_italic-webfont.svg#museo_sans_500italic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@mixin gradient-bg($dir: top, $color1: #555, $color2: #222) {
+   background-color: $color2;
+   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($color1), to($color2));
+   background-image: -webkit-linear-gradient(top, $color1, $color2); 
+   background-image:    -moz-linear-gradient(top, $color1, $color2);
+   background-image:     -ms-linear-gradient(top, $color1, $color2);
+   background-image:      -o-linear-gradient(top, $color1, $color2);
+}
+
+@mixin border-radius($radius: 18px) {
+    border-radius: $radius;
+    -moz-border-radius: $radius;
+    -webkit-border-radius: $radius;
+}
+@mixin roundedSide($side, $radius: 10px) {
+  border-#{$side}-radius: $radius;
+  -moz-border-radius-#{$side}: $radius;
+  -webkit-border-#{$side}-radius: $radius;
+}
+@mixin box-shadow($x: 1px, $y: 1px, $s: 5px, $color: #999) {
+    box-shadow: $x $y $s $color;
+    -moz-box-shadow: $x $y $s $color;
+    -webkit-box-shadow: $x $y $s $color;
+}
+.centered {
+    text-align: center;
+}
+.colorize {
+    display: inline-block;
+    background-color: $lightColor;
+}
+.primary-color {
+    color: $lightColor;
+}
+.primary-color-dark {
+    color: $darkColor;
+}
+.secondary-color {
+    color: $secondColor;
+}
+

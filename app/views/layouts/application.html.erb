@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= favicon_link_tag "/favicon.png", :type => 'image/png' %>
+    <title><%= content_for?(:title) ? yield(:title) + " | " : "" %>FinalForms</title>
+    <meta name="description" content="">
+    <meta name="author" content="BC Technologies Company">
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <%= yield(:head) %>
+  <body class="<%= yield(:bodyclass) %>">
+    <header class="navbar navbar-fixed-top">
+      <nav class="navbar-inner">
+        <div class="container">
+	  <%= link_to "Chagrin Falls LPDC", root_url, class: "brand" %>
+          <% if signed_in? %><%= render 'layouts/navigation' %><% end %>
+        </div>
+      </nav>
+    </header>
+    <div id="main" role="main">
+      <div class="container">
+        <div class="content" style="min-height: 400px;">
+          <div class="row">
+            <div class="span12">
+              <%= render 'layouts/messages' %>
+              <%= yield %>
+            </div>
+          </div>
+        </div>
+	<footer id="footer">
+	  <p style="clear: both;"><br /></p>
+	  <p><br /></p>
+	  <hr />
+	  <p style="float: right; color: #999;">If you are experiencing any issues, please email <a style="color: #777;" href="mailto:support@finalforms.com">support@finalforms.com</a></p>
+	</footer>
+      </div> <!--! end of .container -->
+    </div> <!--! end of #main -->
+
+    <% if Rails.env.production? %>
+    <!--script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-36056665-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script-->
+    <% end %>
+
+  </body>
+</html>

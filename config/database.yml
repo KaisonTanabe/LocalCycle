@@ -1,0 +1,16 @@
+common: &common
+  adapter: postgresql
+  username: macklin
+  password: Boards05
+
+development:
+  <<: *common
+  database: ff_dev
+
+test:
+  <<: *common
+  database: ff_test
+
+production:
+  <<: *common
+  database: ff_production

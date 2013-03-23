@@ -1,0 +1,81 @@
+<%= form_for(@form, html: { multipart: true, class: "form-horizontal" }) do |f| %>
+
+  <%= render partial: 'partials/errors', locals: {obj: @form} %>
+
+  <% if @form.new_record? %>
+
+  <legend>Choose your form:</legend>
+
+  <ol>
+    <li>Complete and submit a form</li>
+    <li>Committee members will be automatically notified of your submission.</li>
+    <li>Once your form has been reviewed, you will be notified.</li>
+  </ol>
+
+    <div class="control-group">
+      <%= f.label :form_type, "Select a Form:", class: "control-label" %>
+      <div class="controls controls-row">
+	<%= f.select :form_type, [["Choose from list...",""]] + FORM_TYPES.map {|f| [f.first, f.second]} %>
+      </div>
+    </div>
+    
+    <% FORM_TYPES.each do |k, type| %>
+      <div class="<%= type %> specificFields">
+	<%= f.fields_for type.to_sym, f.object.send(type) || f.object.send("build_" + type) do |tf| %>
+          <%= render partial: "forms/types/" + type, locals: { f: tf } %>
+	<% end %>
+      </div>
+    <% end %>
+
+  <% else %>
+
+    <h6>Form submitted by <span style="color: #555;"><%= @form.user.full_name %></span> [PIN: <span style="color: #555;"><%= @form.user.pin %></span>] on <span style="color: #555;"><%= @form.created_at.strftime("%B %d, %Y") %></span></h6>
+
+    <%= f.fields_for (@form.form_type).to_sym, f.object.send(@form.form_type) || f.object.send("build_" + @form.form_type) do |tf| %>
+      <%= render partial: "forms/types/" + (@form.form_type), locals: { f: tf } %>
+    <% end %>
+  
+
+  <% end %>
+
+  <% if !@form.new_record? %>
+    <% if current_user.educator? or @form.user == current_user %>
+      <p><br /></p>
+      <legend>Reviews of this Form</legend>
+      <%= raw("<em>No reviews submitted yet</em>") unless @form.form_reviews.any? %>
+      <% @form.form_reviews.each do |r|%>
+        <p>
+          <% if r.review == "approve" %>
+            <span class="label label-success">Approved</span>
+          <% elsif r.review == "deny" %>
+            <span class="label label-important">Denied</span>
+          <% else r.review == "pending" %>
+            <span class="label label-warning">Pending</span>
+          <% end %>
+          <% if !r.reason.blank? %><strong>Reviewer Notes:</strong> <%= r.reason %><% end %>
+	</p>
+      <% end %>
+    <% else %>
+      <legend>Please review the above form and approve/deny</legend>
+      <%= f.fields_for :form_reviews, @form_review do |fr|%>
+        <%= fr.hidden_field :user_id, value: current_user.id %>
+	<%= fr.hidden_field :form_id, value: @form.id %>
+	<div class="control-group">
+	  <%= fr.label :review, "Options", class: "control-label req" %>
+	  <div class="controls controls-row">
+	    <%= fr.select :review, REVIEW_OPTIONS.map {|o| [o.first, o.last]} %>
+	  </div>
+	</div>
+	<div class="control-group">
+	  <%= fr.label :reason, "Reason", class: "control-label req" %>
+	  <div class="controls controls-row">
+	    <%= fr.text_area :reason, rows: 4 %>
+	    <span class="help-inline">*required if denied</span>
+	  </div>
+	</div>
+      <% end %>
+    <% end %>
+  <% end %>
+  
+  <%= render partial: 'partials/submit', locals: {f: f, text: "Form"} %>
+<% end %>

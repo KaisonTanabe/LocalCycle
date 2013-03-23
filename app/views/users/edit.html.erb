@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="span12">
+    <% if current_user.admin? %>
+    <div class="btn-group pull-right">
+	<%= link_to raw('<i class="icon-eye-open icon-white"></i> View ' + @user.role.capitalize), @user, class: "btn btn-primary" %>
+	<%= link_to raw('<i class="icon-list"></i> List Users'), users_path(params), class: "btn" %>
+    </div>
+    <% end %>
+    <h1>Editing <%= @user.full_name %></h1>
+    <h6></h6>
+  </div>
+</div>
+
+<%= render 'form' %>

@@ -1,0 +1,19 @@
+<div id="devise">
+  <div class="contents">
+    
+    <%= form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :method => :post, class: "form-horizontal" }) do |f| %>
+      <%= render partial: 'partials/errors', locals: {obj: resource} %>
+
+      <legend>Resend Unlock Instructions</legend>
+      
+      <div class="control-group">
+	<%= f.label :email, class: "control-label" %>
+	<div class="controls"><%= f.email_field :email, placeholder: "user@example.com", :autofocus => true %></div>
+      </div>
+	
+      <%= render partial: 'partials/submit', locals: {f: f, override: 'Resend Unlock Instructions'} %>
+    <% end %>
+      
+  </div>
+</div>
+<%= render "devise/shared/links" %>

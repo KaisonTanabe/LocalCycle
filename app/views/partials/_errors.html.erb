@@ -1,0 +1,13 @@
+<% if obj.errors.any? %>
+  <div class="alert alert-error">
+    <a class="close" data-dismiss="alert">&#215;</a>
+    <%= content_tag :div, "Please fix all invalid fields below", :id => "flash_error" %>
+  </div>
+
+  <% if Rails.env.development? %>
+    <% obj.errors.full_messages.each do |e| %>
+      <script>console.log('<%= e %>')</script>
+    <% end %>
+  <% end %>
+<% end %>
+  
