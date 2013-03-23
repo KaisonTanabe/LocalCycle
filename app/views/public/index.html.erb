@@ -1,46 +1,23 @@
-<% content_for :bodyclass do %>devise<% end %>
-
-<% if user_signed_in? %>
-
-  <div class="span4 centered offset4" style="padding-top: 40px;">
-    <h2> &nbsp; <%= link_to (image_tag image_path("admin.png"), alt: "Admin"), users_path, class: "colorize" %></h2>
-    <h2>Administration</h2>
-    <div class="btn-group" style="text-align: left;">
-      <button data-toggle="dropdown" class="btn btn-primary btn-bubble btn-large dropdown-toggle">MANAGE <span class="caret"></span></button>
-      <ul class="dropdown-menu" style="text-align: left;">
-      </ul>
-    </div>
-  </div>
-
-<% else %>
-
-
 <div class="row">
   <div class="panel">
 
-    <%= form_for("user", url: user_session_path, html: {class: "form-horizontal"}) do |f| %>
+    <h1><img src="assets/localcycle-logo.PNG" alt="LocalCycle" /> <span>L</span>ocal<span>C</span>ycle</h1>
 
-      <legend>Chagrin Falls LPDC</legend>
-      
-      <div class="control-group">
-	<%= f.label :email, class: "control-label" %>
-	<div class="controls"><%= f.email_field :email, placeholder: "user@example.com", autofocus: true %></div>
+    <!--h5 style="text-indent: 80px; text-align: right; font-size: 15px; margin-top: -18px;">Local Food Planning, Producing, &amp; Purchasing Efficiency Application</h5-->
+    <h5 style="font-size: 13px; text-align: right; margin: -30px 2px 0 0;">Planning, Producing, &amp; Purchasing</h5>
+
+    <hr />
+
+    <h6 style="text-align: center;">Here's how to get in early.</h6>
+
+    <form class="SG_widget_form" method="POST" action="http://sendgrid.com/subscribe?p=%2Fn7Rt9Et%2F0vq38IVp0TnBtxxYk0F%2B0%2BFcBcIU7mXtavwA7RqvSVQ0dvIkT2aXOb9" accept-charset="UTF-8">
+      <div class="input-append">
+	<input type="text" class="SG_widget_form_input" id="SG_widget_email_1" placeholder="Enter our email..." name="SG_widget[email]"> <input type="submit" value="Notify me" class="SG_widget_form_submit btn-success btn">
       </div>
-      
-      <div class="control-group">
-	<%= f.label :password, class: "control-label" %>
-	<div class="controls"><%= f.password_field :password %></div>
-      </div>
-      
-      <div class="control-group">
-	<div class="controls">
-	  <%= f.submit "Sign in", disable_data_with: "Signing in...", class: "btn btn-primary", tabindex: "3" %> &nbsp;
-	  <label tabindex="2" class="checkbox" style="display: inline-block;width: 100px;"><%= f.check_box :remember_me %> Remember Me</label>
-	</div>
-      </div>
-    <% end %>
+      <small>...but don't spam me</small>
+    </form>
+
+    <!--script type="text/javascript" src="http://sendgrid.com/newsletter/getSubscriptionWidget?p=%2Fn7Rt9Et%2F0vq38IVp0TnBtxxYk0F%2B0%2BFcBcIU7mXtavwA7RqvSVQ0dvIkT2aXOb9"> </script-->
       
   </div>
 </div>
-
-<% end %>

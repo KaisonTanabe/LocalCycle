@@ -31,11 +31,11 @@
 
 hr { box-shadow: 0 1px 1px #fff; }
 
-legend { border-bottom: 1px solid #ccc; }
+legend { border-bottom: 1px solid #ccc; font-family: 'savu'; color: $fontColor; }
 
 /* General Site Headings */
 h1, h2, h3, h4, h5, h6 {
-    font-family: "museo_sans_500regular", "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font-family: "savu", "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 h1 { 
     margin-top: 0; 
@@ -123,9 +123,26 @@ ul.parsley-error-list li {
 body {
     padding-top: 40px;
     min-width: 360px;
-    background: url("bg.jpg") 0 0 repeat scroll;
+    background: url("body-bg.JPG") 0 0 repeat scroll;
     font-size: 13px;
     text-shadow: 0 1px 1px #fff;
+}
+
+#vignette {
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+    -webkit-transition: 0.25s opacity;
+/**    background: -webkit-radial-gradient(rgba(57, 181, 74, 0), rgba(249, 237, 51, 0.1) 30%, rgba(238, 122, 33, 0.25) 60%, rgba(238, 122, 33, 0.6)); **/
+    background: -webkit-radial-gradient(rgba(238, 122, 33, 0), rgba(249, 237, 51, 0.1) 30%, rgba(249, 237, 51, 0.25) 60%, rgba(57, 181, 74, 0.6));
+    display: -webkit-box;
+    padding: 20px;
+    padding-bottom: 130px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
 }
 
 header {
@@ -151,48 +168,24 @@ header {
 /* =============================================================================
    Pages
    ========================================================================== */
-body.devise {
-    background: url("bg-login.jpg");
-    background-size: cover;
-    header, footer { display: none; }
+.public {
     .panel {
 	background-color: rgba(255,255,255,0.75);
 	@include border-radius(12px);
 	padding:20px;
 	border: 4px solid #fff;
 	margin: 150px auto 0;
-	max-width: 450px;
-	&.wide {
-	    max-width: 800px;
-	    margin-top: 100px;
-	}
-	legend {
-	    padding: 10px 0 10px;
-	    text-indent: 80px;
-	    font-weight: bold;
-	    background: url("http://www.caachagrin.com/websites/caa/templates/caa/template/tiger.png") 0 0 no-repeat;
-	}
+	max-width: 460px;
+	box-shadow: 0 0 20px rgba(0,0,0,0.25);
     }
-}
-
-
-body.form {
-    h1 {
-	margin-bottom: 10px;
+    table { border: 0; background: none; margin: 20px auto 0; text-align: center;}
+    form { 
+	text-align: center; margin-top: 10px; 
+	input[type="submit"] { font-weight: bold; }
     }
-    
-    .btn-group-vertical {    
-	.btn-large:first-child {
-	    border-radius: 6px 0 0 0;
-	}
-	.btn-large:last-child {
-	    border-radius: 0 0 0 6px;
-	}
-    }
-
-    .btn-group-vertical .btn-large [class^="icon-"], .btn-group-vertical .btn-large [class*=" icon-"] {
-	margin-top: 0;
-    }
+    label { font-weight: bold; margin-right: 15px; }
+    h1 span {font-size: 50px;}
+    small {margin: -15px 0 0 220px; color: #aaa;}
 }
 
 
