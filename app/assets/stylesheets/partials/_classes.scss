@@ -6,10 +6,16 @@ $fontColor: #532f08;
     font-family: 'savu';
     src: url('Savu.eot');
     src: url('Savu.eot?#iefix') format('embedded-opentype'),
-         url('Savu.svg#Savu') format('svg'),
-         url('Savu.ttf') format('truetype');
+         url('Savu.ttf') format('truetype'),
+         url('Savu.svg') format('svg');
     font-weight: normal;
     font-style: normal;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    @font-face {
+	font-family: 'chunk-webfont';
+	src: url('Savu.svg') format('svg');
+    }
 }
 
 @mixin gradient-bg($dir: top, $color1: #555, $color2: #222) {
