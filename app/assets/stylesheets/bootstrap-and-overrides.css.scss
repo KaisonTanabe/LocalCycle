@@ -187,11 +187,15 @@ header {
 	text-align: center; margin-top: 10px; 
 	input[type="submit"] { font-weight: bold; }
     }
+    #response {text-align: center; color: $lightColor;}
     label { display: none; }
-    h6 {font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;}
+    h5, h6 {text-align: center;}
     h1 {margin-right: -20px;}
     h1 span {font-size: 50px;}
     small {margin: -15px 0 0 220px; color: #aaa;}
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .public h5, .public h6 {font-weight: normal; font-family: "Helvetica Neue", Arial, Helvetica, sans-serif; }
 }
 
 

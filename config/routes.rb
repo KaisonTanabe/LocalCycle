@@ -1,5 +1,8 @@
 LOCALCYCLE::Application.routes.draw do
 
+  resources :leads
+
+
   devise_for :users, path_prefix: "d", path_names: { sign_in: 'login' }, 
     controllers: {confirmations: 'confirmations', sessions: 'sessions'}
 

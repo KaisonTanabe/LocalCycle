@@ -5,20 +5,26 @@
     <h1><img src="assets/localcycle-temp-logo.PNG" alt="LocalCycle" /></h1>
 -->
     <h1><img src="assets/localcycle-logo.PNG" alt="LocalCycle" /> <span>L</span>ocal<span>C</span>ycle</h1>
-    <h5 style="font-size: 13px; text-align: right; margin: -30px 2px 0 0;">Planning, Producing, &amp; Purchasing</h5>
+    <!--h5 style="font-size: 13px; text-align: right; margin: -30px 2px 0 0;">Planning, Producing, &amp; Purchasing</h5-->
 
     <hr />
 
-    <h6 style="text-align: center;">Enter your email address below to get in early.</h6>
+    <h5>Connecting local producers with wholesale buyers</h5>
+    <h5>We enable producers and buyers to see and act upon future demand and supply through production agreements.</h5>
 
-    <!--form class="SG_widget_form" method="POST" action="http://sendgrid.com/subscribe?p=%2Fn7Rt9Et%2F0vq38IVp0TnBtxxYk0F%2B0%2BFcBcIU7mXtavwA7RqvSVQ0dvIkT2aXOb9" accept-charset="UTF-8">
+    <hr />
+
+    <h6>Sign up below to get in early.</h6>
+
+    <p id="response"></p>
+
+    <%= form_for("lead", url: leads_path,  html: {class: "form-horizontal", action: "post", remote: true}) do |f| %>
       <div class="input-append">
-	<input type="text" class="SG_widget_form_input" id="SG_widget_email_1" placeholder="Enter our email..." name="SG_widget[email]"> <input type="submit" value="Notify me" class="SG_widget_form_submit btn-success btn">
+	<%= f.email_field :email, placeholder: "Enter your email..." %>
+	<%= f.submit "Notify me", class: "btn-success btn" %>
       </div>
       <small>...but don't spam me</small>
-    </form-->
-
-    <script type="text/javascript" src="http://sendgrid.com/newsletter/getSubscriptionWidget?p=%2Fn7Rt9Et%2F0vq38IVp0TnBtxxYk0F%2B0%2BFcBcIU7mXtavwA7RqvSVQ0dvIkT2aXOb9"> </script>
+    <% end %>
       
   </div>
 </div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130306051805) do
+ActiveRecord::Schema.define(:version => 20130323214004) do
 
   create_table "attachments", :force => true do |t|
     t.integer  "attachable_id"
@@ -26,75 +26,11 @@ ActiveRecord::Schema.define(:version => 20130306051805) do
 
   add_index "attachments", ["attachable_id", "attachable_type"], :name => "index_attachments_on_attachable_id_and_attachable_type"
 
-  create_table "form101as", :force => true do |t|
-    t.integer  "form_id",                  :null => false
-    t.string   "building"
-    t.date     "expected_completion_date"
-    t.string   "university"
-    t.string   "course_title"
-    t.string   "semester_hours"
-    t.string   "sponsoring_organization"
-    t.string   "workshop_title"
-    t.string   "contact_hours"
-    t.text     "anticipated_outcomes"
-    t.text     "experience"
-    t.string   "employee_signature"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+  create_table "leads", :force => true do |t|
+    t.string   "email"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
-
-  add_index "form101as", ["form_id"], :name => "index_form101as_on_form_id"
-
-  create_table "form101bs", :force => true do |t|
-    t.integer  "form_id",               :null => false
-    t.boolean  "graded_coursework"
-    t.boolean  "accredited_university"
-    t.boolean  "syllabus"
-    t.boolean  "approved_plan"
-    t.boolean  "aligned_coursework"
-    t.string   "course_application"
-    t.text     "anticipated_outcomes"
-    t.text     "experience_learned"
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
-  end
-
-  add_index "form101bs", ["form_id"], :name => "index_form101bs_on_form_id"
-
-  create_table "form_logs", :force => true do |t|
-    t.string   "form_part",    :null => false
-    t.string   "updater_name", :null => false
-    t.text     "params",       :null => false
-    t.integer  "form_id",      :null => false
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  create_table "form_reviews", :force => true do |t|
-    t.integer  "form_id",                           :null => false
-    t.integer  "user_id",                           :null => false
-    t.string   "review",     :default => "pending", :null => false
-    t.text     "reason"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-  end
-
-  add_index "form_reviews", ["form_id"], :name => "index_form_reviews_on_form_id"
-  add_index "form_reviews", ["user_id"], :name => "index_form_reviews_on_user_id"
-
-  create_table "forms", :force => true do |t|
-    t.string   "last_updater"
-    t.text     "last_params"
-    t.integer  "user_id",                          :null => false
-    t.boolean  "seen",          :default => false, :null => false
-    t.boolean  "approved",      :default => false, :null => false
-    t.integer  "no_vote_count", :default => 999,   :null => false
-    t.string   "form_type",                        :null => false
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
-  end
-
-  add_index "forms", ["user_id"], :name => "index_forms_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "",         :null => false
