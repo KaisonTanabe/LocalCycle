@@ -133,13 +133,7 @@ body {
     -webkit-box-pack: center;
     -webkit-transition: 0.25s opacity;
     background: -webkit-radial-gradient(rgba(238, 122, 33, 0), rgba(249, 237, 51, 0.1) 30%, rgba(249, 237, 51, 0.25) 60%, rgba(57, 181, 74, 0.6));
-    background: -moz-radial-gradient(center, ellipse cover, rgba(238, 122, 33, 0), 
-				                            rgba(249, 237, 51, 0.1) 30%, 
-							    rgba(249, 237, 51, 0.25) 60%, 
-							    rgba(57, 181, 74, 0.6));
-
-    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(238, 122, 33, 0)), color-stop(30%,rgba(249, 237, 51, 0.1)), color-stop(60%,rgba(249, 237, 51, 0.25)), color-stop(100%,rgba(57, 181, 74, 0.6)));
-    background: -webkit-radial-gradient(center, ellipse cover, rgba(238, 122, 33, 0) 0%,rgba(249, 237, 51, 0.1) 30%,rgba(249, 237, 51, 0.25) 60%,rgba(57, 181, 74, 0.6) 100%); /* Chrome10+,Safari5.1+ */
+    background: -moz-radial-gradient(center, ellipse cover, rgba(238, 122, 33, 0), rgba(249, 237, 51, 0.1) 30%, rgba(249, 237, 51, 0.25) 60%, rgba(57, 181, 74, 0.6));
     background: -o-radial-gradient(center, ellipse cover, rgba(238, 122, 33, 0) 0%,rgba(249, 237, 51, 0.1) 30%,rgba(249, 237, 51, 0.25) 60%,rgba(57, 181, 74, 0.6) 100%); /* Opera 12+ */
     background: -ms-radial-gradient(center, ellipse cover, rgba(238, 122, 33, 0) 0%,rgba(249, 237, 51, 0.1) 30%,rgba(249, 237, 51, 0.25) 60%,rgba(57, 181, 74, 0.6) 100%); /* IE10+ */
     background: radial-gradient(ellipse at center, rgba(238, 122, 33, 0) 0%,rgba(249, 237, 51, 0.1) 30%,rgba(249, 237, 51, 0.25) 60%,rgba(57, 181, 74, 0.6) 100%); /* W3C */
@@ -193,6 +187,7 @@ header {
 	input[type="submit"] { font-weight: bold; }
     }
     label { font-weight: bold; margin-right: 15px; }
+    h6 {font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;}
     h1 {margin-right: -20px;}
     h1 span {font-size: 50px;}
     small {margin: -15px 0 0 220px; color: #aaa;}
