@@ -6,8 +6,8 @@ $fontColor: #532f08;
     font-family: 'savu';
     src: url('Savu.eot');
     src: url('Savu.eot?#iefix') format('embedded-opentype'),
-         url('Savu.svg#Savu') format('svg');
-         url('Savu.ttf') format('truetype'),
+         url('Savu.svg#Savu') format('svg'),
+         url('Savu.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
