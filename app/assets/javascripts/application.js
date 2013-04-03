@@ -22,65 +22,86 @@
 //= require parsley.min
 //= require_tree .
 jQuery(function($){
+
+    ////////////////////////////////////////////////////////////////////////////
+    //// Plugin initializers
+
+    // Initialize Select2 Plugin (pretty select fields) on select fields with class="select2"
     $('.select2').select2({minimumInputLength: 2});
 
-    $('.parsley').parsley({
+    // Initialize Parsley Plugin (javascript validations) on forms with class="parsley"
+    $('form.parsley').parsley({
 	errors: {
 	    errorsWrapper: '<span class="span0" style="display: none;"></span>',
 	    errorElem: '<small></small>'
 	}
     });
 
+    // Initialize bootstrap file field formatting on all file fields
     $(":file").filestyle({
 	icon: true
     });
 
+    // Initialize field errors in popover
+    $('.fieldWithErrors').popover()
+
+
+    /**    
+    // Initialize Datepicker on select fields with data-behavior='datepicker' attribute
+    $("[data-behavior~='datepicker']").datepicker({
+	"format": "yyyy-mm-dd",
+	"weekStart": 1,
+	"autoclose": true
+    });
+    */
     ////////////////////////////////////////////////////////////////////////////
-    // For associated model forms
+
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Rails add/remove js for has_many associated model forms
     // Render fields for an associated object
-	$('form a.add_child').on('click', function() {
-	    var assoc = $(this).attr('data-association');
-	    var content = $('#' + assoc + '_fields_template').html();
-	    var regexp = new RegExp('new_' + assoc, 'g');
-	    var new_id = new Date().getTime();
-	    content=content.replace(regexp, new_id+'');
-	    $(this).parent().parent().before(content);
-	    //inputPrompts();
-	    return false;
-	});
+    $('form a.add_child').on('click', function() {
+	var assoc = $(this).attr('data-association');
+	var content = $('#' + assoc + '_fields_template').html();
+	var regexp = new RegExp('new_' + assoc, 'g');
+	var new_id = new Date().getTime();
+	content=content.replace(regexp, new_id+'');
+	$(this).parent().parent().before(content);
+	//inputPrompts();
+	return false;
+    });
     // Remove fields for new object
-	$('form a.remove-new-child').on('click', function() {
-	    $(this).parents('.child-field').remove();
-	    return false;
-	});
+    $('form a.remove-new-child').on('click', function() {
+	$(this).parents('.child-field').remove();
+	return false;
+    });
     // Remove fields for existing object
-	$('form a.remove-old-child').on('click', function() {
-	    var hidden_destroy_field = $(this).parent().next('input.destroy-field');
-	    hidden_destroy_field.val(1);
-	    $(this).parents('.child-field').hide();
-	    return false;
-	});
+    $('form a.remove-old-child').on('click', function() {
+	var hidden_destroy_field = $(this).parent().next('input.destroy-field');
+	hidden_destroy_field.val(1);
+	$(this).parents('.child-field').hide();
+	return false;
+    });
     // Toggling fields from a select box
-        $('.toggle-fields').on('click', function(){
-            $("."+$(this).attr('toggle_fields')+":visible").hide();
-            $('#'+$(this).attr('toggle_field')).show();
-            return true;
-	});
+    $('.toggle-fields').on('click', function(){
+        $("."+$(this).attr('toggle_fields')+":visible").hide();
+        $('#'+$(this).attr('toggle_field')).show();
+        return true;
+    });
     ////////////////////////////////////////////////////////////////////////////
 
 
-    /**
-     * ALL Student AJAX select
-     */
-    // SELECT 
+
+    ////////////////////////////////////////////////////////////////////////////
+    // AJAX filtering system
     if (history && history.pushState) {
-	$("#formAdminTable select, #formAdminTable input:checkbox").on("change", function() {
-	    var form = $("#form-filter");
+	$("#agreementAdminTable select, #agreementAdminTable input:checkbox").on("change", function() {
+	    var form = $("#agreement-filter");
 	    form.submit();
 	    history.pushState(null, document.title, form.attr("action") + "?" + form.serialize());
 	});
-	$("#formAdminTable input").keyup(function() {
-	    var form = $("#form-filter");
+	$("#agreementAdminTable input").keyup(function() {
+	    var form = $("#agreement-filter");
 	    form.submit();
 	    history.replaceState(null, document.title, form.attr("action") + "?" + form.serialize());
 	});
@@ -89,26 +110,33 @@ jQuery(function($){
 	    $.getScript(location.href);
 	});
     } else {
-	$("#formAdminTable select, #formAdminTable input:checkbox").on("change", function() {
+	$("#agreementAdminTable select, #agreementAdminTable input:checkbox").on("change", function() {
 	    $(':text.hasPlaceholder').val('');
-	    $("#form-filter").submit();
+	    $("#agreement-filter").submit();
 	});
-	$("#formAdminTable input").keyup(function() {
+	$("#agreementAdminTable input").keyup(function() {
 	    $(':text.hasPlaceholder').val('');
-	    $("#form-filter").submit();
+	    $("#agreement-filter").submit();
 	});
     }
-/**    
-    $("[data-behavior~='datepicker']").datepicker({
-	"format": "yyyy-mm-dd",
-	"weekStart": 1,
-	"autoclose": true
-    });
-*/
+    ////////////////////////////////////////////////////////////////////////////
 
-    $('.fieldWithErrors').popover()
 
-    $('#same .btn').click( function() {
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Toggleable fields JS
+    function displayFields() {
+	$("form .specificFields").hide();
+	if ($("#form_form_type").val()) {
+	    $('.' + $("#form_form_type").val()).show(); // Show currently selected
+	}
+    }
+    $("#form_form_type").on("change", function() {displayFields()});
+    displayFields();
+
+
+    // For duplicating address fields
+    $('#sameAddress .btn').click( function() {
 	if ($(this).hasClass('yes')) {
 //	    $('#pastAddress').hide();
             $('#form_l_street_address_1').val($('#form_p_street_address_1').val());
@@ -121,38 +149,15 @@ jQuery(function($){
 	    $('#pastAddress input').val('');
 	}
     })
-
-    function displayFields() {
-	$("form .specificFields").hide();
-	$('.' + $("#form_form_type").val()).show(); // Show currently Selected
-    }
-    $("#form_form_type").on("change", function() {displayFields()});
-    displayFields();
+    ////////////////////////////////////////////////////////////////////////////
 
 
-    /** 
-     * Swap out fieldsets depending on user input
-     */
-    function grantingConsent() {
-        if ($('#form_consent_to_treatment option:selected').val() == "true") {
-            $('#grant').show();
-            $('#refuse').hide();
-        } else if ($('#form_consent_to_treatment option:selected').val() == "false") {
-            $('#grant').hide();
-            $('#refuse').show();
-        } else {
-            $('#grant').hide();
-            $('#refuse').hide();
-	}
-    }
-    $('#form_consent_to_treatment').change(function() {grantingConsent()});
-    grantingConsent();
 
 
 
     
     ////////////////////////////////////////////////////////////////////////////
-    // Placeholder fix for IE
+    // Placeholder attribute fix for IE
     jQuery.support.placeholder = false;
     test = document.createElement('input');
     if('placeholder' in test) jQuery.support.placeholder = true;

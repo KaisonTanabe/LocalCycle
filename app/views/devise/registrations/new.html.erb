@@ -5,20 +5,22 @@
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: "form-horizontal"}) do |f| %>
 
-    <legend>Educator Registration</legend>
+    <%= f.hidden_field :role, value: @role %>
+
+    <legend><%= @role.capitalize %> Registration</legend>
 
     <ol>
-      <li>Register as an educator below.</li>
-      <li>Check your email (for the address supplied below).</li>
-      <li>You will receive an email within 5 minutes prompting you to confirm and complete your registration.<br />
-	<em>If you do not receive an email, check your spam folder. If still missing, email <a href="mailto:support@finalforms.com?subject=Confirmation Email Never Received...">support@finalforms.com</a>.</em></li>
-      <li>You will then be signed in and able to submit your forms!</li>
+      <li>Register as a <%= @role %> below.</li>
+      <li>Check your email (at the address supplied below).</li>
+      <li>You will receive an email within 5 minutes prompting you to confirm and complete your profile.<br />
+	<em>If you do not receive an email, check your spam folder. If still missing, email <a href="mailto:<%= SUPPORT_EMAIL %>?subject=Confirmation Email Never Received..."><%= SUPPORT_EMAIL %></a>.</em></li>
+      <li>You will then be signed in and able to find agreements!</li>
     </ol>
 
     <hr />
 
     <%= render partial: 'partials/errors', locals: {obj: resource} %> 
-     
+
     <div class="control-group">
       <%= f.label :first_name, "Your Name: ", class: "req control-label" %>
       <div class="controls controls-row">
@@ -30,26 +32,17 @@
       <%= f.label :email, "Email Address: ", class: "req control-label" %>
       <div class="controls controls-row">
 	<%= f.email_field :email, placeholder: "user@example.com", class: "span4" %>
-	<span class="help-inline">If you believe you have already registered, please <strong><a href="/login">sign in</a></strong> or <strong><a href="/d/users/password/new">request a new password</a></strong>.</span>
       </div>
     </div>
 
-    <div class="control-group">
-      <%= f.label :pin, "Educator PIN: ", class: "req control-label" %>
-      <div class="controls controls-row">
-	<%= f.text_field :pin, class: "span4" %>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <%= f.label :phone, "Phone Number: ", class: "req control-label" %>
-      <div class="controls controls-row">
-	<%= f.text_field :phone, placeholder: "(123) 555-5555", class: "span4" %>
-      </div>
-    </div>
 
     <%= render partial: 'partials/submit', locals: {f: f, override: 'Register'} %>
+    
+    <hr />
+
+    <p style="text-align: center;"><em>If you believe you have already registered, please <strong><a href="/login">sign in</a></strong> or <strong><a href="/d/users/password/new">request a new password</a></strong>.</em></p>
+    <%#= render "devise/shared/links" %>
 
   <% end %>
-      
-  <%#= render "devise/shared/links" %>
+  </div>
+</div>      

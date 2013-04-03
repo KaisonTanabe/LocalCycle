@@ -1,6 +1,5 @@
 <%= form_for(@user, html: { multipart: true, class: "form-horizontal" }) do |f| %>
   
-    <legend></legend>
     <%= render partial: 'partials/errors', locals: {obj: @user} %>
         
     <div class="control-group">
@@ -18,12 +17,6 @@
       </div>
     </div>
 
-    <div class="control-group">
-      <%= f.label :pin, "Educator PIN: ", class: "req control-label" %>
-      <div class="controls controls-row">
-	<%= f.text_field :pin, class: "span4" %>
-      </div>
-    </div>
 
     <div class="control-group">
       <%= f.label :phone, "Phone Number: ", class: "req control-label" %>

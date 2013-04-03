@@ -12,6 +12,7 @@
     <%= csrf_meta_tags %>
     <%= yield(:head) %>
   <body class="<%= yield(:bodyclass) %>">
+    <div id="vignette"></div>
     <header class="navbar navbar-fixed-top">
       <nav class="navbar-inner">
         <div class="container">
@@ -34,7 +35,7 @@
 	  <p style="clear: both;"><br /></p>
 	  <p><br /></p>
 	  <hr />
-	  <p style="float: right; color: #999;">If you are experiencing any issues, please email <a style="color: #777;" href="mailto:support@finalforms.com">support@finalforms.com</a></p>
+	  <p style="float: right; color: #999;">If you are experiencing any issues, please email <a style="color: #777;" href="mailto:<%= SUPPORT_EMAIL %>"><%= SUPPORT_EMAIL %></a></p>
 	</footer>
       </div> <!--! end of .container -->
     </div> <!--! end of #main -->

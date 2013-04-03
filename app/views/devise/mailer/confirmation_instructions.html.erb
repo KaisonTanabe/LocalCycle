@@ -1,5 +1,5 @@
 <p>Welcome <%= @resource.first_name %> <%= @resource.last_name %>,</p>
 
-<p>Your profile has been created. Please <p><%= link_to 'Confirm your account email', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token, :subdomain => SUBDOMAIN) %></p> and complete your registration for FinalForms.</p>
+<p>Your profile has been created. Please <p><%= link_to 'Confirm your email address', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p> and complete your registration for LocalCycle.</p>
 
-<p><a href="http://www.finalforms.com">FinalForms</a></p>
+<p><%= link_to "LocalCycle", :root %></p>

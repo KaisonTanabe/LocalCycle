@@ -1,25 +1,16 @@
 <ul class="nav pull-right">
-    <li><%= link_to 'My Profile', edit_user_path(current_user) %></li>
-<% if current_user.educator? %>
-    <li><%= link_to 'My Forms', forms_path %></li>
-<% end %>
-
-<% if current_user.cm? %>
-    <li><%= link_to 'My Forms', forms_path(user: current_user.last_name) %></li>
-    <li><%= link_to 'Review Forms', forms_path %></li>
-<% end %>
-
-<% if current_user.admin? %>
-    <li><%= link_to 'My Forms', forms_path(user: current_user.last_name) %></li>
+  <li><%= link_to 'My Profile', edit_user_path(current_user) %></li>
+  
+  <% if current_user.admin? %>
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage <b class="caret"></b></a>
       <ul class="dropdown-menu">
-	<li><%= link_to "All Forms", forms_path %></li>
 	<li><%= link_to "All Users", users_path %></li>
       </ul>
     </li>
-<% end %>
-    <li><%= link_to 'Log Out', destroy_user_session_path(), method: "delete" %></li>
+  <% end %>
+
+  <li><%= link_to 'Log Out', destroy_user_session_path(), method: "delete" %></li>
 </ul>
 
 <%= yield :nav_bar %>

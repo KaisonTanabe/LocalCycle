@@ -1,0 +1,79 @@
+<%= form_for(@buyer_profile, html: { multipart: true, class: "form-horizontal" }) do |f| %>
+
+  <legend></legend>
+  <%= render partial: 'partials/errors', locals: {obj: @buyer_profile} %>
+
+  <p>Tell producers a little bit about your organization.</p>
+
+  <div class="control-group">
+    <%= f.label :name, "Organization Name: ", class: "req control-label" %>
+    <div class="controls controls-row">
+      <%= f.text_field :name, class: "span4" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :description, "Description: ", class: "req control-label" %>
+    <div class="controls controls-row">
+      <%= f.text_area :description, class: "span4", rows: "4" %>
+    </div>
+  </div>
+
+  <legend>Contact Information</legend>
+
+  <div class="control-group">
+    <%= f.label :phone, "Phone: ", class: "req control-label" %>
+    <div class="controls controls-row">
+      <%= f.text_field :phone, placeholder: "Ex. (603) 555-5555", class: "span4" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :street_address_1, "Delivery Address: ", class: "req control-label" %>
+    <div class="controls controls-row">
+      <%= f.text_field :street_address_1, placeholder: "Address 1", class: "span4" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :street_address_2, raw('&nbsp'), class: "control-label" %>
+    <div class="controls controls-row">
+      <%= f.text_field :street_address_2, placeholder: "Address 2", class: "span4" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :city, raw('&nbsp'), class: "req control-label" %>
+    <div class="controls controls-row">
+      <%= f.text_field :city, placeholder: "City", class: "span2" %>
+      <%= f.text_field :state, placeholder: "State", class: "span1" %>
+      <%= f.text_field :zip, placeholder: "Zip", class: "span1" %>
+    </div>
+  </div>
+
+  <legend>Promotional Information</legend>
+  <p>Help producers connect and learn more about you.</p>
+  <div class="control-group">
+    <%= f.label :website, "Website:", class: "control-label" %>
+    <div class="controls controls-row">
+      <%= f.text_field :website, placeholder: "http://www.organization.com", class: "span4" %>
+      <span class="inline-help">(optional)</span>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :twitter, "Twitter:", class: "control-label" %>
+    <div class="controls controls-row">
+      <%= f.text_field :twitter, placeholder: "https://www.twitter.com/organization", class: "span4" %>
+      <span class="inline-help">(optional)</span>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :facebook, "Facebook:", class: "control-label" %>
+    <div class="controls controls-row">
+      <%= f.text_field :facebook, placeholder: "https://www.facebook.com/organization", class: "span4" %>
+      <span class="inline-help">(optional)</span>
+    </div>
+  </div>
+  
+
+  <%= render partial: 'partials/submit', locals: {f: f, text: 'Profile'} %>
+
+<% end %>

@@ -6,24 +6,22 @@ class User < ActiveRecord::Base
   include Extensions::Authenticatable
 
   ## SETUP ASSOCIATIONS
-  has_many :forms, dependent: :destroy
-
   has_many :attachments, as: :attachable, dependent: :destroy
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
-  has_many :form_reviews, dependent: :destroy
-  has_many :reviewed_forms, through: :form_reviews
+  has_one :buyer_profile
+  has_one :producer_profile
+
 
   ## ATTRIBUTE PROTECTION
+  attr_accessible :first_name, :last_name, :email, :notes,
+    :attachments_attributes, :role
 
-  attr_accessible :first_name, :last_name, :email, :notes, :active,
-    :phone, :form_attributes, :attachments_attributes, :role, :pin
-
-  validates :first_name, :last_name, :email, :pin,   presence: true
-  validates :email, :pin,                            uniqueness: true
-  validates :role,                inclusion: {:in => ROLES.map{ |r| r.second}}
 
   ## ATTRIBUTE VALIDATION
+  validates :first_name, :last_name, :email,   presence: true
+  validates :email,                            uniqueness: true
+  validates :role,                inclusion: {:in => ROLES.map{ |r| r.first}}
 
 
   #########################################
@@ -52,7 +50,7 @@ class User < ActiveRecord::Base
   ############ CLASS METHODS ##############
 
   def self.csv_header
-    "First Name,Last Name,Email,Phone".split(',')
+    "First Name,Last Name,Email".split(',')
   end
 
   def self.build_from_csv(row) 
@@ -61,8 +59,7 @@ class User < ActiveRecord::Base
     user.attributes = {
       :first_name => row[0],
       :last_name => row[1],
-      :email => row[2],
-      :phone => row[3]
+      :email => row[2]
     }
     return user
   end 
@@ -78,11 +75,11 @@ class User < ActiveRecord::Base
   def admin?
     role == "admin"
   end
-  def cm?
-    role == "cm"
+  def buyer?
+    role == "buyer"
   end
-  def educator?
-    role == "educator"
+  def producer?
+    role == "producer"
   end
 
   def role_label
@@ -98,7 +95,7 @@ class User < ActiveRecord::Base
   end
 
   def to_csv
-    [first_name, last_name, email, phone]
+    [first_name, last_name, email]
   end
 
   # Returns the status of the student

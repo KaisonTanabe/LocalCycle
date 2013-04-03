@@ -6,33 +6,100 @@ require File.expand_path('../application', __FILE__)
 ####### THEMEABLE OVERRIDES #######
 ###################################
 
-SUBDOMAIN = "cflpdc"
 TEST_DATA = false
+DEFAULT_PER_PAGE = 50
+
+SUPPORT_EMAIL = "support@localcycle.org"
 
 ###################################
 ## DISPLAY
-ORGANIZATION_NAME = "FinalForms Demo High School"
-
-REPLY_TO_ADDRESS = ""
-
 ROLES = {
-  "Admin" => "admin",
-  "Committee Member" => "cm",
-  "Educator" => "educator"
+  "admin" => "Admin",
+  "buyer" => "Buyer",
+  "producer" => "Producer"
+}
+REGISTERABLE_ROLES = {
+  "buyer" => "Buyer",
+  "producer" => "Producer"
 }
 
-REVIEW_OPTIONS = {
-  "Please select..." => "pending",
-  "Approve" => "approve",
-  "Deny" => "deny",
+GROWING_METHODS = {
+  "responsible" => "Responsible",
+  "green" => "Green",
+  "organic" => "Organic",
+  "biodynamic" => "Biodynamic"
 }
 
-DEFAULT_PER_PAGE = 50
+PRODUCER_CERTIFICATIONS = {
+  "00" => "Animal Welfare Approved",
+  "01" => "Certified Humane",
+  "02" => "Food Alliance",
+  "03" => "HCAAP",
+  "04" => "USDA Gap Food Safety Certified",
+  "05" => "Beyond Organic",
+  "06" => "Certified Naturally Grown",
+  "07" => "The Farmer's Pledge",
+}
+LIVESTOCK_CERTIFICATIONS = {
+  "20" => "100% Grass Fed",
+  "21" => "Cage Free/Free Roaming/Crate Free ",
+  "22" => "Animal Welfare",
+  "23" => "Grass Fed, Grain Finished",
+  "24" => "Halal",
+  "25" => "Kosher",
+  "26" => "Nitrate Free",
+  "27" => "Pasture Raised",
+  "28" => "Vegetarian Fed",
+}
+EGG_CERTIFICATIONS = {
+  "40" => "Cage-Free Hens/Free Roaming Hens",
+  "41" => "Pasture Raised Hens",
+  "42" => "Vegetarian Fed",
+}
+DAIRY_CERTIFICATIONS = {
+  "50" => "Cheeses aged for 60+ days",
+  "51" => "Homogenized",
+}
+PANTRY_CERTIFICATIONS = {
+  "60" => "Certified Vegan",
+  "61" => "DOHMH Food Safety Certified",
+  "62" => "No artificial additives",
+  "63" => "USDA Approved Processing Plants",
+}
+
 
 GENDER = {
   "Male" => "male",
   "Female" => "female"
 }
+
+UNIT_TYPE = {
+  "lb" => "Pound",
+  "3lb" => "3 Pounds",
+  "5lb" => "5 Pounds",
+  "10lb" => "10 Pounds",
+  "15lb" => "15 Pounds",
+  "20lb" => "20 Pounds",
+  "25lb" => "25 Pounds",
+  "bunch" => "Bunch",
+  "bu" => "Bushel",
+  "(1/2bu)" => "Half Bushel",
+  "(4/5bu)" => "4/5 Bushel",
+  "case" => "Case",
+  "doz" => "Dozen",
+  "ea" => "Each",
+  "flat" => "Flat",
+  "gal" => "Gallon",
+  "(1/2gal)" => "Half Gallon",
+  "pack" => "Pack",
+  "piece" => "Piece",
+  "pt" => "Pint",
+  "(1/2pt)" => "Half Pint",
+  "wheel" => "Wheel",
+  "(1/2wheel)" => "Half Wheel",
+  "(1/4wheel)" => "Quarter Wheel"
+}
+
 ###################################
 
 
@@ -43,29 +110,8 @@ GENDER = {
 
 
 ###################################
-## FORMS
-FORM_TYPES = {
-  "101A-PreApproval College Coursework-Workshops Form" => "form101a",
-  "101B-Checklist for Internet-Computer Coursework" => "form101b",
-#  "101C-Evaluation of Activity-College Coursework or Workshop" => "form_101c",
-#  "102A-National Board Certification PreApproval" => "form_102a",
-#  "102B-National Board Certification Evaluation" => "form_102b",
-#  "103A-Professional Growth Options Proposal" => "form_103a",
-#  "103B-Professional Growth Options Evaluation" => "form_103b",
-#  "100A-Professional Development Plan Worksheet" => "form_100a",
-#  "100B-Employee Profile" => "form_100b",
-#  "100C-Individual Professioonal Development Plan" => "form_100c",
-#  "100C-1 Measurable Evidence Examples" => "form_100c1",
-#  "100D-Standards For Ohio Teachers" => "form_100d",
-#  "100E-Standards For Ohio Principals" => "form_100e",
-#  "100F-Professional Development Plan Review Form" => "form_100f",
-}
-###################################
-
-
-###################################
 ## EMAIL
-RESPONSIBLE_ADMINS = []
+ADDITIONAL_ADMINS = []
 ###################################
 
 

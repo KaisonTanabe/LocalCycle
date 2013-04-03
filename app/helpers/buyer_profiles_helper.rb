@@ -1,0 +1,2 @@
+module BuyerProfilesHelper
+end

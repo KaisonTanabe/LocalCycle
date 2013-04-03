@@ -10,7 +10,7 @@ LOCALCYCLE::Application.configure do
   config.paperclip_defaults = {
     storage: :s3,
     s3_credentials: {
-      bucket: SUBDOMAIN + "ff",
+      bucket: "localcycle",
       access_key_id: ENV["EC2_ACCESS_KEY"],
       secret_access_key: ENV["EC2_SECRET_KEY"]
     }

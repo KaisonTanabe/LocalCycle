@@ -1,8 +1,4 @@
 module ApplicationHelper
-  def student_signed_in?
-    AUTHENTICATABLE_STUDENTS ? super : false
-  end
-
 
   def sortable(column, title = nil, addition_params=nil)
     title ||= column.titleize
@@ -16,7 +12,7 @@ module ApplicationHelper
   end
 
 
-  # Form Helpers
+  # Form Helpers (coupled with JS) to add/remove has_many associated model forms
   def remove_child_link(name, f)
     link_to(name, "javascript:void(0)", :class => "remove_child")
   end
