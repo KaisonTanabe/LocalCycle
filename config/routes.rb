@@ -10,7 +10,7 @@ LOCALCYCLE::Application.routes.draw do
 
   resources :products
 
-  devise_for :users, path_names: { sign_in: 'login', sign_up: 'register' }, 
+  devise_for :users, path_prefix: "d", path_names: { sign_in: 'login', sign_up: 'register' }, 
     controllers: {confirmations: 'confirmations', sessions: 'sessions', registrations: 'registrations'}
 
   devise_scope :user do
