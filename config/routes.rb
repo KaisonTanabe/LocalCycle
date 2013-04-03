@@ -4,9 +4,9 @@ LOCALCYCLE::Application.routes.draw do
 
   resources :agreements
 
-  resources :buyer_profiles
+  resources :buyer_profiles, only: ["new","create"]
 
-  resources :producer_profiles
+  resources :producer_profiles, only: ["new","create"]
 
   resources :products
 

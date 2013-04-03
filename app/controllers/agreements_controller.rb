@@ -1,11 +1,9 @@
 class AgreementsController < ApplicationController
-  # GET /agreements
-  # GET /agreements.json
+  load_and_authorize_resource
+
   def index
     redirect_to new_buyer_profile_path and return if current_user.buyer? and !current_user.buyer_profile
     redirect_to new_producer_profile_path and return if current_user.producer? and !current_user.producer_profile
-
-    @agreements = Agreement.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,10 +11,7 @@ class AgreementsController < ApplicationController
     end
   end
 
-  # GET /agreements/1
-  # GET /agreements/1.json
   def show
-    @agreement = Agreement.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,10 +19,7 @@ class AgreementsController < ApplicationController
     end
   end
 
-  # GET /agreements/new
-  # GET /agreements/new.json
   def new
-    @agreement = Agreement.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,15 +27,10 @@ class AgreementsController < ApplicationController
     end
   end
 
-  # GET /agreements/1/edit
   def edit
-    @agreement = Agreement.find(params[:id])
   end
 
-  # POST /agreements
-  # POST /agreements.json
   def create
-    @agreement = Agreement.new(params[:agreement])
 
     respond_to do |format|
       if @agreement.save
@@ -56,10 +43,7 @@ class AgreementsController < ApplicationController
     end
   end
 
-  # PUT /agreements/1
-  # PUT /agreements/1.json
   def update
-    @agreement = Agreement.find(params[:id])
 
     respond_to do |format|
       if @agreement.update_attributes(params[:agreement])
@@ -72,10 +56,7 @@ class AgreementsController < ApplicationController
     end
   end
 
-  # DELETE /agreements/1
-  # DELETE /agreements/1.json
   def destroy
-    @agreement = Agreement.find(params[:id])
     @agreement.destroy
 
     respond_to do |format|

@@ -10,7 +10,10 @@ class ProducerProfile < ActiveRecord::Base
     :description, :website, :twitter, :facebook, :user_id
 
   ## ATTRIBUTE VALIDATION
-  #validates
+  validates :name, :phone,
+    :street_address_1, :city, :state, :country, :zip,
+    :description, :user_id,
+    presence: true
 
   #########################################
 

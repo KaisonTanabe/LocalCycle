@@ -7,13 +7,20 @@ class Ability
 
     if user and user.admin?
       can :manage, User
-      can :manage, Agreements
-      can :manage, Products
+      can :manage, Agreement
+      can :manage, Product
     end
 
     if user and user.buyer?
+      can :manage, Agreement
       can :manage, User, id: user.id
-      can :manage, BuyerProfile, user_id: user.buyer_profile.id
+      can :create, BuyerProfile
+    end
+
+    if user and user.producer?
+      can :manage, Agreement
+      can :manage, User, id: user.id
+      can :create, ProducerProfile
     end
 
   end
