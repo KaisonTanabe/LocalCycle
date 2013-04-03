@@ -114,6 +114,7 @@ UNIT_TYPE = {
 ###################################
 ## EMAIL
 ADDITIONAL_ADMINS = ["Macklin Chaffee <macklin@goldenorbventure.com>"]
+REPLY_TO_ADDRESS = ["LocalCycle Support <support@localcycle.org>"]
 ###################################
 
 
