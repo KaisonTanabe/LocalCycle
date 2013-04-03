@@ -151,14 +151,36 @@ body {
 }
 
 header.navbar {
-    a.brand {
-	margin-top: 3px;
-	width: 300px;
-	background: url(localcycle-logo.PNG) 0 0 no-repeat;
-	background-size: contain;
-	text-indent: 30px;
-	color: $fontColor;
-	font-family: 'savu';
+    h1 {
+	margin: 0;
+	padding: 0;
+	line-height: 15px;
+	a.brand {
+	    margin-top: 3px;
+	    width: 200px;
+	    padding: 13px 20px 7px;
+	    text-indent: 30px;
+	    color: $fontColor;
+	    font-family: 'savu';
+	    background: url(localcycle-logo.png) 0 0 no-repeat;
+	    background-size: contain;
+	    span {
+		font-size: 26px;
+	    }
+	    &:hover {
+		color: $lightColor;
+	    }
+	}
+    }
+    ul li a:hover {
+	background-color: #f0f0f0;
+	background-image: -moz-linear-gradient(top, white, #e2e2e2);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(white), to(#e2e2e2));
+	background-image: -webkit-linear-gradient(top, white, #e2e2e2);
+	background-image: -o-linear-gradient(top, white, #e2e2e2);
+	background-image: linear-gradient(to bottom, white, #e2e2e2);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFFFF', endColorstr='#FFE2E2E2', GradientType=0);
     }
 }
 
