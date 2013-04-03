@@ -1,6 +1,8 @@
-$lightColor: #38b549;
-$darkColor: #00ff23;
-$fontColor: #532f08;
+$linkColor: #38b549; /** lightgreen **/
+$linkHoverColor: #00ff23; /** green **/
+$fontColor: #532f08; /** brown **/
+$fontLightColor: #a67d51; /** lightbrown **/
+$secondaryColor: #fb8220; /** orange **/
 
 @font-face {
     font-family: 'savu';
@@ -45,17 +47,15 @@ $fontColor: #532f08;
 .centered {
     text-align: center;
 }
+
 .colorize {
     display: inline-block;
-    background-color: $lightColor;
+    background-color: $linkColor;
 }
-.primary-color {
-    color: $lightColor;
-}
-.primary-color-dark {
-    color: $darkColor;
-}
+.primary-color,
 .font-color {
     color: $fontColor;
 }
-
+.secondary-color {
+    color: $secondaryColor;
+}

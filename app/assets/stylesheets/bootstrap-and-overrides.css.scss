@@ -55,12 +55,12 @@ h6 {
 
 a { 
     text-decoration: none;
-    color: $lightColor;
+    color: $linkColor;
     -o-transition: all 0.2s ease-out;
     -moz-transition: all 0.2s ease-out;
     -webkit-transition: all 0.2s ease-out;
 
-    &:hover { color: $darkColor; }
+    &:hover { color: $linkHoverColor; }
     &:focus { outline: none; }
     &:hover, &:active { outline: 0; }
     .caret {
@@ -168,7 +168,7 @@ header.navbar {
 		font-size: 26px;
 	    }
 	    &:hover {
-		color: $lightColor;
+		color: $linkHoverColor;
 	    }
 	}
     }
@@ -184,10 +184,61 @@ header.navbar {
     }
 }
 
+#sectionNav {
+    height: 110px;
+    h3 {
+	width: 31%;
+	text-align: center;
+	float: left;
+	border-radius: 12px;
+	height: 80px;
+	margin: 10px 1% 20px;
+	position: relative;
+	border: 1px solid rgba(255,255,255,1);
+	background: rgba(255,255,255,0.5);
+	-o-transition: all 0.2s ease-out;
+	-moz-transition: all 0.2s ease-out;
+	-webkit-transition: all 0.2s ease-out;
+
+	&.active,
+	&:hover {
+	    border: 1px solid rgba(200,200,200,0.75);
+	    background: rgba(255,255,255,0.75);
+	    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+	}
+	img.it {
+	    position: absolute;
+	    top: -10px;
+	    left: 0px;
+	    width: 80px;
+	}
+	a {
+	    position: relative;
+	    z-index: 9;
+	    line-height: 1.4em;
+	    text-shadow: 1px 1px 25px #fff;
+	    margin: 10px 0 0 45px;
+	    display: block;
+	    color: $secondaryColor;
+	    &:hover {
+		text-decoration: none;
+	    }
+	}
+        &.mgnt a {
+	    margin: 27px 0 0 55px;
+	}
+        &.caln a {
+	    margin-left: 65px;
+	}
+	&.caln img {margin-left: -5px;}
+	&.mrkt img {margin-left: 5px;}
+    }
+}
 
 
-#main {
+#content {
     padding: 20px 0 40px;
+    min-height: 400px;
 }
 
 #debug {
@@ -207,7 +258,7 @@ header.navbar {
 	text-align: center; margin-top: 10px; 
 	input[type="submit"] { font-weight: bold; }
     }
-    #response {text-align: center; color: $lightColor;}
+    #response {text-align: center; color: $linkColor;}
     label { display: none; }
     h5, h6 {text-align: center;}
     h1 {margin-right: -20px;}
