@@ -13,6 +13,11 @@ SUPPORT_EMAIL = "support@localcycle.org"
 
 ###################################
 ## DISPLAY
+GENDER = {
+  "Male" => "male",
+  "Female" => "female"
+}
+
 ROLES = {
   "admin" => "Admin",
   "buyer" => "Buyer",
@@ -22,6 +27,7 @@ REGISTERABLE_ROLES = {
   "buyer" => "Buyer",
   "producer" => "Producer"
 }
+
 
 GROWING_METHODS = {
   "responsible" => "Responsible",
@@ -68,10 +74,6 @@ PANTRY_CERTIFICATIONS = {
 }
 
 
-GENDER = {
-  "Male" => "male",
-  "Female" => "female"
-}
 
 UNIT_TYPE = {
   "lb" => "Pound",
@@ -111,7 +113,7 @@ UNIT_TYPE = {
 
 ###################################
 ## EMAIL
-ADDITIONAL_ADMINS = []
+ADDITIONAL_ADMINS = ["Macklin Chaffee <macklin@goldenorbventure.com>"]
 ###################################
 
 

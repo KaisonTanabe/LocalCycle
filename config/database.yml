@@ -1,16 +1,16 @@
 common: &common
   adapter: postgresql
-  username: macklin
-  password: Boards05
+  username: <%= ENV['PG_USER'] %>
+  password: <%= ENV['PG_PASSWORD'] %>
 
 development:
   <<: *common
-  database: ff_dev
+  database: lc_dev
 
 test:
   <<: *common
-  database: ff_test
+  database: lc_test
 
 production:
   <<: *common
-  database: ff_production
+  database: lc_production
