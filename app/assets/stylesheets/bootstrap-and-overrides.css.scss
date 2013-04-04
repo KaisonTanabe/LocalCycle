@@ -292,27 +292,42 @@ footer {
    ========================================================================== */
 .public {
     padding-top: 20px;
-    form { 
-	text-align: center; margin-top: 10px; 
-	input[type="submit"] { font-weight: bold; }
-    }
-    #navigation {
-	padding-top: 42px;
-	ul li {
-	    padding-left: 5%;
-	    a {
-		font-size: 20px;
-		color: $fontColor;
-		font-family: savu;
-		&:hover {
-		    color: $fontLightColor;
+    header {
+	h1 span {font-size: 40px;}
+	#navigation {
+	    padding-top: 42px;
+	    margin-left: -6%;
+	    ul li {
+		padding-left: 6%;
+		a {
+		    font-size: 20px;
+		    color: $fontColor;
+		    font-family: savu;
+		    &:hover {
+			color: $fontLightColor;
+		    }
 		}
 	    }
 	}
     }
-    #response {text-align: center; color: $linkColor;}
-    h1 span {font-size: 40px;}
-    small {margin: -15px 0 0 220px; color: #aaa;}
+
+    #content {
+	background: url(col-divider.png) 48% 0 no-repeat;
+	form {
+	    text-align: center;
+	    input[type="submit"] { font-weight: bold; }
+	}
+	#tagline {
+	    line-height: 1.8em;
+	}
+	h6 {
+	    text-align: center;
+	}
+	#response {text-align: center; color: $linkColor;}
+	
+	small {margin: -15px 0 0 220px; color: #aaa;}
+    }
+
     footer {
 	position: relative;
 	padding: 20px 0;
