@@ -12,8 +12,31 @@
     <%= csrf_meta_tags %>
     <%= yield(:head) %>
   <body class="public">
-    <div id="vignette"></div>
-    <header id="header"></header>
+    <!--div id="vignette"></div-->
+    <header id="header">
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+	    <h1>
+	      <a href="/">
+		<img src="assets/localcycle-logo.png" alt="LocalCycle" /> 
+		<span>L</span>ocal<span>C</span>ycle
+	      </a>
+	    </h1>
+	  </div>
+	  <div class="span6">
+	    <nav id="navigation" class="inline">
+	      <ul>
+		<li><a href="/">Home</a></li>
+		<li><a href="/contact">Contact</a></li>
+		<li><a href="/about">About</a></li>
+		<li><a href="/faq">FAQ</a></li>
+	      </ul>
+	    </nav>
+	  </div>
+	</div>
+      </div>
+    </header>
     <div id="content" role="main">
       <div class="container">
         <div class="row">
@@ -24,5 +47,29 @@
         </div>
       </div>
     </div>
+    <footer id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="span4">
+	    <p id="copyright"><img src="assets/localcycle-logo.png" alt="LocalCycle Logo" /><br />LocalCycle, LLC.<br />
+	      &copy; Copyright 2013. All Rights Reserved.</p>
+	  </div>
+	  <div class="span8">
+	    <nav id="footerNav" class="inline">
+	      <ul>
+		<li><a href="/">Home</a></li>
+		<li><a href="/contact">Contact</a></li>
+		<li><a href="/about">About</a></li>
+		<li><a href="/faq">FAQ</a></li>
+		<li><a href="#">|</a></li>
+		<li><a href="/register?role=buyer">Buyer</a></li>
+		<li><a href="#">Food Hub</a></li>
+		<li><a href="/register?role=producer">Producer</a></li>	      
+	      </ul>
+	    </nav>
+	  </div>
+	</div>
+      </div>
+    </footer>
   </body>
 </html>

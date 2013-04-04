@@ -40,15 +40,26 @@ hr { box-shadow: 0 1px 1px #dfd3c7; }
 
 legend { border-bottom: 1px solid #9d8974; font-family: 'savu'; color: $fontColor; }
 
+nav ul, nav ol { list-style: none; list-style-image: none; margin: 0; padding: 0; }
+nav.inline li { display: block; float: left;}
+
 /* General Site Headings */
 h1, h2, h3, h4, h5, h6 {
     font-family: "savu", "Helvetica Neue", Arial, Helvetica, sans-serif;
     color: $fontColor;
+    font-weight: normal;
+    a {
+	color: inherit;
+	text-decoration: none;
+	&:hover {
+	    text-decoration: none;
+	}
+    }
 }
 h1 { 
     margin-top: 0;
-    font-size: 26px;
-    #ecard-list { font-size: 20px; }
+    font-size: 32px;
+    color: $fontColor;
 }
 h6 {
     text-transform: uppercase;
@@ -223,9 +234,6 @@ header.navbar {
 	    margin: 10px 0 0 45px;
 	    display: block;
 	    color: $secondaryColor;
-	    &:hover {
-		text-decoration: none;
-	    }
 	}
         &.mgnt a {
 	    margin: 27px 0 0 55px;
@@ -258,12 +266,22 @@ footer {
     background: #023008 url(body-bg.png);
     border-top: 3px solid #001f03;
     width: 100%;
+    text-shadow: 0 -1px 1px #000;
     p { 
 	float: right;
 	color: #67836b;
-	text-shadow: 0 -1px 1px #000;
 	a {
 	    color: #91b897;
+	}
+    }
+    #copyright {
+	float: left;
+	min-width: 350px;
+	img {
+	    float: left;
+	    margin: 0 15px 5px 0;
+	    width: 80px;
+	    opacity: 0.7;
 	}
     }
 }
@@ -273,7 +291,64 @@ footer {
    Pages
    ========================================================================== */
 .public {
-    table { border: 0; background: none; margin: 20px auto 0; text-align: center;}
+    padding-top: 20px;
+    form { 
+	text-align: center; margin-top: 10px; 
+	input[type="submit"] { font-weight: bold; }
+    }
+    #navigation {
+	padding-top: 42px;
+	ul li {
+	    padding-left: 5%;
+	    a {
+		font-size: 20px;
+		color: $fontColor;
+		font-family: savu;
+		&:hover {
+		    color: $fontLightColor;
+		}
+	    }
+	}
+    }
+    #response {text-align: center; color: $linkColor;}
+    h1 span {font-size: 40px;}
+    small {margin: -15px 0 0 220px; color: #aaa;}
+    footer {
+	position: relative;
+	padding: 20px 0;
+	height: auto;
+	#footerNav {
+	    padding-top: 1.6em;
+	    float: right;
+	    min-width: 450px;
+	    ul {
+		li {
+		    padding-left: 4%;
+		    a {
+			color: #67836b;
+			&:hover {
+			    color: #67836b + 50;
+			}
+		    }
+		}
+	    }
+	}
+    }
+}
+
+@media (max-width: 979px) and (min-width: 768px) {
+    .public header {
+	h1 {
+	    font-size: 26px;
+	}
+	#navigation ul li a {
+	    font-size: 16px;
+	}
+    }
+}
+
+
+.placeholder {
     form { 
 	text-align: center; margin-top: 10px; 
 	input[type="submit"] { font-weight: bold; }
@@ -282,11 +357,12 @@ footer {
     label { display: none; }
     h5, h6 {text-align: center;}
     h1 {margin-top: 20px;text-align: center;}
-    h1 span {font-size: 50px;}
+    h1 span {font-size: 40px;}
     small {margin: -15px 0 0 220px; color: #aaa;}
 }
+
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-    .public h5, .public h6 {font-weight: normal; font-family: "Helvetica Neue", Arial, Helvetica, sans-serif; }
+    .placeholder h5, .placeholder h6 {font-weight: normal; font-family: "Helvetica Neue", Arial, Helvetica, sans-serif; }
 }
 
 
