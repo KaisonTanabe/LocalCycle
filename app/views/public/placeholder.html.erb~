@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="panel">
+
+    <h1><img src="assets/localcycle-logo.png" alt="LocalCycle" style="margin-top: -20px;" /> <span>L</span>ocal<span>C</span>ycle</h1>
+
+    <hr />
+
+    <h5>Connecting local producers with wholesale buyers</h5>
+    <h5>We enable producers and buyers to see and act upon future demand and supply through production agreements.</h5>
+
+    <hr />
+
+    <h6>Sign up below to get in early.</h6>
+
+    <p id="response"></p>
+
+    <%= form_for("lead", url: leads_path,  html: {class: "form-horizontal", action: "post", remote: true}) do |f| %>
+      <div class="input-append">
+	<%= f.email_field :email, placeholder: "Enter your email..." %>
+	<%= f.submit "Notify me", class: "btn-success btn" %>
+      </div>
+      <small>...but don't spam me</small>
+    <% end %>
+      
+  </div>
+</div>
