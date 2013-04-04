@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" style="min-height: 350px;">
   <div class="span6">
     <h6>Sign up to get in early.</h6>
 
@@ -19,5 +19,16 @@
       <span style="color: #f47f20;">wholesale buyers</span>
     </h2>
     <p style=" font-size: 16px;"><span style="font-weight: bold;" title="Click a button below">Sign Up</span> to discover and create local production agreements.</p>
+  </div>
+</div>
+<div class="row">
+  <div class="span4">
+    <h3><%= link_to raw("<img src='/assets/icon-buyer.png' /><br />Buyers"), new_user_registration_path(role: "buyer"), {class: "tout buyer"} %></h3>
+  </div>
+  <div class="span4">
+    <h3><%= link_to raw("<img src='/assets/icon-food-hub.png' /><br />Food Hub"), new_user_registration_path(role: "foodhub"), {class: "tout food-hub"} %></h3>
+  </div>
+  <div class="span4">
+    <h3><%= link_to raw("<img src='/assets/icon-producer.png' /><br />Producers"), new_user_registration_path(role: "producer"), {class: "tout producer"} %></h3>
   </div>
 </div>

@@ -23,7 +23,7 @@
     </header>
     <div id="content" role="main">
       <div class="container">
-        <%= render 'layouts/sectionNav' if user_signed_in? %>
+        <%= render 'layouts/sectionNav' if (user_signed_in? and current_user.has_profile?) %>
         <div class="row">
           <div class="span12">
             <%= render 'layouts/messages' %>

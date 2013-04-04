@@ -61,6 +61,11 @@ h1 {
     font-size: 32px;
     color: $fontColor;
 }
+h2 { 
+    margin-top: 0;
+    font-size: 28px;
+    color: $fontColor;
+}
 h6 {
     text-transform: uppercase;
     color: #999;
@@ -138,7 +143,7 @@ table {
    ========================================================================== */
 
 body {
-    padding-top: 40px;
+    padding: 40px 0;
     min-width: 360px;
     background: url("body-bg.jpg") 0 0 repeat scroll;
 }
@@ -291,7 +296,7 @@ footer {
    Pages
    ========================================================================== */
 .public {
-    padding-top: 20px;
+    padding: 20px 0 0;
     header {
 	h1 span {font-size: 40px;}
 	#navigation {
@@ -326,8 +331,27 @@ footer {
 	#response {text-align: center; color: $linkColor;}
 	
 	small {margin: -15px 0 0 220px; color: #aaa;}
+	h3 a.tout {
+	    display: block;
+	    text-align: center;
+	    font-size: 28px;
+	    border-radius: 10px;
+	    padding: 20px 0;
+	    background: #fff;
+	    border: 1px solid #e0dad3;
+	    img { 
+		padding-bottom: 10px; height: 100px;
+	    }
+	    &.buyer { color: $secondaryColor; }
+	    &.food-hub { color: $tertiaryColor; }
+	    &.producer { color: $linkColor; }
+	    &:hover {
+		background: #ffffef;
+		border: 1px solid #e0dad3;
+	    }
+	}
     }
-
+    
     footer {
 	position: relative;
 	padding: 20px 0;
@@ -351,19 +375,10 @@ footer {
     }
 }
 
-@media (max-width: 979px) and (min-width: 768px) {
-    .public header {
-	h1 {
-	    font-size: 26px;
-	}
-	#navigation ul li a {
-	    font-size: 16px;
-	}
-    }
-}
 
 
 .placeholder {
+    padding: 20px 0 0;
     form { 
 	text-align: center; margin-top: 10px; 
 	input[type="submit"] { font-weight: bold; }
@@ -486,6 +501,22 @@ input, select, textarea, .checkbox, .radio {
    Modify as content requires.
    ========================================================================== */
 
+@media (min-width: 979px) and (max-width: 1199px) {
+    #sectionNav h3 a {
+	font-size: 18px;
+	margin-top: 20px;
+    }
+}
+@media (max-width: 979px) and (min-width: 768px) {
+    .public header {
+	h1 {
+	    font-size: 26px;
+	}
+	#navigation ul li a {
+	    font-size: 16px;
+	}
+    }
+}
 @media only screen and (max-width: 767px) {
     tr.visible-phone {
 	display: table-row !important;

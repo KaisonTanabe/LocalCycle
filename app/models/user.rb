@@ -78,8 +78,15 @@ class User < ActiveRecord::Base
   def buyer?
     role == "buyer"
   end
+  def foodhub?
+    role == "foodhub"
+  end
   def producer?
     role == "producer"
+  end
+
+  def has_profile?
+    (buyer? and buyer_profile) or (producer? and producer_profile)
   end
 
   def role_label
