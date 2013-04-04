@@ -319,14 +319,13 @@ footer {
     #content {
 	background: url(col-divider.png) 48% 0 no-repeat;
 	form {
-	    text-align: center;
+	    width: 320px;
+	    margin: 60px auto 0;
 	    input[type="submit"] { font-weight: bold; }
+	    h6 { text-align: center;}
 	}
 	#tagline {
 	    line-height: 1.8em;
-	}
-	h6 {
-	    text-align: center;
 	}
 	#response {text-align: center; color: $linkColor;}
 	

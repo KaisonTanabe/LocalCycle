@@ -1,10 +1,9 @@
 <div class="row" style="min-height: 350px;">
   <div class="span6">
-    <h6>Sign up to get in early.</h6>
-
-    <p id="response"></p>
 
     <%= form_for("lead", url: leads_path,  html: {class: "form-horizontal", action: "post", remote: true}) do |f| %>
+      <h6>Sign up to get in early.</h6>
+      <p id="response"></p>
       <div class="input-append">
 	<%= f.email_field :email, placeholder: "Enter your email..." %>
 	<%= f.submit "Notify me", class: "btn-success btn" %>
