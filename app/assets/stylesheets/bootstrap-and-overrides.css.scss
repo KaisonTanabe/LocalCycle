@@ -30,7 +30,11 @@
    Extra Defaults
    ========================================================================== */
 
-body {color: $fontColor;}
+body {
+    color: $fontColor;
+    font-size: 13px;
+    text-shadow: 0 1px #fff;
+}
 
 hr { box-shadow: 0 1px 1px #dfd3c7; }
 
@@ -125,9 +129,7 @@ table {
 body {
     padding-top: 40px;
     min-width: 360px;
-    background: url("body-bg.JPG") 0 0 repeat scroll;
-    font-size: 13px;
-    text-shadow: 0 1px 1px #fff;
+    background: url("body-bg.jpg") 0 0 repeat scroll;
 }
 
 #vignette {
@@ -191,6 +193,7 @@ header.navbar {
 	text-align: center;
 	float: left;
 	border-radius: 12px;
+	font-weight: normal;
 	height: 80px;
 	margin: 10px 1% 20px;
 	position: relative;
@@ -247,6 +250,23 @@ header.navbar {
     padding: 20px;
 }
 
+footer {
+    position: fixed;
+    bottom: 0;
+    height: 20px;
+    padding: 10px 0;
+    background: #023008 url(body-bg.png);
+    border-top: 3px solid #001f03;
+    width: 100%;
+    p { 
+	float: right;
+	color: #67836b;
+	text-shadow: 0 -1px 1px #000;
+	a {
+	    color: #91b897;
+	}
+    }
+}
 
 
 /* =============================================================================
@@ -261,7 +281,7 @@ header.navbar {
     #response {text-align: center; color: $linkColor;}
     label { display: none; }
     h5, h6 {text-align: center;}
-    h1 {margin-right: -20px;}
+    h1 {margin-top: 20px;text-align: center;}
     h1 span {font-size: 50px;}
     small {margin: -15px 0 0 220px; color: #aaa;}
 }

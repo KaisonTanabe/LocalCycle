@@ -23,21 +23,24 @@
     </header>
     <div id="content" role="main">
       <div class="container">
-        <%= render 'layouts/sectionNav' %>
+        <%= render 'layouts/sectionNav' if user_signed_in? %>
         <div class="row">
           <div class="span12">
             <%= render 'layouts/messages' %>
             <%= yield %>
           </div>
         </div>
-	<footer id="footer">
-	  <p style="clear: both;"><br /></p>
-	  <p><br /></p>
-	  <hr />
-	  <p style="float: right; color: #999;">If you are experiencing any issues, please email <a style="color: #777;" href="mailto:<%= SUPPORT_EMAIL %>"><%= SUPPORT_EMAIL %></a></p>
-	</footer>
       </div> <!--! end of .container -->
     </div> <!--! end of #main -->
+    <footer id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+	    <p>If you are experiencing any issues, please email <a href="mailto:<%= SUPPORT_EMAIL %>"><%= SUPPORT_EMAIL %></a></p>
+	  </div>
+	</div>
+      </div>
+    </footer>
 
   </body>
 </html>
