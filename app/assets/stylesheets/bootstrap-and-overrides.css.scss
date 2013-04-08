@@ -33,12 +33,12 @@
 body {
     color: $fontColor;
     font-size: 13px;
-    text-shadow: 0 1px #fff;
+    text-shadow: 1px 1px 0 #fff;
 }
 
 hr { box-shadow: 0 1px 1px #dfd3c7; }
 
-legend { border-bottom: 1px solid #9d8974; font-family: 'savu'; color: $fontColor; }
+legend { border-bottom: 1px solid #9d8974; font-family: 'savu'; color: $secondaryColor; }
 
 nav ul, nav ol { list-style: none; list-style-image: none; margin: 0; padding: 0; }
 nav.inline li { display: block; float: left;}
@@ -315,7 +315,6 @@ footer {
 	    }
 	}
     }
-
     #content {
 	background: url(col-divider.png) 48% 0 no-repeat;
 	form {
@@ -323,6 +322,8 @@ footer {
 	    margin: 60px auto 0;
 	    input[type="submit"] { font-weight: bold; }
 	    h6 { text-align: center;}
+	    .controls { margin-left: 100px; }
+	    label { width: 80px; }
 	}
 	#tagline {
 	    line-height: 1.8em;

@@ -9,7 +9,7 @@ class Category < ActiveRecord::Base
 
   ## ATTRIBUTE PROTECTION
 
-  attr_accessible :description, :name, :parent_id
+  attr_accessible :description, :name, :parent_id, :fakeid
 
 
   ## ATTRIBUTE VALIDATION
@@ -47,6 +47,34 @@ class Category < ActiveRecord::Base
 
 
   ############ CLASS METHODS ##############
+
+  # Initialize tree creation
+  def self.createTreeFromJSON(tree)
+    top_level = ["","Meat","Dairy & Soy","Eggs","Fruit","Vegetables","Pantry","Baked Goods","Sea Food"]
+    tree.each do |k,v|
+      puts "Creating Categories and Products"
+      if k.to_i <= 8
+        cat = Category.create(name: top_level[k.to_i], fakeid: k.to_i)
+        createChildren(cat,v)
+      else 
+        cat = Category.where(fakeid: k.to_i).first
+        puts "Category parent not found for: " + v if cat.nil?
+        createProducts(cat,v) if !cat.nil?
+      end
+    end
+  end
+
+  def self.createChildren(parent, children)
+    children.each do |child|
+      parent.children << Category.create(name: child["name"].titleize, fakeid: child["fakeid"])
+    end
+  end
+
+  def self.createProducts(parent, products)
+    products.each do |product|
+      Product.create(name: product["name"].titleize, category_id: parent.id)
+    end
+  end
 
   # Initialize tree creation
   def self.createTree(n)

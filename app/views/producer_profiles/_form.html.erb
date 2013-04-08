@@ -1,9 +1,3 @@
-<%= form_for(@producer_profile, html: { multipart: true, class: "form-horizontal" }) do |f| %>
-
-  <legend></legend>
-  <%= render partial: 'partials/errors', locals: {obj: @producer_profile} %>
-
-  <p>Tell potential buyers a little bit about your farm/business.</p>
 
   <div class="control-group">
     <%= f.label :name, "Organization Name: ", class: "req control-label" %>
@@ -76,7 +70,4 @@
   <legend>Growing Methods</legend>
   <p>Help potential buyers connect and learn more about you.</p>
   
-
-  <%= render partial: 'partials/submit', locals: {f: f, text: 'Profile'} %>
-
-<% end %>
+  <%= render partial: "producer_profiles/certifications", locals: {f: f} %>

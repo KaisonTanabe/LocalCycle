@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20130401042207) do
     t.string   "name"
     t.text     "description"
     t.integer  "parent_id"
+    t.integer  "fakeid"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end

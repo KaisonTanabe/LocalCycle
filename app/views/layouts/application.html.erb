@@ -12,7 +12,6 @@
     <%= csrf_meta_tags %>
     <%= yield(:head) %>
   <body class="<%= yield(:bodyclass) %>">
-    <div id="vignette"></div>
     <header id="header" class="navbar navbar-fixed-top">
       <nav class="navbar-inner">
         <div class="container">
@@ -23,10 +22,10 @@
     </header>
     <div id="content" role="main">
       <div class="container">
+        <%= render 'layouts/messages' %>
         <%= render 'layouts/sectionNav' if (user_signed_in? and current_user.has_profile?) %>
         <div class="row">
           <div class="span12">
-            <%= render 'layouts/messages' %>
             <%= yield %>
           </div>
         </div>

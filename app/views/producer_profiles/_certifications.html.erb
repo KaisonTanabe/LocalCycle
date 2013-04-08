@@ -1,0 +1,8 @@
+  <div class="control-group">
+    <%= f.label :growing_methods, "Describe Your Farm:", class: "control-label" %>
+    <div class="controls controls-row">
+      <%= f.select :growing_methods, [["-- Please Select --", "none"]] + GROWING_METHODS.map {|k,v| [v,k]}, class: "span4" %>
+    </div>
+  </div>
+
+  

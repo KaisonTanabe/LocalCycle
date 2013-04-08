@@ -1,8 +1,17 @@
 <div class="row">
   <div class="panel wide">
-    <h1>Complete Your Producer Profile</h1>
+    <h3>Complete Your Producer Profile</h3>
     
-    <%= render 'form' %>
+    <%= form_for(@producer_profile, html: { multipart: true, class: "form-horizontal" }) do |f| %>
+
+      <legend></legend>
+      <%= render partial: 'partials/errors', locals: {obj: @producer_profile} %>
+    
+      <p>Tell potential buyers a little bit about your farm/business.</p>
+      <%= render partial: 'form', locals: {f: f} %>
+      <%= render partial: 'partials/submit', locals: {f: f, text: 'Profile'} %>
+    
+    <% end %>
 
   </div>
 </div>

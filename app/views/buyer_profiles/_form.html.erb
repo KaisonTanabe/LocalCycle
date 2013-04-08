@@ -1,9 +1,3 @@
-<%= form_for(@buyer_profile, html: { multipart: true, class: "form-horizontal" }) do |f| %>
-
-  <legend></legend>
-  <%= render partial: 'partials/errors', locals: {obj: @buyer_profile} %>
-
-  <p>Tell producers a little bit about your organization.</p>
 
   <div class="control-group">
     <%= f.label :name, "Organization Name: ", class: "req control-label" %>
@@ -72,8 +66,3 @@
       <span class="inline-help">(optional)</span>
     </div>
   </div>
-  
-
-  <%= render partial: 'partials/submit', locals: {f: f, text: 'Profile'} %>
-
-<% end %>

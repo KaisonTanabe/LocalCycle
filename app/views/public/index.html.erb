@@ -1,6 +1,28 @@
 <div class="row" style="min-height: 350px;">
   <div class="span6">
 
+    <%= form_for("user", url: user_session_path, html: {class: "form-horizontal"}) do |f| %>
+
+      <h2>User Sign In</h2>
+      
+      <div class="control-group">
+	<%= f.label :email, "Email:", class: "control-label" %>
+	<div class="controls"><%= f.email_field :email, placeholder: "user@example.com", autofocus: true %></div>
+      </div>
+      
+      <div class="control-group">
+	<%= f.label :password, "Password:", class: "control-label" %>
+	<div class="controls"><%= f.password_field :password %></div>
+      </div>
+      
+      <div class="control-group">
+	<div class="controls">
+	  <%= f.submit "Sign in", disable_data_with: "Signing in...", class: "btn btn-success" %> &nbsp;
+	  <label tabindex="2" class="checkbox" style="display: inline-block;width: 100px;"><%= f.check_box :remember_me %> Remember Me</label>
+	</div>
+      </div>
+    <% end %>
+<!--
     <%= form_for("lead", url: leads_path,  html: {class: "form-horizontal", action: "post", remote: true}) do |f| %>
       <h6>Sign up to get in early.</h6>
       <p id="response"></p>
@@ -10,6 +32,7 @@
       </div>
       <small>...but don't spam me</small>
     <% end %>
+-->
   </div>
   <div class="span6">
     <h2 id="tagline">

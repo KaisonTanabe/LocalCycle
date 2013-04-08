@@ -1,47 +1,56 @@
 <%= form_for(@user, html: { multipart: true, class: "form-horizontal" }) do |f| %>
   
-    <%= render partial: 'partials/errors', locals: {obj: @user} %>
+  <legend></legend>
+  <%= render partial: 'partials/errors', locals: {obj: @user} %>
         
-    <div class="control-group">
-      <%= f.label :first_name, "Name: ", class: "req control-label" %>
-      <div class="controls controls-row">
-	<%= f.text_field :first_name, placeholder: "First", class: "span2" %>
-	<%= f.text_field :last_name, placeholder: "Last", class: "span2" %>
-      </div>
+  <div class="control-group">
+    <%= f.label :first_name, "Name: ", class: "req control-label" %>
+    <div class="controls controls-row">
+      <%= f.text_field :first_name, placeholder: "First", class: "span2" %>
+      <%= f.text_field :last_name, placeholder: "Last", class: "span2" %>
     </div>
-    <div class="control-group">
-      <%= f.label :email, "Email Address: ", class: "req control-label" %>
-      <div class="controls controls-row">
-	<%= f.email_field :email, placeholder: "user@example.com", class: "span4" %>
-	<% if !@user.new_record? %><span class="help-block">You will be logged out and prompted to confirm email if changed.</span><% end %>
-      </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :email, "Email Address: ", class: "req control-label" %>
+    <div class="controls controls-row">
+      <%= f.email_field :email, placeholder: "user@example.com", class: "span4" %>
+      <% if !@user.new_record? %><span class="help-block">You will be logged out and prompted to confirm email if changed.</span><% end %>
     </div>
-
-
-    <div class="control-group">
-      <%= f.label :phone, "Phone Number: ", class: "req control-label" %>
-      <div class="controls controls-row">
-	<%= f.text_field :phone, placeholder: "(123) 555-5555", class: "span4" %>
-      </div>
+  </div>
+  
+  <% if current_user.admin? %>
+  <div class="control-group">
+    <%= f.label :pin, "Role: ", class: "req control-label" %>
+    <div class="controls controls-row">
+      <%= f.select :role, ROLES, class: "span4" %>
     </div>
-
-    <% if current_user.admin? %>
-      <div class="control-group">
-	<%= f.label :pin, "Role: ", class: "req control-label" %>
-	<div class="controls controls-row">
-	  <%= f.select :role, ROLES, class: "span4" %>
-	</div>
-      </div>
-
-      <div class="control-group">
-	<%= f.label :notes, "Notes: ", class: "req control-label" %>
-	<div class="controls controls-row"><%= f.text_area :notes, rows: 4, class: "span4" %>
-	  <span class="help-block">Scratch space for other information linked to this user.</span>
-	</div>
-      </div>
-    <% end %>
-
-    <%= render partial: 'partials/submit', locals: {f: f, text: 'User'} %>
-
+  </div>
+  
+  <div class="control-group">
+    <%= f.label :notes, "Notes: ", class: "req control-label" %>
+    <div class="controls controls-row"><%= f.text_area :notes, rows: 4, class: "span4" %>
+      <span class="help-block">Scratch space for other information linked to this user.</span>
+    </div>
+  </div>
   <% end %>
 
+  <p><br /></p>
+
+  <% if @user.buyer? %>
+    <h2>Buyer Profile</h2>
+    <legend></legend>
+    <%= fields_for @user.buyer_profile do |fb| %>
+      <%= render partial: 'buyer_profiles/form', locals: {f: fb} %>
+    <% end %>
+  <% end %>
+  <% if @user.producer? %>
+    <h2>Producer Profile</h2>
+    <legend></legend>
+    <%= fields_for @user.producer_profile do |fp| %>
+      <%= render partial: 'producer_profiles/form', locals: {f: fp} %>
+    <% end %>
+  <% end %>
+  
+  <%= render partial: 'partials/submit', locals: {f: f, text: 'User'} %>
+
+<% end %>
