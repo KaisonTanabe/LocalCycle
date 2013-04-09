@@ -31,6 +31,7 @@ class CreateProducerProfiles < ActiveRecord::Migration
 
       t.timestamps
     end
+
     add_index :producer_profiles, :user_id
   end
 end

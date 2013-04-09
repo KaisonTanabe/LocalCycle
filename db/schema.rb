@@ -166,10 +166,6 @@ ActiveRecord::Schema.define(:version => 20130409044531) do
     t.datetime "locked_at"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
-    t.string   "first_name",                             :null => false
-    t.string   "last_name",                              :null => false
-    t.string   "role",                                   :null => false
-    t.text     "notes"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
