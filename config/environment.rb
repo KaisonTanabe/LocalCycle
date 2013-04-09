@@ -36,42 +36,6 @@ GROWING_METHODS = {
   "biodynamic" => "Biodynamic"
 }
 
-PRODUCER_CERTIFICATIONS = {
-  "00" => "Animal Welfare Approved",
-  "01" => "Certified Humane",
-  "02" => "Food Alliance",
-  "03" => "HCAAP",
-  "04" => "USDA Gap Food Safety Certified",
-  "05" => "Beyond Organic",
-  "06" => "Certified Naturally Grown",
-  "07" => "The Farmer's Pledge",
-}
-LIVESTOCK_CERTIFICATIONS = {
-  "20" => "100% Grass Fed",
-  "21" => "Cage Free/Free Roaming/Crate Free ",
-  "22" => "Animal Welfare",
-  "23" => "Grass Fed, Grain Finished",
-  "24" => "Halal",
-  "25" => "Kosher",
-  "26" => "Nitrate Free",
-  "27" => "Pasture Raised",
-  "28" => "Vegetarian Fed",
-}
-EGG_CERTIFICATIONS = {
-  "40" => "Cage-Free Hens/Free Roaming Hens",
-  "41" => "Pasture Raised Hens",
-  "42" => "Vegetarian Fed",
-}
-DAIRY_CERTIFICATIONS = {
-  "50" => "Cheeses aged for 60+ days",
-  "51" => "Homogenized",
-}
-PANTRY_CERTIFICATIONS = {
-  "60" => "Certified Vegan",
-  "61" => "DOHMH Food Safety Certified",
-  "62" => "No artificial additives",
-  "63" => "USDA Approved Processing Plants",
-}
 
 
 

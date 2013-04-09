@@ -51,14 +51,14 @@ class Category < ActiveRecord::Base
   # Initialize tree creation
   def self.createTreeFromJSON(tree)
     top_level = ["","Meat","Dairy & Soy","Eggs","Fruit","Vegetables","Pantry","Baked Goods","Sea Food"]
+    puts "Creating Categories and Products"
     tree.each do |k,v|
-      puts "Creating Categories and Products"
       if k.to_i <= 8
         cat = Category.create(name: top_level[k.to_i], fakeid: k.to_i)
         createChildren(cat,v)
       else 
         cat = Category.where(fakeid: k.to_i).first
-        puts "Category parent not found for: " + v if cat.nil?
+        puts "Category parent not found for: " + v.to_s if cat.nil?
         createProducts(cat,v) if !cat.nil?
       end
     end

@@ -52,4 +52,5 @@ ProducerProfile.create(
                    user_id: user.id
                    )
 
-require File.expand_path('../product_tree', __FILE__)
+require File.expand_path('../seed_products', __FILE__)
+require File.expand_path('../seed_certifications', __FILE__)

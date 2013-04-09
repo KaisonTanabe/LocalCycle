@@ -134,6 +134,21 @@ jQuery(function($){
     $("#form_form_type").on("change", function() {displayFields()});
     displayFields();
 
+    function toggleActive() {
+	$(".growing_methods").removeClass("active"); // Show currently selected
+	$(".growing_methods input:checked").parent().parent().addClass("active");
+    }
+    $(".growing_methods input").on("change", function() {toggleActive()}); // Show currently selected
+    toggleActive();
+
+
+    function toggleCerts() {
+	$("#specific_certs input.yes:checked").parent().parent().siblings(".certs").show();
+	$("#specific_certs input.no:checked").parent().parent().siblings(".certs").hide();
+    }
+    $("#specific_certs input[type='radio']").on("change", function() {toggleCerts()}); // Show currently selected
+    toggleCerts();
+
 
     // For duplicating address fields
     $('#sameAddress .btn').click( function() {

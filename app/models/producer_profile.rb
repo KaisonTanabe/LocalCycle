@@ -3,16 +3,18 @@ class ProducerProfile < ActiveRecord::Base
 
   ## SETUP ASSOCIATIONS
   belongs_to :user
+  has_and_belongs_to_many :certifications
 
   ## ATTRIBUTE PROTECTION
-  attr_accessible :name, :latitude, :longitude, :phone,
+  attr_accessible :name, :latitude, :longitude, :phone, :growing_methods,
     :street_address_1, :street_address_2, :city, :state, :country, :zip,
-    :description, :website, :twitter, :facebook, :user_id
+    :description, :website, :twitter, :facebook, :user_id, :certification_ids,
+    :has_eggs, :has_dairy, :has_livestock, :has_pantry
 
   ## ATTRIBUTE VALIDATION
   validates :name, :phone,
     :street_address_1, :city, :state, :country, :zip,
-    :description, :user_id,
+    :description, :user_id, :growing_methods,
     presence: true
 
   #########################################

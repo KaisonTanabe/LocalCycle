@@ -39,14 +39,14 @@
   <% if @user.buyer? %>
     <h2>Buyer Profile</h2>
     <legend></legend>
-    <%= fields_for @user.buyer_profile do |fb| %>
+    <%= f.fields_for :buyer_profile do |fb| %>
       <%= render partial: 'buyer_profiles/form', locals: {f: fb} %>
     <% end %>
   <% end %>
   <% if @user.producer? %>
     <h2>Producer Profile</h2>
     <legend></legend>
-    <%= fields_for @user.producer_profile do |fp| %>
+    <%= f.fields_for :producer_profile do |fp| %>
       <%= render partial: 'producer_profiles/form', locals: {f: fp} %>
     <% end %>
   <% end %>

@@ -32,7 +32,7 @@
 
 body {
     color: $fontColor;
-    font-size: 13px;
+    font-size: 14px;
     text-shadow: 1px 1px 0 #fff;
 }
 
@@ -137,6 +137,12 @@ table {
     }
 }
 
+.growing_methods {
+    margin: -5px -10px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    &:active, &.active { background: rgba(100,200,100,0.1); }
+}
 
 /* =============================================================================
    Layout
@@ -268,6 +274,7 @@ footer {
     bottom: 0;
     height: 20px;
     padding: 10px 0;
+    font-size: 12px;
     background: #023008 url(body-bg.png);
     border-top: 3px solid #001f03;
     width: 100%;

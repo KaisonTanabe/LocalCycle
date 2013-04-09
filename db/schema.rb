@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130401042207) do
+ActiveRecord::Schema.define(:version => 20130409044531) do
 
   create_table "agreements", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -81,6 +81,18 @@ ActiveRecord::Schema.define(:version => 20130401042207) do
   add_index "category_hierarchies", ["ancestor_id", "descendant_id"], :name => "index_category_hierarchies_on_ancestor_id_and_descendant_id", :unique => true
   add_index "category_hierarchies", ["descendant_id"], :name => "index_category_hierarchies_on_descendant_id"
 
+  create_table "certifications", :force => true do |t|
+    t.string   "name"
+    t.string   "cert_type"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "certifications_producer_profiles", :force => true do |t|
+    t.integer "certification_id",    :null => false
+    t.integer "producer_profile_id", :null => false
+  end
+
   create_table "leads", :force => true do |t|
     t.string   "email"
     t.datetime "created_at", :null => false
@@ -113,7 +125,6 @@ ActiveRecord::Schema.define(:version => 20130401042207) do
     t.string   "website"
     t.string   "twitter"
     t.string   "facebook"
-    t.string   "certifications",   :default => "[]",   :null => false
     t.string   "growing_methods",  :default => "none", :null => false
     t.boolean  "has_eggs",         :default => false,  :null => false
     t.boolean  "has_livestock",    :default => false,  :null => false

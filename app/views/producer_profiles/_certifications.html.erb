@@ -1,8 +1,91 @@
+<div id="responsible" class="growing_methods control-group">
+  <label class="radio" for="producer_profile_growing_methods_responsible"><%= f.radio_button :growing_methods, "responsible" %><strong style="color: #8bc63e;">Responsible</strong> Farms have a reverence for the ecological and social wellbeing of local communities. Many employ conventional farming methods, but go a step beyond industrial agriculture.</label>
+  <ul>
+    <li>All produce farms must utilize Integrated Pest Management and crop rotation at a minimum, and be GMO-free.</li>
+    <li>All livestock farmers must not be CAFOs, must treat animals humanely, must raise animals that are hormone-free, and must avoid the use of antibiotics.</li>
+    <li>All mid to large sized farms on LocalCycle must employ worker safety systems to ensure quality of work life for all employees.</li>
+  </ul>
+  <small>If your farm goes beyond these basic requirements but is not certified organic, see <em>Green</em> label.</small>
+</div>
+
+<div id="green" class="growing_methods control-group">
+  <label class="radio" for="producer_profile_growing_methods_green"><%= f.radio_button :growing_methods, "green" %><strong style="color: #60ac37;">Green</strong> farms go beyond <em>Responsible</em>, additionally meeting several requirements of organic farming without being organic certified. Green Farms do not employ synthetic pesticides nor chemical fertilizers.</label>
+</div>
+
+<div id="organic" class="growing_methods control-group">
+  <label class="radio" for="producer_profile_growing_methods_organic"><%= f.radio_button :growing_methods, "organic" %><strong style="color: #39b54a;">Organic (certified)</strong> food is produced without antibiotics, growth hormones, conventional pesticides, petroleum-based fertilizers or sewage sludge-based fertilizers, bioengineering, or ionizing radiation. U.S. Department of Agriculture (USDA) certification is required before a product can be labeled "organic."</label>
+</div>
+
+<div id="biodynamic" class="growing_methods control-group">
+  <label class="radio" for="producer_profile_growing_methods_biodynamic"><%= f.radio_button :growing_methods, "biodynamic" %><strong style="color: #146527;">Biodynamic (certified)</strong> agriculture considers both the material and spiritual context of food production and works with terrestrial as well as cosmic influences. The influence of planetary rhythms on the growth of plants and animals, in terms of the ripening power of light and warmth, is managed by guiding cultivation times with an astronomical calendar. All organic principles apply to biodynamic farming.</label>
+</div>
+
+<legend>Certifications</legend>
+<p>Check all that apply</p>
+<% Certification.by_type("producer").each do |c| %>
+<div class="controls control-row">
+  <label class="checkbox"><%= check_box_tag "user[producer_profile_attributes][certification_ids][]", c.id, @user.producer_profile.certifications.include?(c) %><%= c.name %></label>
+</div>
+<% end %>
+
+<p><br /></p>
+
+<legend>Specific Product Certifications</legend>
+
+<div id="specific_certs">
   <div class="control-group">
-    <%= f.label :growing_methods, "Describe Your Farm:", class: "control-label" %>
-    <div class="controls controls-row">
-      <%= f.select :growing_methods, [["-- Please Select --", "none"]] + GROWING_METHODS.map {|k,v| [v,k]}, class: "span4" %>
+    <%= f.label :has_livestock, "Do you raise livestock?", class: "control-label" %>
+    <div class="controls control-row">
+      <label class="radio" for="producer_profile_has_livestock_true"><%= f.radio_button :has_livestock, true, class: "yes" %> YES</label>
+      <label class="radio" for="producer_profile_has_livestock_false"><%= f.radio_button :has_livestock, false, class: "no" %> NO</label>
     </div>
+    
+    <% Certification.by_type("livestock").each do |c| %>
+    <div class="controls control-row certs">
+      <label class="checkbox"><%= check_box_tag "user[producer_profile_attributes][certification_ids][]", c.id, @user.producer_profile.certifications.include?(c) %><%= c.name %></label>
+    </div>
+    <% end %>
+  </div>
+  
+  <div class="control-group">
+    <%= f.label :has_eggs, "Do you sell eggs?", class: "control-label" %>
+    <div class="controls control-row">
+      <label class="radio" for="producer_profile_has_eggs_true"><%= f.radio_button :has_eggs, true, class: "yes" %> YES</label>
+      <label class="radio" for="producer_profile_has_eggs_false"><%= f.radio_button :has_eggs, false, class: "no" %> NO</label>
+    </div>
+
+    <% Certification.by_type("egg").each do |c| %>
+    <div class="controls control-row certs">
+      <label class="checkbox"><%= check_box_tag "user[producer_profile_attributes][certification_ids][]", c.id, @user.producer_profile.certifications.include?(c) %><%= c.name %></label>
+    </div>
+    <% end %>
   </div>
 
-  
+  <div class="control-group">
+    <%= f.label :has_dairy, "Do you sell any dairy products?", class: "control-label" %>
+    <div class="controls control-row">
+      <label class="radio" for="producer_profile_has_dairy_true"><%= f.radio_button :has_dairy, true, class: "yes" %> YES</label>
+      <label class="radio" for="producer_profile_has_dairy_false"><%= f.radio_button :has_dairy, false, class: "no" %> NO</label>
+    </div>
+
+    <% Certification.by_type("dairy").each do |c| %>
+    <div class="controls control-row certs">
+      <label class="checkbox"><%= check_box_tag "user[producer_profile_attributes][certification_ids][]", c.id, @user.producer_profile.certifications.include?(c) %><%= c.name %></label>
+    </div>
+    <% end %>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :has_pantry, "Do you process any pantry or baked goods?", class: "control-label" %>
+    <div class="controls control-row">
+      <label class="radio" for="producer_profile_has_pantry_true"><%= f.radio_button :has_pantry, true, class: "yes" %> YES</label>
+      <label class="radio" for="producer_profile_has_pantry_false"><%= f.radio_button :has_pantry, false, class: "no" %> NO</label>
+    </div>
+
+    <% Certification.by_type("pantry").each do |c| %>
+    <div class="controls control-row certs">
+      <label class="checkbox"><%= check_box_tag "user[producer_profile_attributes][certification_ids][]", c.id, @user.producer_profile.certifications.include?(c) %><%= c.name %></label>
+    </div>
+    <% end %>
+  </div>
+</div>

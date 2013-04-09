@@ -10,12 +10,14 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
   has_one :buyer_profile
+  accepts_nested_attributes_for :buyer_profile, allow_destroy: true
   has_one :producer_profile
+  accepts_nested_attributes_for :producer_profile, allow_destroy: true
 
 
   ## ATTRIBUTE PROTECTION
   attr_accessible :first_name, :last_name, :email, :notes,
-    :attachments_attributes, :role
+    :attachments_attributes, :role, :producer_profile_attributes
 
 
   ## ATTRIBUTE VALIDATION
