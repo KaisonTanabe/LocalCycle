@@ -1,0 +1,30 @@
+certs = [{name: "Animal Welfare Approved", cert_type: "producer"},
+         {name: "Certified Humane", cert_type: "producer"},
+         {name: "Food Alliance", cert_type: "producer"},
+         {name: "HCAAP", cert_type: "producer"},
+         {name: "USDA Gap Food Safety Certified", cert_type: "producer"},
+         {name: "Beyond Organic", cert_type: "producer"},
+         {name: "Certified Naturally Grown", cert_type: "producer"},
+         {name: "The Farmer's Pledge", cert_type: "producer"},
+         {name: "100% Grass Fed", cert_type: "livestock"},
+         {name: "Cage Free/Free Roaming/Crate Free ", cert_type: "livestock"},
+         {name: "Animal Welfare", cert_type: "livestock"},
+         {name: "Grass Fed, Grain Finished", cert_type: "livestock"},
+         {name: "Halal", cert_type: "livestock"},
+         {name: "Kosher", cert_type: "livestock"},
+         {name: "Nitrate Free", cert_type: "livestock"},
+         {name: "Pasture Raised", cert_type: "livestock"},
+         {name: "Vegetarian Fed", cert_type: "livestock"},
+         {name: "Cage-Free Hens/Free Roaming Hens", cert_type: "egg"},
+         {name: "Pasture Raised Hens", cert_type: "egg"},
+         {name: "Vegetarian Fed", cert_type: "egg"},
+         {name: "Cheeses aged for 60+ days", cert_type: "dairy"},
+         {name: "Homogenized", cert_type: "dairy"},
+         {name: "Certified Vegan", cert_type: "pantry"},
+         {name: "DOHMH Food Safety Certified", cert_type: "pantry"},
+         {name: "No artificial additives", cert_type: "pantry"},
+         {name: "USDA Approved Processing Plants", cert_type: "pantry"}]
+
+certs.each do |c|
+  Certification.create(c)
+end
