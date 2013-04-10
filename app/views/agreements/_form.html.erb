@@ -1,17 +1,18 @@
-<%= form_for(@agreement) do |f| %>
-  <% if @agreement.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@agreement.errors.count, "error") %> prohibited this agreement from being saved:</h2>
+<%= form_for(@agreement, html: { multipart: true, class: "form-horizontal" }) do |f| %>
+  
+  <legend></legend>
+  <%= render partial: 'partials/errors', locals: {obj: @agreement} %>
 
-      <ul>
-      <% @agreement.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+  <legend>Product</legend>
+  <div class="control-group">
+    <label class="req control-label" for="agreement_product_id">Name:</label>
+    <div class="controls controls-row">
+      <%= f.select :product_id, options_for_select(Product.order('name').collect {|p| [p.name, p.id] }, (@agreement.new_record? ? "" : @agreement.product.id)), {prompt: "asdf"}, {class: "select2 span4" } %>
+      <span class="help-inline"><span class="label label-info">HINT:</span> Start typing a product name...</span>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit %>
   </div>
+
+  
+  <%= render partial: 'partials/submit', locals: {f: f, text: 'Agreement'} %>
+
 <% end %>

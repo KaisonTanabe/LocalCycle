@@ -4,8 +4,8 @@ class Certification < ActiveRecord::Base
   ## SETUP ASSOCIATIONS
   has_and_belongs_to_many :producer_profiles
 
-  ## ATTRIBUTE PROTECTION  
-  attr_accessible :cert_type, :name
+  ## ATTRIBUTE PROTECTION
+  attr_accessible :cert_type, :name, :audited
 
   ## ATTRIBUTE VALIDATION
   validates :name, :cert_type,

@@ -14,8 +14,24 @@
 ActiveRecord::Schema.define(:version => 20130409044531) do
 
   create_table "agreements", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "product_id",                                 :null => false
+    t.integer  "buyer_id",                                   :null => false
+    t.integer  "producer_id",                                :null => false
+    t.string   "name",                                       :null => false
+    t.text     "description"
+    t.string   "agreement_type",   :default => "onetime",    :null => false
+    t.date     "start_date",       :default => '2013-04-09', :null => false
+    t.date     "end_date",         :default => '2013-04-16', :null => false
+    t.float    "quantity",                                   :null => false
+    t.string   "selling_unit",                               :null => false
+    t.float    "price",                                      :null => false
+    t.boolean  "locally_packaged",                           :null => false
+    t.boolean  "can_deliver",      :default => false,        :null => false
+    t.text     "delivery_options"
+    t.boolean  "can_pickup",       :default => false,        :null => false
+    t.text     "pickup_options"
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
   end
 
   create_table "attachments", :force => true do |t|
@@ -72,6 +88,8 @@ ActiveRecord::Schema.define(:version => 20130409044531) do
     t.datetime "updated_at",  :null => false
   end
 
+  add_index "categories", ["parent_id"], :name => "index_categories_on_parent_id"
+
   create_table "category_hierarchies", :id => false, :force => true do |t|
     t.integer "ancestor_id",   :null => false
     t.integer "descendant_id", :null => false
@@ -82,16 +100,20 @@ ActiveRecord::Schema.define(:version => 20130409044531) do
   add_index "category_hierarchies", ["descendant_id"], :name => "index_category_hierarchies_on_descendant_id"
 
   create_table "certifications", :force => true do |t|
-    t.string   "name"
-    t.string   "cert_type"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "name",                               :null => false
+    t.string   "cert_type",  :default => "producer", :null => false
+    t.boolean  "audited",    :default => false,      :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
   end
 
   create_table "certifications_producer_profiles", :force => true do |t|
     t.integer "certification_id",    :null => false
     t.integer "producer_profile_id", :null => false
   end
+
+  add_index "certifications_producer_profiles", ["certification_id"], :name => "index_certifications_producer_profiles_on_certification_id"
+  add_index "certifications_producer_profiles", ["producer_profile_id"], :name => "index_certifications_producer_profiles_on_producer_profile_id"
 
   create_table "leads", :force => true do |t|
     t.string   "email"
@@ -146,6 +168,8 @@ ActiveRecord::Schema.define(:version => 20130409044531) do
     t.datetime "updated_at",                     :null => false
   end
 
+  add_index "products", ["category_id"], :name => "index_products_on_category_id"
+
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
     t.string   "encrypted_password",     :default => "", :null => false
@@ -166,6 +190,10 @@ ActiveRecord::Schema.define(:version => 20130409044531) do
     t.datetime "locked_at"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.string   "first_name",                             :null => false
+    t.string   "last_name",                              :null => false
+    t.string   "role",                                   :null => false
+    t.text     "notes"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
