@@ -11,6 +11,14 @@ class AgreementsController < ApplicationController
     end
   end
 
+  def marketplace
+
+    respond_to do |format|
+      format.html # marketplace.html.erb
+      format.json { render json: @agreements }
+    end
+  end
+
   def show
 
     respond_to do |format|
@@ -20,6 +28,7 @@ class AgreementsController < ApplicationController
   end
 
   def new
+    @agreement.agreement_type = params[:agreement_type] unless params[:agreement_type].nil?
 
     respond_to do |format|
       format.html # new.html.erb

@@ -55,33 +55,6 @@
   </div>
  
   <div class="span6">
-    <div class="dfagreement_agreement_type dfindefinite dfseasonal">
-      <div class="control-group">
-	<%= f.label :frequency, "Frequency:", class: "control-label" %>
-	<div class="controls controls-row">
-	  <%= f.select :frequency, FREQUENCIES.map {|u| [u.second, u.first]}, {prompt: "-- Please select --"}, {class: "span4"} %>
-	</div>
-      </div>
-    </div>
-    <div class="dfagreement_agreement_type dfseasonal">
-      <div class="control-group">
-	<%= f.label :start_date, "Begin Date:", class: "control-label" %>
-	<div class="controls controls-row controls-date">
-	  <%= f.date_select :start_date, :prompt => true, :order => [:month, :day, :year] %>
-	  <span class="help-inline">First week of agreement period</span>
-	</div>
-      </div>    
-      <div class="control-group">
-	<%= f.label :end_date, "End Date:", class: "control-label" %>
-	<div class="controls controls-row controls-date">
-	  <%= f.date_select :end_date, :prompt => true, :order => [:month, :day, :year] %>
-	  <span class="help-inline">Last week of agreement period</span>
-	</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="span6">
     <div class="dfagreement_agreement_type dfindefinite dfseasonal dfonetime">
       <div class="control-group">
 	<%= f.label :selling_unit, "Selling Unit:", class: "control-label" %>
@@ -113,6 +86,33 @@
       </div>
     </div>
   </div>
+
+  <div class="span6">
+    <div class="dfagreement_agreement_type dfindefinite dfseasonal">
+      <div class="control-group">
+	<%= f.label :frequency, "Frequency:", class: "control-label" %>
+	<div class="controls controls-row">
+	  <%= f.select :frequency, FREQUENCIES.map {|u| [u.second, u.first]}, {prompt: "-- Please select --"}, {class: "span4"} %>
+	</div>
+      </div>
+    </div>
+    <div class="dfagreement_agreement_type dfseasonal">
+      <div class="control-group">
+	<%= f.label :start_date, "Begin Date:", class: "control-label" %>
+	<div class="controls controls-row controls-date">
+	  <%= f.date_select :start_date, :prompt => true, :order => [:month, :day, :year] %>
+	  <span class="help-inline">First week of agreement period</span>
+	</div>
+      </div>    
+      <div class="control-group">
+	<%= f.label :end_date, "End Date:", class: "control-label" %>
+	<div class="controls controls-row controls-date">
+	  <%= f.date_select :end_date, :prompt => true, :order => [:month, :day, :year] %>
+	  <span class="help-inline">Last week of agreement period</span>
+	</div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="row">
@@ -130,10 +130,9 @@
     </div>
     
     <div class="control-group">
-      <%= f.label :can_pickup, "Can Pickup?", class: "control-label" %>
+      <%= f.label :delivery_options, "Delivery Instructions:", class: "control-label" %>
       <div class="controls control-row">
-	<label class="radio" for="agreement_can_pickup_true"><%= f.radio_button :can_pickup, true, class: "yes" %> YES</label>
-	<label class="radio" for="agreement_can_pickup_true"><%= f.radio_button :can_pickup, false, class: "no" %> No</label>
+	<%= f.text_area :delivery_options, rows: 4, class: "span4" %>
       </div>
     </div>
   </div>
@@ -141,9 +140,10 @@
 
   <div class="span6">
     <div class="control-group">
-      <%= f.label :delivery_options, "Delivery Instructions:", class: "control-label" %>
+      <%= f.label :can_pickup, "Can Pickup?", class: "control-label" %>
       <div class="controls control-row">
-	<%= f.text_area :delivery_options, rows: 4, class: "span4" %>
+	<label class="radio" for="agreement_can_pickup_true"><%= f.radio_button :can_pickup, true, class: "yes" %> YES</label>
+	<label class="radio" for="agreement_can_pickup_true"><%= f.radio_button :can_pickup, false, class: "no" %> No</label>
       </div>
     </div>
     

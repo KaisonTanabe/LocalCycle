@@ -2,7 +2,9 @@ LOCALCYCLE::Application.routes.draw do
 
   resources :categories
 
-  resources :agreements
+  resources :agreements do
+    get 'marketplace', :on => :collection
+  end
 
   resources :buyer_profiles, only: ["new","create"]
 
