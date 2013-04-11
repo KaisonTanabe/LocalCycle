@@ -14,24 +14,29 @@
 ActiveRecord::Schema.define(:version => 20130409044531) do
 
   create_table "agreements", :force => true do |t|
-    t.integer  "product_id",                                 :null => false
-    t.integer  "buyer_id",                                   :null => false
-    t.integer  "producer_id",                                :null => false
-    t.string   "name",                                       :null => false
+    t.integer  "product_id",                                      :null => false
+    t.integer  "buyer_id",                                        :null => false
+    t.integer  "producer_id",                                     :null => false
+    t.string   "name",                                            :null => false
     t.text     "description"
-    t.string   "agreement_type",   :default => "onetime",    :null => false
-    t.date     "start_date",       :default => '2013-04-09', :null => false
-    t.date     "end_date",         :default => '2013-04-16', :null => false
-    t.float    "quantity",                                   :null => false
-    t.string   "selling_unit",                               :null => false
-    t.float    "price",                                      :null => false
-    t.boolean  "locally_packaged",                           :null => false
-    t.boolean  "can_deliver",      :default => false,        :null => false
+    t.string   "agreement_type",                                  :null => false
+    t.string   "frequency"
+    t.date     "start_date",            :default => '2013-04-10', :null => false
+    t.date     "end_date",              :default => '2013-05-10', :null => false
+    t.float    "quantity",                                        :null => false
+    t.string   "selling_unit",                                    :null => false
+    t.float    "price",                                           :null => false
+    t.boolean  "locally_packaged",                                :null => false
+    t.boolean  "can_deliver",           :default => false,        :null => false
     t.text     "delivery_options"
-    t.boolean  "can_pickup",       :default => false,        :null => false
+    t.float    "min_delivery_quantity"
+    t.float    "max_delivery_quantity"
+    t.boolean  "can_pickup",            :default => false,        :null => false
     t.text     "pickup_options"
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.float    "min_pickup_quantity"
+    t.float    "max_pickup_quantity"
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
   end
 
   create_table "attachments", :force => true do |t|

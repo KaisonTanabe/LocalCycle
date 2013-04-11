@@ -28,6 +28,11 @@ REGISTERABLE_ROLES = {
   "producer" => "Producer"
 }
 
+FREQUENCIES = {
+  "weekly" => "Weekly",
+  "monthly" => "Monthly"
+}
+
 
 GROWING_METHODS = {
   "responsible" => "Responsible",
@@ -36,7 +41,11 @@ GROWING_METHODS = {
   "biodynamic" => "Biodynamic"
 }
 
-
+AGREEMENT_TYPES = {
+  "onetime" => "One Time",
+  "seasonal" => "Seasonal",
+  "indefinite" => "Indefinite",  
+}
 
 
 UNIT_TYPE = {
@@ -53,7 +62,7 @@ UNIT_TYPE = {
   "(4/5bu)" => "4/5 Bushel",
   "case" => "Case",
   "doz" => "Dozen",
-  "ea" => "Each",
+  "ea" => "Single",
   "flat" => "Flat",
   "gal" => "Gallon",
   "(1/2gal)" => "Half Gallon",

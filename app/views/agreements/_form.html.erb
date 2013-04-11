@@ -2,16 +2,161 @@
   
   <legend></legend>
   <%= render partial: 'partials/errors', locals: {obj: @agreement} %>
+  <p><span class="label label-info">HINT:</span> Start typing a product name. Then select your product to auto-populate options<br />&nbsp;</p>
 
-  <legend>Product</legend>
-  <div class="control-group">
-    <label class="req control-label" for="agreement_product_id">Name:</label>
-    <div class="controls controls-row">
-      <%= f.select :product_id, options_for_select(Product.order('name').collect {|p| [p.name, p.id] }, (@agreement.new_record? ? "" : @agreement.product.id)), {prompt: "asdf"}, {class: "select2 span4" } %>
-      <span class="help-inline"><span class="label label-info">HINT:</span> Start typing a product name...</span>
+<div class="row">
+  <div class="span6">
+    <div class="control-group">
+      <label class="req control-label" for="agreement_product_id">Product:</label>
+      <div class="controls controls-row">
+	<%= f.select :product_id, option_groups_from_collection_for_select(Category.includes(:products).order('name'), :products, :name, :id, :name, (@agreement.new_record? ? "" : @agreement.product.id)), {prompt: "-- Please type and select --"}, {class: "select2 span4" } %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :name, "Name/Title:", class: "control-label" %>
+      <div class="controls controls-row">
+	<%= f.text_field :name, class: "span4" %>
+	<span class="help-inline">Further differentiate the item you chose above.</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :locally_packaged, "Locally Packaged:", class: "control-label" %>
+      <div class="controls control-row">
+	<label class="checkbox"><%= f.check_box :locally_packaged %> Check this box if this product is locally packaged, but not grown or raised locally.</label>
+      </div>
     </div>
   </div>
 
+  <div class="span6">
+    <div class="control-group">
+      <%= f.label :description, "Description:", class: "control-label" %>
+      <div class="controls controls-row">
+	<%= f.text_area :description, rows: 4, class: "span4" %>
+	<span class="help-inline">(optional) Add a detailed description.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="span12">
+    <legend>Agreement Options</legend>
+  </div>
+
+  <div class="span12">
+    <p><em>LocalCycle</em> gives you the ability to propose one-time, repeating seasonal, or repeating indefinite contract periods for your agreement. Repeating deliveries can occur with weekly or monthly frequency.</p>
+    <div class="control-group">
+      <%= f.label :agreement_type, "Agreement Type:", class: "control-label" %>
+      <div class="controls controls-row">
+	<%= f.select :agreement_type, AGREEMENT_TYPES.map {|u| [u.second, u.first]}, {prompt: "-- Please select --"}, {class: "span4"} %>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="span6">
+    <div class="dfagreement_agreement_type dfindefinite dfseasonal">
+      <div class="control-group">
+	<%= f.label :frequency, "Frequency:", class: "control-label" %>
+	<div class="controls controls-row">
+	  <%= f.select :frequency, FREQUENCIES.map {|u| [u.second, u.first]}, {prompt: "-- Please select --"}, {class: "span4"} %>
+	</div>
+      </div>
+    </div>
+    <div class="dfagreement_agreement_type dfseasonal">
+      <div class="control-group">
+	<%= f.label :start_date, "Begin Date:", class: "control-label" %>
+	<div class="controls controls-row controls-date">
+	  <%= f.date_select :start_date, :prompt => true, :order => [:month, :day, :year] %>
+	  <span class="help-inline">First week of agreement period</span>
+	</div>
+      </div>    
+      <div class="control-group">
+	<%= f.label :end_date, "End Date:", class: "control-label" %>
+	<div class="controls controls-row controls-date">
+	  <%= f.date_select :end_date, :prompt => true, :order => [:month, :day, :year] %>
+	  <span class="help-inline">Last week of agreement period</span>
+	</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="span6">
+    <div class="dfagreement_agreement_type dfindefinite dfseasonal dfonetime">
+      <div class="control-group">
+	<%= f.label :selling_unit, "Selling Unit:", class: "control-label" %>
+	<div class="controls controls-row">
+	  <%= f.select :selling_unit, UNIT_TYPE.map {|u| [u.second, u.first]}, {prompt: "-- Please select --"}, {class: "span3"} %>
+	</div>
+      </div>
+
+      <div class="control-group">
+	<%= f.label :price, "Price Per Unit:", class: "control-label" %>
+	<div class="controls controls-row">
+	  <div class="input-prepend">
+	    <span class="add-on">$</span>
+	    <%= f.text_field :price, placeholder: "0.00", class: "span2" %>
+	  </div>
+	  <span class="help-inline">Unit selected above</span>
+	</div>
+      </div>
+
+      <div class="control-group">
+	<%= f.label :quantity, "Quantity:", class: "control-label" %>
+	<div class="controls controls-row">
+	  <div class="input-append">
+	    <%= f.text_field :quantity, placeholder: "0", class: "span2" %>
+	    <span class="add-on" id="quantity_add_on"></span>
+	  </div>
+	  <span class="help-inline">Number of units available <span class="dfagreement_frequency dfweekly">(per weekly delivery)</span><span class="dfagreement_frequency dfmonthly">(per monthly delivery)</span></span>
+	</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="span12">
+    <p><br /></p>
+    <legend>Delivery Options</legend>
+  </div>
+  <div class="span6">
+    <div class="control-group">
+      <%= f.label :can_deliver, "Can Deliver?", class: "control-label" %>
+      <div class="controls control-row">
+	<label class="radio" for="agreement_can_deliver_true"><%= f.radio_button :can_deliver, true, class: "yes" %> YES</label>
+	<label class="radio" for="agreement_can_deliver_true"><%= f.radio_button :can_deliver, false, class: "no" %> No</label>
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <%= f.label :can_pickup, "Can Pickup?", class: "control-label" %>
+      <div class="controls control-row">
+	<label class="radio" for="agreement_can_pickup_true"><%= f.radio_button :can_pickup, true, class: "yes" %> YES</label>
+	<label class="radio" for="agreement_can_pickup_true"><%= f.radio_button :can_pickup, false, class: "no" %> No</label>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="span6">
+    <div class="control-group">
+      <%= f.label :delivery_options, "Delivery Instructions:", class: "control-label" %>
+      <div class="controls control-row">
+	<%= f.text_area :delivery_options, rows: 4, class: "span4" %>
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <%= f.label :pickup_options, "Pickup Instructions:", class: "control-label" %>
+      <div class="controls control-row">
+	<%= f.text_area :pickup_options, rows: 4, class: "span4" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr style="clear: both;" />
   
   <%= render partial: 'partials/submit', locals: {f: f, text: 'Agreement'} %>
 

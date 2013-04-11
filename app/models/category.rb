@@ -3,6 +3,7 @@ class Category < ActiveRecord::Base
   ############# CONFIGURATION #############
 
   acts_as_tree
+  has_many :products
 
   ## SETUP ASSOCIATIONS
 

@@ -125,14 +125,17 @@ jQuery(function($){
 
     ////////////////////////////////////////////////////////////////////////////
     // Toggleable fields JS
-    function displayFields() {
-	$("form .specificFields").hide();
-	if ($("#form_form_type").val()) {
-	    $('.' + $("#form_form_type").val()).show(); // Show currently selected
+    //   Assumes all hide/showable fields have same class as selector id attribute 
+    //   and ids equal to the corresponding option values
+    function displayFields(selectorID) {
+	if (selectorID !== "") {
+	    $(".df" + selectorID).hide();
+	    if ($("#" + selectorID).val()) {
+		$('.df' + $("#" + selectorID).val()).show(); // Show currently selected
+	    }
 	}
     }
-    $("#form_form_type").on("change", function() {displayFields()});
-    displayFields();
+
 
     function toggleActive() {
 	$(".growing_methods").removeClass("active"); // Show currently selected
@@ -149,7 +152,24 @@ jQuery(function($){
     $("#specific_certs input[type='radio']").on("change", function() {toggleCerts()}); // Show currently selected
     toggleCerts();
 
+    
+    /** AGREEMENT FORM **/
+    $('#agreement_product_id').on("change", function(e) {
+	var name = $("#agreement_name");
+	if (name.val() == "") {
+	    name.val($('#agreement_product_id option:selected').html());
+	}
+    });
 
+    $('#agreement_selling_unit').on("change", function(e) {
+	$("#quantity_add_on").html($('#agreement_selling_unit option:selected').html());
+    });
+
+    $("#agreement_agreement_type").on("change", function() {displayFields("agreement_agreement_type")});
+    displayFields("agreement_agreement_type");
+    $("#agreement_frequency").on("change", function() {displayFields("agreement_frequency")});
+    displayFields("agreement_frequency");
+    
     // For duplicating address fields
     $('#sameAddress .btn').click( function() {
 	if ($(this).hasClass('yes')) {

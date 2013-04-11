@@ -13,7 +13,7 @@ class Agreement < ActiveRecord::Base
   attr_accessible :product_id, :name, :description, :producer_id, :buyer_id,
     :quantity, :agreement_type, :start_date, :end_date,
     :selling_unit, :price, :locally_packaged, :can_deliver,
-    :can_pickup, :delivery_options, :pickup_options
+    :can_pickup, :delivery_options, :pickup_options, :frequency
 
   ## ATTRIBUTE VALIDATION
 
