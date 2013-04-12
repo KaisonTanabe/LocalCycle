@@ -40,6 +40,12 @@ hr { box-shadow: 0 1px 1px #dfd3c7; }
 
 legend { border-bottom: 1px solid #9d8974; font-family: 'savu'; color: $secondaryColor; }
 
+.border {
+    border: 1px solid #9d8974;
+    border-radius: 10px;
+    padding: 0 12px 12px;
+}
+
 nav ul, nav ol { list-style: none; list-style-image: none; margin: 0; padding: 0; }
 nav.inline li { display: block; float: left;}
 
@@ -118,11 +124,6 @@ table {
     }
 }
 
-/** IE Fix **/
-.hasPlaceholder {
-    color: #999 !important;
-}
-
 .panel {
     background-color: rgba(255,255,255,0.75);
     @include border-radius(12px);
@@ -137,12 +138,12 @@ table {
     }
 }
 
-.growing_methods {
-    margin: -5px -10px;
-    padding: 5px 10px;
-    border-radius: 10px;
-    &:active, &.active { background: rgba(100,200,100,0.1); }
+/** IE Fix **/
+.hasPlaceholder {
+    color: #999 !important;
 }
+
+
 
 /* =============================================================================
    Layout
@@ -228,8 +229,8 @@ header.navbar {
 	&.active,
 	&:hover {
 	    border: 1px solid rgba(200,200,200,0.75);
-	    background: rgba(255,255,255,0.75);
-	    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+	    background: rgba(255,255,255,1);
+	    box-shadow: 0 0 15px rgba(0,0,0,0.5);
 	}
 	img.it {
 	    position: absolute;
@@ -302,6 +303,30 @@ footer {
 /* =============================================================================
    Pages
    ========================================================================== */
+#key {
+    float: right;
+    margin: -48px 10px 0 0;
+    font-size: 12px;
+    line-height: 1.4;
+    > div {
+	float: left;
+	margin: 0 10px;
+    }
+    .bar {
+	width: 6px;
+	float: left;
+	margin: 4px 6px 0 0;
+    }
+}
+
+.growing_methods {
+    margin: -5px -10px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    &:active, &.active { background: rgba(100,200,100,0.1); }
+}
+
+
 .public {
     padding: 20px 0 0;
     header {
@@ -407,6 +432,9 @@ footer {
 /* =============================================================================
    Bootstrap Overrides
    ========================================================================== */
+.nav-tabs .dropdown-toggle .caret {
+    border-top-color: #39b54a;
+}
 
 .pagination .prev.disabled a {
     background-color: whiteSmoke;

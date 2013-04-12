@@ -1,3 +1,40 @@
-<div class="btn-group pull-right">
-  <%= link_to 'Propose Agreement', new_agreement_path, class: "btn btn-primary" %>
+<div class="row">
+  <div class="span12">
+    <ul class="nav nav-tabs">
+      <% Category.roots.each do |c| %>
+      <li class="dropdown"><a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="#"><%= c.name %> <b class="caret" style="margin-top: 9px;"></b></a>
+	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+	  <% c.children.each do |cc| %>
+	  <li><a tabindex="-1" href="#"><%= cc.name %></a></li>
+	  <% end %>
+	</ul>
+      </li>
+      <% end %>
+    </ul>
+    <!--div id="key">
+      <div><div class="bar complete"></div> = Active Agreement</div>
+      <div><div class="bar pending"></div> = Pending Agreement</div>
+      <div><div class="bar"></div> = Available Agreement</div>
+    </div-->
+    <table class="table table-hover table-striped" style="background: #fff;margin-top: -20px; border-top: 3px solid #dadada;">
+      <thead><tr>
+	  <th width="270px"><input id="name" name="name" placeholder="Search..." type="text" value="" style="margin-bottom: 0; padding: 2px; vertical-align: top; width: auto;"> <small><a href="#" class="btn btn-mini"><i class="icon-search"></i> Options</a></small></th>
+	  <th>JAN</th>
+	  <th>FEB</th>
+	  <th>MAR</th>
+	  <th>APR</th>
+	  <th>MAY</th>
+	  <th>JUN</th>
+	  <th>JUL</th>
+	  <th>AUG</th>
+	  <th>SEP</th>
+	  <th>OCT</th>
+	  <th>NOV</th>
+	  <th>DEC</th>
+	</tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
 </div>
