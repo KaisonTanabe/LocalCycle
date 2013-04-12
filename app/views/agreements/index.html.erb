@@ -1,5 +1,8 @@
 <div class="row">
   <div class="span12">
+<div class="btn-group pull-right">
+  <%= link_to 'Propose Agreement', new_agreement_path(agreement_type: "onetime"), class: "btn btn-primary" %>
+</div>
     <ul class="nav nav-tabs">
       <% Category.roots.each do |c| %>
       <li class="dropdown"><a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="#"><%= c.name %> <b class="caret" style="margin-top: 9px;"></b></a>
