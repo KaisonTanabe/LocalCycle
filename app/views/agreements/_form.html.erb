@@ -81,7 +81,7 @@
 	    <%= f.text_field :quantity, placeholder: "0", class: "span2" %>
 	    <span class="add-on" id="quantity_add_on"></span>
 	  </div>
-	  <span class="help-inline">Number of units available <span class="dfagreement_frequency dfweekly">(per weekly delivery)</span><span class="dfagreement_frequency dfmonthly">(per monthly delivery)</span></span>
+	  <span class="help-inline">Number of units <%= current_user.buyer? ? "demanded" : "available" %> <span class="dfagreement_frequency dfweekly">(per weekly delivery)</span><span class="dfagreement_frequency dfmonthly">(per monthly delivery)</span></span>
 	</div>
       </div>
     </div>
