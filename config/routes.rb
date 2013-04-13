@@ -16,7 +16,7 @@ LOCALCYCLE::Application.routes.draw do
     controllers: {confirmations: 'confirmations', sessions: 'sessions', registrations: 'registrations'}
 
   devise_scope :user do
-    put '/confirm' => 'confirmations#confirm', as: :user_confirm
+    get '/confirm' => 'confirmations#confirm', as: :user_confirm
     get '/login', :to => "devise/sessions#new"
     get '/register', :to => "registrations#new"
   end
