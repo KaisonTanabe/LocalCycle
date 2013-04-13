@@ -7,6 +7,10 @@ development:
   <<: *common
   database: lc_dev
 
+staging:
+  <<: *common
+  database: lc_staging
+
 test:
   <<: *common
   database: lc_test

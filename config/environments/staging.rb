@@ -19,7 +19,7 @@ LOCALCYCLE::Application.configure do
 
   # If disable delivery errors, bad email addresses will be ignored
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options = { host: 'localcycle.com' }
+  config.action_mailer.default_url_options = { host: 'lcstaging.herokuapp.com' }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.default charset: "utf-8"
 
@@ -29,7 +29,7 @@ LOCALCYCLE::Application.configure do
   config.action_mailer.smtp_settings = {
     :address              => "smtp.sendgrid.net",
     :port                 => 587,
-    :domain               => 'localcycle.com',
+    :domain               => 'lcstaging.herokuapp.com',
     :user_name            => ENV['SENDMAIL_USERNAME'],
     :password             => ENV['SENDMAIL_PASSWORD'],
     :authentication       => 'plain',
@@ -40,7 +40,7 @@ LOCALCYCLE::Application.configure do
   config.cache_classes = true
 
   # Full error reports are disabled and caching is turned on
-  config.consider_all_requests_local       = false
+  config.consider_all_requests_local       = true
   config.action_controller.perform_caching = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
