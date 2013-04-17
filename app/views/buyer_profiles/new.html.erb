@@ -1,13 +1,17 @@
 <div class="row">
   <div class="panel wide">
     <h2>Complete Your Buyer Profile</h2>
+
+    <%= form_for(@buyer_profile, html: { multipart: true, class: "form-horizontal" }) do |f| %>
     
-    <legend></legend>
-    <%= render partial: 'partials/errors', locals: {obj: @buyer_profile} %>
+      <legend></legend>
+      <%= render partial: 'partials/errors', locals: {obj: @buyer_profile} %>
+      
+      <p>Tell producers a little bit about your organization.</p>
+      <%= render partial: 'form', locals: {f: f} %>
+      <%= render partial: 'partials/submit', locals: {f: f, text: 'Profile'} %>
     
-    <p>Tell producers a little bit about your organization.</p>
-    <%= render partial: 'form', locals: {f: f} %>
-    <%= render partial: 'partials/submit', locals: {f: f, text: 'Profile'} %>
-    
+    <% end %>
+
   </div>
 </div>

@@ -21,7 +21,7 @@ class Agreement < ActiveRecord::Base
     :selling_unit, :price, presence: true
 
   validates :locally_packaged, :can_deliver,
-  :can_pickup, inclusion: {:in => [true, false]}
+    :can_pickup, inclusion: {:in => [true, false]}
 
   #########################################
 
@@ -58,8 +58,12 @@ class Agreement < ActiveRecord::Base
 
   ############ PUBLIC METHODS #############
 
-
-  ############ PUBLIC METHODS #############
+  def deadline_is_possible?
+    return if [deadline.blank?, begins_at.blank?].any?
+    if deadline > begins_at
+      errors.add(:deadline, 'must be possible')
+    end
+  end
 
 
   ############ PRIVATE METHODS ############

@@ -15,13 +15,17 @@ ActiveRecord::Schema.define(:version => 20130409044531) do
 
   create_table "agreements", :force => true do |t|
     t.integer  "product_id",                                      :null => false
-    t.integer  "buyer_id",                                        :null => false
-    t.integer  "producer_id",                                     :null => false
+    t.integer  "buyer_id"
+    t.integer  "producer_id"
     t.string   "name",                                            :null => false
     t.text     "description"
     t.string   "agreement_type",                                  :null => false
     t.string   "frequency"
+<<<<<<< HEAD
     t.date     "start_date",            :default => '2013-04-16', :null => false
+=======
+    t.date     "start_date",            :default => '2013-04-13', :null => false
+>>>>>>> f323364bebfbb4ab7fc791388a6db238b9d3c626
     t.date     "end_date"
     t.float    "quantity",                                        :null => false
     t.string   "selling_unit",                                    :null => false
