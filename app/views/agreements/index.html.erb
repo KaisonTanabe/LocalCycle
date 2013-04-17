@@ -1,8 +1,17 @@
 <div class="row">
   <div class="span12">
-<div class="btn-group pull-right">
-  <%= link_to 'Propose Agreement', new_agreement_path(agreement_type: "onetime"), class: "btn btn-primary" %>
+    <div class="btn-group pull-right">
+      <%= link_to 'Propose New', new_agreement_path, class: "btn btn-primary" %>
+      <%= link_to 'Current', agreements_path(buyer_id: current_user.buyer? ? current_user.id : "", producer_id: current_user.producer? ? current_user.id : "", current: "true"), class: "btn" %>
+      <%= link_to 'Past', agreements_path(buyer_id: current_user.buyer? ? current_user.id : "", producer_id: current_user.producer? ? current_user.id : "", current: "false"), class: "btn" %>
+      <%= link_to raw('<span class="icon-question-sign"></span>'), "#", class: "btn" %>
+    </div>
+    <h1><img class="big-icon" src="/assets/calendar.png" alt="Calendar Icon" /> Production Agreements</h1>
+  </div>
 </div>
+
+<div class="row">
+  <div class="span12">
     <ul class="nav nav-tabs">
       <% Category.roots.each do |c| %>
       <li class="dropdown"><a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="#"><%= c.name %> <b class="caret" style="margin-top: 9px;"></b></a>
