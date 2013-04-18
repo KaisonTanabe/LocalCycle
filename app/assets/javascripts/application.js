@@ -135,7 +135,17 @@ jQuery(function($){
 	    }
 	}
     }
-
+    function displayProductPic(src) {
+	if (src !== "") {
+	    var img = $('<img id="profile_pic">');
+	    img.attr("src", src);
+	    $("#product_pic_div").html(img);
+	}
+    }
+    function addZero(num) {
+	(String(num).length < 3) ? num = String("0" + num) :  num = String(num);
+	return num;
+    }
 
     function toggleActive() {
 	$(".growing_methods").removeClass("active"); // Show currently selected
@@ -159,14 +169,18 @@ jQuery(function($){
 	if (name.val() == "") {
 	    name.val($('#agreement_product_id option:selected').html());
 	}
+	displayProductPic("http://s3.amazonaws.com/localcycle/products/pics/000/000/" + addZero($("#agreement_product_id option:selected").val()) + "/medium/" + $('#agreement_product_id option:selected').html().toLowerCase().replace(/[^a-z0-9 -]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-') + ".jpg");
     });
 
     $('#agreement_selling_unit').on("change", function(e) {
 	$("#quantity_add_on").html($('#agreement_selling_unit option:selected').html());
     });
 
-    $("#agreement_agreement_type").on("change", function() {displayFields("agreement_agreement_type")});
+    $("#agreement_agreement_type").on("change", function() {
+	displayFields("agreement_agreement_type");
+    });
     displayFields("agreement_agreement_type");
+
     $("#agreement_frequency").on("change", function() {displayFields("agreement_frequency")});
     displayFields("agreement_frequency");
     

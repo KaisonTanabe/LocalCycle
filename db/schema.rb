@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130409044531) do
+ActiveRecord::Schema.define(:version => 20130418165915) do
 
   create_table "agreements", :force => true do |t|
     t.integer  "product_id",                                      :null => false
@@ -21,11 +21,7 @@ ActiveRecord::Schema.define(:version => 20130409044531) do
     t.text     "description"
     t.string   "agreement_type",                                  :null => false
     t.string   "frequency"
-<<<<<<< HEAD
-    t.date     "start_date",            :default => '2013-04-16', :null => false
-=======
-    t.date     "start_date",            :default => '2013-04-13', :null => false
->>>>>>> f323364bebfbb4ab7fc791388a6db238b9d3c626
+    t.date     "start_date",            :default => '2013-04-18', :null => false
     t.date     "end_date"
     t.float    "quantity",                                        :null => false
     t.string   "selling_unit",                                    :null => false
@@ -124,6 +120,19 @@ ActiveRecord::Schema.define(:version => 20130409044531) do
   add_index "certifications_producer_profiles", ["certification_id"], :name => "index_certifications_producer_profiles_on_certification_id"
   add_index "certifications_producer_profiles", ["producer_profile_id"], :name => "index_certifications_producer_profiles_on_producer_profile_id"
 
+  create_table "images", :force => true do |t|
+    t.integer  "imageable_id"
+    t.string   "imageable_type"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+  end
+
+  add_index "images", ["imageable_id", "imageable_type"], :name => "index_images_on_imageable_id_and_imageable_type"
+
   create_table "leads", :force => true do |t|
     t.string   "email"
     t.datetime "created_at", :null => false
@@ -168,13 +177,17 @@ ActiveRecord::Schema.define(:version => 20130409044531) do
   add_index "producer_profiles", ["user_id"], :name => "index_producer_profiles_on_user_id"
 
   create_table "products", :force => true do |t|
-    t.string   "name",                           :null => false
-    t.integer  "category_id",                    :null => false
+    t.string   "name",                               :null => false
+    t.integer  "category_id",                        :null => false
     t.text     "description"
-    t.string   "unit_type",    :default => "lb", :null => false
-    t.float    "catch_weight", :default => 0.0,  :null => false
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.string   "unit_type",        :default => "lb", :null => false
+    t.float    "catch_weight",     :default => 0.0,  :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.string   "pic_file_name"
+    t.string   "pic_content_type"
+    t.integer  "pic_file_size"
+    t.datetime "pic_updated_at"
   end
 
   add_index "products", ["category_id"], :name => "index_products_on_category_id"

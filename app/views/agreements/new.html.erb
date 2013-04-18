@@ -1,3 +1,9 @@
-<h1>Post <%= current_user.buyer? ? "Demand" : "Supply" %></h1>
-
+<% if params["agreement_type"] == "onetime" %>
+<h1>List <%= current_user.producer? ? "Product" : "Immediate Demand" %></h1>
+<h6>This product will be listed <%= current_user.producer? ? "for sale" : "as in immediate demand" %> in the current marketplace.</h6>
+<% else %>
+<h1>Post <%= current_user.producer? ? "Supply" : "Demand" %></h1>
+<h6>Propose a production agreement. <%= current_user.producer? ? "Buyers" : "Producers" %> will be able to see your proposal.<br />
+If they agree to your terms, they will respond and accept!</h6>
+<% end %>
 <%= render 'form' %>

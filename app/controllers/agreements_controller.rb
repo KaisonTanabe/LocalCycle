@@ -29,6 +29,7 @@ class AgreementsController < ApplicationController
 
   def new
     @agreement.agreement_type = params[:agreement_type] unless params[:agreement_type].nil?
+    @image = @agreement.images.build
 
     respond_to do |format|
       format.html # new.html.erb

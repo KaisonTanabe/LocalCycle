@@ -6,10 +6,9 @@ class Product < ActiveRecord::Base
 
   ## ATTRIBUTE PROTECTION
   
-  has_many :attachments, as: :attachable, dependent: :destroy
-  accepts_nested_attributes_for :attachments, allow_destroy: true
-
-  attr_accessible :description, :name, :unit_type, :catch_weight, :category_id
+  has_attached_file :pic, styles: {xlarge: "1500x1000>", large: "600x400>", medium: "240x160>", thumb: "60x40>"}, default_url: "/images/:style/missing.png"
+  
+  attr_accessible :description, :name, :unit_type, :catch_weight, :category_id, :pic
 
   ## ATTRIBUTE VALIDATION
 

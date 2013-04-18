@@ -4,8 +4,8 @@ class Agreement < ActiveRecord::Base
 
   ## SETUP ASSOCIATIONS
 
-  has_many :attachments, as: :attachable, dependent: :destroy
-  accepts_nested_attributes_for :attachments, allow_destroy: true
+  has_many :images, as: :imageable, dependent: :destroy
+  accepts_nested_attributes_for :images, allow_destroy: true
   
   belongs_to :product
   belongs_to :buyer, class_name: "User", foreign_key: :buyer_id
@@ -16,7 +16,8 @@ class Agreement < ActiveRecord::Base
   attr_accessible :product_id, :name, :description, :producer_id, :buyer_id,
     :quantity, :agreement_type, :start_date, :end_date,
     :selling_unit, :price, :locally_packaged, :can_deliver,
-    :can_pickup, :delivery_options, :pickup_options, :frequency
+    :can_pickup, :delivery_options, :pickup_options, :frequency,
+    :images_attributes
 
   ## ATTRIBUTE VALIDATION
 
