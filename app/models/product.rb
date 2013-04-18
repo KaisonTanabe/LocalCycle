@@ -6,6 +6,9 @@ class Product < ActiveRecord::Base
 
   ## ATTRIBUTE PROTECTION
   
+  has_many :attachments, as: :attachable, dependent: :destroy
+  accepts_nested_attributes_for :attachments, allow_destroy: true
+
   attr_accessible :description, :name, :unit_type, :catch_weight, :category_id
 
   ## ATTRIBUTE VALIDATION

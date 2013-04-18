@@ -3,6 +3,9 @@ class Agreement < ActiveRecord::Base
   ############# CONFIGURATION #############
 
   ## SETUP ASSOCIATIONS
+
+  has_many :attachments, as: :attachable, dependent: :destroy
+  accepts_nested_attributes_for :attachments, allow_destroy: true
   
   belongs_to :product
   belongs_to :buyer, class_name: "User", foreign_key: :buyer_id

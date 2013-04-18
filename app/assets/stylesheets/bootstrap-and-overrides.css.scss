@@ -26,6 +26,14 @@
 @import "partials/parsley";
 
 
+.border {
+    border: 1px solid #9d8974;
+    border-radius: 10px;
+    padding: 0 12px 12px;
+    margin-bottom: 30px;
+}
+
+
 /* =============================================================================
    Extra Defaults
    ========================================================================== */
@@ -39,13 +47,6 @@ body {
 hr { box-shadow: 0 1px 1px #dfd3c7; }
 
 legend { border-bottom: 1px solid #9d8974; font-family: 'savu'; color: $secondaryColor; }
-
-.border {
-    border: 1px solid #9d8974;
-    border-radius: 10px;
-    padding: 0 12px 12px;
-    margin-bottom: 30px;
-}
 
 nav ul, nav ol { list-style: none; list-style-image: none; margin: 0; padding: 0; }
 nav.inline li { display: block; float: left;}
@@ -122,20 +123,6 @@ table {
 
     td.name {
 	max-width: 135px;
-    }
-}
-
-.panel {
-    background-color: rgba(255,255,255,0.75);
-    @include border-radius(12px);
-    padding:20px;
-    border: 4px solid #fff;
-    margin: 150px auto 0;
-    max-width: 460px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.25);
-    &.wide {
-	margin-top: 50px;
-	max-width: 650px;
     }
 }
 
@@ -352,7 +339,7 @@ footer {
 	background: url(col-divider.png) 48% 0 no-repeat;
 	form {
 	    width: 320px;
-	    margin: 60px auto 0;
+	    margin: 30px auto 0;
 	    input[type="submit"] { font-weight: bold; }
 	    h6 { text-align: center;}
 	    .controls { margin-left: 100px; }
@@ -469,6 +456,7 @@ footer {
     padding-top: 5px;
 }
 
+.btn-success,
 .btn-primary {
     font-weight: bold;
 }
@@ -482,6 +470,24 @@ footer {
 /* =============================================================================
    Bootstrap Additions
    ========================================================================== */
+
+.actions-bar {
+    margin-top: 21px;
+}
+
+.panel {
+    background-color: rgba(255,255,255,0.75);
+    @include border-radius(12px);
+    padding:20px;
+    border: 4px solid #fff;
+    margin: 150px auto 0;
+    max-width: 460px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.25);
+    &.wide {
+	margin-top: 50px;
+	max-width: 650px;
+    }
+}
 
 .btn-bubble {
     font-weight: bold;

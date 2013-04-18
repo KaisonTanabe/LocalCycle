@@ -46,8 +46,5 @@
   ############ PUBLIC METHODS #############
 
 
-  ############ PUBLIC METHODS #############
-
-
   ############ PRIVATE METHODS ############
   private
