@@ -41,6 +41,7 @@ class AgreementsController < ApplicationController
   end
 
   def create
+    @agreement.images.build(image: @agreement.product.best_pic) unless params[:agreement][:images_attributes]
 
     respond_to do |format|
       if @agreement.save

@@ -21,16 +21,16 @@ ActiveRecord::Schema.define(:version => 20130418165915) do
     t.text     "description"
     t.string   "agreement_type",                                  :null => false
     t.string   "frequency"
-    t.date     "start_date",            :default => '2013-04-18', :null => false
+    t.date     "start_date",            :default => '2013-04-22', :null => false
     t.date     "end_date"
     t.float    "quantity",                                        :null => false
     t.string   "selling_unit",                                    :null => false
     t.float    "price",                                           :null => false
-    t.boolean  "locally_packaged",                                :null => false
+    t.boolean  "locally_packaged",      :default => false,        :null => false
     t.boolean  "can_deliver",           :default => false,        :null => false
     t.text     "delivery_options"
     t.float    "min_delivery_quantity"
-    t.float    "max_delivery_quantity"
+    t.float    "delivery_fee"
     t.boolean  "can_pickup",            :default => false,        :null => false
     t.text     "pickup_options"
     t.float    "min_pickup_quantity"
@@ -78,8 +78,13 @@ ActiveRecord::Schema.define(:version => 20130418165915) do
     t.string   "website"
     t.string   "twitter"
     t.string   "facebook"
+    t.boolean  "text_updates",     :default => true, :null => false
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
+    t.string   "pic_file_name"
+    t.string   "pic_content_type"
+    t.integer  "pic_file_size"
+    t.datetime "pic_updated_at"
   end
 
   add_index "buyer_profiles", ["user_id"], :name => "index_buyer_profiles_on_user_id"
@@ -89,8 +94,12 @@ ActiveRecord::Schema.define(:version => 20130418165915) do
     t.text     "description"
     t.integer  "parent_id"
     t.integer  "fakeid"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.string   "pic_file_name"
+    t.string   "pic_content_type"
+    t.integer  "pic_file_size"
+    t.datetime "pic_updated_at"
   end
 
   add_index "categories", ["parent_id"], :name => "index_categories_on_parent_id"
@@ -151,13 +160,13 @@ ActiveRecord::Schema.define(:version => 20130418165915) do
 
   create_table "producer_profiles", :force => true do |t|
     t.integer  "user_id"
-    t.string   "name",                                 :null => false
-    t.string   "street_address_1",                     :null => false
+    t.string   "name",                                       :null => false
+    t.string   "street_address_1",                           :null => false
     t.string   "street_address_2"
-    t.string   "city",                                 :null => false
-    t.string   "state",                                :null => false
-    t.string   "country",          :default => "US",   :null => false
-    t.string   "zip",                                  :null => false
+    t.string   "city",                                       :null => false
+    t.string   "state",                                      :null => false
+    t.string   "country",                :default => "US",   :null => false
+    t.string   "zip",                                        :null => false
     t.float    "latitude"
     t.float    "longitude"
     t.string   "phone"
@@ -165,13 +174,19 @@ ActiveRecord::Schema.define(:version => 20130418165915) do
     t.string   "website"
     t.string   "twitter"
     t.string   "facebook"
-    t.string   "growing_methods",  :default => "none", :null => false
-    t.boolean  "has_eggs",         :default => false,  :null => false
-    t.boolean  "has_livestock",    :default => false,  :null => false
-    t.boolean  "has_dairy",        :default => false,  :null => false
-    t.boolean  "has_pantry",       :default => false,  :null => false
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.string   "growing_methods",        :default => "none", :null => false
+    t.text     "custom_growing_methods"
+    t.boolean  "has_eggs",               :default => false,  :null => false
+    t.boolean  "has_livestock",          :default => false,  :null => false
+    t.boolean  "has_dairy",              :default => false,  :null => false
+    t.boolean  "has_pantry",             :default => false,  :null => false
+    t.boolean  "text_updates",           :default => true,   :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+    t.string   "pic_file_name"
+    t.string   "pic_content_type"
+    t.integer  "pic_file_size"
+    t.datetime "pic_updated_at"
   end
 
   add_index "producer_profiles", ["user_id"], :name => "index_producer_profiles_on_user_id"

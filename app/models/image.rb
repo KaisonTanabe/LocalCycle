@@ -4,7 +4,7 @@ class Image < ActiveRecord::Base
   ## SETUP ASSOCIATIONS
 
   belongs_to :imageable, polymorphic: true
-  has_attached_file :image, styles: {xlarge: "1500x1000>", large: "600x400>", medium: "240x160>", thumb: "60x40>"}
+  has_attached_file :image, styles: IMAGE_STYLES, default_url: DEFAULT_PAPERCLIP_IMAGE
 
   ## ATTRIBUTE PROTECTION
   

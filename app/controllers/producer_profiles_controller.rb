@@ -11,7 +11,6 @@ class ProducerProfilesController < ApplicationController
 
 
   def create
-    @producer_profile.user_id = current_user.id
     
     respond_to do |format|
       if @producer_profile.save

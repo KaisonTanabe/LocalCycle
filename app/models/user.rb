@@ -17,7 +17,8 @@ class User < ActiveRecord::Base
 
   ## ATTRIBUTE PROTECTION
   attr_accessible :first_name, :last_name, :email, :notes,
-    :attachments_attributes, :role, :producer_profile_attributes
+    :attachments_attributes, :role, 
+    :buyer_profile_attributes, :producer_profile_attributes
 
 
   ## ATTRIBUTE VALIDATION

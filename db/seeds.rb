@@ -54,4 +54,5 @@ ProducerProfile.create(
 
 require File.expand_path('../seed_products', __FILE__)
 require File.expand_path('../seed_product_pics', __FILE__)
+require File.expand_path('../alter_product_tree', __FILE__)
 require File.expand_path('../seed_certifications', __FILE__)

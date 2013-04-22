@@ -1,0 +1,19 @@
+<div class="control-group">
+  <% if f.object.new_record? %>
+  <div class="">
+    <div id="product_pic_div" style="padding: 10px 0 10px 1px;"></div>
+    <%= f.file_field :image, class: "span4" %>
+  </div>
+  <% else %>
+  <div class="controls controls-row child-field" style="padding: 5px;" >
+    <% if !@agreement.images.any? %><div id="product_pic_div"></div><% end %>
+    <%= image_tag @agreement.images[0].image.url(:medium) %>
+    <span class="help-inline"><%= link_to raw('<span class="icon-white icon-remove"></span> Remove'), 'javascript:void(0)', class: 'remove-old-child btn btn-mini btn-inverse' %></span>
+    <%= f.hidden_field :_destroy, class: 'destroy-field', value: '0' %>
+  </div>
+  <% end %>
+
+  <div class="">
+    <span class="help-block">Upload an image to use instead of the default. 2MB Limit.</span>
+  </div>
+</div>

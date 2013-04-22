@@ -48,11 +48,12 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @attachment = @user.attachments.build
   end
 
   def update
-    params[:user][:producer_profile_attributes][:certification_ids] ||= []
+    if @user.producer?
+      params[:user][:producer_profile_attributes][:certification_ids] ||= []
+    end
 
     respond_to do |format|
       if @user.update_attributes(params[:user])

@@ -1,8 +1,8 @@
 <%= form_for(@agreement, html: { multipart: true, class: "form-horizontal" }) do |f| %>
   
-  <legend></legend>
-  <%= render partial: 'partials/errors', locals: {obj: @agreement} %>
-  <p><span class="label label-info">Instructions:</span> Start typing a product name. Then select your product to auto-populate options<br />&nbsp;</p>
+<legend></legend>
+<%= render partial: 'partials/errors', locals: {obj: @agreement} %>
+<p><span class="label label-info">Instructions:</span> Start typing a product name. Then select your product to auto-populate options<br />&nbsp;</p>
 
 <div class="row">
   <div class="span6">
@@ -14,11 +14,10 @@
     </div>
 
     <div class="control-group">
-      <%= f.label :name, "Name/Title:", class: "control-label" %>
+      <%= f.label :name, "Title:", class: "control-label" %>
       <div class="controls controls-row">
 	<%= f.text_field :name, class: "span4" %>
-	<span class="help-inline">Further differentiate <%= current_user.producer? ? "your product" : "your need" %>.<br />
-	  Ex. "English Cucumbers, fresh organic"</span>
+	<span class="help-inline">Further differentiate <%= current_user.producer? ? "your product" : "your proposal" %>.</span>
       </div>
     </div>
 
@@ -26,7 +25,7 @@
       <%= f.label :description, "Description:", class: "control-label" %>
       <div class="controls controls-row">
 	<%= f.text_area :description, rows: 4, class: "span4" %>
-	<span class="help-inline">(optional) Add a detailed description<%= current_user.producer? ? "." : " of what you are looking for." %></span>
+	<span class="help-inline">(optional) Add a detailed description or custom instructions<%= current_user.producer? ? "." : " for what you are looking for." %></span>
       </div>
     </div>
 
@@ -41,28 +40,18 @@
   </div>
 
   <div class="span6">
-    <%= f.fields_for :images do |fa| %>
-    <div class="control-group">
-      <%= fa.label :image, "Thumbnail: ", class: "req control-label" %>
-      <% if fa.object.new_record? %>
-        <div class="controls controls-row">
-	  <div id="product_pic_div" style="padding: 10px 2px;"></div>
- 	  <%= fa.file_field :image, rows: 4, class: "span4" %>
-	</div>
-      <% else %>
-        <div class="controls controls-row child-field" style="padding: 5px;" >
-	  <% if !@agreement.images.any? %><div id="product_pic_div"></div><% end %>
-	  <%= image_tag @agreement.images[0].image.url(:medium) %>
-	  <span class="help-inline"><%= link_to raw('<span class="icon-white icon-remove"></span> Remove'), 'javascript:void(0)', class: 'remove-old-child btn btn-mini btn-inverse' %></span>
-	  <%= fa.hidden_field :_destroy, class: 'destroy-field', value: '0' %>
-	</div>
-      <% end %>
-      <div class="controls">
-	<span class="help-block">Upload an image to use instead of the default. 2MB Limit.</span>
-      </div>
-    </div>
+    <%= f.fields_for :images do |fi| %>
+      <%= render partial: "agreements/image", locals: {f: fi} %>
     <% end %>
+  </div>
+</div>
 
+<div class="row">
+  <div class="span12">
+    <p><br /></p>
+    <legend>Preferred Partners</legend>
+    <p>List preferred <%= current_user.buyer? ? "producers" : "buyers" %> below. They will be notified and have 3 days to respond before your proposal becomes public.</p>
+    [TODO]
   </div>
 </div>
 
@@ -106,6 +95,7 @@
 <% else %>
 <div class="row">
   <div class="span12">
+    <p><br /></p>
     <legend>Agreement Options</legend>
   </div>
 
@@ -184,7 +174,7 @@
 	<%= f.label :start_date, "Date:", class: "control-label" %>
 	<div class="controls controls-row controls-date">
 	  <%= f.date_select :start_date, :prompt => true, :order => [:month, :day, :year] %>
-	  <span class="help-inline">Date <%= current_user.producer? ? "your product is available" : "product is needed" %></span>
+	  <span class="help-inline">On what date <%= current_user.producer? ? "will your product be available?" : "is this product is needed?" %></span>
 	</div>
       </div>
     </div>
@@ -197,46 +187,12 @@
   <div class="span12">
     <p><br /></p>
     <legend>Delivery Options</legend>
+    <p>Use your default delivery options below OR <%= link_to "Customize", "#" %></p>
+    <% if current_user.producer? %>    
+    <% elsif current_user.buyer? %>
+    <% end %>
+    [TODO]
   </div>
-
-  <% if current_user.producer? %>
-  <div class="span6">
-    <div class="control-group">
-      <%= f.label :can_deliver, "Can Deliver?", class: "control-label" %>
-      <div class="controls control-row">
-	<label class="radio" for="agreement_can_deliver_true"><%= f.radio_button :can_deliver, true, class: "yes" %> YES</label>
-	<label class="radio" for="agreement_can_deliver_true"><%= f.radio_button :can_deliver, false, class: "no" %> No</label>
-      </div>
-    </div>
-    
-    <div class="control-group">
-      <%= f.label :delivery_options, "Delivery Instructions:", class: "control-label" %>
-      <div class="controls control-row">
-	<%= f.text_area :delivery_options, rows: 4, class: "span4" %>
-      </div>
-    </div>
-  </div>
-
-  <% elsif current_user.buyer? %>
-
-  <div class="span6">
-    <div class="control-group">
-      <%= f.label :can_pickup, "Can Pickup?", class: "control-label" %>
-      <div class="controls control-row">
-	<label class="radio" for="agreement_can_pickup_true"><%= f.radio_button :can_pickup, true, class: "yes" %> YES</label>
-	<label class="radio" for="agreement_can_pickup_true"><%= f.radio_button :can_pickup, false, class: "no" %> No</label>
-      </div>
-    </div>
-    
-
-    <div class="control-group">
-      <%= f.label :pickup_options, "Pickup Instructions:", class: "control-label" %>
-      <div class="controls control-row">
-	<%= f.text_area :pickup_options, rows: 4, class: "span4" %>
-      </div>
-    </div>
-  </div>
-  <% end %>
 </div>
 
 <hr style="clear: both;" />

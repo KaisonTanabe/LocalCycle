@@ -1,3 +1,12 @@
-<div class="btn-group pull-right">
-  <%= link_to 'Add a Product', new_agreement_path(agreement_type: "onetime"), class: "btn btn-primary" %>
+<div class="row">
+  <div class="span12">
+    <div class="btn-group pull-right actions-bar">
+      <% if current_user.producer? %>
+      <%= link_to 'New Product', new_agreement_path, class: "btn btn-primary" %>
+      <%= link_to 'My Products', marketplace_agreements_path(producer_id: current_user.id), class: "btn" %>
+      <% end %>
+      <%= link_to raw('<span class="icon-question-sign"></span>'), "#", class: "btn" %>
+    </div>
+    <h1><img class="big-icon" src="/assets/icon-mrkt.png" alt="Marketplace Icon" /> Marketplace</h1>
+  </div>
 </div>

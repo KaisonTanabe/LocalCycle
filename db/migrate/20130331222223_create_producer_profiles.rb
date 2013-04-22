@@ -22,12 +22,15 @@ class CreateProducerProfiles < ActiveRecord::Migration
       t.string  :twitter
       t.string  :facebook
 
-      t.string  :growing_methods,  null: false, default: "none"
+      t.string  :growing_methods,    null: false, default: "none"
+      t.text    :custom_growing_methods
 
-      t.boolean :has_eggs,         null: false, default: false
-      t.boolean :has_livestock,    null: false, default: false
-      t.boolean :has_dairy,        null: false, default: false
-      t.boolean :has_pantry,       null: false, default: false
+      t.boolean :has_eggs,           null: false, default: false
+      t.boolean :has_livestock,      null: false, default: false
+      t.boolean :has_dairy,          null: false, default: false
+      t.boolean :has_pantry,         null: false, default: false
+
+      t.boolean :text_updates,       null: false, default: true
 
       t.timestamps
     end

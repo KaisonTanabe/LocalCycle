@@ -18,12 +18,12 @@ class CreateAgreements < ActiveRecord::Migration
 
       t.float      :price,            null: false
 
-      t.boolean    :locally_packaged, null: false
+      t.boolean    :locally_packaged, null: false, default: false
 
       t.boolean    :can_deliver,      null: false, default: false
       t.text       :delivery_options
       t.float      :min_delivery_quantity
-      t.float      :max_delivery_quantity
+      t.float      :delivery_fee
       t.boolean    :can_pickup,       null: false, default: false
       t.text       :pickup_options
       t.float      :min_pickup_quantity

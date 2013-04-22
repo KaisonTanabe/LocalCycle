@@ -10,7 +10,9 @@ LOCALCYCLE::Application.routes.draw do
 
   resources :producer_profiles, only: ["new","create"]
 
-  resources :products
+  resources :products do
+    get 'pic', :on => :member
+  end
 
   devise_for :users, path_prefix: "d", path_names: { sign_in: 'login', sign_up: 'register' }, 
     controllers: {confirmations: 'confirmations', sessions: 'sessions', registrations: 'registrations'}

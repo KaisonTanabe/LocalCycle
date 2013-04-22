@@ -6,9 +6,12 @@
   <li class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog"></i> Manage <b class="caret"></b></a>
     <ul class="dropdown-menu">
-      <li><%= link_to "Agreements", agreements_path %></li>
-      <li><%= link_to "Inventory", agreements_path(agreement_type: "onetime") %></li>
-      <li><%= link_to "Transactions", agreements_path %></li>
+      <li><%= link_to "Agreements", "#" %></li>
+      <% if current_user.buyer? %>
+      <% else %>
+      <li><%= link_to "Inventory", "#" %></li>
+      <% end %>
+      <li><%= link_to "Transactions", "#" %></li>
 
       <% if current_user.admin? %>
       <li><%= link_to "Users", users_path %></li>

@@ -10,7 +10,9 @@ class Category < ActiveRecord::Base
 
   ## ATTRIBUTE PROTECTION
 
-  attr_accessible :description, :name, :parent_id, :fakeid
+  has_attached_file :pic, styles: IMAGE_STYLES, default_url: DEFAULT_PAPERCLIP_IMAGE
+
+  attr_accessible :description, :name, :parent_id, :fakeid, :pic
 
 
   ## ATTRIBUTE VALIDATION
@@ -51,7 +53,7 @@ class Category < ActiveRecord::Base
 
   # Initialize tree creation
   def self.createTreeFromJSON(tree)
-    top_level = ["","Meat","Dairy & Soy","Eggs","Fruit","Vegetables","Pantry","Baked Goods","Sea Food"]
+    top_level = ["","Meat","Dairy & Soy","Eggs","Fruit","Vegetables","Pantry","Baked Goods","Seafood"]
     puts "Creating Categories and Products"
     tree.each do |k,v|
       if k.to_i <= 8
@@ -102,9 +104,13 @@ class Category < ActiveRecord::Base
 
   ############ PUBLIC METHODS #############
 
+  def best_pic_url
+    (pic? or root?) ? pic.url(:medium) : parent.best_pic_url
+  end  
 
-  ############ PUBLIC METHODS #############
-
+  def best_pic
+    (pic? or root?) ? pic : parent.best_pic
+  end  
 
   ############ PRIVATE METHODS ############
   private

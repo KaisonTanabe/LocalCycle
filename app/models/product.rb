@@ -6,7 +6,8 @@ class Product < ActiveRecord::Base
 
   ## ATTRIBUTE PROTECTION
   
-  has_attached_file :pic, styles: {xlarge: "1500x1000>", large: "600x400>", medium: "240x160>", thumb: "60x40>"}, default_url: "/images/:style/missing.png"
+  belongs_to :category
+  has_attached_file :pic, styles: IMAGE_STYLES, default_url: DEFAULT_PAPERCLIP_IMAGE
   
   attr_accessible :description, :name, :unit_type, :catch_weight, :category_id, :pic
 
@@ -49,8 +50,13 @@ class Product < ActiveRecord::Base
 
   ############ PUBLIC METHODS #############
 
+  def best_pic_url
+    pic? ? pic.url(:medium) : category.best_pic_url
+  end
 
-  ############ PUBLIC METHODS #############
+  def best_pic
+    pic? ? pic : category.best_pic
+  end
 
 
   ############ PRIVATE METHODS ############

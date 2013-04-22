@@ -22,6 +22,8 @@ class CreateBuyerProfiles < ActiveRecord::Migration
       t.string  :twitter
       t.string  :facebook
 
+      t.boolean :text_updates,       null: false, default: true
+
       t.timestamps
     end
     add_index :buyer_profiles, :user_id

@@ -11,7 +11,6 @@ class BuyerProfilesController < ApplicationController
 
 
   def create
-    @buyer_profile.user_id = current_user.id
     
     respond_to do |format|
       if @buyer_profile.save

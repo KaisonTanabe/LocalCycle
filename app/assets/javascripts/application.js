@@ -27,7 +27,8 @@ jQuery(function($){
     //// Plugin initializers
 
     // Initialize Select2 Plugin (pretty select fields) on select fields with class="select2"
-    $('.select2').select2({minimumInputLength: 2});
+//    $('.select2').select2({minimumInputLength: 2});
+    $('.select2').select2({});
 
     // Initialize Parsley Plugin (javascript validations) on forms with class="parsley"
     $('form.parsley').parsley({
@@ -135,13 +136,6 @@ jQuery(function($){
 	    }
 	}
     }
-    function displayProductPic(src) {
-	if (src !== "") {
-	    var img = $('<img id="profile_pic">');
-	    img.attr("src", src);
-	    $("#product_pic_div").html(img);
-	}
-    }
     function addZero(num) {
 	(String(num).length < 3) ? num = String("0" + num) :  num = String(num);
 	return num;
@@ -169,7 +163,10 @@ jQuery(function($){
 	if (name.val() == "") {
 	    name.val($('#agreement_product_id option:selected').html());
 	}
-	displayProductPic("http://s3.amazonaws.com/localcycle/products/pics/000/000/" + addZero($("#agreement_product_id option:selected").val()) + "/medium/" + $('#agreement_product_id option:selected').html().toLowerCase().replace(/[^a-z0-9 -]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-') + ".jpg");
+	$.ajax({
+	    url: "/products/" + $("#agreement_product_id option:selected").val() + "/pic",
+	    type: 'GET'
+	});
     });
 
     $('#agreement_selling_unit').on("change", function(e) {

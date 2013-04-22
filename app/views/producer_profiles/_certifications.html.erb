@@ -20,6 +20,13 @@
   <label class="radio" for="producer_profile_growing_methods_biodynamic"><%= f.radio_button :growing_methods, "biodynamic" %><strong style="color: #146527;">Biodynamic (certified)</strong> agriculture considers both the material and spiritual context of food production and works with terrestrial as well as cosmic influences. The influence of planetary rhythms on the growth of plants and animals, in terms of the ripening power of light and warmth, is managed by guiding cultivation times with an astronomical calendar. All organic principles apply to biodynamic farming.</label>
 </div>
 
+<div id="custom" class="growing_methods control-group">
+  <label class="radio" for="producer_profile_growing_methods_custom"><%= f.radio_button :growing_methods, "custom" %><strong style="color: #532f08;">Custom</strong></label>
+  <div class="controls control-row">
+    <%= f.text_area, :custom_methods, rows: 4, placeholder: "Explain your methods...", class: "span9" %>
+  </div>
+</div>
+
 <legend>Certifications</legend>
 <p>Do you have any of the following certifications?</p>
 <% Certification.by_type("producer").each do |c| %>

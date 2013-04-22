@@ -11,6 +11,10 @@ DEFAULT_PER_PAGE = 50
 
 SUPPORT_EMAIL = "support@localcycle.org"
 
+
+IMAGE_STYLES = {large: "600x400>", medium: "240x160>", thumb: "60x40>"}
+DEFAULT_PAPERCLIP_IMAGE = "/images/:style/missing.png"
+
 ###################################
 ## DISPLAY
 GENDER = {
@@ -38,7 +42,8 @@ GROWING_METHODS = {
   "responsible" => "Responsible",
   "green" => "Green",
   "organic" => "Organic",
-  "biodynamic" => "Biodynamic"
+  "biodynamic" => "Biodynamic",
+  "custom" => "Custom"
 }
 
 AGREEMENT_TYPES = {

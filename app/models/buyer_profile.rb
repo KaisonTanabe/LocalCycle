@@ -5,14 +5,16 @@ class BuyerProfile < ActiveRecord::Base
 
   belongs_to :user
 
-
   ## ATTRIBUTE PROTECTION
   
   attr_accessible :name, :latitude, :longitude, :phone,
     :street_address_1, :street_address_2, :city, :state, :country, :zip,
     :description, :website, :twitter, :facebook,
     :certifications, :growing_methods,
-    :has_eggs, :has_livestock, :has_dairy, :has_pantry, :user_id
+    :has_eggs, :has_livestock, :has_dairy, :has_pantry, :user_id,
+    :pic, :text_updates
+
+  has_attached_file :pic, styles: IMAGE_STYLES, default_url: DEFAULT_PAPERCLIP_IMAGE
 
 
   ## ATTRIBUTE VALIDATION
