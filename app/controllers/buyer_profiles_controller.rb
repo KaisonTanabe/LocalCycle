@@ -11,7 +11,8 @@ class BuyerProfilesController < ApplicationController
 
 
   def create
-    
+    @buyer_profile.user_id = current_user.id
+
     respond_to do |format|
       if @buyer_profile.save
         format.html { redirect_to agreements_path, notice: 'Buyer profile was successfully created.' }

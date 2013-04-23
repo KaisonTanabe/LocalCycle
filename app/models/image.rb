@@ -14,6 +14,9 @@ class Image < ActiveRecord::Base
 
   #validates
 
+  validates_attachment :image,
+    :size => { :in => 0..2.megabytes }
+
   #########################################
 
 

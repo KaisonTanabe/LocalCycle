@@ -18,6 +18,8 @@ class Category < ActiveRecord::Base
   ## ATTRIBUTE VALIDATION
 
   #validates
+  validates_attachment :pic,
+    :size => { :in => 0..2.megabytes }
 
 
   #########################################

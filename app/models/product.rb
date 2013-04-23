@@ -15,6 +15,9 @@ class Product < ActiveRecord::Base
 
   validates :name, :category_id, presence: true
 
+  validates_attachment :pic,
+    :size => { :in => 0..2.megabytes }
+
   #########################################
 
 

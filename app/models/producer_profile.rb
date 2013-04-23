@@ -19,6 +19,8 @@ class ProducerProfile < ActiveRecord::Base
     :description, :user_id, :growing_methods,
     presence: true
 
+  validates_attachment :pic,
+    :size => { :in => 0..2.megabytes }
   #########################################
 
 

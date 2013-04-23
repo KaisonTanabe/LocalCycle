@@ -23,6 +23,8 @@ class BuyerProfile < ActiveRecord::Base
     :street_address_1, :city, :state, :country, :zip,
     presence: true
 
+  validates_attachment :pic,
+    :size => { :in => 0..2.megabytes }
 
   #########################################
 
