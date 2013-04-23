@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(:version => 20130418165915) do
     t.text     "description"
     t.string   "agreement_type",                                  :null => false
     t.string   "frequency"
-    t.date     "start_date",            :default => '2013-04-22', :null => false
+    t.date     "start_date",            :default => '2013-04-23', :null => false
     t.date     "end_date"
     t.float    "quantity",                                        :null => false
     t.string   "selling_unit",                                    :null => false
