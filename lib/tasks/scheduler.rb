@@ -1,5 +1,5 @@
 desc "EMAILING list of ineligible students to admins"
-task :ineligible_student_list => :environment do
+task :seed_products => :environment do
   
   Product.all.each do |p|
     begin
