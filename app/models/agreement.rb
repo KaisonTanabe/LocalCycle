@@ -64,9 +64,28 @@ class Agreement < ActiveRecord::Base
 
   ############ CLASS METHODS ##############
 
-  #def self.
+  def self.csv_header 
+    "First Name,Last Name,Email,Teams".split(',') 
+  end
+
+  def self.build_from_csv(row) 
+    # find existing customer from email or create new 
+    agreement = Agreement.where(email: row[2]).first_or_initialize
+    agreement.attributes = {
+      :first_name => row[0],
+      :last_name => row[1],
+      :email => row[2],
+      :teams => Team.names_to_records(row[3].split("||"))
+    }
+    return agreement
+  end 
+
 
   ############ PUBLIC METHODS #############
+
+  def to_csv
+    [id, name, email, teams.map{|t| t.full_team_name}.join("||")]
+  end
 
   def deadline_is_possible?
     return if [deadline.blank?, begins_at.blank?].any?

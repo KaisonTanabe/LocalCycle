@@ -12,6 +12,7 @@ LOCALCYCLE::Application.routes.draw do
 
   resources :products do
     get 'pic', :on => :member
+    get 'export', :on => :collection
   end
 
   devise_for :users, path_prefix: "d", path_names: { sign_in: 'login', sign_up: 'register' }, 

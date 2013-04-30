@@ -51,8 +51,16 @@ class Product < ActiveRecord::Base
   ############ CLASS METHODS ##############
 
   #def self.
+  def self.csv_header 
+    "ID,Name,Description,Selling Unit,Catch Weight,Season Start Date,Season End Date".split(',') 
+  end
+
 
   ############ PUBLIC METHODS #############
+
+  def to_csv
+    [id, name, description, unit_type, catch_weight, start_date, end_date]
+  end
 
   def best_pic_url(sym)
     pic? ? pic.url(sym) : category.best_pic_url(sym)

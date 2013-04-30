@@ -1,6 +1,10 @@
 class ProductsController < ApplicationController
   load_and_authorize_resource
 
+  helper_method :sort_column, :sort_direction
+  
+  require 'csv'
+
   # GET /products
   # GET /products.json
   def index
@@ -80,5 +84,44 @@ class ProductsController < ApplicationController
       format.html { redirect_to products_url }
       format.json { head :no_content }
     end
+  end
+
+  def export 
+    products = filter_and_sort(@products, params)
+
+    filename = "products_#{Date.today.strftime('%b-%d-%y')}"
+    csv_data = CSV.generate do |csv|
+      csv << Product.csv_header
+      products.each do |t|
+        csv << t.to_csv
+      end
+    end
+    send_data csv_data,
+      :type => 'text/csv; charset=iso-8859-1; header=present',
+      :disposition => "attachment; filename=#{filename}.csv"
+  end
+
+  private
+
+  def filter_and_sort(products, params)
+    products = products.by_name(params[:name]) unless params[:name].blank?
+    products = products.by_category(params[:category]) unless params[:category].blank?
+
+    return products.order(sort_product_column + " " + sort_direction)
+  end
+  
+  def sort_product_column
+    sort = params[:sort] || ''
+    Product.column_names.include?(sort) ? sort : "name"
+  end
+
+  def sort_column
+    sort = params[:sort] || ''
+    Product.column_names.include?(sort) ? sort : "agreements.name"
+  end
+
+  def sort_direction
+    direction = params[:direction] || ''
+    "ASC DESC".include?(direction) ? direction : "ASC"
   end
 end

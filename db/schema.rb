@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(:version => 20130418165915) do
     t.text     "description"
     t.string   "agreement_type",                                  :null => false
     t.string   "frequency"
-    t.date     "start_date",            :default => '2013-04-26', :null => false
+    t.date     "start_date",            :default => '2013-04-30', :null => false
     t.date     "end_date"
     t.float    "quantity",                                        :null => false
     t.string   "selling_unit",                                    :null => false
@@ -192,13 +192,15 @@ ActiveRecord::Schema.define(:version => 20130418165915) do
   add_index "producer_profiles", ["user_id"], :name => "index_producer_profiles_on_user_id"
 
   create_table "products", :force => true do |t|
-    t.string   "name",                               :null => false
-    t.integer  "category_id",                        :null => false
+    t.string   "name",                                       :null => false
+    t.integer  "category_id",                                :null => false
     t.text     "description"
-    t.string   "unit_type",        :default => "lb", :null => false
-    t.float    "catch_weight",     :default => 0.0,  :null => false
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
+    t.date     "start_date",       :default => '2013-01-01', :null => false
+    t.date     "end_date",         :default => '2013-12-31', :null => false
+    t.string   "unit_type",        :default => "lb",         :null => false
+    t.float    "catch_weight",     :default => 0.0,          :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
     t.string   "pic_file_name"
     t.string   "pic_content_type"
     t.integer  "pic_file_size"
