@@ -1,6 +1,7 @@
 <div class="control-group">
+  <label class="control-label">Thumbnail:</label>
   <% if f.object.new_record? %>
-  <div class="">
+  <div class="controls controls-row child-field">
     <div id="product_pic_div" style="padding: 10px 0 10px 1px;"></div>
     <%= f.file_field :image, class: "span4" %>
   </div>
@@ -13,7 +14,7 @@
   </div>
   <% end %>
 
-  <div class="">
+  <div class="controls control-row">
     <span class="help-block">Upload an image to use instead of the default. 2MB Limit.</span>
   </div>
 </div>

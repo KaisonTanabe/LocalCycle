@@ -53,6 +53,15 @@ class Category < ActiveRecord::Base
 
   ############ CLASS METHODS ##############
 
+  def option_children
+    children.collect{|cc| [cc.name, cc.id]}
+  end
+
+  def option_products
+    products.collect{|p| [p.name, p.id]}
+  end
+
+
   # Initialize tree creation
   def self.createTreeFromJSON(tree)
     top_level = ["","Meat","Dairy & Soy","Eggs","Fruit","Vegetables","Pantry","Baked Goods","Seafood"]
@@ -106,9 +115,9 @@ class Category < ActiveRecord::Base
 
   ############ PUBLIC METHODS #############
 
-  def best_pic_url
-    (pic? or root?) ? pic.url(:medium) : parent.best_pic_url
-  end  
+  def best_pic_url(sym)
+    (pic? or root?) ? pic.url(sym) : parent.best_pic_url(sym)
+  end
 
   def best_pic
     (pic? or root?) ? pic : parent.best_pic

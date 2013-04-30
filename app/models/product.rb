@@ -41,7 +41,8 @@ class Product < ActiveRecord::Base
 
   #scope :by_, where()
   #scope :by_, includes(:model).where()
-  #scope :by_, lambda {|s| where()}
+  scope :by_category, lambda {|c| includes(:category).where("categories.name = ?", c)}
+  scope :by_name, lambda { |n| where('UPPER(products.name) LIKE UPPER(?)', '%'+n+'%')}
 
   #########################################
 
@@ -53,8 +54,8 @@ class Product < ActiveRecord::Base
 
   ############ PUBLIC METHODS #############
 
-  def best_pic_url
-    pic? ? pic.url(:medium) : category.best_pic_url
+  def best_pic_url(sym)
+    pic? ? pic.url(sym) : category.best_pic_url(sym)
   end
 
   def best_pic

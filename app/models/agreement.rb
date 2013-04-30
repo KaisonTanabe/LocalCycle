@@ -27,6 +27,11 @@ class Agreement < ActiveRecord::Base
   validates :locally_packaged, :can_deliver,
     :can_pickup, inclusion: {:in => [true, false]}
 
+  validates :start_date, :end_date,
+    presence: true if lambda { self.agreements_type == "seasonal"}
+  validates :start_date,
+    presence: true if lambda { self.agreements_type == "onetime"}
+
   #########################################
 
 
@@ -50,7 +55,8 @@ class Agreement < ActiveRecord::Base
 
   #scope :by_, where()
   #scope :by_, includes(:model).where()
-  #scope :by_, lambda {|s| where()}
+  scope :by_buyer, lambda {|b| where("buyer_id = ?", b)}
+  scope :by_producer, lambda {|b| where("producer_id = ?", b)}
 
   #########################################
 
@@ -69,9 +75,33 @@ class Agreement < ActiveRecord::Base
     end
   end
 
+  def bar_margins
+    if agreement_type == "indefinite"
+      ""
+    else
+      "margin-left: " + bar_margin_left.to_s + "%; margin-right: " + bar_margin_right.to_s + "%;"
+    end
+  end
+
+  def bar_status(cid)
+    puts producer_id
+    return "complete" if (!buyer_id.nil? and !producer_id.nil?)
+    return "pending" if (buyer_id == cid and producer_id.nil?) or (producer_id == cid and buyer_id.nil?)
+  end
 
   ############ PRIVATE METHODS ############
   private
 
+  def bar_margin_left
+    (start_date.yday.to_f/365)*100
+  end
+
+  def bar_margin_right
+    if agreement_type == "onetime"
+      100 - ((start_date.yday + 7).to_f/365)*100
+    else 
+      100 - (end_date.yday.to_f/365)*100
+    end
+  end
 
 end

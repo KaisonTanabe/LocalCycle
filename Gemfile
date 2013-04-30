@@ -18,7 +18,7 @@ gem 'closure_tree'
   #gem 'heroku'
 #end
 #gem 'bootstrap-sass'
-#gem 'bootstrap-datepicker-rails'
+gem 'bootstrap-datepicker-rails'
 #gem 'nokogiri'
 
 # Gems used only for assets and not required

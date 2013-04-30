@@ -1,0 +1,22 @@
+<% if @products.any? %>
+  <% @products.each do |product| %>
+    <%= content_tag_for :tr, product do %>
+      <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
+	<%= image_tag product.best_pic_url(:thumb), class: "thumb" %>
+	
+	<h5><%= link_to product.name, "#" %><br />
+	  <% if @agreements.where(product_id: product.id).any? %>
+	  <small><%= @agreements.where(product_id: product.id).count %> producers</small>
+	  <% end %>
+	  <%= link_to "Propose an Agreement", new_agreement_path(product_id: product.id), class: "btn btn-mini btn-primary" %>
+	</h5>
+      </td>
+      <td colspan="12">
+	<!--a class="bar" style="margin-left: 49%; margin-right: 22%;" href="#myModal"></a-->
+      </td>
+    <% end %>
+  <% end %>
+<% else %>
+  <tr><td colspan="13"><em>No matching products...</em></td></tr>
+<% end %>
+

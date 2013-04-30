@@ -19,6 +19,7 @@
 //= require bootstrap/bootstrap
 //= require modernizr-2.0.6.min
 //= require select2
+//= require bootstrap-datepicker
 //= require parsley.min
 //= require_tree .
 jQuery(function($){
@@ -27,8 +28,7 @@ jQuery(function($){
     //// Plugin initializers
 
     // Initialize Select2 Plugin (pretty select fields) on select fields with class="select2"
-//    $('.select2').select2({minimumInputLength: 2});
-    $('.select2').select2({});
+    $('.select2').select2({minimumInputLength: 2});
 
     // Initialize Parsley Plugin (javascript validations) on forms with class="parsley"
     $('form.parsley').parsley({
@@ -43,18 +43,20 @@ jQuery(function($){
 	icon: true
     });
 
+    $("#filter-toggle").on("click", function() {
+	$(this).toggleClass("active");
+    });
+
     // Initialize field errors in popover
     $('.fieldWithErrors').popover()
 
 
-    /**    
     // Initialize Datepicker on select fields with data-behavior='datepicker' attribute
     $("[data-behavior~='datepicker']").datepicker({
 	"format": "yyyy-mm-dd",
 	"weekStart": 1,
 	"autoclose": true
     });
-    */
     ////////////////////////////////////////////////////////////////////////////
 
 
@@ -158,17 +160,50 @@ jQuery(function($){
 
     
     /** AGREEMENT FORM **/
-    $('#agreement_product_id').on("change", function(e) {
-	var name = $("#agreement_name");
-	if (name.val() == "") {
-	    name.val($('#agreement_product_id option:selected').html());
-	}
-	$.ajax({
-	    url: "/products/" + $("#agreement_product_id option:selected").val() + "/pic",
-	    type: 'GET'
+    function resetSelect(elem, data) {
+	elem.empty();	
+	elem.append($('<option>', {value : ""}).text("-- Please Select --"))
+	$.each(data, function(k,v) {
+	    elem.append($('<option>', {value : v[1]}).text(v[0]));
+	    elem.attr("disabled", false);
 	});
-    });
+    }
 
+    $("#category_id").on("change", function() {
+	resetSelect($("#subcategory_id"), categories[$("#category_id").val()]["option_children"]);
+    });
+    $("#subcategory_id").on("change", function() {
+	resetSelect($("#fake_product_id"), categories[$("#subcategory_id").val()]["option_products"]);
+    });
+    $("#fake_product_id").on("change", function() {
+	$("#agreement_product_id").val($("#fake_product_id").val()).trigger("change");
+    });
+    function populateBrowsingFields() {
+	var productNameSelectID = $("#agreement_name");
+	var product = products[$('#agreement_product_id').val()];
+	if (product) {
+	    var subcategory = categories[product["category_id"]];
+	    var category = categories[subcategory["parent_id"]];
+	    if (productNameSelectID.val() == "") {
+		productNameSelectID.val($('#agreement_product_id option:selected').html());
+	    }
+	    
+	    $("#category_id").val(category["id"]);
+	    resetSelect($("#subcategory_id"), categories[$("#category_id").val()]["option_children"]);
+	    $("#subcategory_id").val(subcategory["id"]);
+	    resetSelect($("#fake_product_id"), categories[$("#subcategory_id").val()]["option_products"]);
+	    $("#fake_product_id").val(product["id"]);
+	    $.ajax({
+		url: "/products/" + $("#agreement_product_id option:selected").val() + "/pic",
+		type: 'GET'
+	    });
+	}
+    }
+    $('#agreement_product_id').on("change", function(e) {populateBrowsingFields();});
+    populateBrowsingFields();
+
+
+    
     $('#agreement_selling_unit').on("change", function(e) {
 	$("#quantity_add_on").html($('#agreement_selling_unit option:selected').html());
     });

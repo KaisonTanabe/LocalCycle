@@ -13,4 +13,5 @@
  *= require_self
  *= require bootstrap-and-overrides
  *= require select2
+ *= require bootstrap-datepicker
  */

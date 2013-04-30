@@ -80,6 +80,18 @@ h6 {
     font-weight: bold;
     margin-bottom: 0;
 }
+h5 {
+    font-weight: bold;
+    margin: 0;
+    font-family: "HelveticaNeue", Helvetica, Arial, sans-serif;
+}
+.thumb {
+    height: 40px;
+    width: 60px;
+    float: left;
+    margin-right: 15px;
+}
+
 
 a { 
     text-decoration: none;
@@ -95,6 +107,13 @@ a {
 	margin-top: 8px;
 	margin-left: 2px;
     }
+}
+
+div.input-row {
+    margin-top: -20px;
+    box-shadow: inset 0 0 1px #777;
+    background-color: #FAFAFA;
+    background-image: -moz-linear-gradient(center top , #FAFAFA, #EFEFEF);
 }
 
 table {
@@ -246,6 +265,27 @@ header.navbar {
     }
 }
 
+.bar {
+    display: block;
+    height: 6px;
+    background-color: #f6b328;
+    border: 1px solid #f37f23;
+    margin: 0 0 3px;
+    position: relative;
+    text-indent: -9999px;
+}
+.bar:hover {
+    background-color: #d7df23;
+    border: 1px solid #8cc63f;
+}
+.bar.pending {
+    background-color: #f9ed32;
+    border: 1px solid #ffd02c;
+}
+.bar.complete {
+    background-color: #8cc63f;
+    border: 1px solid #39b54a;
+}
 
 #content {
     padding: 20px 0 40px;
@@ -259,10 +299,10 @@ header.navbar {
 }
 
 footer {
+    padding: 0 0 2px;
     position: fixed;
     bottom: 0;
-    height: 20px;
-    padding: 10px 0;
+    height: 18px;
     font-size: 12px;
     background: #023008 url(body-bg.png);
     border-top: 3px solid #001f03;
@@ -423,6 +463,14 @@ footer {
 .nav-tabs .dropdown-toggle .caret {
     border-top-color: #39b54a;
 }
+ul#cat-nav li.dropdown:hover > ul.dropdown-menu {
+    display: block;    
+    margin-top: 0;
+}
+ul.dropdown-menu li.active a {
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
 
 .pagination .prev.disabled a {
     background-color: whiteSmoke;
@@ -435,6 +483,9 @@ footer {
 .table {
     ul {
 	list-style: none;
+	margin: 0;
+    }
+    form {
 	margin: 0;
     }
     tr {

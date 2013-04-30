@@ -1,15 +1,25 @@
+<script type="text/javascript">
+  <% a = Hash.new
+     Category.select("id, name, parent_id").each {|c| a[c.id] = c } %>
+     window.categories = <%= raw(a.to_json(:methods => %w(option_children option_products))) %>;
+  <% a = Hash.new
+     Product.select("id, name, category_id").each {|p| a[p.id] = p} %>
+     window.products = <%= raw(a.to_json) %>;
+     console.log(window.categories);
+</script>
 <%= form_for(@agreement, html: { multipart: true, class: "form-horizontal" }) do |f| %>
   
 <legend></legend>
 <%= render partial: 'partials/errors', locals: {obj: @agreement} %>
-<p><span class="label label-info">Instructions:</span> Start typing a product name. Then select your product to auto-populate options<br />&nbsp;</p>
 
 <div class="row">
+  <div class="span12"><h2>Two Methods:</h2></div>
   <div class="span6">
+    <h4>1. Quick-select system!</h4>
     <div class="control-group">
       <label class="req control-label" for="agreement_product_id">Product:</label>
       <div class="controls controls-row">
-	<%= f.select :product_id, option_groups_from_collection_for_select(Category.includes(:products).order('name'), :products, :name, :id, :name, (@agreement.new_record? ? "" : @agreement.product.id)), {prompt: "-- Please type and select --"}, {class: "select2 span4" } %>
+	<%= f.select :product_id, option_groups_from_collection_for_select(Category.includes(:products).order('name'), :products, :name, :id, :name, (@agreement.new_record? ? (params[:product_id].blank? ? "" : params[:product_id]) : @agreement.product.id)), {prompt: "-- Please type and select --"}, {class: "select2 span4" } %>
       </div>
     </div>
 
@@ -20,6 +30,10 @@
 	<span class="help-inline">Further differentiate <%= current_user.producer? ? "your product" : "your proposal" %>.</span>
       </div>
     </div>
+
+    <%= f.fields_for :images do |fi| %>
+      <%= render partial: "agreements/image", locals: {f: fi} %>
+    <% end %>
 
     <div class="control-group">
       <%= f.label :description, "Description:", class: "control-label" %>
@@ -40,9 +54,25 @@
   </div>
 
   <div class="span6">
-    <%= f.fields_for :images do |fi| %>
-      <%= render partial: "agreements/image", locals: {f: fi} %>
-    <% end %>
+    <h4>2. Browse the product tree.</h4>
+    <div class="control-group">
+      <label class="control-label">Category:</label>
+      <div class="controls controls-row">
+	<%= select_tag "category_id", options_from_collection_for_select(Category.roots, :id, :name), {prompt: "-- Please select --", class: "span4" } %>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">Sub-category:</label>
+      <div class="controls controls-row">
+	<%= select_tag "subcategory_id", options_from_collection_for_select(Category.leaves, :id, :name), {prompt: "-- Please select --", disabled: true, class: "span4" } %>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">Product:</label>
+      <div class="controls controls-row">
+	<%= select_tag "fake_product_id", options_from_collection_for_select(Product.all, :id, :name), {prompt: "-- Please select --", disabled: true, class: "span4" } %>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -156,14 +186,15 @@
       <div class="control-group">
 	<%= f.label :start_date, "Begin Date:", class: "control-label" %>
 	<div class="controls controls-row controls-date">
-	  <%= f.date_select :start_date, :prompt => true, :order => [:month, :day, :year] %>
+	  <%= f.text_field :start_date, data: {behavior: "datepicker"} %>
 	  <span class="help-inline">First week of agreement period</span>
 	</div>
       </div>    
       <div class="control-group">
 	<%= f.label :end_date, "End Date:", class: "control-label" %>
 	<div class="controls controls-row controls-date">
-	  <%= f.date_select :end_date, :prompt => true, :order => [:month, :day, :year] %>
+	  <%= f.text_field :end_date, data: {behavior: "datepicker"} %>
+	  <%#= f.date_select :end_date, :prompt => true, :order => [:month, :day, :year] %>
 	  <span class="help-inline">Last week of agreement period</span>
 	</div>
       </div>
@@ -173,7 +204,7 @@
       <div class="control-group">
 	<%= f.label :start_date, "Date:", class: "control-label" %>
 	<div class="controls controls-row controls-date">
-	  <%= f.date_select :start_date, :prompt => true, :order => [:month, :day, :year] %>
+	  <%= f.text_field :start_date, data: {behavior: "datepicker"} %>
 	  <span class="help-inline">On what date <%= current_user.producer? ? "will your product be available?" : "is this product is needed?" %></span>
 	</div>
       </div>
