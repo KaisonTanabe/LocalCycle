@@ -4,10 +4,12 @@
       <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
 	<%= image_tag product.best_pic_url(:thumb), class: "thumb" %>
 	
-	<h5><%= link_to product.name, "#" %><br />
-	  <% if @agreements.where(product_id: product.id).any? %>
-	  <small><%= @agreements.where(product_id: product.id).count %> producers</small>
+	<h5><%= link_to product.name, "#" %>
+	  <% available = @agreements.by_product(product.id).available_demand %>
+	  <% if available.any? %>
+	  <small><%= pluralize(available.count, "producer") %></small>
 	  <% end %>
+	  <br />
 	  <%= link_to "Propose an Agreement", new_agreement_path(product_id: product.id), class: "btn btn-mini btn-primary" %>
 	</h5>
       </td>

@@ -9,7 +9,7 @@ require File.expand_path('../application', __FILE__)
 TEST_DATA = false
 DEFAULT_PER_PAGE = 50
 
-SUPPORT_EMAIL = "support@localcycle.org"
+SUPPORT_EMAIL = "info@localcycle.org"
 
 
 IMAGE_STYLES = {large: "600x400>", medium: "240x160>", thumb: "60x40>"}
@@ -92,7 +92,7 @@ UNIT_TYPE = {
 ###################################
 ## EMAIL
 ADDITIONAL_ADMINS = ["Macklin Chaffee <macklin@goldenorbventure.com>"]
-REPLY_TO_ADDRESS = ["LocalCycle Support <support@localcycle.org>"]
+REPLY_TO_ADDRESS = ["LocalCycle Support <info@localcycle.org>"]
 ###################################
 
 

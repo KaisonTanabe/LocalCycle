@@ -52,14 +52,18 @@ class Product < ActiveRecord::Base
 
   #def self.
   def self.csv_header 
-    "ID,Name,Description,Selling Unit,Catch Weight,Season Start Date,Season End Date".split(',') 
+    "ID,Category,Name,Description,Selling Unit,Catch Weight,Season Start Date,Season End Date".split(',') 
   end
 
 
   ############ PUBLIC METHODS #############
 
   def to_csv
-    [id, name, description, unit_type, catch_weight, start_date, end_date]
+    [id, cat_name, description, unit_type, catch_weight, start_date, end_date]
+  end
+
+  def cat_name
+    Category.where(id: category_id).first.name
   end
 
   def best_pic_url(sym)

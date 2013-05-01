@@ -19,7 +19,7 @@ LOCALCYCLE::Application.configure do
 
   # If disable delivery errors, bad email addresses will be ignored
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options = { host: 'localcycle.com' }
+  config.action_mailer.default_url_options = { host: 'localcycle.org' }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.default charset: "utf-8"
 
@@ -29,7 +29,7 @@ LOCALCYCLE::Application.configure do
   config.action_mailer.smtp_settings = {
     :address              => "smtp.sendgrid.net",
     :port                 => 587,
-    :domain               => 'localcycle.com',
+    :domain               => 'localcycle.org',
     :user_name            => ENV['SENDMAIL_USERNAME'],
     :password             => ENV['SENDMAIL_PASSWORD'],
     :authentication       => 'plain',

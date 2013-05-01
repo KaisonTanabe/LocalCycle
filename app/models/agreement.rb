@@ -27,10 +27,8 @@ class Agreement < ActiveRecord::Base
   validates :locally_packaged, :can_deliver,
     :can_pickup, inclusion: {:in => [true, false]}
 
-  validates :start_date, :end_date,
-    presence: true if lambda { self.agreements_type == "seasonal"}
-  validates :start_date,
-    presence: true if lambda { self.agreements_type == "onetime"}
+  validates :start_date, :end_date, presence: true, :if => lambda { self.agreement_type == "seasonal"}
+  validates :start_date, presence: true, :if => lambda { self.agreement_type == "onetime"}
 
   #########################################
 
@@ -57,6 +55,9 @@ class Agreement < ActiveRecord::Base
   #scope :by_, includes(:model).where()
   scope :by_buyer, lambda {|b| where("buyer_id = ?", b)}
   scope :by_producer, lambda {|b| where("producer_id = ?", b)}
+  scope :by_product, lambda {|p| where("product_id = ?", p)}
+  scope :available_supply, where(:buyer_id == nil)
+  scope :available_demand, where(:producer_id == nil)
 
   #########################################
 

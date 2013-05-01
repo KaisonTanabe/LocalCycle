@@ -21,3 +21,9 @@ task :seed_products => :environment do
     end
   end
 end
+
+task :fix_products => :environment do  
+  Product.all.each do |p|
+    puts Category.where(id: p.category_id).first.name + " " + p.name if Product.where(name: p.name).count > 1
+  end
+end
