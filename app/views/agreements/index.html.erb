@@ -107,25 +107,25 @@
 	</tr>
       </thead>
       <tbody>
-	<% if current_user.buyer? and (params.count <= 2) %>
-	  <%= render "buyer_index"  %>
-	<% else %>
-	  <% if @agreements.any? %>
-	    <% @agreements.each do |a| %>
-	      <%= render partial: "agreement", locals: {a: a} %>
-	    <% end %>
-	  <% else %>
-	    <tr><td colspan="13"><em>No matching agreements...</em></td></tr>
-	  <% end %>
-	<% end %>
+	<%# if current_user.buyer? and (params.count <= 2) %>
+	  <%= render "buyer_index" %>
+	<%# else %>
+	  <%# if @agreements.any? %>
+	    <%# @agreements.each do |a| %>
+	      <%#= render partial: "agreement", locals: {a: a} %>
+	    <%# end %>
+	  <%# else %>
+	    <!--tr><td colspan="13"><em>No matching agreements...</em></td></tr-->
+	  <%# end %>
+	<%# end %>
       </tbody>
     </table>
     <div id="pagination">
-      <% if current_user.buyer? and (params.count <= 2) %>
+      <%# if current_user.buyer? and (params.count <= 2) %>
 	<%= will_paginate @products %>
-      <% else %>
-	<%= will_paginate @agreements %>
-      <% end %>
+      <%# else %>
+	<%#= will_paginate @agreements %>
+      <%# end %>
     </div>
   </div>
 </div>

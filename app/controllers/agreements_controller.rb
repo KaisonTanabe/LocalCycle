@@ -90,7 +90,7 @@ class AgreementsController < ApplicationController
   def filter_and_sort(agreements, params)
     
     agreements = agreements.by_name(params[:name]) unless params[:name].blank?
-    agreements = agreements.by_category(params[:cat]) unless params[:cat].blank?
+#    agreements = agreements.by_category(params[:cat]) unless params[:cat].blank?
     agreements = agreements.by_buyer(params[:buyer_id]) unless params[:buyer_id].blank?
     agreements = agreements.by_producer(params[:producer_id]) unless params[:producer_id].blank?
 
