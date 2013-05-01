@@ -30,6 +30,8 @@ jQuery(function($){
     // Initialize Select2 Plugin (pretty select fields) on select fields with class="select2"
     $('.select2').select2({minimumInputLength: 2});
 
+    $('.bar').popover({trigger: 'hover'});
+    
     // Initialize Parsley Plugin (javascript validations) on forms with class="parsley"
     $('form.parsley').parsley({
 	errors: {

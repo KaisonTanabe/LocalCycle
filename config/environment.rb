@@ -7,7 +7,7 @@ require File.expand_path('../application', __FILE__)
 ###################################
 
 TEST_DATA = false
-DEFAULT_PER_PAGE = 50
+DEFAULT_PER_PAGE = 20
 
 SUPPORT_EMAIL = "info@localcycle.org"
 

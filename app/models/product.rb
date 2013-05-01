@@ -39,10 +39,9 @@ class Product < ActiveRecord::Base
 
   ################ SCOPES #################
 
-  #scope :by_, where()
-  #scope :by_, includes(:model).where()
-  scope :by_category, lambda {|c| includes(:category).where("categories.name = ?", c)}
+  scope :by_category_name, lambda {|c| includes(:category).where("categories.name = ?", c)}
   scope :by_name, lambda { |n| where('UPPER(products.name) LIKE UPPER(?)', '%'+n+'%')}
+  scope :in_category, lambda { |c| includes(:category).where(category_id: Category.where(id: c).first.self_and_descendant_ids) }
 
   #########################################
 

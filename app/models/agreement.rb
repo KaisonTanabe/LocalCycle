@@ -56,8 +56,8 @@ class Agreement < ActiveRecord::Base
   scope :by_buyer, lambda {|b| where("buyer_id = ?", b)}
   scope :by_producer, lambda {|b| where("producer_id = ?", b)}
   scope :by_product, lambda {|p| where("product_id = ?", p)}
-  scope :available_supply, where(:buyer_id == nil)
-  scope :available_demand, where(:producer_id == nil)
+  scope :available_supply, where(buyer_id: nil)
+  scope :available_demand, where(producer_id: nil)
 
   #########################################
 
@@ -100,6 +100,16 @@ class Agreement < ActiveRecord::Base
       ""
     else
       "margin-left: " + bar_margin_left.to_s + "%; margin-right: " + bar_margin_right.to_s + "%;"
+    end
+  end
+
+  def duration
+    if agreement_type == "onetime"
+      "Once"
+    elsif agreement_type == "indefinite"
+      "Indefinite"
+    else
+      start_date.strftime("%M %d") + " - " + end_date.strftime("%M %d")
     end
   end
 

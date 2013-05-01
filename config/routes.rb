@@ -2,18 +2,19 @@ LOCALCYCLE::Application.routes.draw do
 
   resources :categories
 
-  resources :agreements do
+  resources :products do
+    get 'pic', :on => :member
+    get 'export', :on => :collection
     get 'marketplace', :on => :collection
+  end
+
+  resources :agreements do
+    get 'modal', :on => :member
   end
 
   resources :buyer_profiles, only: ["new","create"]
 
   resources :producer_profiles, only: ["new","create"]
-
-  resources :products do
-    get 'pic', :on => :member
-    get 'export', :on => :collection
-  end
 
   devise_for :users, path_prefix: "d", path_names: { sign_in: 'login', sign_up: 'register' }, 
     controllers: {confirmations: 'confirmations', sessions: 'sessions', registrations: 'registrations'}

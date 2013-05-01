@@ -5,9 +5,14 @@ class ProductsController < ApplicationController
   
   require 'csv'
 
-  # GET /products
-  # GET /products.json
   def index
+
+    # Ensure profile
+    redirect_to new_buyer_profile_path and return if current_user.buyer? and !current_user.buyer_profile
+    redirect_to new_producer_profile_path and return if current_user.producer? and !current_user.producer_profile
+
+    @products = filter_and_sort(@products, params)
+    @products = @products.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,8 +20,17 @@ class ProductsController < ApplicationController
     end
   end
 
-  # GET /products/1
-  # GET /products/1.json
+  def marketplace
+    @products = filter_and_sort_products(@products, params)
+    @products = @products.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
+
+    respond_to do |format|
+      format.html # marketplace.html.erb
+      format.json { render json: @agreements }
+    end
+  end
+
+
   def show
 
     respond_to do |format|
@@ -25,14 +39,15 @@ class ProductsController < ApplicationController
     end
   end
 
+
   def pic
+
     respond_to do |format|
       format.js {}
     end
   end
 
-  # GET /products/new
-  # GET /products/new.json
+
   def new
 
     respond_to do |format|
@@ -41,12 +56,10 @@ class ProductsController < ApplicationController
     end
   end
 
-  # GET /products/1/edit
   def edit
   end
 
-  # POST /products
-  # POST /products.json
+
   def create
 
     respond_to do |format|
@@ -60,8 +73,7 @@ class ProductsController < ApplicationController
     end
   end
 
-  # PUT /products/1
-  # PUT /products/1.json
+
   def update
 
     respond_to do |format|
@@ -75,8 +87,7 @@ class ProductsController < ApplicationController
     end
   end
 
-  # DELETE /products/1
-  # DELETE /products/1.json
+
   def destroy
     @product.destroy
 
@@ -85,6 +96,7 @@ class ProductsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 
   def export 
     products = filter_and_sort(@products, params)
@@ -105,19 +117,15 @@ class ProductsController < ApplicationController
 
   def filter_and_sort(products, params)
     products = products.by_name(params[:name]) unless params[:name].blank?
-    products = products.by_category(params[:category]) unless params[:category].blank?
+    products = products.by_category_name(params[:category]) unless params[:category].blank?
+    products = products.in_category(params[:cat_id]) unless params[:cat_id].blank?
 
-    return products.order(sort_product_column + " " + sort_direction)
+    return products.order(sort_column + " " + sort_direction)
   end
   
-  def sort_product_column
-    sort = params[:sort] || ''
-    Product.column_names.include?(sort) ? sort : "name"
-  end
-
   def sort_column
     sort = params[:sort] || ''
-    Product.column_names.include?(sort) ? sort : "agreements.name"
+    Product.column_names.include?(sort) ? sort : "name"
   end
 
   def sort_direction

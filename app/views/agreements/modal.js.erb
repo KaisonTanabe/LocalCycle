@@ -1,0 +1,5 @@
+<% if current_user.producer? %>
+<%= render partial: "modal_buyer" %>
+<% else %>
+<%= render partial: "modal_producer" %>
+<% end %>
