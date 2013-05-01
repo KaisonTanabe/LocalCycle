@@ -59,7 +59,7 @@ class Product < ActiveRecord::Base
   ############ PUBLIC METHODS #############
 
   def to_csv
-    [id, cat_name, description, unit_type, catch_weight, start_date, end_date]
+    [id, cat_name, name, description, unit_type, catch_weight, start_date, end_date]
   end
 
   def cat_name
