@@ -15,7 +15,7 @@ class ProducerProfilesController < ApplicationController
     
     respond_to do |format|
       if @producer_profile.save
-        format.html { redirect_to agreements_path, notice: 'Producer profile was successfully created.' }
+        format.html { redirect_to products_path, notice: 'Producer profile was successfully created.' }
         format.json { render json: @producer_profile, status: :created, location: @producer_profile }
       else
         format.html { render action: "new" }
