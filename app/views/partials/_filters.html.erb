@@ -1,0 +1,57 @@
+<ul id="cat-nav" class="nav nav-tabs">
+  <% Category.roots.each do |c| %>
+  <li class="dropdown <%= (!params['cat_id'].blank? and c.self_and_descendant_ids.include?(params['cat_id'].to_i)) ? 'active' : '' %>"><%= link_to raw(c.name + ' <b class="caret" style="margin-top: 9px;"></b>'), url_for(controller: params['controller'], action: params['action'], cat_id: c.id), class: "dropdown-toggle", id: "dLabel", role: "button" %>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+      <% c.children.each do |cc| %>
+      <li class="<%= (!params['cat_id'].blank? and cc.self_and_descendant_ids.include?(params['cat_id'].to_i)) ? 'active' : '' %>"><%= link_to cc.name, url_for(controller: params['controller'], action: params['action'], cat_id: cc.id), tabindex: "-1" %></li>
+      <% end %>
+    </ul>
+  </li>
+  <% end %>
+  <li class="pull-right" id="filter-toggle"><a title="Advanced search options" href="#" data-toggle="collapse" data-target="#product-filter"><i class="icon-cog"></i> <b class="caret" style="margin-top: 9px;"></b></a></li>
+</ul>
+
+<div class="row">
+  <div class="span12 input-row">
+    <div class="row">
+      <div id="product-filter" class="collapse">
+	<div class="span6">
+	  <h4 style="margin-left: 20px;">Advanced Search Options</h4>
+	  <%= form_tag(url_for(controller: params['controller'], action: params['action']), class: "form-horizontal") do %>
+	  <div class="control-group">
+	    <label for="min_price" class="control-label">Price Options:</label>
+	    <div class="controls controls-row">
+	      <div class="input-prepend">
+		<span class="add-on">$</span>
+		<%= text_field_tag :min_price, params[:min_price].blank? ? '' : params[:min_price], placeholder: "Min...", class: "span1" %>
+	      </div>
+	      &nbsp; &lt; &nbsp;
+	      <div class="input-prepend">
+		<span class="add-on">$</span>
+		<%= text_field_tag :max_price, params[:max_price].blank? ? '' : params[:max_price], placeholder: "Max...", class: "span1" %>
+	      </div>
+	      per unit
+	    </div>
+	  </div>
+
+	  <div class="control-group">
+	    <label for="min_quantity" class="control-label">Quantity Options:</label>
+	    <div class="controls controls-row">
+	      <div class="input-append">
+		<%= text_field_tag :min_quantity, params[:min_quantity].blank? ? '' : params[:min_quantity], placeholder: "Min...", class: "span1" %>
+		<span class="add-on">units</span>
+	      </div>
+	      &nbsp; &lt; &nbsp;
+	      <div class="input-append">
+		<%= text_field_tag :max_quantity, params[:max_quantity].blank? ? '' : params[:max_quantity], placeholder: "Max...", class: "span1" %>
+		<span class="add-on">units</span>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
+

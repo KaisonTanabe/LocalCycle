@@ -21,11 +21,12 @@ class ProductsController < ApplicationController
   end
 
   def marketplace
-    @products = filter_and_sort_products(@products, params)
+    @products = current_user.producer? ? @products.by_standing_demand : @products.by_standing_supply
+    @products = filter_and_sort(@products, params)
     @products = @products.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
 
     respond_to do |format|
-      format.html # marketplace.html.erb
+      format.html
       format.json { render json: @agreements }
     end
   end
@@ -125,7 +126,7 @@ class ProductsController < ApplicationController
   
   def sort_column
     sort = params[:sort] || ''
-    Product.column_names.include?(sort) ? sort : "name"
+    Product.column_names.include?(sort) ? sort : "products.name"
   end
 
   def sort_direction

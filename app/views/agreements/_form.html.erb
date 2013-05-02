@@ -90,6 +90,7 @@
   <div class="span12">
     <legend>Pricing Options</legend>
     <%= f.hidden_field :agreement_type, value: "onetime" %>
+    <%= f.hidden_field :start_date, value: Date.today %>
   </div>
   <div class="span6">
     <div class="control-group">
@@ -228,6 +229,6 @@
 
 <hr style="clear: both;" />
   
-  <%= render partial: 'partials/submit', locals: {f: f, text: 'Agreement'} %>
+  <%= render partial: 'partials/submit', locals: {f: f, override: (params["agreement_type"] == "onetime") ? 'List Product' : 'List Agreement' } %>
 
 <% end %>

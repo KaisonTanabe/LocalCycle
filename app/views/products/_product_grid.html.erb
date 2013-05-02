@@ -1,0 +1,29 @@
+<%= render "partials/filters" %>
+
+<div class="row">
+  <div class="span12">
+    <%= form_tag(marketplace_products_path, method: :get) do %>
+    <div class="form-search pull-left">
+      <div class="input-append">
+	<%= text_field_tag :name, params[:name].blank? ? '' : params[:name], placeholder: "Search by name...", class: "search-query span2" %>
+	<button type="submit" class="btn-inverse btn"><span class="icon-search icon-white"></span></button>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="span12">
+      <% if @products.any? %>
+        <% @products.each do |p| %>
+          <%= render partial: "product", locals: {p: p} %>
+        <% end %>
+      <% else %>
+        <div class="product"><em>No matching products...</em></div>
+      <% end %>
+    <div id="pagination">
+      <%= will_paginate @products %>
+    </div>
+  </div>
+</div>
+

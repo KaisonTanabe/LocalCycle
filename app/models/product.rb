@@ -4,12 +4,16 @@ class Product < ActiveRecord::Base
 
   ## SETUP ASSOCIATIONS
 
-  ## ATTRIBUTE PROTECTION
-  
   belongs_to :category
   has_attached_file :pic, styles: IMAGE_STYLES, default_url: DEFAULT_PAPERCLIP_IMAGE
+
+  has_many :agreements
+
+
+  ## ATTRIBUTE PROTECTION  
   
   attr_accessible :description, :name, :unit_type, :catch_weight, :category_id, :pic
+
 
   ## ATTRIBUTE VALIDATION
 
@@ -42,6 +46,8 @@ class Product < ActiveRecord::Base
   scope :by_category_name, lambda {|c| includes(:category).where("categories.name = ?", c)}
   scope :by_name, lambda { |n| where('UPPER(products.name) LIKE UPPER(?)', '%'+n+'%')}
   scope :in_category, lambda { |c| includes(:category).where(category_id: Category.where(id: c).first.self_and_descendant_ids) }
+  scope :by_standing_supply, includes(:agreements).where("agreements.start_date <= ? AND agreements.agreement_type = ? AND agreements.buyer_id IS NULL", Date.today, "onetime")
+  scope :by_standing_demand, includes(:agreements).where("agreements.start_date <= ? AND agreements.agreement_type = ? AND agreements.producer_id IS NULL", Date.today, "onetime")
 
   #########################################
 

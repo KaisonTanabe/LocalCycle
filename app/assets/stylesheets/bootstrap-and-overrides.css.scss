@@ -32,7 +32,38 @@
     padding: 0 12px 12px;
     margin-bottom: 30px;
 }
+.centered {
+    text-align: center;
+}
+.thumb {
+    height: 40px;
+    width: 60px;
+    float: left;
+    margin-right: 15px;
+}
+#agreementModal .medium {
+    float: right;
+    margin: 0 0 5px 15px;
+}
 
+div.products {
+    margin: 10px -10px;
+    div.product {
+	border-radius: 10px;
+	border: 1px solid #efefef;
+	background-color: #fff;
+	background-color: rgba(255,255,255,0.5);
+	width: 260px;
+	text-align: center;
+	padding: 20px;
+	-o-transition: all 0.2s ease-out;
+	-moz-transition: all 0.2s ease-out;
+	-webkit-transition: all 0.2s ease-out;
+	&:hover {
+	    background-color: rgba(255,255,255,1);
+	}
+    }
+}
 
 /* =============================================================================
    Extra Defaults
@@ -84,16 +115,6 @@ h5 {
     font-weight: bold;
     margin: 0;
     font-family: "HelveticaNeue", Helvetica, Arial, sans-serif;
-}
-.thumb {
-    height: 40px;
-    width: 60px;
-    float: left;
-    margin-right: 15px;
-}
-#agreementModal .medium {
-    float: right;
-    margin: 0 0 5px 15px;
 }
 
 a { 
