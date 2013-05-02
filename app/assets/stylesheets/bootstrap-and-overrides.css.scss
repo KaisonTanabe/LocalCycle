@@ -52,6 +52,8 @@
 div.products {
     margin: 10px -10px;
     div.product {
+	margin: 10px;
+	float: left;
 	border-radius: 10px;
 	border: 1px solid #efefef;
 	background-color: #fff;
