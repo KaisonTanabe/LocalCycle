@@ -109,7 +109,7 @@ class Agreement < ActiveRecord::Base
     elsif agreement_type == "indefinite"
       "Indefinite"
     else
-      start_date.strftime("%M %d") + " - " + end_date.strftime("%M %d")
+      start_date.strftime("%b %e") + " - " + end_date.strftime("%b %e")
     end
   end
 
