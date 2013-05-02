@@ -49,6 +49,7 @@ ProducerProfile.create(
                    zip: "80305",
                    phone: "440-796-7082",
                    description: "I am a test producer",
+                   growing_methods: "responsible",
                    user_id: user.id
                    )
 
