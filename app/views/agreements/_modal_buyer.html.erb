@@ -2,6 +2,7 @@
 
 <%= image_tag u.pic.url(:medium), class: "medium" %>
 <p><%= u.description %> <a href="#">Read more &raquo;</a></p>
+<hr class="clear" />
 <h4>Agreement Proposal</h4>
 <ul>
   <li>We pledge to deliver <span class="label label-info"><%= pluralize(@agreement.quantity, UNIT_TYPE[@agreement.selling_unit]) %>/<%= @agreement.frequency %></span> of <strong><%= @agreement.name %></strong> at <span class="label label-success"><%= number_to_currency(@agreement.price) %>/<%= UNIT_TYPE[@agreement.selling_unit] %></span>.</li>
