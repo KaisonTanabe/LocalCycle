@@ -19,9 +19,21 @@
   <div class="span12 input-row">
     <div class="row">
       <div id="product-filter" class="collapse">
-	<%= form_tag(url_for(controller: params['controller'], action: params['action']), class: "form-horizontal") do %>
+	<%= form_tag agreements_path, method: :get, id: "agreement-filter", class: "form-horizontal" do %>
+
+	<%= hidden_field_tag(:sort, params[:sort]) unless params[:sort].blank? %>
+	<%= hidden_field_tag(:direction, params[:direction]) unless params[:direction].blank? %>
+	<%= hidden_field_tag(:cat_id, params[:cat_id]) unless params[:cat_id].blank? %>
+
+	<div class="span12">
+	  <% if current_user.producer? %>
+	    <h4 style="margin-left: 20px;">Advanced Producer Filters</h4>
+	  <% else %>
+	    <h4 style="margin-left: 20px;">Advanced Agreement Filters</h4>
+	  <% end %>
+	</div>
 	<div class="span6">
-	  <h4 style="margin-left: 20px;">Advanced Search Options</h4>
+	  <% if current_user.producer? %>
 	  <div class="control-group">
 	    <label for="min_price" class="control-label">Price Options:</label>
 	    <div class="controls controls-row">
@@ -52,9 +64,34 @@
 	      </div>
 	    </div>
 	  </div>
+
+	  <% else %>
+
+	  <div class="control-group">
+	    <label for="distance" class="control-label">Within:</label>
+	    <div class="controls controls-row">
+	      <%= select_tag :distance, options_for_select(DISTANCES.map{|d| [d.second, d.first]}, params[:distance].blank? ? '' : params[:distance]), {prompt: "-- Please Select --", class: "span2"} %>
+	    </div>
+	  </div>
+
+	  <div class="control-group">
+	    <label for="growing_methods" class="control-label">Growing Methods:</label>
+	    <div class="controls controls-row">
+	      <%= select_tag :growing_methods, options_for_select(GROWING_METHODS.map{|g| [g.second, g.first]}, params[:growing_methods].blank? ? '' : params[:growing_methods]), {prompt: "-- Please Select --", class: "span4"} %>
+	    </div>
+	  </div>
+
+	  <% end %>
+	  <div class="control-group">
+	    <div class="controls controls-row">
+	      <% unless current_user.producer? %>
+	        <%= submit_tag 'Filter Producers', :disable_with => 'Searching Items...', :class => "btn btn-warning"  %>
+	        <label class="checkbox" style="display: inline-block;"><%= check_box_tag params[:show_agreements], params[:show_agreements].blank? ? '' : params[:show_agreements] %> Only show available agreements.</label>
+	      <% end %>
+	    </div>
+	  </div>
 	</div>
 	<div class="span6">
-	  <%= link_to "Show Available", params.merge({show_agreements: true}) unless current_user.producer? %>
 	</div>
 	<% end %>
       </div>

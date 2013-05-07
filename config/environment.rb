@@ -32,6 +32,12 @@ SIZES = {
   "medium" => "Medium",
   "large" => "Large"
 }
+DISTANCES = {
+  "20" => "20 miles",
+  "50" => "50 miles",
+  "100" => "100 miles",
+  "250" => "250 miles"
+}
 REGISTERABLE_ROLES = {
   "buyer" => "Buyer",
   "producer" => "Producer"
