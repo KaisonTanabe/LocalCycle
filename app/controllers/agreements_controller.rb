@@ -128,6 +128,8 @@ class AgreementsController < ApplicationController
     products = products.by_category_name(params[:category]) unless params[:category].blank?
     products = products.in_category(params[:cat_id]) unless params[:cat_id].blank?
 
+    products = products.by_name(params[:name]) unless params[:name].blank?
+
     return products.order(sort_product_column + " " + sort_direction)
   end
 

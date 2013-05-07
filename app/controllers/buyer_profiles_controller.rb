@@ -15,7 +15,7 @@ class BuyerProfilesController < ApplicationController
 
     respond_to do |format|
       if @buyer_profile.save
-        format.html { redirect_to products_path, notice: 'Buyer profile was successfully created.' }
+        format.html { redirect_to agreements_path, notice: 'Buyer profile was successfully created.' }
         format.json { render json: @buyer_profile, status: :created, location: @buyer_profile }
       else
         format.html { render action: "new" }
