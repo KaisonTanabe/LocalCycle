@@ -2,8 +2,8 @@ class CreateAgreements < ActiveRecord::Migration
   def change
     create_table :agreements do |t|
       t.references :product,         null: false
-      t.integer    :buyer_id
-      t.integer    :producer_id
+      t.integer    :buyer_id,        #null: false, default: 0
+      t.integer    :producer_id,     #null: false, default: 0
 
       t.string     :name,             null: false
       t.text       :description

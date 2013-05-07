@@ -8,10 +8,17 @@ class AgreementsController < ApplicationController
   def index
 
     @agreements = filter_and_sort(@agreements, params)
+
     @agreements = @agreements.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
 
+    @product_agreements = @agreements.group_by(&:product)
+
+
+    @products = filter_and_sort_products(Product.scoped.includes(:agreements), params) if params["show_agreements"].blank?
+    @products = @products.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE)) if params["show_agreements"].blank?
+
     respond_to do |format|
-      format.html # index.html.erb
+      format.html 
       format.json { render json: @agreements }
     end
   end
@@ -25,6 +32,7 @@ class AgreementsController < ApplicationController
   end
 
   def modal
+    @counter_agreement = @agreement.counter_agreements.build
 
     respond_to do |format|
       format.js
@@ -64,7 +72,22 @@ class AgreementsController < ApplicationController
 
     respond_to do |format|
       if @agreement.update_attributes(params[:agreement])
-        format.html { redirect_to @agreement, notice: 'Agreement was successfully updated.' }
+        format.html { redirect_to agreements_path, notice: 'Agreement was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @agreement.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def accept
+    @agreement.producer_id = params["producer_id"] unless params["producer_id"].blank?
+    @agreement.buyer_id = params["buyer_id"] unless params["buyer_id"].blank?
+
+    respond_to do |format|
+      if @agreement.save
+        format.html { redirect_to agreements_path, notice: 'Agreement was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -84,16 +107,31 @@ class AgreementsController < ApplicationController
 
   private
 
+  def filter_and_sort_products(products, params)
+    products = products.by_category_name(params[:category]) unless params[:category].blank?
+    products = products.in_category(params[:cat_id]) unless params[:cat_id].blank?
+
+    return products.order(sort_product_column + " " + sort_direction)
+  end
+
   def filter_and_sort(agreements, params)
-    
+
+    agreements = agreements.by_complete if !params[:status].blank? and params[:status] == "complete"
+    agreements = agreements.by_not_complete if !params[:status].blank? and params[:status] == "proposed"
+
     agreements = agreements.by_name(params[:name]) unless params[:name].blank?
-    agreements = agreements.by_category(params[:cat]) unless params[:cat].blank?
+    agreements = agreements.in_category(params[:cat_id]) unless params[:cat_id].blank?
     agreements = agreements.by_buyer(params[:buyer_id]) unless params[:buyer_id].blank?
     agreements = agreements.by_producer(params[:producer_id]) unless params[:producer_id].blank?
 
     return agreements.order(sort_column + " " + sort_direction)
   end
   
+  def sort_product_column
+    sort = params[:sort] || ''
+    Agreement.column_names.include?(sort) ? sort : "products.name"
+  end
+
   def sort_column
     sort = params[:sort] || ''
     Agreement.column_names.include?(sort) ? sort : "agreements.name"

@@ -20,9 +20,18 @@
 //= require modernizr-2.0.6.min
 //= require select2
 //= require bootstrap-datepicker
+//= require bootstrap-modalmanager
+//= require bootstrap-modal
 //= require parsley.min
 //= require_tree .
 jQuery(function($){
+
+    $('a.bar').on('click', function(e) {
+	e.preventDefault();
+	e.stopPropagation();
+	$('body').modalmanager('loading');
+	$.rails.handleRemote( $(this) );
+    })
 
     ////////////////////////////////////////////////////////////////////////////
     //// Plugin initializers

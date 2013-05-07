@@ -1,35 +1,13 @@
 <div class="row">
-  <div class="span6">
-    <div class="border">
-      <h3>Inventory</h3>
-      <div class="btn-group">
-	<%= link_to 'Add a Product', new_agreement_path, class: "btn btn-primary" %>
-      </div>
+  <div class="span3">
+    <div id="management-nav" class="btn-group btn-group-vertical">
+      <%= link_to "Inventory", "#", class: "btn btn-large" %>
+      <%= link_to "Accounting", "#", class: "btn btn-large" %>
+      <%= link_to "Invoices", "#", class: "btn btn-large" %>
+      <%= link_to "Profile", "#", class: "btn btn-large" %>
     </div>
   </div>
-  <div class="span6">
-    <div class="border">
-      <h3>My Agreements</h3>
-      <div class="btn-group">
-	<%= link_to 'Propose Agreement', new_agreement_path, class: "btn btn-primary" %>
-	<%= link_to 'Current Agreements', "#", class: "btn" %>
-	<%= link_to 'Past Agreements', "#", class: "btn" %>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="span6">
-    <div class="border">
-      <h3>My Profile</h3>
-      <p>Bunch of stuff here</p>
-      
-    </div>
-  </div>
-  <div class="span6">
-    <div class="border">
-      <h3>My Accounting</h3>
-      <p>Bunch of stuff here</p>
-    </div>
+  <div class="span9">
+
   </div>
 </div>

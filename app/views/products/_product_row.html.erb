@@ -1,19 +1,21 @@
-<% available = current_user.producer? ? p.agreements.available_demand : p.agreements.available_supply %>
+<% bars_to_display = current_user.producer? ? p.agreements.available_demand_and_mine(current_user.id) : p.agreements.available_supply_and_mine(current_user.id) %>
+<% bars_to_display = bars_to_display.where(buyer_id: params["buyer_id"]) if params["buyer_id"]  %>
+<% bars_to_display = bars_to_display.where(producer_id: params["producer_id"]) if params["producer_id"]  %>
 <tr>
   <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
     <%= image_tag p.best_pic_url(:thumb), class: "thumb" %>
     
     <h5><%= link_to p.name, "#" %>
-      <% if available.any? %>
-       <small><%= pluralize(available.count, (current_user.buyer? ? "producer" : "buyer")) %></small>
+      <% if false %>
+       <small><%= pluralize(bars_to_display.count, (current_user.buyer? ? "producer" : "buyer")) %></small>
       <% end %>
       <br />
       <%= link_to "Propose an Agreement", new_agreement_path(product_id: p.id), class: "btn btn-mini btn-primary" %>
     </h5>
   </td>
   <td colspan="12">
-    <% if available.any? %>
-      <% available.each do |a| %>
+    <% if bars_to_display.any? %>
+      <% bars_to_display.each do |a| %>
         <%= render partial: "agreement_bar", locals: {a: a} %>
       <% end %>
     <% else %>

@@ -1,5 +1,31 @@
-<% if current_user.producer? %>
-<%= render partial: "modal_buyer" %>
-<% else %>
-<%= render partial: "modal_producer" %>
-<% end %>
+var title       =   '.modal-title',
+    loader      =   '.ajax-loader',
+    content     =   '.modal-body-content',
+    toolbar     =   'div.modal-footer';
+    modal       =   '#ajax-modal'
+
+// shows the modal and the ajax content
+$(loader).fadeToggle('fast', function() {
+  <% unless @agreement.buyer_id == 0 %>
+
+    $(content).show().html("<%= j render partial: "modal_buyer" %>");
+    $(title).html("<%= j @agreement.buyer.buyer_profile.name %>");
+    
+    <% unless @agreement.buyer_id == current_user.id %>
+      $(toolbar).html("<%= j (link_to raw("<i class='icon-edit'></i> Propose Amendments"), "#", class: "btn new-counter-agreement", data: {target: "#stack2", toggle: "modal"}) + " " + (link_to raw("<i class='icon-ok icon-white'></i> Accept Agreement"), accept_agreement_path(@agreement, producer_id: current_user.id), method: "put", confirm: "You will be obligated to fulfill your part of the contract", class: "btn btn-success") %>")
+    <% end %>
+  <% else %>
+
+    $(content).show().html("<%= j render partial: "modal_producer" %>");
+    $(title).html("<%= j @agreement.producer.producer_profile.name %>");
+    <% unless @agreement.producer_id == current_user.id %>
+      $(toolbar).html("<%= j (link_to raw("<i class='icon-edit'></i> Propose Amendments"), "#", class: "btn new-counter-agreement", data: {target: "#stack2", toggle: "modal"}) + " " + (link_to raw("<i class='icon-ok icon-white'></i> Accept Agreement"), accept_agreement_path(@agreement, buyer_id: current_user.id), method: "put", confirm: "You will be obligated to fulfill your part of the contract", class: "btn btn-success") %>")
+    <% end %>
+
+  <% end %>
+
+  $('#content').append('<%= j render partial: "partials/stack2modal" %>');
+
+  $(modal).modal();
+});
+

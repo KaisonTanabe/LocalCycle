@@ -6,6 +6,8 @@ class Agreement < ActiveRecord::Base
 
   has_many :images, as: :imageable, dependent: :destroy
   accepts_nested_attributes_for :images, allow_destroy: true
+
+  has_many :counter_agreements, dependent: :destroy
   
   belongs_to :product
   belongs_to :buyer, class_name: "User", foreign_key: :buyer_id
@@ -53,11 +55,19 @@ class Agreement < ActiveRecord::Base
 
   #scope :by_, where()
   #scope :by_, includes(:model).where()
+  scope :by_name, lambda { |n| where('UPPER(agreements.name) LIKE UPPER(?)', '%'+n+'%')}
   scope :by_buyer, lambda {|b| where("buyer_id = ?", b)}
-  scope :by_producer, lambda {|b| where("producer_id = ?", b)}
+  scope :by_producer, lambda {|p| where("producer_id = ?", p)}
   scope :by_product, lambda {|p| where("product_id = ?", p)}
-  scope :available_supply, where(buyer_id: nil)
-  scope :available_demand, where(producer_id: nil)
+  scope :in_category, lambda { |c| includes(:product).where("products.category_id IN (?)", Category.where(id: c).first.self_and_descendant_ids) }
+
+  scope :by_complete, where("buyer_id > 0 AND producer_id > 0")
+  scope :by_not_complete, where("buyer_id = 0 OR producer_id = 0")
+
+  scope :available_supply, where(buyer_id: 0)
+  scope :available_demand, where(producer_id: 0)
+  scope :available_supply_and_mine, lambda{ |b| where("buyer_id = 0 OR buyer_id = ?", b)}
+  scope :available_demand_and_mine, lambda{ |p| where("producer_id = 0 OR producer_id = ?", p)}
 
   #########################################
 
@@ -88,6 +98,17 @@ class Agreement < ActiveRecord::Base
     [id, name, email, teams.map{|t| t.full_team_name}.join("||")]
   end
 
+  def users
+    users = []
+    users << buyer if buyer
+    users << producer if producer
+    return users
+  end
+
+  def user_names
+    users.map {|u| u.buyer? ? u.buyer_profile.name : u.producer_profile.name }.join(' + ')
+  end
+
   def deadline_is_possible?
     return if [deadline.blank?, begins_at.blank?].any?
     if deadline > begins_at
@@ -114,9 +135,9 @@ class Agreement < ActiveRecord::Base
   end
 
   def bar_status(cid)
-    puts producer_id
-    return "complete" if (!buyer_id.nil? and !producer_id.nil?)
-    return "pending" if (buyer_id == cid and producer_id.nil?) or (producer_id == cid and buyer_id.nil?)
+    puts cid
+    return "complete" if (buyer_id != 0 and producer_id != 0)
+    return "pending" if (buyer_id == cid and producer_id == 0) or (producer_id == cid and buyer_id == 0)
   end
 
   ############ PRIVATE METHODS ############

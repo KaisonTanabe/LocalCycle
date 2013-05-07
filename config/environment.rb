@@ -27,6 +27,11 @@ ROLES = {
   "buyer" => "Buyer",
   "producer" => "Producer"
 }
+SIZES = {
+  "small" => "Small",
+  "medium" => "Medium",
+  "large" => "Large"
+}
 REGISTERABLE_ROLES = {
   "buyer" => "Buyer",
   "producer" => "Producer"

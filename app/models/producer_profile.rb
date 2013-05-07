@@ -11,10 +11,10 @@ class ProducerProfile < ActiveRecord::Base
   attr_accessible :name, :latitude, :longitude, :phone, :growing_methods,
     :street_address_1, :street_address_2, :city, :state, :country, :zip,
     :description, :website, :twitter, :facebook, :user_id, :certification_ids,
-    :has_eggs, :has_dairy, :has_livestock, :has_pantry, :pic, :text_updates, :custom_growing_methods
+    :has_eggs, :has_dairy, :has_livestock, :has_pantry, :pic, :text_updates, :custom_growing_methods, :size
 
   ## ATTRIBUTE VALIDATION
-  validates :name, :phone,
+  validates :name, :phone, :size,
     :street_address_1, :city, :state, :country, :zip,
     :description, :user_id, :growing_methods,
     presence: true

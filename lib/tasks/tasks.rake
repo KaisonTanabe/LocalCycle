@@ -27,3 +27,10 @@ task :fix_products => :environment do
     puts Category.where(id: p.category_id).first.name + " " + p.name if Product.where(name: p.name).count > 1
   end
 end
+
+task :agreements_nil_to_zero => :environment do  
+  Agreement.all.each do |a|
+    a.update_column("producer_id", 0) if a.producer_id == nil
+    a.update_column("buyer_id", 0) if a.buyer_id == nil
+  end
+end

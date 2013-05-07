@@ -10,10 +10,12 @@ LOCALCYCLE::Application.routes.draw do
 
   resources :agreements do
     get 'modal', :on => :member
+    put 'accept', :on => :member
   end
 
-  resources :buyer_profiles, only: ["new","create"]
+  resources :counter_agreements, only: ["new","create"]
 
+  resources :buyer_profiles, only: ["new","create"]
   resources :producer_profiles, only: ["new","create"]
 
   devise_for :users, path_prefix: "d", path_names: { sign_in: 'login', sign_up: 'register' }, 

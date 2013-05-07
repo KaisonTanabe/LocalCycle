@@ -43,9 +43,18 @@ class Product < ActiveRecord::Base
 
   ################ SCOPES #################
 
+  scope :available_demand_only, includes(:agreements).where("agreements.buyer_id = 0")
+  scope :available_supply_only, includes(:agreements).where("agreements.producer_id = 0")
+  scope :available_demand_and_mine_only, lambda {|b| includes(:agreements).where("agreements.buyer_id = 0 OR agreements.buyer_id = ?", b)}
+  scope :available_supply_and_mine_only, lambda {|p| includes(:agreements).where("agreements.producer_id = 0 OR agreements.producer_id = ?", p)}
+
   scope :by_category_name, lambda {|c| includes(:category).where("categories.name = ?", c)}
   scope :by_name, lambda { |n| where('UPPER(products.name) LIKE UPPER(?)', '%'+n+'%')}
   scope :in_category, lambda { |c| includes(:category).where(category_id: Category.where(id: c).first.self_and_descendant_ids) }
+
+  scope :by_producer, lambda { |p| includes(:agreements).where("agreements.producer_id = ?", p) }
+  scope :by_buyer, lambda { |p| includes(:agreements).where("agreements.buyer_id = ?", p) }
+
   scope :by_standing_supply, includes(:agreements).where("agreements.start_date <= ? AND agreements.agreement_type = ? AND agreements.buyer_id IS NULL", Date.today, "onetime")
   scope :by_standing_demand, includes(:agreements).where("agreements.start_date <= ? AND agreements.agreement_type = ? AND agreements.producer_id IS NULL", Date.today, "onetime")
 
@@ -78,7 +87,6 @@ class Product < ActiveRecord::Base
   def best_pic
     pic? ? pic : category.best_pic
   end
-
 
   ############ PRIVATE METHODS ############
   private

@@ -11,12 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130418165915) do
+ActiveRecord::Schema.define(:version => 20130507023107) do
 
   create_table "agreements", :force => true do |t|
     t.integer  "product_id",                                      :null => false
-    t.integer  "buyer_id"
-    t.integer  "producer_id"
+    t.integer  "buyer_id",              :default => 0,            :null => false
+    t.integer  "producer_id",           :default => 0,            :null => false
     t.string   "name",                                            :null => false
     t.text     "description"
     t.string   "agreement_type",                                  :null => false
@@ -129,6 +129,16 @@ ActiveRecord::Schema.define(:version => 20130418165915) do
   add_index "certifications_producer_profiles", ["certification_id"], :name => "index_certifications_producer_profiles_on_certification_id"
   add_index "certifications_producer_profiles", ["producer_profile_id"], :name => "index_certifications_producer_profiles_on_producer_profile_id"
 
+  create_table "counter_agreements", :force => true do |t|
+    t.integer  "price"
+    t.integer  "quantity"
+    t.text     "reasons"
+    t.integer  "agreement_id", :null => false
+    t.integer  "user_id",      :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
   create_table "images", :force => true do |t|
     t.integer  "imageable_id"
     t.string   "imageable_type"
@@ -160,13 +170,13 @@ ActiveRecord::Schema.define(:version => 20130418165915) do
 
   create_table "producer_profiles", :force => true do |t|
     t.integer  "user_id"
-    t.string   "name",                                       :null => false
-    t.string   "street_address_1",                           :null => false
+    t.string   "name",                                        :null => false
+    t.string   "street_address_1",                            :null => false
     t.string   "street_address_2"
-    t.string   "city",                                       :null => false
-    t.string   "state",                                      :null => false
-    t.string   "country",                :default => "US",   :null => false
-    t.string   "zip",                                        :null => false
+    t.string   "city",                                        :null => false
+    t.string   "state",                                       :null => false
+    t.string   "country",                :default => "US",    :null => false
+    t.string   "zip",                                         :null => false
     t.float    "latitude"
     t.float    "longitude"
     t.string   "phone"
@@ -174,19 +184,20 @@ ActiveRecord::Schema.define(:version => 20130418165915) do
     t.string   "website"
     t.string   "twitter"
     t.string   "facebook"
-    t.string   "growing_methods",        :default => "none", :null => false
+    t.string   "growing_methods",        :default => "none",  :null => false
     t.text     "custom_growing_methods"
-    t.boolean  "has_eggs",               :default => false,  :null => false
-    t.boolean  "has_livestock",          :default => false,  :null => false
-    t.boolean  "has_dairy",              :default => false,  :null => false
-    t.boolean  "has_pantry",             :default => false,  :null => false
-    t.boolean  "text_updates",           :default => true,   :null => false
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.boolean  "has_eggs",               :default => false,   :null => false
+    t.boolean  "has_livestock",          :default => false,   :null => false
+    t.boolean  "has_dairy",              :default => false,   :null => false
+    t.boolean  "has_pantry",             :default => false,   :null => false
+    t.boolean  "text_updates",           :default => true,    :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
     t.string   "pic_file_name"
     t.string   "pic_content_type"
     t.integer  "pic_file_size"
     t.datetime "pic_updated_at"
+    t.string   "size",                   :default => "small", :null => false
   end
 
   add_index "producer_profiles", ["user_id"], :name => "index_producer_profiles_on_user_id"

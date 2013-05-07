@@ -48,6 +48,12 @@
     float: right;
     margin: 0 0 5px 15px;
 }
+#fake-modal-label {
+    margin-top: -10px;
+}
+#management-nav a {
+    text-align: left;
+}
 
 div.products {
     margin: 10px -10px;
@@ -294,6 +300,36 @@ header.navbar {
     }
 }
 
+#key-holder {
+    position: relative;
+}
+#key {
+    position: absolute;
+    z-index: 999;
+    padding: 10px;
+    border-radius: 10px;
+    width: 130px;
+    right: 10px;
+    top: 95px;
+    font-size: 12px;
+    line-height: 1.4;
+    background-color: #fff;
+    border: 1px solid #eee;
+    box-shadow: 0 0 10px #aaa;
+    opacity: 0.7;
+    h5 {
+	margin: 0 0 5px 6px;
+    }
+    &:hover {
+	opacity: 1;
+    }
+    .bar {
+	width: 6px;
+	float: left;
+	margin: 4px 6px 0 0;
+    }
+}
+
 .bar {
     display: block;
     height: 6px;
@@ -314,6 +350,10 @@ header.navbar {
 .bar.complete {
     background-color: #8cc63f;
     border: 1px solid #39b54a;
+}
+.bar.proposed {
+    background-color: #8c3fc6;
+    border: 1px solid #394ab5;
 }
 
 #content {

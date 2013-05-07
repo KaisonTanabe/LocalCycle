@@ -1,14 +1,19 @@
 <ul id="cat-nav" class="nav nav-tabs">
   <% Category.roots.each do |c| %>
-  <li class="dropdown <%= (!params['cat_id'].blank? and c.self_and_descendant_ids.include?(params['cat_id'].to_i)) ? 'active' : '' %>"><%= link_to raw(c.name + ' <b class="caret" style="margin-top: 9px;"></b>'), url_for(controller: params['controller'], action: params['action'], cat_id: c.id), class: "dropdown-toggle", id: "dLabel", role: "button" %>
+  <li class="dropdown <%= (!params['cat_id'].blank? and c.self_and_descendant_ids.include?(params['cat_id'].to_i)) ? 'active' : '' %>"><%= link_to raw(c.name + ' <b class="caret" style="margin-top: 9px;"></b>'), params.merge({cat_id: c.id}), class: "dropdown-toggle", id: "dLabel", role: "button" %>
     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
       <% c.children.each do |cc| %>
-      <li class="<%= (!params['cat_id'].blank? and cc.self_and_descendant_ids.include?(params['cat_id'].to_i)) ? 'active' : '' %>"><%= link_to cc.name, url_for(controller: params['controller'], action: params['action'], cat_id: cc.id), tabindex: "-1" %></li>
+      <li class="<%= (!params['cat_id'].blank? and cc.self_and_descendant_ids.include?(params['cat_id'].to_i)) ? 'active' : '' %>"><%= link_to cc.name, params.merge({cat_id: cc.id}), tabindex: "-1" %></li>
       <% end %>
     </ul>
   </li>
   <% end %>
-  <li class="pull-right" id="filter-toggle"><a title="Advanced search options" href="#" data-toggle="collapse" data-target="#product-filter"><i class="icon-cog"></i> <b class="caret" style="margin-top: 9px;"></b></a></li>
+  <li class="pull-right" id="filter-toggle">    
+    <a title="Advanced search options" href="#" data-toggle="collapse" data-target="#product-filter"><i class="icon-cog"></i> <b class="caret" style="margin-top: 9px;"></b></a>
+  </li>
+  <li class="pull-right" id="available">    
+    <%= link_to "Show Available", params.merge({show_agreements: true}) %>
+  </li>
 </ul>
 
 <div class="row">

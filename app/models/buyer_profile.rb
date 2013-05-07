@@ -5,6 +5,8 @@ class BuyerProfile < ActiveRecord::Base
 
   belongs_to :user
 
+  has_attached_file :pic, styles: IMAGE_STYLES, default_url: DEFAULT_PAPERCLIP_IMAGE
+
   ## ATTRIBUTE PROTECTION
   
   attr_accessible :name, :latitude, :longitude, :phone,
@@ -14,7 +16,6 @@ class BuyerProfile < ActiveRecord::Base
     :has_eggs, :has_livestock, :has_dairy, :has_pantry, :user_id,
     :pic, :text_updates
 
-  has_attached_file :pic, styles: IMAGE_STYLES, default_url: DEFAULT_PAPERCLIP_IMAGE
 
 
   ## ATTRIBUTE VALIDATION

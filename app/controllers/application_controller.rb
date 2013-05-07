@@ -6,11 +6,11 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    products_path
+    agreements_path
   end
 
 
-  def my_agreements_path(time="")    
-    current_user.producer? ? agreements_path(producer_id: current_user.id, status: time) : agreements_path(buyer_id: current_user.id, status: time)
+  def my_products_path(time="")    
+    current_user.producer? ? products_path(producer: current_user.id, status: time) : products_path(buyer: current_user.id, status: time)
   end
 end

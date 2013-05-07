@@ -117,7 +117,13 @@ class ProductsController < ApplicationController
   private
 
   def filter_and_sort(products, params)
+    products = products.available_demand_and_mine_only(current_user.id) unless params[:only_available].blank? or current_user.producer?
+    products = products.available_supply_and_mine_only(current_user.id) unless params[:only_available].blank? or current_user.buyer?
     products = products.by_name(params[:name]) unless params[:name].blank?
+
+    products = products.by_buyer(params[:buyer]) unless params[:buyer].blank?
+    products = products.by_producer(params[:producer]) unless params[:producer].blank?
+
     products = products.by_category_name(params[:category]) unless params[:category].blank?
     products = products.in_category(params[:cat_id]) unless params[:cat_id].blank?
 

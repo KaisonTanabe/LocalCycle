@@ -11,6 +11,7 @@ class Ability
 
     if user and user.buyer?
       can :manage, Agreement
+      can :manage, CounterAgreement
       can [:index, :marketplace, :pic], Product
       can :manage, User, id: user.id
       can :create, BuyerProfile
@@ -18,6 +19,7 @@ class Ability
 
     if user and user.producer?
       can :manage, Agreement
+      can :manage, CounterAgreement
       can [:index, :marketplace, :pic], Product
       can :manage, User, id: user.id
       can :create, ProducerProfile

@@ -1,7 +1,7 @@
 module ApplicationHelper
 
-  def my_agreements_path(time="")    
-    current_user.producer? ? agreements_path(producer_id: current_user.id, status: time) : agreements_path(buyer_id: current_user.id, status: time)
+  def my_agreements_path(status="")
+    current_user.producer? ? agreements_path(producer_id: current_user.id, show_agreements: true, status: status) : agreements_path(buyer_id: current_user.id, show_agreements: true, status: status)
   end
 
   def sortable(column, title = nil, addition_params=nil)

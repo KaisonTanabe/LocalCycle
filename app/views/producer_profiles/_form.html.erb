@@ -6,6 +6,17 @@
 	<%= f.text_field :name, class: "span4" %>
       </div>
     </div>
+    <div class="control-group">
+      <%= f.label :size, "Organization Size:", class: "control-label" %>
+      <div class="controls controls-row">
+	<%= f.select :size, SIZES.map {|s| [s.second, s.first]}, {prompt: "-- Please select --"}, {class: "span4"} %>
+	<span class="help-inline">
+	  <strong>Large</strong> - asdf<br />
+	  <strong>Medium</strong> - asdf<br />
+	  <strong>Small</strong> - asdf<br />
+	</span>
+      </div>
+    </div>
 
     <div class="control-group">
       <%= f.label :description, "Description: ", class: "req control-label" %>
