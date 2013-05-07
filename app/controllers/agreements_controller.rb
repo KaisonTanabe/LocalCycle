@@ -7,6 +7,8 @@ class AgreementsController < ApplicationController
 
   def index
 
+    @agreements = @agreements.available_supply_or_mine(current_user.id) if current_user.buyer?
+    @agreements = @agreements.available_demand_or_mine(current_user.id) if current_user.producer?
     @agreements = filter_and_sort(@agreements, params)
 
     @agreements = @agreements.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
@@ -22,6 +24,21 @@ class AgreementsController < ApplicationController
       format.json { render json: @agreements }
     end
   end
+
+  def marketplace
+    @agreements = @agreements.standing_supply_or_mine(current_user.id) if current_user.buyer?
+    @agreements = @agreements.standing_demand_or_mine(current_user.id) if current_user.producer?
+    @agreements = filter_and_sort(@agreements, params)
+    @agreements = @agreements.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
+
+    @product_agreements = @agreements.group_by(&:product)
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @agreements }
+    end
+  end
+
 
   def show
 

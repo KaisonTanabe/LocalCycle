@@ -1,7 +1,7 @@
 <div id="sectionNav" class="row">
   <div class="span10 offset1">
     <h3 class="caln <%= 'active' if (params[:controller] == 'agreements' and params[:action] == 'index') %>"><img class="it" src="/assets/icon-caln.png"><%= link_to "Production Agreements", agreements_path %></h3>
-    <h3 class="mrkt <%= 'active' if params[:action] == 'marketplace' %>"><img class="it" src="/assets/icon-mrkt.png"><%= link_to "Current Marketplace", marketplace_products_path %></h3>
+    <h3 class="mrkt <%= 'active' if params[:action] == 'marketplace' %>"><img class="it" src="/assets/icon-mrkt.png"><%= link_to "Current Marketplace", marketplace_agreements_path %></h3>
     <h3 class="mgnt <%= 'active' if params[:controller] == 'users' %>"><img class="it" src="/assets/icon-mgnt.png"><%= link_to "Management", user_path(current_user) %></h3>
   </div>
 </div>

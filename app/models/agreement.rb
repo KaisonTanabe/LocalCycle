@@ -66,8 +66,10 @@ class Agreement < ActiveRecord::Base
 
   scope :available_supply, where(buyer_id: 0)
   scope :available_demand, where(producer_id: 0)
-  scope :available_supply_and_mine, lambda{ |b| where("buyer_id = 0 OR buyer_id = ?", b)}
-  scope :available_demand_and_mine, lambda{ |p| where("producer_id = 0 OR producer_id = ?", p)}
+  scope :available_supply_or_mine, lambda{ |b| where("buyer_id = 0 OR buyer_id = ?", b)}
+  scope :available_demand_or_mine, lambda{ |p| where("producer_id = 0 OR producer_id = ?", p)}
+  scope :standing_supply_or_mine, lambda{ |b| where("agreements.start_date <= ? AND agreement_type = ? AND buyer_id = 0 OR buyer_id = ?", Date.today, "onetime", b)}
+  scope :standing_demand_or_mine, lambda{ |p| where("agreements.start_date <= ? AND agreement_type = ? AND producer_id = 0 OR producer_id = ?", Date.today, "onetime", p)}
 
   #########################################
 

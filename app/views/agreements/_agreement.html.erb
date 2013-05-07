@@ -1,10 +1,13 @@
-<%= content_tag_for :tr, a do %>
-  <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
-    <%= image_tag a.product.best_pic_url(:thumb), class: "thumb" %>
-    <h5><%= link_to a.product.name, "#" %></h5>
-  </td>
-  <td colspan="12">
-    <a class="bar <%= a.bar_status(current_user.id) %>" style="<%= a.bar_margins %>" href="#modal<%= a.id %>"></a>
-  </td>
-<% end %>
-
+<div class="products">
+  <% agreements.each do |a| %>
+    <div class="product">
+      <%= image_tag a.images[0].image.url(:medium), class: "medium" %>
+      
+      <h4><%= link_to a.name, "#" %></h4>
+      
+      <p class="details"><strong><%= number_to_currency(a.price) + "/" + a.selling_unit %></strong> | <%= pluralize(a.quantity, UNIT_TYPE[a.selling_unit]) %> avail.</p>
+      
+      <p class="centered"><%= link_to "Purchase", "#", class: "btn btn-warning" %></p>
+    </div>
+  <% end %>
+</div>

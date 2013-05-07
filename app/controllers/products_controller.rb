@@ -20,18 +20,6 @@ class ProductsController < ApplicationController
     end
   end
 
-  def marketplace
-    @products = current_user.producer? ? @products.by_standing_demand : @products.by_standing_supply
-    @products = filter_and_sort(@products, params)
-    @products = @products.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @agreements }
-    end
-  end
-
-
   def show
 
     respond_to do |format|

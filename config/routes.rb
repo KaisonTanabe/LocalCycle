@@ -5,12 +5,12 @@ LOCALCYCLE::Application.routes.draw do
   resources :products do
     get 'pic', :on => :member
     get 'export', :on => :collection
-    get 'marketplace', :on => :collection
   end
 
   resources :agreements do
     get 'modal', :on => :member
     put 'accept', :on => :member
+    get 'marketplace', :on => :collection
   end
 
   resources :counter_agreements, only: ["new","create"]
