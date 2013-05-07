@@ -12,7 +12,6 @@
     <a title="Advanced search options" href="#" data-toggle="collapse" data-target="#product-filter"><i class="icon-cog"></i> <b class="caret" style="margin-top: 9px;"></b></a>
   </li>
   <li class="pull-right" id="available">    
-    <%= link_to "Show Available", params.merge({show_agreements: true}) %>
   </li>
 </ul>
 
@@ -20,9 +19,9 @@
   <div class="span12 input-row">
     <div class="row">
       <div id="product-filter" class="collapse">
+	<%= form_tag(url_for(controller: params['controller'], action: params['action']), class: "form-horizontal") do %>
 	<div class="span6">
 	  <h4 style="margin-left: 20px;">Advanced Search Options</h4>
-	  <%= form_tag(url_for(controller: params['controller'], action: params['action']), class: "form-horizontal") do %>
 	  <div class="control-group">
 	    <label for="min_price" class="control-label">Price Options:</label>
 	    <div class="controls controls-row">
@@ -54,9 +53,12 @@
 	    </div>
 	  </div>
 	</div>
+	<div class="span6">
+	  <%= link_to "Show Available", params.merge({show_agreements: true}) unless current_user.producer? %>
+	</div>
+	<% end %>
       </div>
     </div>
-    <% end %>
   </div>
 </div>
 

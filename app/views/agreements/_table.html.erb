@@ -2,7 +2,7 @@
 
 <div id="key-holder"><%= render "partials/key" %></div>
 
-<table class="table table-hover table-striped" style="background: #fff;margin-top: -20px; border-top: 2px solid #dadada;">
+<table id="agreementTable" class="table table-hover table-striped" style="background: #fff;margin-top: -20px; border-top: 2px solid #dadada;">
   <thead>
     <tr>
       <th width="10px"></th>
@@ -34,7 +34,7 @@
     <% if @products %>
       <% if @products.any? %>
         <% @products.each do |p| %>
-          <%= render partial: "row", locals: {p: p, agreements: []} %>
+          <%= render partial: "producer_row", locals: {p: p} %>
         <% end %>
       <% else %>
         <tr><td colspan="14"><em>No matching products...</em></td></tr>
@@ -42,7 +42,7 @@
     <% else %>
       <% if @product_agreements.any? %>
         <% @product_agreements.each do |p, agreements| %>
-          <%= render partial: "row", locals: {p: p, agreements: agreements} %>
+          <%= render partial: "buyer_row", locals: {p: p, agreements: agreements} %>
         <% end %>
       <% else %>
         <tr><td colspan="14"><em>No matching agreements...</em></td></tr>

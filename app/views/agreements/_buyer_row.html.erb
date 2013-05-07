@@ -1,9 +1,9 @@
-<tr>
-  <td class="collapse-toggle" data-toggle="collapse" data-target="#collapse<%= p.id %>">
-    <a>
-      <i id="toggle" class="icon-plus"></i>
+<tr id="collapse<%= p.id %>">
+  <td class="row-collapse">
+    <!--a id="toggle">
+      <i class="icon-plus" some="#collapse<%= p.id %>"></i>
     </a>
-  </td>
+  </td-->
   <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
     <%= image_tag p.best_pic_url(:thumb), class: "thumb" %>
     
@@ -21,17 +21,7 @@
         <%= render partial: "bar", locals: {a: a} %>
       <% end %>
     <% else %>
-      <em>General harvest calendar availability bar here</em>
-      <!--a class="bar" style="margin-left: 49%; margin-right: 22%;" href="#myModal"></a-->
+      <em>No demand posted. But that doesn't mean no one's buying! <%= link_to "Post Supply Agreement", new_agreement_path(product_id: p.id), class: "btn btn-mini btn-primary" %></em>
     <% end %>
-  </td>
-</tr>
-<tr class="collapsable">
-  <td></td>
-  <td colspan="13">
-    <div id="collapse<%= p.id %>" class="collapse">
-      <p>asdf<br />
-	asdf</p>
-    </div>
   </td>
 </tr>

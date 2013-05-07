@@ -7,17 +7,23 @@ class AgreementsController < ApplicationController
 
   def index
 
-    @agreements = @agreements.available_supply_or_mine(current_user.id) if current_user.buyer?
-    @agreements = @agreements.available_demand_or_mine(current_user.id) if current_user.producer?
-    @agreements = filter_and_sort(@agreements, params)
+    if current_user.buyer? and params["show_agreements"].blank?
 
-    @agreements = @agreements.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
+      @products = filter_and_sort_products(Product.scoped.includes(:agreements), params) if params["show_agreements"].blank?
+      @products = @products.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE)) if params["show_agreements"].blank?
 
-    @product_agreements = @agreements.group_by(&:product)
+    else
 
+      @agreements = @agreements.available_supply_or_mine(current_user.id) if current_user.buyer?
+      @agreements = @agreements.available_demand_or_mine(current_user.id) if current_user.producer?
+      @agreements = filter_and_sort(@agreements, params)
+      
+      @agreements = @agreements.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
+      
+      @product_agreements = @agreements.group_by(&:product)
 
-    @products = filter_and_sort_products(Product.scoped.includes(:agreements), params) if params["show_agreements"].blank?
-    @products = @products.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE)) if params["show_agreements"].blank?
+    end
+
 
     respond_to do |format|
       format.html 

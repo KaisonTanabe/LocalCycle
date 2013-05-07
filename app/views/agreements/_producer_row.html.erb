@@ -1,0 +1,35 @@
+<% producers = User.by_producer.order_best_available %>
+<tr id="collapse<%= p.id %>">
+  <td class="row-collapse">
+    <a id="toggle">
+      <i class="icon-plus" some="#collapse<%= p.id %>"></i>
+    </a>
+  </td>
+  <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
+    <div class="collapsable">
+    <div class="topDisplay">
+    <%= image_tag p.best_pic_url(:thumb), class: "thumb" %>    
+    <h5><%= link_to p.name, "#" %>
+      <% if false %>
+       <small><%= pluralize(agreements.count, (current_user.buyer? ? "producer" : "buyer")) %></small>
+      <% end %>
+      <br />
+      <%= link_to "Post Demand Agreement", new_agreement_path(product_id: p.id), class: "btn btn-mini btn-primary" %>
+    </h5>
+    </div>
+    <% producers.each do |u| %>
+      <%= render partial: "producer_profiles/first_col", locals: {u: u, p: p} %>
+    <% end %>
+  </div>
+  </td>
+  <td colspan="12">
+  <div class="collapsable">
+    <div class="topDisplay">
+      <em>[General harvest calendar availability bar here]</em>
+    </div>
+    <% producers.each do |u| %>
+      <%= render partial: "producer_profiles/second_col", locals: {u: u, p: p} %>
+    <% end %>
+  </div>
+  </td>
+</tr>

@@ -33,6 +33,10 @@ jQuery(function($){
 	$.rails.handleRemote( $(this) );
     })
 
+    $('.row-collapse #toggle').on('click', function(e) {
+	$($(e.target).attr("some")).toggleClass("expanded");
+    });
+
     ////////////////////////////////////////////////////////////////////////////
     //// Plugin initializers
 

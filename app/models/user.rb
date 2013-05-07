@@ -9,8 +9,8 @@ class User < ActiveRecord::Base
   has_many :attachments, as: :attachable, dependent: :destroy
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
-  has_many :producer_agreements, foreign_key: "producer_id", dependent: :destroy
-  has_many :buyer_agreements, foreign_key: "buyer_id", dependent: :destroy
+  has_many :producer_agreements, class_name: "Agreement", foreign_key: "producer_id", dependent: :destroy
+  has_many :buyer_agreements, class_name: "Agreement", foreign_key: "buyer_id", dependent: :destroy
 
   has_one :buyer_profile
   accepts_nested_attributes_for :buyer_profile, allow_destroy: true
@@ -45,10 +45,9 @@ class User < ActiveRecord::Base
 
   ################ SCOPES #################
 
-  scope :active_only, where(active: true)
-  scope :by_seen, lambda { |s| includes(:form).where("forms.seen = ?", s)}
-  scope :reviewers, where("role = ? OR role = ?", "cm", "admin")
-  scope :denied_form, lambda { |f| includes(:form_reviews).where("form_reviews.form_id = ? AND form_reviews.review != ?", f, "approve") }
+  scope :by_producer, where(role: "producer")
+  scope :by_buyer, where(role: "buyer")
+  scope :order_best_available, includes(:producer_profile).order("producer_profiles.size ASC")
 
   #########################################
 
