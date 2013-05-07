@@ -1,0 +1,13 @@
+var title       =   '.stack2-title',
+    loader      =   '.stack2-loader',
+    content     =   '.stack2-body-content',
+    toolbar     =   'div.stack2-footer';
+    modal       =   '#stack2'
+
+// shows the modal and the ajax content
+$(loader).fadeToggle('fast', function() {
+    $(content).show().html("<%= j render partial: "form" %>");
+    $(title).html("Propose Counter-Agreement");
+    $(toolbar).html("<%= j "Submit" %>")
+    $(modal).modal();
+});
