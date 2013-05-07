@@ -33,6 +33,13 @@
 	  <% end %>
 	</div>
 	<div class="span6">
+	  <div class="control-group">
+	    <label for="distance" class="control-label">Within:</label>
+	    <div class="controls controls-row">
+	      <%= select_tag :distance, options_for_select(DISTANCES.map{|d| [d.second, d.first]}, params[:distance].blank? ? '' : params[:distance]), {prompt: "-- Please Select --", class: "span2"} %>
+	    </div>
+	  </div>
+
 	  <% if current_user.producer? %>
 	  <div class="control-group">
 	    <label for="min_price" class="control-label">Price Options:</label>
@@ -68,13 +75,6 @@
 	  <% else %>
 
 	  <div class="control-group">
-	    <label for="distance" class="control-label">Within:</label>
-	    <div class="controls controls-row">
-	      <%= select_tag :distance, options_for_select(DISTANCES.map{|d| [d.second, d.first]}, params[:distance].blank? ? '' : params[:distance]), {prompt: "-- Please Select --", class: "span2"} %>
-	    </div>
-	  </div>
-
-	  <div class="control-group">
 	    <label for="growing_methods" class="control-label">Growing Methods:</label>
 	    <div class="controls controls-row">
 	      <%= select_tag :growing_methods, options_for_select(GROWING_METHODS.map{|g| [g.second, g.first]}, params[:growing_methods].blank? ? '' : params[:growing_methods]), {prompt: "-- Please Select --", class: "span4"} %>
@@ -86,7 +86,9 @@
 	    <div class="controls controls-row">
 	      <% unless current_user.producer? %>
 	        <%= submit_tag 'Filter Producers', :disable_with => 'Searching Items...', :class => "btn btn-warning"  %>
-	        <label class="checkbox" style="display: inline-block;"><%= check_box_tag params[:show_agreements], params[:show_agreements].blank? ? '' : params[:show_agreements] %> Only show available agreements.</label>
+	        <label class="checkbox" style="display: inline-block;"><%= check_box_tag :show_agreements, params[:show_agreements].blank? ? '' : params[:show_agreements] %> Only show available agreements.</label>
+	      <% else %>
+	        <%= submit_tag 'Filter Agreements', :disable_with => 'Searching...', :class => "btn btn-warning"  %>
 	      <% end %>
 	    </div>
 	  </div>
