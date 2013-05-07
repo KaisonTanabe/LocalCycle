@@ -44,6 +44,11 @@
     float: left;
     margin-right: 15px;
 }
+.collapsable td {
+    padding: 0;
+    .collapse {
+    }
+}
 .modal img.medium {
     float: right;
     margin: 0 0 5px 15px;

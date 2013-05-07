@@ -5,6 +5,7 @@
 <table class="table table-hover table-striped" style="background: #fff;margin-top: -20px; border-top: 2px solid #dadada;">
   <thead>
     <tr>
+      <th width="10px"></th>
       <th width="270px">
 	<%= form_tag(agreements_path, method: :get) do %>
 	<div class="form-search pull-left">
@@ -36,7 +37,7 @@
           <%= render partial: "row", locals: {p: p, agreements: []} %>
         <% end %>
       <% else %>
-        <tr><td colspan="13"><em>No matching products...</em></td></tr>
+        <tr><td colspan="14"><em>No matching products...</em></td></tr>
       <% end %>
     <% else %>
       <% if @product_agreements.any? %>
@@ -44,7 +45,7 @@
           <%= render partial: "row", locals: {p: p, agreements: agreements} %>
         <% end %>
       <% else %>
-        <tr><td colspan="13"><em>No matching agreements...</em></td></tr>
+        <tr><td colspan="14"><em>No matching agreements...</em></td></tr>
       <% end %>
     <% end %>
     

@@ -26,8 +26,8 @@ class AgreementsController < ApplicationController
   end
 
   def marketplace
-    @agreements = @agreements.standing_supply_or_mine(current_user.id) if current_user.buyer?
-    @agreements = @agreements.standing_demand_or_mine(current_user.id) if current_user.producer?
+    @agreements = @agreements.standing_supply if current_user.buyer?
+    @agreements = @agreements.standing_demand if current_user.producer?
     @agreements = filter_and_sort(@agreements, params)
     @agreements = @agreements.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
 
