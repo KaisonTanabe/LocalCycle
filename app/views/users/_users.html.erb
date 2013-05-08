@@ -9,8 +9,8 @@
       </td>
 
       <td class='name <%= (params[:sort] == "last_name") ? "sorted" : "" %>'>
-	<%= user.producer_profile.name if user.producer? %>
-	<%= user.buyer_profile.name if user.buyer? %>
+	<%= user.producer_profile.name if user.producer? and user.producer_profile %>
+	<%= user.buyer_profile.name if user.buyer? and user.buyer_profile %>
       </td>
 
       <td class='login <%= (params[:sort] == "current_sign_in_at") ? "sorted" : "" %>'>
