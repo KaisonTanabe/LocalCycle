@@ -183,30 +183,23 @@
 	</div>
       </div>
     </div>
-    <div class="dfagreement_agreement_type dfseasonal">
+    <div class="dfagreement_agreement_type dfseasonal dfonetime">
       <div class="control-group">
 	<%= f.label :start_date, "Begin Date:", class: "control-label" %>
 	<div class="controls controls-row controls-date">
 	  <%= f.text_field :start_date, data: {behavior: "datepicker"} %>
-	  <span class="help-inline">First week of agreement period</span>
+	  <span class="help-inline dfagreement_agreement_type dfseasonal">First week of agreement period</span>
+	  <span class="help-inline dfagreement_agreement_type dfonetime">On what date <%= current_user.producer? ? "will your product be available?" : "is this product is needed?" %></span>
 	</div>
       </div>    
+    </div>
+    <div class="dfagreement_agreement_type dfseasonal">
       <div class="control-group">
 	<%= f.label :end_date, "End Date:", class: "control-label" %>
 	<div class="controls controls-row controls-date">
 	  <%= f.text_field :end_date, data: {behavior: "datepicker"} %>
 	  <%#= f.date_select :end_date, :prompt => true, :order => [:month, :day, :year] %>
 	  <span class="help-inline">Last week of agreement period</span>
-	</div>
-      </div>
-    </div>
-
-    <div class="dfagreement_agreement_type dfonetime">
-      <div class="control-group">
-	<%= f.label :start_date, "Date:", class: "control-label" %>
-	<div class="controls controls-row controls-date">
-	  <%= f.text_field :start_date, data: {behavior: "datepicker"} %>
-	  <span class="help-inline">On what date <%= current_user.producer? ? "will your product be available?" : "is this product is needed?" %></span>
 	</div>
       </div>
     </div>
