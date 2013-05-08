@@ -45,6 +45,8 @@ class User < ActiveRecord::Base
 
   ################ SCOPES #################
 
+  scope :by_size, lambda {|s| includes(:producer_profile).where("producer_profiles.size = ?", s)}
+  scope :by_growing_methods, lambda {|g| includes(:producer_profile).where("producer_profiles.growing_methods = ?", g)}
   scope :by_producer, where(role: "producer")
   scope :by_buyer, where(role: "buyer")
   scope :order_best_available, includes(:producer_profile).order("producer_profiles.size ASC")

@@ -56,6 +56,10 @@ class Agreement < ActiveRecord::Base
   #scope :by_, where()
   #scope :by_, includes(:model).where()
   scope :by_name, lambda { |n| where('UPPER(agreements.name) LIKE UPPER(?)', '%'+n+'%')}
+  scope :by_min_price, lambda {|p| where("price >= ?", p.to_i)}
+  scope :by_max_price, lambda {|p| where("price <= ?", p.to_i)}
+  scope :by_min_quantity, lambda {|q| where("quantity >= ?", q.to_i)}
+  scope :by_max_quantity, lambda {|q| where("quantity <= ?", q.to_i)}
   scope :by_buyer, lambda {|b| where("buyer_id = ?", b)}
   scope :by_producer, lambda {|p| where("producer_id = ?", p)}
   scope :by_product, lambda {|p| where("product_id = ?", p)}

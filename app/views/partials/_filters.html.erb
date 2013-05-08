@@ -75,6 +75,13 @@
 	  <% else %>
 
 	  <div class="control-group">
+	    <label for="size" class="control-label">Only Sizes:</label>
+	    <div class="controls controls-row">
+	      <%= select_tag :size, options_for_select(SIZES.map{|s| [s.second, s.first]}, params[:size].blank? ? '' : params[:size]), {prompt: "-- Please Select --", class: "span4"} %>
+	    </div>
+	  </div>
+
+	  <div class="control-group">
 	    <label for="growing_methods" class="control-label">Growing Methods:</label>
 	    <div class="controls controls-row">
 	      <%= select_tag :growing_methods, options_for_select(GROWING_METHODS.map{|g| [g.second, g.first]}, params[:growing_methods].blank? ? '' : params[:growing_methods]), {prompt: "-- Please Select --", class: "span4"} %>

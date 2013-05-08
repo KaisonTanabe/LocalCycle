@@ -144,6 +144,11 @@ class AgreementsController < ApplicationController
     agreements = agreements.by_complete if !params[:status].blank? and params[:status] == "complete"
     agreements = agreements.by_not_complete if !params[:status].blank? and params[:status] == "proposed"
 
+    agreements = agreements.by_min_price(params[:min_price]) unless params[:min_price].blank?
+    agreements = agreements.by_max_price(params[:max_price]) unless params[:max_price].blank?
+    agreements = agreements.by_min_quantity(params[:min_quantity]) unless params[:min_quantity].blank?
+    agreements = agreements.by_max_quantity(params[:max_quantity]) unless params[:max_quantity].blank?
+
     agreements = agreements.by_name(params[:name]) unless params[:name].blank?
     agreements = agreements.in_category(params[:cat_id]) unless params[:cat_id].blank?
     agreements = agreements.by_buyer(params[:buyer_id]) unless params[:buyer_id].blank?
