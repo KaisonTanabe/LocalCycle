@@ -93,7 +93,7 @@
 	    <div class="controls controls-row">
 	      <% unless current_user.producer? %>
 	        <%= submit_tag 'Filter Producers', :disable_with => 'Searching Items...', :class => "btn btn-warning"  %>
-	        <label class="checkbox" style="display: inline-block;"><%= check_box_tag :show_agreements, params[:show_agreements].blank? ? '' : params[:show_agreements] %> Only show available agreements.</label>
+	        <label class="checkbox" style="display: inline-block;"><%= check_box_tag :show_agreements, "yes", params[:show_agreements].blank? ? false : true %> Only show available agreements.</label>
 	      <% else %>
 	        <%= submit_tag 'Filter Agreements', :disable_with => 'Searching...', :class => "btn btn-warning"  %>
 	      <% end %>

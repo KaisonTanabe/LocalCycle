@@ -135,6 +135,7 @@ class AgreementsController < ApplicationController
     products = products.in_category(params[:cat_id]) unless params[:cat_id].blank?
 
     products = products.by_name(params[:name]) unless params[:name].blank?
+    products = products.available_supply_only unless params[:show_available].blank?
 
     return products.order(sort_product_column + " " + sort_direction)
   end
