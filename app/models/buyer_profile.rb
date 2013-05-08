@@ -5,7 +5,7 @@ class BuyerProfile < ActiveRecord::Base
 
   belongs_to :user
 
-  has_attached_file :pic, styles: IMAGE_STYLES, default_url: DEFAULT_PAPERCLIP_IMAGE
+  has_attached_file :pic, styles: IMAGE_STYLES, default_url: "/assets/buyer_profile_pics/:style/missing.png"
 
   ## ATTRIBUTE PROTECTION
   

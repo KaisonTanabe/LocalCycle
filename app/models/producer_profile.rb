@@ -5,7 +5,7 @@ class ProducerProfile < ActiveRecord::Base
   belongs_to :user
   has_and_belongs_to_many :certifications
 
-  has_attached_file :pic, styles: IMAGE_STYLES, default_url: DEFAULT_PAPERCLIP_IMAGE
+  has_attached_file :pic, styles: IMAGE_STYLES, default_url: "/assets/producer_profile_pics/:style/missing.png"
 
   ## ATTRIBUTE PROTECTION
   attr_accessible :name, :latitude, :longitude, :phone, :growing_methods,
