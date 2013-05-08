@@ -8,8 +8,13 @@
 	<%= link_to(user.formal_name, edit_user_path(user)) %>
       </td>
 
+      <td class='name <%= (params[:sort] == "last_name") ? "sorted" : "" %>'>
+	<%= user.producer_profile.name if user.producer? %>
+	<%= user.buyer_profile.name if user.buyer? %>
+      </td>
+
       <td class='login <%= (params[:sort] == "current_sign_in_at") ? "sorted" : "" %>'>
-        <%= user.last_sign_in_at ? user.last_sign_in_at.strftime("%b %-d %I:%M %P") : "Never" %>
+        <%= user.current_sign_in_at ? user.current_sign_in_at.strftime("%b %-d %I:%M %P") : "Never" %>
       </td>
       <td>
 	<%= render partial: "users/buttons", locals: {user: user} %>

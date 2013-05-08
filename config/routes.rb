@@ -27,7 +27,9 @@ LOCALCYCLE::Application.routes.draw do
     get '/register', :to => "registrations#new"
   end
 
-  resources :users
+  resources :users do
+    get 'prompt', :on => :member
+  end
 
   # Temporary model to collect email addresses on BETA page
   resources :leads, only: "create"

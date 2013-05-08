@@ -104,11 +104,8 @@ class UsersController < ApplicationController
   private
 
   def filter_and_sort(users, params)
-    users = users.active_only unless params[:include_inactives] == "true"
-
     users = users.by_name(params[:name]) unless params[:name].blank?
-
-    users = users.by_seen(false) if params[:status] and (params[:status] == "unseen")
+    users = users.by_role(params[:role]) unless params[:role].blank?
 
     return users.order(sort_column + " " + sort_direction)
   end
