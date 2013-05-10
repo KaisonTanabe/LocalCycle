@@ -44,13 +44,23 @@
     float: left;
     margin-right: 15px;
 }
-#agreementTable tr td div.collapsable {
-    height: 44px;
-    overflow: hidden;
-}
-#agreementTable tr.expanded td div.collapsable {
-    height: auto;
-    overflow: visible;
+#agreementTable {
+    background: #fff;
+    margin-top: -20px; 
+    border-top: 2px solid #dadada;
+
+    tr {
+	td div.collapsable {
+	    height: 44px;
+	    overflow: hidden;
+	}
+	&.expanded {
+	    td div.collapsable {
+		height: auto;
+		overflow: visible;
+	    }
+	}
+    }
 }
 .producer_col {
     height: 40px;

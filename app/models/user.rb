@@ -9,9 +9,6 @@ class User < ActiveRecord::Base
   has_many :attachments, as: :attachable, dependent: :destroy
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
-  has_many :producer_agreements, class_name: "Agreement", foreign_key: "producer_id", dependent: :destroy
-  has_many :buyer_agreements, class_name: "Agreement", foreign_key: "buyer_id", dependent: :destroy
-
   has_one :buyer_profile
   accepts_nested_attributes_for :buyer_profile, allow_destroy: true
   has_one :producer_profile

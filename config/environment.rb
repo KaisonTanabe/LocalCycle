@@ -28,9 +28,9 @@ ROLES = {
   "producer" => "Producer"
 }
 SIZES = {
-  "small" => "Small",
-  "medium" => "Medium",
-  "large" => "Large"
+  "0" => "Small",
+  "1" => "Medium",
+  "2" => "Large"
 }
 DISTANCES = {
   "20" => "20 miles",
@@ -50,11 +50,11 @@ FREQUENCIES = {
 
 
 GROWING_METHODS = {
-  "responsible" => "Responsible",
-  "green" => "Green",
-  "organic" => "Organic",
-  "biodynamic" => "Biodynamic",
-  "custom" => "Custom"
+  "0" => "Custom",
+  "1" => "Responsible",
+  "2" => "Green",
+  "3" => "Organic",
+  "4" => "Biodynamic"
 }
 
 AGREEMENT_TYPES = {

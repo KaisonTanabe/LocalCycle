@@ -21,7 +21,7 @@ user = User.create(
                    password_confirmation: "BuyerFF",
                    )
 user.confirm!
-p = BuyerProfile.create(
+b = BuyerProfile.create(
                    name: "Williams College",
                    street_address_1: "355 Auburn St",
                    city: "Boulder",
@@ -31,6 +31,7 @@ p = BuyerProfile.create(
                    description: "I am a test buyer",
                    user_id: user.id
                    )
+#b.set_lat_long
 
 user = User.create(
                    first_name: 'Joe',
@@ -41,7 +42,7 @@ user = User.create(
                    password_confirmation: "ProducerFF",
                    )
 user.confirm!
-ProducerProfile.create(
+p = ProducerProfile.create(
                    name: "Bellview Farms",
                    street_address_1: "40 Harvard Rd",
                    city: "Boulder",
@@ -49,11 +50,73 @@ ProducerProfile.create(
                    zip: "80305",
                    phone: "440-796-7082",
                    description: "I am a test producer",
-                   growing_methods: "responsible",
+                   growing_methods: GROWING_METHODS.key("Organic"),
+                   has_eggs: true,
                    user_id: user.id
                    )
+#p.set_lat_long
 
 require File.expand_path('../seed_products', __FILE__)
 require File.expand_path('../seed_product_pics', __FILE__)
 require File.expand_path('../alter_product_tree', __FILE__)
 require File.expand_path('../seed_certifications', __FILE__)
+
+CertificationsProducerProfiles.create(
+  certification_id: Certification.where(name: "HCAAP").first.id,
+  producer_profile_id: p.id
+)
+
+a = Agreement.create(
+                 buyer_id: b.id,
+                 producer_id: p.id,
+
+                 product_id: Product.where(name: "Beet Greens").first.id,
+                 name: "Organic Beet Greens",
+
+                 price: 3.29,
+                 quantity: 80,
+                 selling_unit: "lb",
+
+                 agreement_type: "indefinite",
+                 frequency: "weekly",
+
+                 transport_by: "producer",
+                 transport_fee: 75,
+                 transportation_instructions: "Producer will deliver Tuesdays 3pm-5pm\nAddress: 480 Spring Street, Williamstown, MA, 01267"
+)
+AgreementChange.create(
+                       buyer_id: b.id,
+                       agreement: a.id,
+                       price: 3.00,
+                       quantity: 100,
+                       frequency: "weekly",
+                       transported_by: "producer",
+                       transportation_instructions: "We will not pickup. Delivery fee acceptible. Producer will deliver (pick one)\nTuesdays 3pm-5pm\nThursdays 3pm-5pm\nSaturdays 10am-2pm\nAddress: 480 Spring Street, Williamstown, MA, 01267"
+                       agree: false
+)
+AgreementChange.create(
+                       producer_id: p.id,
+                       agreement: a.id,
+                       price: 3.50,
+                       quantity: 80,
+                       transportation_instructions: "Producer will deliver Tuesdays 3pm-5pm\nAddress: 480 Spring Street, Williamstown, MA, 01267"
+                       reason: "I can supply you with 80lbs at $3.50/lb. Delivery fee is $75.",
+                       agree: false
+)
+AgreementChange.create(
+                       buyer_id: b.id,
+                       agreement: a.id,
+                       price: 3.29,
+                       reason: "We'd be willing to do $3.29/lb.",
+                       agree: false
+)
+AgreementChange.create(
+                       producer_id: p.id,
+                       agreement: a.id,
+                       agree: true
+)
+AgreementChange.create(
+                       buyer_id: b.id,
+                       agreement: a.id,
+                       agree: true
+)

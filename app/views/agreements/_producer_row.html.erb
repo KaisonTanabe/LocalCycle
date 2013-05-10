@@ -1,4 +1,4 @@
-<% producers = User.by_producer.order_best_available %>
+<% producers = ProducerProfile.scoped.order_best_available %>
 <% producers = producers.by_size(params[:size]) unless params[:size].blank? %>
 <% producers = producers.by_growing_methods(params[:growing_methods]) unless params[:growing_methods].blank? %>
 
@@ -14,25 +14,25 @@
 	<%= image_tag p.best_pic_url(:thumb), class: "thumb" %>    
 	<h5><%= link_to p.name, "#" %>
 	  <% if false %>
-	  <small><%= pluralize(agreements.count, (current_user.buyer? ? "producer" : "buyer")) %></small>
+	  <small><%= pluralize(agreements.count, "producer") %></small>
 	  <% end %>
 	  <br />
 	  <%= link_to "Post Demand Agreement", new_agreement_path(product_id: p.id), class: "btn btn-mini btn-primary" %>
 	</h5>
       </div>
-      <% producers.each do |u| %>
-        <div class="producer_col"><%= render partial: "producer_profiles/first_col", locals: {u: u, p: p} %></div>
+      <% producers.each do |profile| %>
+        <div class="producer_col"><%= render partial: "producer_profiles/first_col", locals: {profile: profile, p: p} %></div>
       <% end %>
     </div>
   </td>
   <td colspan="12">
   <div class="collapsable">
     <div class="topDisplay">
-      <em>[General harvest calendar availability bar here]</em>
+      [<em>General harvest calendar availability bar here</em>]
     </div>
-    <% producers.each do |u| %>
-      <div class="producer_col"><%= render partial: "producer_profiles/second_col", locals: {u: u, p: p} %></div>
-    <% end %>
+      <% producers.each do |profile| %>
+        <div class="producer_col"><%= render partial: "producer_profiles/second_col", locals: {profile: profile, p: p} %></div>
+      <% end %>
   </div>
   </td>
 </tr>

@@ -7,18 +7,18 @@ class Agreement < ActiveRecord::Base
   has_many :images, as: :imageable, dependent: :destroy
   accepts_nested_attributes_for :images, allow_destroy: true
 
-  has_many :counter_agreements, dependent: :destroy
-  
+  has_many :agreement_changes, dependent: :destroy
+
   belongs_to :product
-  belongs_to :buyer, class_name: "User", foreign_key: :buyer_id
-  belongs_to :producer, class_name: "User", foreign_key: :producer_id
+  belongs_to :buyer, class_name: "BuyerProfile", foreign_key: :buyer_id
+  belongs_to :producer, class_name: "ProducerProfile", foreign_key: :producer_id
 
   ## ATTRIBUTE PROTECTION
   
   attr_accessible :product_id, :name, :description, :producer_id, :buyer_id,
-    :quantity, :agreement_type, :start_date, :end_date,
-    :selling_unit, :price, :locally_packaged, :can_deliver,
-    :can_pickup, :delivery_options, :pickup_options, :frequency,
+    :agreement_type, :start_date, :end_date, 
+    :selling_unit, :price, :locally_packaged, :frequency, :quantity,
+    :transport_by, :transport_fee, :transport_instructions,
     :images_attributes
 
   ## ATTRIBUTE VALIDATION

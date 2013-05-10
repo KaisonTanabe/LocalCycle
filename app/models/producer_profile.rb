@@ -7,6 +7,9 @@ class ProducerProfile < ActiveRecord::Base
 
   has_attached_file :pic, styles: IMAGE_STYLES, default_url: "/assets/producer_profile_pics/:style/missing.png"
 
+  has_many :agreements, class_name: "Agreement", foreign_key: "producer_id", dependent: :destroy
+
+
   ## ATTRIBUTE PROTECTION
   attr_accessible :name, :latitude, :longitude, :phone, :growing_methods,
     :street_address_1, :street_address_2, :city, :state, :country, :zip,

@@ -22,7 +22,9 @@ class CreateProducerProfiles < ActiveRecord::Migration
       t.string  :twitter
       t.string  :facebook
 
-      t.string  :growing_methods,    null: false, default: "none"
+      t.integer :size,               null: false, default: 0
+
+      t.integer :growing_methods,    null: false, default: 0
       t.text    :custom_growing_methods
 
       t.boolean :has_eggs,           null: false, default: false

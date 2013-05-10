@@ -1,6 +1,6 @@
 <%= render "partials/filters" %>
 
-<table id="agreementTable" class="table table-hover table-striped" style="background: #fff;margin-top: -20px; border-top: 2px solid #dadada;">
+<table id="agreementTable" class="table table-hover table-striped">
   <thead>
     <tr>
       <th width="10px"></th>
@@ -28,6 +28,7 @@
       <th>DEC</th>
     </tr>
   </thead>
+
   <tbody>
     <% if @products %>
       <% if @products.any? %>

@@ -7,6 +7,9 @@ class BuyerProfile < ActiveRecord::Base
 
   has_attached_file :pic, styles: IMAGE_STYLES, default_url: "/assets/buyer_profile_pics/:style/missing.png"
 
+
+  has_many :agreements, class_name: "Agreement", foreign_key: "buyer_id", dependent: :destroy
+
   ## ATTRIBUTE PROTECTION
   
   attr_accessible :name, :latitude, :longitude, :phone,

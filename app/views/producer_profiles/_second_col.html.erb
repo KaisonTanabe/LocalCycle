@@ -1,7 +1,7 @@
-  <% if u.producer_agreements.where(product_id: p.id).any? %>
-    <% u.producer_agreements.where(product_id: p.id).each do |a| %>
-      <%= render partial: "bar", locals: {a: a} %>
-    <% end %>
-  <% else %>
-    <em>No supply posted. But that doesn't mean there's none available! <%= link_to "Propose Agreement to Producer", new_agreement_path(product_id: p.id, preferred_producer_id: u.id), class: "btn btn-mini btn-primary" %></em>
+<% if profile.agreements.where(product_id: p.id).any? %>
+  <% profile.agreements.where(product_id: p.id).each do |a| %>
+    <%= render partial: "bar", locals: {a: a} %>
   <% end %>
+<% else %>
+  <em>No supply posted. But that doesn't mean there's none available! <%= link_to "Propose Agreement to Producer", new_agreement_path(product_id: p.id, preferred_producer_id: profile.id), class: "btn btn-mini btn-primary" %></em>
+<% end %>
