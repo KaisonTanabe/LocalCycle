@@ -106,8 +106,8 @@ class Agreement < ActiveRecord::Base
 
   def users
     users = []
-    users << buyer if buyer
-    users << producer if producer
+    users << buyer if buyer and buyer.has_profile?
+    users << producer if producer and producer.has_profile?
     return users
   end
 
