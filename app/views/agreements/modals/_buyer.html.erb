@@ -1,0 +1,16 @@
+<% u = @agreement.buyer.buyer_profile %>
+
+<%= image_tag u.pic.url(:medium), class: "medium" %>
+<p><%= u.description %> <a href="#">Read more &raquo;</a></p>
+<hr class="clear" />
+<h4>Agreement Details</h4>
+<h5><%= @agreement.name %></h5>
+<ul>
+  <li><strong>Price:</strong> <%= number_to_currency(@agreement.price) %>/<%= UNIT_TYPE[@agreement.selling_unit] %></li>
+  <li><strong>Quantity:</strong> <%= pluralize(@agreement.quantity, UNIT_TYPE[@agreement.selling_unit]) %>/<%= @agreement.frequency %></li>
+  <li><strong>Duration:</strong> <%= @agreement.duration %></li>
+  <li><strong>Delivery Windows:</strong> [TO DO]</li>
+  <!--li>We pledge to deliver <span class="label label-info"><%= pluralize(@agreement.quantity, UNIT_TYPE[@agreement.selling_unit]) %>/<%= @agreement.frequency %></span> of <strong><%= @agreement.name %></strong> at <span class="label label-success"><%= number_to_currency(@agreement.price) %>/<%= UNIT_TYPE[@agreement.selling_unit] %></span>.</li>
+  <li>We can deliver on <span class="label label-warning">?</span> within ?? miles.</li>
+  <li>Duration: <span class="label label-info"><%= @agreement.duration %></span>.</li-->
+</ul>
