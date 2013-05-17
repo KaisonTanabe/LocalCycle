@@ -17,4 +17,8 @@ class ConfirmationsController < Devise::ConfirmationsController
       render :action => "show"
     end
   end
+
+  def fixConfirm
+    redirect_to root_url
+  end
 end

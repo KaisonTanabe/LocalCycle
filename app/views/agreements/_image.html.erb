@@ -2,7 +2,7 @@
   <label class="control-label">Thumbnail:</label>
   <% if f.object.new_record? %>
   <div class="controls controls-row child-field">
-    <div id="product_pic_div" style="padding: 10px 0 10px 1px;"></div>
+    <div id="product_pic_div"></div>
     <%= f.file_field :image, class: "span4" %>
   </div>
   <% else %>

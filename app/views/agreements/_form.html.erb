@@ -14,15 +14,44 @@
 
 <div class="row">
   <div class="span12"><h2>Two Methods:</h2></div>
-  <div class="span6">
+  <div class="span6 skinny-label">
     <h4>1. Quick-select system!</h4>
     <div class="control-group">
       <label class="req control-label" for="agreement_product_id">Product:</label>
       <div class="controls controls-row">
-	<%= f.select :product_id, option_groups_from_collection_for_select(Category.includes(:products).order('name'), :products, :name, :id, :name, (@agreement.new_record? ? (params[:product_id].blank? ? "" : params[:product_id]) : @agreement.product.id)), {prompt: "-- Please type and select --"}, {class: "select2 span4" } %>
+	<%= f.select :product_id, option_groups_from_collection_for_select(Category.includes(:products).order('name'), :products, :name, :id, :name, (@agreement.new_record? ? (params[:product_id].blank? ? "" : params[:product_id]) : @agreement.product.id)), {prompt: "-- Please type and select --"}, {class: "select2 span3" } %>
       </div>
     </div>
+  </div>
 
+  <div class="span6 skinny-label">
+    <h4>2. Browse the product tree.</h4>
+    <div class="control-group">
+      <label class="control-label">Category:</label>
+      <div class="controls controls-row">
+	<%= select_tag "category_id", options_from_collection_for_select(Category.roots, :id, :name), {prompt: "-- Please select --", class: "span3" } %>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">Sub-category:</label>
+      <div class="controls controls-row">
+	<%= select_tag "subcategory_id", options_from_collection_for_select(Category.leaves, :id, :name), {prompt: "-- Please select --", disabled: true, class: "span3" } %>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">Product:</label>
+      <div class="controls controls-row">
+	<%= select_tag "fake_product_id", options_from_collection_for_select(Product.all, :id, :name), {prompt: "-- Please select --", disabled: true, class: "span3" } %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="span12">
+    <hr />
+  </div>
+
+  <div class="span6">
     <div class="control-group">
       <%= f.label :name, "Title:", class: "control-label" %>
       <div class="controls controls-row">
@@ -30,11 +59,6 @@
 	<span class="help-inline">Further differentiate <%= current_user.producer? ? "your product" : "your proposal" %>.</span>
       </div>
     </div>
-
-    <%= f.fields_for :images do |fi| %>
-      <%= render partial: "agreements/image", locals: {f: fi} %>
-    <% end %>
-
     <div class="control-group">
       <%= f.label :description, "Description:", class: "control-label" %>
       <div class="controls controls-row">
@@ -42,7 +66,6 @@
 	<span class="help-inline">(optional) Add a detailed description or custom instructions<%= current_user.producer? ? "." : " for what you are looking for." %></span>
       </div>
     </div>
-
     <% if current_user.producer? %>
     <div class="control-group">
       <%= f.label :locally_packaged, "Locally Packaged:", class: "control-label" %>
@@ -52,36 +75,10 @@
     </div>
     <% end %>
   </div>
-
   <div class="span6">
-    <h4>2. Browse the product tree.</h4>
-    <div class="control-group">
-      <label class="control-label">Category:</label>
-      <div class="controls controls-row">
-	<%= select_tag "category_id", options_from_collection_for_select(Category.roots, :id, :name), {prompt: "-- Please select --", class: "span4" } %>
-      </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label">Sub-category:</label>
-      <div class="controls controls-row">
-	<%= select_tag "subcategory_id", options_from_collection_for_select(Category.leaves, :id, :name), {prompt: "-- Please select --", disabled: true, class: "span4" } %>
-      </div>
-    </div>
-    <div class="control-group">
-      <label class="control-label">Product:</label>
-      <div class="controls controls-row">
-	<%= select_tag "fake_product_id", options_from_collection_for_select(Product.all, :id, :name), {prompt: "-- Please select --", disabled: true, class: "span4" } %>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="span12">
-    <p><br /></p>
-    <legend>Preferred Partners</legend>
-    <p>List preferred <%= current_user.buyer? ? "producers" : "buyers" %> below. They will be notified and have 3 days to respond before your proposal becomes public.</p>
-    [TODO]
+    <%= f.fields_for :images do |fi| %>
+      <%= render partial: "agreements/image", locals: {f: fi} %>
+    <% end %>
   </div>
 </div>
 
@@ -211,12 +208,44 @@
 <div class="row">
   <div class="span12">
     <p><br /></p>
-    <legend>Delivery Options</legend>
-    <p>Use your default delivery options below OR <%= link_to "Customize", "#" %></p>
-    <% if current_user.producer? %>    
-    <% elsif current_user.buyer? %>
-    <% end %>
-    [TODO]
+    <legend>Delivery Method</legend>
+    <p>Add or remove possible delivery windows. The other party will be required to pick one that works with their schedule.</p>
+    <div class="control-group">
+      <%= f.label :transport_by, "Preferred Delivery Method:", class: "control-label" %>
+      <div class="controls controls-row">
+	<%= f.select :transport_by, [["-- Please Select --",""],["We deliver", "producer"],["Buyers pick up", "buyer"],["We are open to either", "both"]], {selected: (f.object.new_record? ? (current_user.producer? ? current_user.producer_profile.transport_by : current_user.buyer_profile.transport_by ) : "")}, {class: "span4"} %>
+	<span class="help-inline"></span>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :delivery_window, "Delivery Windows: ", class: "req control-label" %>
+      <%= f.fields_for :delivery_windows do |fd| %>
+        <%= render partial: 'delivery_windows/delivery_window', locals: { f: fd } %>
+        <%= new_child_fields_template(f, :delivery_windows, {partial: "delivery_windows/delivery_window"})%>
+      <% end %>
+      <div class="controls">
+	<span class="help-inline"><%= add_child_link "Add Window", :delivery_windows %></span>
+	<span class="help-block">Add common Delivery/Pickup windows for your organization.</span>
+      </div>
+    </div>
+    <!--p><span class="label label-info">NOTE:</span> We expect both parties to integrate the delivery fee into price point of Production Agreements.</p-->
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="span12">
+    <p><br /></p>
+    <legend>Preferred Partners</legend>
+    <p>List preferred <%= current_user.producer? ? "buyers" : "producers" %> below. They will be notified and have 3 days to respond before your proposal becomes public.</p>
+    <div class="control-group">
+      <label class="req control-label" for="agreement_product_id">Preferred:</label>
+      <div class="controls controls-row">
+	<% if current_user.producer? %>
+	<%= f.select :preferred_buyer_profile_ids, options_for_select(BuyerProfile.order('name').collect {|p| [p.name, p.id] }, (@agreement.new_record? and !params[:preferred].blank?) ? params[:preferred] : @agreement.preferred_buyer_profiles.map{ |p| p.id }), {}, {multiple: "", placeholder: "Select " + (current_user.producer? ? "Buyers" : "Producers"), class: "select2 span4" } %>
+	<% end %>
+	<span class="help-inline"><span class="label label-info">HINT:</span> Start typing the organization's name...</span>
+    </div>
   </div>
 </div>
 

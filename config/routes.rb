@@ -11,18 +11,20 @@ LOCALCYCLE::Application.routes.draw do
     get 'modal', :on => :member
     put 'accept', :on => :member
     get 'marketplace', :on => :collection
+    get 'table', :on => :collection
+    get 'export', :on => :collection
+    resources :agreement_changes, as: "change", only: ["new","create","update"]
   end
 
-  resources :counter_agreements, only: ["new","create"]
-
-  resources :buyer_profiles, only: ["new","create"]
-  resources :producer_profiles, only: ["new","create"]
+  resources :buyer_profiles, only: ["new","create","show"]
+  resources :producer_profiles, only: ["new","create","show"]
 
   devise_for :users, path_prefix: "d", path_names: { sign_in: 'login', sign_up: 'register' }, 
     controllers: {confirmations: 'confirmations', sessions: 'sessions', registrations: 'registrations'}
 
   devise_scope :user do
     put '/confirm' => 'confirmations#confirm', as: :user_confirm
+    get '/confirm' => 'confirmations#fixconfirm'
     get '/login', :to => "devise/sessions#new"
     get '/register', :to => "registrations#new"
   end

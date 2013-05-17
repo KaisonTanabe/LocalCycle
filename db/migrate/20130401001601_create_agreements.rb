@@ -14,14 +14,13 @@ class CreateAgreements < ActiveRecord::Migration
       t.date       :start_date
       t.date       :end_date
 
-      t.float      :price,            null: false
-      t.float      :quantity,         null: false
-      t.string     :selling_unit,     null: false
+      t.float      :price,               null: false
+      t.float      :quantity,            null: false
+      t.string     :selling_unit,        null: false
 
-      t.boolean    :locally_packaged, null: false, default: false
+      t.boolean    :locally_packaged,    null: false, default: false
 
       t.string     :transport_by,        null: false
-      t.float      :transport_fee,       null: false, default: 0
       t.text       :transport_instructions
 
       t.timestamps

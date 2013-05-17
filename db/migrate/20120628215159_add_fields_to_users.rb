@@ -6,5 +6,6 @@ class AddFieldsToUsers < ActiveRecord::Migration
 
     add_column :users, :notes,                  :text
 
+
   end
 end

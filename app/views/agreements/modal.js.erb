@@ -5,32 +5,36 @@ var title       =   '.modal-title',
     modal       =   '#ajax-modal'
 
 $(loader).fadeToggle('fast', function() {
-  <% if @agreement.buyer_id != 0 and @agreement.producer_id != 0 %>
+  <% if @agreement.is_complete?%>
 
     $(title).html("Completed Agreement");
-    $(content).show().html("<%= j render partial: 'modal/completed' %>");
+    $(content).show().html("<%= j render partial: 'agreements/modals/completed' %>");
 
-  <% elsif @agreement.buyer_id != 0 %>
+  <% elsif @agreement.has_buyer? %>
 
-    $(title).html("<%= j @agreement.buyer.buyer_profile.name %>");
-    $(content).show().html("<%= j render partial: 'modal/buyer' %>");
+    $(title).html("<%= j @agreement.buyer.name %>");
+
+    $(content).show().html("<%= j render partial: 'agreements/modals/buyer' %>");
 
     <% if @agreement.buyer_id != current_user.id %>
-      $(toolbar).html("<%= j (link_to raw('<i class="icon-edit"></i> Propose Amendments'), discuss_agreement_path, class: "btn") + " " + (link_to raw('<i class="icon-ok icon-white"></i> Accept Agreement'), accept_agreement_path(@agreement, producer_id: current_user.id), method: "put", confirm: "You will be obligated to fulfill your part of the contract", class: "btn btn-warning") %>")
+      $(toolbar).html("<%= j (link_to raw('<i class="icon-edit"></i> Propose Amendments'), new_agreement_change_path(@agreement), class: "btn") + " " + (link_to raw('<i class="icon-ok icon-white"></i> Accept Agreement'), agreement_change_index_path(@agreement, agreement_change: {agree: true}), method: :post, confirm: "You will be obligated to fulfill your part of the contract should this agreement be accepted", class: "btn btn-warning") %>")
     <% end %>
 
-  <% elsif @agreement.producer_id != 0 %>
+  <% elsif @agreement.has_producer? %>
 
-    $(title).html("<%= j @agreement.producer.producer_profile.name %>");
-    $(content).show().html("<%= j render partial: 'modal/producer' %>");
+    $(title).html("<%= j @agreement.producer.name %>");
+    $(content).show().html("<%= j render partial: 'agreements/modals/producer' %>");
 
-    <% if @agreement.producer_id != current_user.id %>
-      $(toolbar).html("<%= j (link_to raw('<i class="icon-edit"></i> Propose Amendments'), discuss_agreement_path, class: "btn") + " " + (link_to raw('<i class="icon-ok icon-white"></i> Accept Agreement'), accept_agreement_path(@agreement, buyer_id: current_user.id), method: "put", confirm: "You will be obligated to fulfill your part of the contract", class: "btn btn-warning") %>")
+    <% if !@agreement.has_buyer? and current_user.buyer? %>
+      <% if @agreement.agreement_changes.by_buyer(current_user.profile_id).by_agreed.any? %>
+        $(toolbar).html('<span class="label label-warning">Pending Agreement!<span>')
+      <% else %>
+        $(toolbar).html("<%= j (link_to raw('<i class="icon-edit"></i> Propose Amendments'), new_agreement_change_path(@agreement), class: "btn") + " " + (link_to raw('<i class="icon-ok icon-white"></i> Accept Agreement'), agreement_change_index_path(@agreement, agreement_change: {agree: true}), method: :post, confirm: "You will be obligated to fulfill your part of the contract should this agreement be accepted", class: "btn btn-warning") %>")
+      <% end %>
+    <% elsif @agreement.buyer_id == current_user.profile_id %>
+
     <% end %>
-
   <% end %>
-
-  $('#content').append('<%= j render partial: "partials/stack2modal" %>');
 
   $(modal).modal();
 });

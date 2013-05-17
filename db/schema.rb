@@ -11,32 +11,46 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130507023107) do
+ActiveRecord::Schema.define(:version => 20130516152931) do
+
+  create_table "agreement_changes", :force => true do |t|
+    t.integer  "agreement_id",                              :null => false
+    t.integer  "producer_id",            :default => 0,     :null => false
+    t.integer  "buyer_id",               :default => 0,     :null => false
+    t.boolean  "agree",                  :default => false, :null => false
+    t.integer  "price"
+    t.integer  "quantity"
+    t.string   "frequency"
+    t.string   "transport_by"
+    t.string   "transport_fee"
+    t.text     "transport_instructions"
+    t.text     "reason"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+  end
+
+  add_index "agreement_changes", ["agreement_id"], :name => "index_agreement_changes_on_agreement_id"
+  add_index "agreement_changes", ["buyer_id"], :name => "index_agreement_changes_on_buyer_id"
+  add_index "agreement_changes", ["producer_id"], :name => "index_agreement_changes_on_producer_id"
 
   create_table "agreements", :force => true do |t|
-    t.integer  "product_id",                                      :null => false
-    t.integer  "buyer_id",              :default => 0,            :null => false
-    t.integer  "producer_id",           :default => 0,            :null => false
-    t.string   "name",                                            :null => false
+    t.integer  "buyer_id",               :default => 0,     :null => false
+    t.integer  "producer_id",            :default => 0,     :null => false
+    t.string   "agreement_type",                            :null => false
+    t.integer  "product_id",                                :null => false
+    t.string   "name",                                      :null => false
     t.text     "description"
-    t.string   "agreement_type",                                  :null => false
     t.string   "frequency"
-    t.date     "start_date",            :default => '2013-04-30', :null => false
+    t.date     "start_date"
     t.date     "end_date"
-    t.float    "quantity",                                        :null => false
-    t.string   "selling_unit",                                    :null => false
-    t.float    "price",                                           :null => false
-    t.boolean  "locally_packaged",      :default => false,        :null => false
-    t.boolean  "can_deliver",           :default => false,        :null => false
-    t.text     "delivery_options"
-    t.float    "min_delivery_quantity"
-    t.float    "delivery_fee"
-    t.boolean  "can_pickup",            :default => false,        :null => false
-    t.text     "pickup_options"
-    t.float    "min_pickup_quantity"
-    t.float    "max_pickup_quantity"
-    t.datetime "created_at",                                      :null => false
-    t.datetime "updated_at",                                      :null => false
+    t.float    "price",                                     :null => false
+    t.float    "quantity",                                  :null => false
+    t.string   "selling_unit",                              :null => false
+    t.boolean  "locally_packaged",       :default => false, :null => false
+    t.string   "transport_by",                              :null => false
+    t.text     "transport_instructions"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
   end
 
   create_table "attachments", :force => true do |t|
@@ -52,16 +66,6 @@ ActiveRecord::Schema.define(:version => 20130507023107) do
 
   add_index "attachments", ["attachable_id", "attachable_type"], :name => "index_attachments_on_attachable_id_and_attachable_type"
 
-  create_table "buyer_agreements", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "agreement_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  add_index "buyer_agreements", ["agreement_id"], :name => "index_buyer_agreements_on_agreement_id"
-  add_index "buyer_agreements", ["user_id"], :name => "index_buyer_agreements_on_user_id"
-
   create_table "buyer_profiles", :force => true do |t|
     t.integer  "user_id"
     t.string   "name",                               :null => false
@@ -71,14 +75,16 @@ ActiveRecord::Schema.define(:version => 20130507023107) do
     t.string   "state",                              :null => false
     t.string   "country",          :default => "US", :null => false
     t.string   "zip",                                :null => false
-    t.float    "latitude"
-    t.float    "longitude"
+    t.float    "lat"
+    t.float    "lng"
+    t.float    "latlong"
     t.string   "phone"
     t.text     "description"
     t.string   "website"
     t.string   "twitter"
     t.string   "facebook"
     t.boolean  "text_updates",     :default => true, :null => false
+    t.string   "transport_by"
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
     t.string   "pic_file_name"
@@ -129,14 +135,14 @@ ActiveRecord::Schema.define(:version => 20130507023107) do
   add_index "certifications_producer_profiles", ["certification_id"], :name => "index_certifications_producer_profiles_on_certification_id"
   add_index "certifications_producer_profiles", ["producer_profile_id"], :name => "index_certifications_producer_profiles_on_producer_profile_id"
 
-  create_table "counter_agreements", :force => true do |t|
-    t.integer  "price"
-    t.integer  "quantity"
-    t.text     "reasons"
-    t.integer  "agreement_id", :null => false
-    t.integer  "user_id",      :null => false
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+  create_table "delivery_windows", :force => true do |t|
+    t.integer  "deliverable_id"
+    t.string   "deliverable_type"
+    t.integer  "weekday"
+    t.integer  "start_hour"
+    t.integer  "end_hour"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "images", :force => true do |t|
@@ -158,46 +164,58 @@ ActiveRecord::Schema.define(:version => 20130507023107) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "producer_agreements", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "agreement_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+  create_table "preferred_buyer_agreements", :force => true do |t|
+    t.integer  "agreement_id",     :null => false
+    t.integer  "buyer_profile_id", :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
-  add_index "producer_agreements", ["agreement_id"], :name => "index_producer_agreements_on_agreement_id"
-  add_index "producer_agreements", ["user_id"], :name => "index_producer_agreements_on_user_id"
+  add_index "preferred_buyer_agreements", ["agreement_id"], :name => "index_preferred_buyer_agreements_on_agreement_id"
+  add_index "preferred_buyer_agreements", ["buyer_profile_id"], :name => "index_preferred_buyer_agreements_on_buyer_profile_id"
+
+  create_table "preferred_producer_agreements", :force => true do |t|
+    t.integer  "agreement_id",        :null => false
+    t.integer  "producer_profile_id", :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "preferred_producer_agreements", ["agreement_id"], :name => "index_preferred_producer_agreements_on_agreement_id"
+  add_index "preferred_producer_agreements", ["producer_profile_id"], :name => "index_preferred_producer_agreements_on_producer_profile_id"
 
   create_table "producer_profiles", :force => true do |t|
     t.integer  "user_id"
-    t.string   "name",                                        :null => false
-    t.string   "street_address_1",                            :null => false
+    t.string   "name",                                      :null => false
+    t.string   "street_address_1",                          :null => false
     t.string   "street_address_2"
-    t.string   "city",                                        :null => false
-    t.string   "state",                                       :null => false
-    t.string   "country",                :default => "US",    :null => false
-    t.string   "zip",                                         :null => false
-    t.float    "latitude"
-    t.float    "longitude"
+    t.string   "city",                                      :null => false
+    t.string   "state",                                     :null => false
+    t.string   "country",                :default => "US",  :null => false
+    t.string   "zip",                                       :null => false
+    t.float    "lat"
+    t.float    "lng"
+    t.string   "latlong"
     t.string   "phone"
     t.text     "description"
     t.string   "website"
     t.string   "twitter"
     t.string   "facebook"
-    t.string   "growing_methods",        :default => "none",  :null => false
+    t.integer  "size",                   :default => 0,     :null => false
+    t.integer  "growing_methods",        :default => 0,     :null => false
     t.text     "custom_growing_methods"
-    t.boolean  "has_eggs",               :default => false,   :null => false
-    t.boolean  "has_livestock",          :default => false,   :null => false
-    t.boolean  "has_dairy",              :default => false,   :null => false
-    t.boolean  "has_pantry",             :default => false,   :null => false
-    t.boolean  "text_updates",           :default => true,    :null => false
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
+    t.boolean  "has_eggs",               :default => false, :null => false
+    t.boolean  "has_livestock",          :default => false, :null => false
+    t.boolean  "has_dairy",              :default => false, :null => false
+    t.boolean  "has_pantry",             :default => false, :null => false
+    t.boolean  "text_updates",           :default => true,  :null => false
+    t.string   "transport_by"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
     t.string   "pic_file_name"
     t.string   "pic_content_type"
     t.integer  "pic_file_size"
     t.datetime "pic_updated_at"
-    t.string   "size",                   :default => "small", :null => false
   end
 
   add_index "producer_profiles", ["user_id"], :name => "index_producer_profiles_on_user_id"

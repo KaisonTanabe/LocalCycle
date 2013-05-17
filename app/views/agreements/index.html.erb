@@ -1,9 +1,30 @@
-<%= render "partials/modal" %>
+<%= render "partials/ajax-modal" %>
+
+<div class="modal hide fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="Help" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 id="myModalLabel">Managing Production Agreements</h4>
+  </div>
+  <div class="modal-body">
+    <% if current_user.producer? %>
+      <%= render partial: "agreements/help/producer" %>
+    <% else %>
+      <%= render partial: "agreements/help/buyer" %>
+    <% end %>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>
+
+<% if @first_login %>
+<script>setTimeout(function(){$('#helpModal').modal('show')}, 1000);</script>
+<% end %>
 
 <div class="row">
   <div class="span12">
     <div class="pull-right actions-bar">
-      <%= link_to 'Propose New', new_agreement_path, class: "btn btn-primary" %>
+      <%= link_to raw('<i class="icon-white icon-certificate"></i> New'), new_agreement_path, class: "btn btn-primary" %>
       <div class="btn-group ">
 	<%= link_to raw('My Agreements'), my_agreements_path(), class: "btn btn-success" %>
 	<%= link_to raw('<span class="caret"></span>'), "#", class: "btn btn-success dropdown-toggle", data: {toggle: "dropdown"} %>
@@ -12,7 +33,9 @@
 	  <li><%= link_to 'Complete', my_agreements_path("complete") %></li>
 	</ul>
       </div>
-      <%= link_to raw('<span class="icon-question-sign"></span>'), "#", class: "btn" %>
+      <a role="button" class="btn" data-toggle="modal" href="#helpModal" title="Click to popup help">
+	<i class="icon-question-sign"></i>
+      </a>
     </div>
     <h1><img class="big-icon" src="/assets/icon-caln.png" alt="Calendar Icon" />  <%= params['cat_id'].blank? ? "Production Agreements" : Category.where(id: params["cat_id"].to_i).first.name %> <%= raw("<small>(" + @product_agreements.count.to_s + ")</small>") if current_user.admin? %></h1>
   </div>
@@ -20,6 +43,6 @@
 
 <div class="row">
   <div class="span12">
-    <%= render "table" %>
+    <%= render "calendar_table" %>
   </div>
 </div>

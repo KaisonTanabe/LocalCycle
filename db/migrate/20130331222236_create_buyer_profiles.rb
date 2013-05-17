@@ -12,8 +12,9 @@ class CreateBuyerProfiles < ActiveRecord::Migration
       t.string  :country,            null: false, default: "US"
       t.string  :zip,                null: false
       
-      t.float   :latitude
-      t.float   :longitude
+      t.float   :lat
+      t.float   :lng
+      t.float   :latlong
       
       t.string  :phone
       
@@ -23,6 +24,8 @@ class CreateBuyerProfiles < ActiveRecord::Migration
       t.string  :facebook
 
       t.boolean :text_updates,       null: false, default: true
+
+      t.string  :transport_by
 
       t.timestamps
     end

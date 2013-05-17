@@ -8,17 +8,17 @@
     </ul>
   </li>
   <% end %>
-  <li class="pull-right" id="filter-toggle">
+  <li class="pull-right <%= params['commit'] == 'Filter Agreements' ? 'active' : '' %>" id="filter-toggle">
     <a title="Advanced search options" href="#" data-toggle="collapse" data-target="#product-filter"><i class="icon-cog"></i> <b class="caret" style="margin-top: 9px;"></b></a>
   </li>
 </ul>
 
-<div id="key-holder" class="pull-right"><%= render "partials/key" %></div>
+<div id="key-holder" class="pull-right"><%#= render "partials/key" %></div>
 
 <div class="row">
   <div class="span12 input-row">
     <div class="row">
-      <div id="product-filter" class="collapse">
+      <div id="product-filter" class="collapse <%= params['commit'] == 'Filter Agreements' ? 'in' : '' %>">
 	<%= form_tag agreements_path, method: :get, id: "agreement-filter", class: "form-horizontal" do %>
 
 	<%= hidden_field_tag(:sort, params[:sort]) unless params[:sort].blank? %>
@@ -36,7 +36,7 @@
 	  <div class="control-group">
 	    <label for="distance" class="control-label">Within:</label>
 	    <div class="controls controls-row">
-	      <%= select_tag :distance, options_for_select(DISTANCES.map{|d| [d.second, d.first]}, params[:distance].blank? ? '' : params[:distance]), {prompt: "-- Please Select --", class: "span2"} %>
+	      <%= select_tag :distance, options_for_select(DISTANCES.map{|d| [d.second, d.first]}, params[:distance].blank? ? '' : params[:distance]), {prompt: "-- Please Select --", class: "span3"} %>
 	    </div>
 	  </div>
 
@@ -108,4 +108,3 @@
     </div>
   </div>
 </div>
-

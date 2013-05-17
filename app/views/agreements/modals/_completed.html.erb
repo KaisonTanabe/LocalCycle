@@ -1,15 +1,25 @@
-<h3><strong>Buyer:</strong> <%= @agreement.buyer.name %></h3>
+<h3>Buyer</h3>
 
-<h3><strong>Producer:</strong> <%= @agreement.producer.producer_profile.name %></h3>
+<% b = @agreement.buyer %>
 
-<hr class="clear" />
-<h4>Agreement Proposal</h4>
-<ul>
-  <li><strong>Price:</strong> <%= number_to_currency(@agreement.price) %>/<%= UNIT_TYPE[@agreement.selling_unit] %></li>
-  <li><strong>Quantity:</strong> <%= pluralize(@agreement.quantity, UNIT_TYPE[@agreement.selling_unit]) %>/<%= @agreement.frequency %></li>
-  <li><strong>Duration:</strong> <%= @agreement.duration %></li>
-  <li><strong>Delivery Windows:</strong> [TO DO]</li>
-  <!--li>We pledge to deliver <span class="label label-info"><%= pluralize(@agreement.quantity, UNIT_TYPE[@agreement.selling_unit]) %>/<%= @agreement.frequency %></span> of <strong><%= @agreement.name %></strong> at <span class="label label-success"><%= number_to_currency(@agreement.price) %>/<%= UNIT_TYPE[@agreement.selling_unit] %></span>.</li>
-  <li>We can deliver on <span class="label label-warning">?</span> within ?? miles.</li>
-  <li>Duration: <span class="label label-info"><%= @agreement.duration %></span>.</li-->
-</ul>
+<%= image_tag b.pic.url(:medium), class: "medium" %>
+<p><%= b.description %> <a href="#">Read more &raquo;</a></p>
+
+<hr style="clear: both;" />
+
+<h3>Producer</h3>
+
+<% p = @agreement.producer %>
+
+<%= image_tag p.pic.url(:medium), class: "medium" %>
+<p>
+  <span class="label label-success"><i class="icon-white icon-certificate"></i> <%= GROWING_METHODS[p.growing_methods] %></span>
+  <% p.certifications.each do |c| %>
+  <span class="label label-info"><i class="icon-white icon-certificate"></i><%= c.name %></span>
+  <% end %>
+</p>
+<p><%= p.description %> <a href="#">Read more &raquo;</a></p>
+
+<% p = @agreement.producer %>
+
+<%= render partial: "agreements/modals/details", locals: {agreement: @agreement} %>

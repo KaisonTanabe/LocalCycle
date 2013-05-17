@@ -1,59 +1,16 @@
-<%= render "partials/filters" %>
-
 <table id="agreementTable" class="table table-hover table-striped">
-  <thead>
-    <tr>
-      <th width="10px"></th>
-      <th width="270px">
-	<%= form_tag(agreements_path, method: :get) do %>
-	<div class="form-search pull-left">
-	  <div class="input-append">
-	    <%= text_field_tag :name, params[:name].blank? ? '' : params[:name], placeholder: "Search by name...", class: "search-query span2" %>
-	    <button type="submit" class="btn-inverse btn"><span class="icon-search icon-white"></span></button>
-	  </div>
-	</div>
-	<% end %>
-      </th>
-      <th>JAN</th>
-      <th>FEB</th>
-      <th>MAR</th>
-      <th>APR</th>
-      <th>MAY</th>
-      <th>JUN</th>
-      <th>JUL</th>
-      <th>AUG</th>
-      <th>SEP</th>
-      <th>OCT</th>
-      <th>NOV</th>
-      <th>DEC</th>
-    </tr>
+  <thead id="query">
+    <%= render "query_form" %>
+  </thead>
+    
+  <thead id="sorters">
+    <%= render "sorters" %>
   </thead>
 
-  <tbody>
-    <% if @products %>
-      <% if @products.any? %>
-        <% @products.each do |p| %>
-          <%= render partial: "producer_row", locals: {p: p} %>
-        <% end %>
-      <% else %>
-        <tr><td colspan="14"><em>No matching products...</em></td></tr>
-      <% end %>
-    <% else %>
-      <% if @product_agreements.any? %>
-        <% @product_agreements.each do |p, agreements| %>
-          <%= render partial: "buyer_row", locals: {p: p, agreements: agreements} %>
-        <% end %>
-      <% else %>
-        <tr><td colspan="14"><em>No matching agreements...</em></td></tr>
-      <% end %>
-    <% end %>
-    
+  <tbody id="agreement-ajax">
+    <%= render "agreements" %>
   </tbody>
 </table>
 <div id="pagination">
-  <% if @products %>
-    <%= will_paginate @products %>
-  <% else %>
-    <%= will_paginate @agreements %>
-  <% end %>
+  <%= will_paginate @agreements %>
 </div>

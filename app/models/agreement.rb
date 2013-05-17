@@ -4,8 +4,17 @@ class Agreement < ActiveRecord::Base
 
   ## SETUP ASSOCIATIONS
 
+  has_many :preferred_buyer_agreements, dependent: :destroy
+  has_many :preferred_buyer_profiles, source: :buyer_profile, through: :preferred_buyer_agreements
+
+  has_many :preferred_producer_agreements, dependent: :destroy
+  has_many :preferred_producer_profiles, source: :producer_profile, through: :preferred_producer_agreements
+
   has_many :images, as: :imageable, dependent: :destroy
   accepts_nested_attributes_for :images, allow_destroy: true
+
+  has_many :delivery_windows, as: :deliverable, dependent: :destroy
+  accepts_nested_attributes_for :delivery_windows, allow_destroy: true, reject_if: proc { |attrs| attrs['weekday'].blank? or attrs['start_hour'].blank? or attrs['start_hour'].blank? }
 
   has_many :agreement_changes, dependent: :destroy
 
@@ -16,18 +25,18 @@ class Agreement < ActiveRecord::Base
   ## ATTRIBUTE PROTECTION
   
   attr_accessible :product_id, :name, :description, :producer_id, :buyer_id,
-    :agreement_type, :start_date, :end_date, 
+    :agreement_type, :start_date, :end_date,
     :selling_unit, :price, :locally_packaged, :frequency, :quantity,
-    :transport_by, :transport_fee, :transport_instructions,
-    :images_attributes
+    :transport_by, :transport_instructions,
+    :images_attributes, :delivery_windows_attributes, 
+    :preferred_buyer_profile_ids, :preferred_producer_profile_ids
 
   ## ATTRIBUTE VALIDATION
 
-  validates :product_id, :name, :quantity, :agreement_type,
+  validates :product_id, :name, :quantity, :agreement_type, :transport_by, 
     :selling_unit, :price, presence: true
 
-  validates :locally_packaged, :can_deliver,
-    :can_pickup, inclusion: {:in => [true, false]}
+  validates :locally_packaged, inclusion: {:in => [true, false]}
 
   validates :start_date, :end_date, presence: true, :if => lambda { self.agreement_type == "seasonal"}
   validates :start_date, presence: true, :if => lambda { self.agreement_type == "onetime"}
@@ -70,10 +79,29 @@ class Agreement < ActiveRecord::Base
 
   scope :available_supply, where(buyer_id: 0)
   scope :available_demand, where(producer_id: 0)
-  scope :available_supply_or_mine, lambda{ |b| where("buyer_id = 0 OR buyer_id = ?", b)}
-  scope :available_demand_or_mine, lambda{ |p| where("producer_id = 0 OR producer_id = ?", p)}
+  scope :available_supply_or_mine, lambda{ |b| includes(:producer).where("buyer_id = 0 OR buyer_id = ?", b)}
+  scope :available_demand_or_mine, lambda{ |p| includes(:buyer).where("producer_id = 0 OR producer_id = ?", p)}
   scope :standing_supply, available_supply.where("agreements.start_date <= ? AND agreement_type = ?", Date.today, "onetime")
   scope :standing_demand, available_demand.where("agreements.start_date <= ? AND agreement_type = ?", Date.today, "onetime")
+
+  scope :near_producer, lambda { |*args|
+    origin = *args.first[:origin]
+    origin_lat, origin_lng = origin
+    origin_lat, origin_lng = (origin_lat.to_f / 180.0 * Math::PI), (origin_lng.to_f / 180.0 * Math::PI)
+    within = *args.first[:within]
+    {
+      :conditions => %(
+        (ACOS(COS(#{origin_lat})*COS(#{origin_lng})*COS(RADIANS(buyer_profiles.lat))*COS(RADIANS(buyer_profiles.lng))+
+        COS(#{origin_lat})*SIN(#{origin_lng})*COS(RADIANS(buyer_profiles.lat))*SIN(RADIANS(buyer_profiles.lng))+
+        SIN(#{origin_lat})*SIN(RADIANS(buyer_profiles.lat)))*3963) <= #{within[0]}
+      ),
+      :select => %( buyer_profiles.*,
+        (ACOS(COS(#{origin_lat})*COS(#{origin_lng})*COS(RADIANS(buyer_profiles.lat))*COS(RADIANS(buyer_profiles.lng))+
+        COS(#{origin_lat})*SIN(#{origin_lng})*COS(RADIANS(buyer_profiles.lat))*SIN(RADIANS(buyer_profiles.lng))+
+        SIN(#{origin_lat})*SIN(RADIANS(buyer_profiles.lat)))*3963) AS distance
+      )
+    }
+  }
 
   #########################################
 
@@ -106,13 +134,27 @@ class Agreement < ActiveRecord::Base
 
   def users
     users = []
-    users << buyer if buyer and buyer.has_profile?
-    users << producer if producer and producer.has_profile?
+    users << buyer if buyer
+    users << producer if producer
     return users
   end
 
   def user_names
-    users.map {|u| u.buyer? ? u.buyer_profile.name : u.producer_profile.name }.join(' + ')
+    users.map {|u| u.name }.join(' + ')
+  end
+
+  def has_producer?
+    producer_id != 0
+  end
+  def has_buyer?
+    buyer_id != 0
+  end
+  def is_complete?
+    has_buyer? and has_producer?
+  end
+
+  def owned_by(u)
+    (u.buyer? and buyer_id == u.buyer_profile.id) or (u.producer? and producer_id == u.producer_profile.id)
   end
 
   def deadline_is_possible?
@@ -140,10 +182,25 @@ class Agreement < ActiveRecord::Base
     end
   end
 
+  def status(cid)
+    return "success" if (buyer_id > 0 and producer_id > 0)
+    return "warning" if agreement_changes.by_producer_or_buyer(cid).by_agreed.any?
+    return "info" if (buyer_id == cid or producer_id == cid)
+    return "available"
+  end
+
   def bar_status(cid)
-    puts cid
-    return "complete" if (buyer_id != 0 and producer_id != 0)
-    return "pending" if (buyer_id == cid and producer_id == 0) or (producer_id == cid and buyer_id == 0)
+    return "complete" if (buyer_id > 0 and producer_id > 0)
+    return "pending" if agreement_changes.by_producer_or_buyer(cid).by_agreed.any?
+    return "listed" if (buyer_id == cid or producer_id == cid)
+    return "available"
+  end
+
+  def mark_complete(b,p)
+    self.buyer_id = b
+    self.producer_id = p
+    self.save!
+    # send emails
   end
 
   ############ PRIVATE METHODS ############

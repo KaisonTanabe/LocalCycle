@@ -25,6 +25,11 @@
 @import "partials/devise";
 @import "partials/parsley";
 
+#product_pic_div {
+    img {
+	padding: 10px 0 10px 1px;
+    }
+}
 
 .border {
     border: 1px solid #9d8974;
@@ -46,7 +51,6 @@
 }
 #agreementTable {
     background: #fff;
-    margin-top: -20px; 
     border-top: 2px solid #dadada;
 
     tr {
@@ -336,10 +340,6 @@ header.navbar {
 }
 #key {
     font-size: 12px;
-    position: absolute;
-    top: -25px;
-    right: 40px;
-    width: 350px;
 /**
     position: absolute;
     z-index: 999;
@@ -356,7 +356,7 @@ header.navbar {
     opacity: 0.7;
 **/
     h5 {
-	margin: 0 0 5px 6px;
+	margin: -3px 10px 0 0;
     }
     &:hover {
 	opacity: 1;
@@ -712,6 +712,9 @@ input, select, textarea, .checkbox, .radio {
     #sectionNav h3 a {
 	font-size: 18px;
 	margin-top: 20px;
+    }
+    h1 {
+	font-size: 28px;
     }
 }
 @media (max-width: 979px) and (min-width: 768px) {

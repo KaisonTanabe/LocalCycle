@@ -5,7 +5,26 @@ class AgreementsController < ApplicationController
   
   require 'csv'
 
+  def table
+
+    @agreements = @agreements.available_supply_or_mine(current_user.buyer_profile.id) if current_user.buyer?
+    @agreements = @agreements.available_demand_or_mine(current_user.producer_profile.id) if current_user.producer?
+    @agreements = filter_and_sort(@agreements, params)
+    
+    @agreements = @agreements.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
+
+    respond_to do |format|
+      format.html 
+      format.json { render json: @agreements }
+    end
+  end
+
   def index
+    # Ensure profile
+    redirect_to new_buyer_profile_path and return if current_user.buyer? and !current_user.buyer_profile
+    redirect_to new_producer_profile_path and return if current_user.producer? and !current_user.producer_profile
+
+    @first_login = (params[:first_login] == "true")
 
     if current_user.buyer? and params["show_agreements"].blank?
 
@@ -14,8 +33,8 @@ class AgreementsController < ApplicationController
 
     else
 
-      @agreements = @agreements.available_supply_or_mine(current_user.id) if current_user.buyer?
-      @agreements = @agreements.available_demand_or_mine(current_user.id) if current_user.producer?
+      @agreements = @agreements.available_supply_or_mine(current_user.buyer_profile.id) if current_user.buyer?
+      @agreements = @agreements.available_demand_or_mine(current_user.producer_profile.id) if current_user.producer?
       @agreements = filter_and_sort(@agreements, params)
       
       @agreements = @agreements.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
@@ -55,7 +74,6 @@ class AgreementsController < ApplicationController
   end
 
   def modal
-    @counter_agreement = @agreement.counter_agreements.build
 
     respond_to do |format|
       format.js
@@ -65,6 +83,16 @@ class AgreementsController < ApplicationController
   def new
     @agreement.agreement_type = params[:agreement_type] unless params[:agreement_type].nil?
     @image = @agreement.images.build
+
+    if current_user.buyer?
+      current_user.buyer_profile.delivery_windows.each do |dw|
+        @agreement.delivery_windows.build(weekday: dw.weekday, start_hour: dw.start_hour, end_hour: dw.end_hour)
+      end
+    elsif current_user.producer? 
+      current_user.producer_profile.delivery_windows.each do |dw|
+        @agreement.delivery_windows.build(weekday: dw.weekday, start_hour: dw.start_hour, end_hour: dw.end_hour)
+      end
+    end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -77,8 +105,8 @@ class AgreementsController < ApplicationController
 
   def create
     @agreement.images.build(image: @agreement.product.best_pic) unless params[:agreement][:images_attributes]
-    @agreement.buyer_id = current_user.id if current_user.buyer?
-    @agreement.producer_id = current_user.id if current_user.producer?
+    @agreement.buyer_id = current_user.buyer_profile.id if current_user.buyer?
+    @agreement.producer_id = current_user.producer_profile.id if current_user.producer?
 
     respond_to do |format|
       if @agreement.save
@@ -151,6 +179,7 @@ class AgreementsController < ApplicationController
     agreements = agreements.by_max_quantity(params[:max_quantity]) unless params[:max_quantity].blank?
 
     agreements = agreements.by_name(params[:name]) unless params[:name].blank?
+    agreements = agreements.near_producer(origin: [current_user.producer_profile.lat,current_user.producer_profile.lng], within: params[:distance]) unless params[:distance].blank? or !current_user.producer_profile
     agreements = agreements.in_category(params[:cat_id]) unless params[:cat_id].blank?
     agreements = agreements.by_buyer(params[:buyer_id]) unless params[:buyer_id].blank?
     agreements = agreements.by_producer(params[:producer_id]) unless params[:producer_id].blank?

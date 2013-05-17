@@ -48,6 +48,8 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @delivery_window = @user.buyer_profile.delivery_windows.build if @user.buyer?
+    @delivery_window = @user.producer_profile.delivery_windows.build if @user.producer?
   end
 
   def update

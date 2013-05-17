@@ -28,15 +28,15 @@ ROLES = {
   "producer" => "Producer"
 }
 SIZES = {
-  "0" => "Small",
-  "1" => "Medium",
-  "2" => "Large"
+  0 => "Small",
+  1 => "Medium",
+  2 => "Large"
 }
 DISTANCES = {
-  "20" => "20 miles",
-  "50" => "50 miles",
-  "100" => "100 miles",
-  "250" => "250 miles"
+  20 => "20 miles",
+  50 => "50 miles",
+  100 => "100 miles",
+  250 => "250 miles"
 }
 REGISTERABLE_ROLES = {
   "buyer" => "Buyer",
@@ -48,13 +48,48 @@ FREQUENCIES = {
   "monthly" => "Monthly"
 }
 
+WEEKDAYS = {
+  1 => "Monday",
+  2 => "Tuesday",
+  3 => "Wednesday",
+  4 => "Thursday",
+  5 => "Friday",
+  6 => "Saturday",
+  7 => "Sunday",
+}
+NORMAL_HOURS = {
+  1 => "1am",
+  2 => "2am",
+  3 => "3am",
+  4 => "4am",
+  5 => "5am",
+  6 => "6am",
+  7 => "7am",
+  8 => "8am",
+  9 => "9am",
+  10 => "10am",
+  11 => "11am",
+  12 => "Noon",
+  13 => "1pm",
+  14 => "2pm",
+  15 => "3pm",
+  16 => "4pm",
+  17 => "5pm",
+  18 => "6pm",
+  19 => "7pm",
+  20 => "8pm",
+  21 => "9pm",
+  22 => "10pm",
+  23 => "11pm",
+  0 => "Midnight",
+}
 
 GROWING_METHODS = {
-  "0" => "Custom",
-  "1" => "Responsible",
-  "2" => "Green",
-  "3" => "Organic",
-  "4" => "Biodynamic"
+  0 => "Custom",
+  1 => "Responsible",
+  2 => "Green",
+  3 => "Organic",
+  4 => "Biodynamic"
 }
 
 AGREEMENT_TYPES = {

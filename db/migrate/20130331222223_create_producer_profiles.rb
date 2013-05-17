@@ -12,8 +12,9 @@ class CreateProducerProfiles < ActiveRecord::Migration
       t.string  :country,            null: false, default: "US"
       t.string  :zip,                null: false
       
-      t.float   :latitude
-      t.float   :longitude
+      t.float   :lat
+      t.float   :lng
+      t.string  :latlong
       
       t.string  :phone
       
@@ -33,6 +34,8 @@ class CreateProducerProfiles < ActiveRecord::Migration
       t.boolean :has_pantry,         null: false, default: false
 
       t.boolean :text_updates,       null: false, default: true
+
+      t.string  :transport_by
 
       t.timestamps
     end

@@ -1,6 +1,7 @@
 <% producers = ProducerProfile.scoped.order_best_available %>
 <% producers = producers.by_size(params[:size]) unless params[:size].blank? %>
 <% producers = producers.by_growing_methods(params[:growing_methods]) unless params[:growing_methods].blank? %>
+<% producers = producers.near(origin: [current_user.buyer_profile.lat,current_user.buyer_profile.lng], within: params[:distance]) unless params[:distance].blank? or !current_user.buyer_profile %>
 
 <tr id="collapse<%= p.id %>">
   <td class="row-collapse">

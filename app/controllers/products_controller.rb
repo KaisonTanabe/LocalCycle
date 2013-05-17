@@ -7,10 +7,6 @@ class ProductsController < ApplicationController
 
   def index
 
-    # Ensure profile
-    redirect_to new_buyer_profile_path and return if current_user.buyer? and !current_user.buyer_profile
-    redirect_to new_producer_profile_path and return if current_user.producer? and !current_user.producer_profile
-
     @products = filter_and_sort(@products, params)
     @products = @products.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
 
