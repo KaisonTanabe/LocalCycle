@@ -1,0 +1,10 @@
+<hr class="clear" />
+
+<h4><%= @agreement.is_complete? ? "" : "Original" %> Agreement Details</h4>
+<h5><%= @agreement.name %></h5>
+<ul>
+  <li><strong>Price:</strong> <%= number_to_currency(@agreement.price) %>/<%= @agreement.selling_unit %></li>
+  <li><strong>Quantity:</strong> <%= pluralize(@agreement.quantity, @agreement.selling_unit) %>/<%= @agreement.frequency %></li>
+  <li><strong>Duration:</strong> <%= @agreement.duration %></li>
+  <li><strong>Delivery Windows:</strong> [TO DO]</li>
+</ul>
