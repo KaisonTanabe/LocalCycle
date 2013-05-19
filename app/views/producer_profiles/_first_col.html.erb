@@ -1,3 +1,0 @@
-<%= image_tag profile.pic.url(:thumb), class: "thumb" %>
-<%= link_to profile.name, "#" %> <span class="label label-info" title="Producer size classification: <%= SIZES[profile.size].upcase %>"><%= profile.display_size %></span><br /> 
-<span class="label label-success"><i class="icon-white icon-certificate"></i> <%= GROWING_METHODS[profile.growing_methods] %></span> <span class="muted">(<%= current_user.buyer? ? profile.distance_from(current_user.buyer_profile.latlong) : "??" %> mi)</span>
