@@ -6,11 +6,7 @@
     <h4 id="myModalLabel">Managing Production Agreements</h4>
   </div>
   <div class="modal-body">
-    <% if current_user.producer? %>
-      <%= render partial: "agreements/help/producer" %>
-    <% else %>
-      <%= render partial: "agreements/help/buyer" %>
-    <% end %>
+    <%= render partial: "agreements/help/table" %>
   </div>
   <div class="modal-footer">
     <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>

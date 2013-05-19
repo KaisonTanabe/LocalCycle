@@ -1,6 +1,6 @@
     <% if @agreements.any? %>
       <% @agreements.each do |agreement| %>
-        <%= content_tag_for :tr, agreement, class: (agreement.status(current_user.profile_id)) do %>
+        <%= content_tag_for :tr, agreement, class: (agreement.status(current_user.id)) do %>
 	<td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
 	  <%= link_to(agreement.name, edit_agreement_path(agreement)) %>
 	</td>
