@@ -1,0 +1,44 @@
+<% p = @agreement.creator %>
+
+<p class="muted">Located <%= pluralize(p.distance_from(current_user.latlong), "mile") %> away</p>
+
+<%= image_tag p.pic.url(:medium), class: "medium" %>
+<p>
+  <% if p.growing_methods %>
+    <span class="label label-success"><i class="icon-white icon-certificate"></i> <%= GROWING_METHODS[p.growing_methods] %></span>
+  <% end %>
+  <% p.certifications.each do |c| %>
+    <span class="label label-info"><i class="icon-white icon-certificate"></i><%= c.name %></span>
+  <% end %>
+</p>
+<p><%= p.description %> <a href="#">Read more &raquo;</a></p>
+
+<%= render partial: "agreements/modals/details", locals: {agreement: @agreement} %>
+
+<% if @agreement.agreement_changes.any? %>
+  <% if @agreement.owned_by(current_user) %>
+  <table class="table">
+    <thead>
+      <tr>
+	<th>Potential Buyers</th>
+	<th>Status</th>
+	<th>Actions</th>
+      </tr>
+    <thead>
+    <tbody>
+      <% @agreement.agreement_changes.group_by(&:user).each do |u, acs| %>
+        <tr>
+	  <td><%= link_to u.name, user_path(u) %></td>
+	  <td><%= (link_to 'View history', "#") %></td>
+	  <td>
+	    <div class="btn-group">
+	      <%= link_to raw('<i class="icon-ok icon-white"></i> Accept!'), agreement_change_path(@agreement, acs[0]), method: :put, confirm: "You will be obligated to fulfill your part of the contract with " + u.name + ".", class: "btn btn-small btn-warning" %>
+	      <%= link_to raw('<i class="icon-white icon-remove"></i> Reject'), agreement_change_path(@agreement, acs[0]), method: :put, class: "btn btn-small btn-danger" %>
+	    </div>
+	  </td>
+	</tr>
+      <% end %>
+    </tbody>
+  </table>  
+  <% end %>
+<% end %>
