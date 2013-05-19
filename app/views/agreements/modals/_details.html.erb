@@ -22,7 +22,7 @@
       <em>None proposed</em>
     <% end %>
   </li>
-  <% if @agreement.transport_instructions %>
+  <% if @agreement.transport_instructions and !@agreement.transport_instructions.blank? %>
     <li><strong>Special transportation instructions:</strong><br /><%= @agreement.transport_instructions %></li>
   <% end %>
 </ul>
