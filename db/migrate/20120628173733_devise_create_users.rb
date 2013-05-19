@@ -2,8 +2,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
   def change
     create_table(:users) do |t|
       ## Database authenticatable
-      t.string :email,              :null => false, :default => ""
-      t.string :encrypted_password, :null => false, :default => ""
+      t.string :email,               null: false, default: ""
+      t.string :encrypted_password,  null: false, default: ""
 
       ## Recoverable
       t.string   :reset_password_token
@@ -13,7 +13,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.datetime :remember_created_at
 
       ## Trackable
-      t.integer  :sign_in_count, :default => 0
+      t.integer  :sign_in_count,                  default: 0
       t.datetime :current_sign_in_at
       t.datetime :last_sign_in_at
       t.string   :current_sign_in_ip
@@ -33,6 +33,41 @@ class DeviseCreateUsers < ActiveRecord::Migration
       ## Token authenticatable
       # t.string :authentication_token
 
+      t.string  :name
+
+      t.string  :street_address_1
+      t.string  :street_address_2
+      t.string  :city
+      t.string  :state
+      t.string  :country,                        default: "US"
+      t.string  :zip
+      
+      t.float   :lat
+      t.float   :lng
+      t.string  :latlong
+      
+      t.string  :phone
+      
+      t.text    :description
+      t.string  :website
+      t.string  :twitter
+      t.string  :facebook
+
+      t.integer :size
+
+      t.integer :growing_methods
+      t.text    :custom_growing_methods
+
+      t.boolean :has_eggs,           null: false, default: false
+      t.boolean :has_livestock,      null: false, default: false
+      t.boolean :has_dairy,          null: false, default: false
+      t.boolean :has_pantry,         null: false, default: false
+
+      t.boolean :text_updates,       null: false, default: true
+
+      t.string  :transport_by
+
+      t.boolean :complete,           null: false, default: false
 
       t.timestamps
     end

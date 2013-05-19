@@ -1,5 +1,13 @@
 <% b = @agreement.buyer %>
 
+<% if @agreement.is_preferred(current_user) %>
+<span class='label label-warning'>
+  <i class='icon-star icon-white' title='You are a preferred partner'></i>
+</span>
+<% end %>
+
+<span class="muted">Located <%= pluralize(p.distance_from(current_user.latlong), "mile") %> away</span>
+
 <%= image_tag b.pic.url(:medium), class: "medium" %>
 <p><%= b.description %> <a href="#">Read more &raquo;</a></p>
 

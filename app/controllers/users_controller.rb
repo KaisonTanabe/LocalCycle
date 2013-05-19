@@ -48,13 +48,14 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @delivery_window = @user.buyer_profile.delivery_windows.build if @user.buyer?
-    @delivery_window = @user.producer_profile.delivery_windows.build if @user.producer?
+    @delivery_window = @user.delivery_windows.build
   end
 
   def update
+    @user.complete = true
+
     if @user.producer?
-      params[:user][:producer_profile_attributes][:certification_ids] ||= []
+      params[:user][:certification_ids] ||= []
     end
 
     respond_to do |format|
@@ -75,10 +76,6 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url }
       format.json { head :no_content }
     end
-  end
-
-  def done
-    @user = User.find(params[:id]) if can?
   end
 
 

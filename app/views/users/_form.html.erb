@@ -37,18 +37,9 @@
   <p><br /></p>
 
   <% if @user.buyer? %>
-    <h2>Buyer Profile</h2>
-    <legend></legend>
-    <%= f.fields_for :buyer_profile do |fb| %>
-      <%= render partial: 'buyer_profiles/form', locals: {f: fb} %>
-    <% end %>
-  <% end %>
-  <% if @user.producer? %>
-    <h2>Producer Profile</h2>
-    <legend></legend>
-    <%= f.fields_for :producer_profile do |fp| %>
-      <%= render partial: 'producer_profiles/form', locals: {f: fp} %>
-    <% end %>
+    <%= render partial: 'users/buyer', locals: {f: f} %>
+  <% elsif @user.producer? %>
+    <%= render partial: 'users/producer', locals: {f: f} %>
   <% end %>
   
   <%= render partial: 'partials/submit', locals: {f: f, text: 'User'} %>

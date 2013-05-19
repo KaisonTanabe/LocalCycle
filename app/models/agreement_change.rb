@@ -4,9 +4,8 @@ class AgreementChange < ActiveRecord::Base
   ## SETUP ASSOCIATIONS
 
   belongs_to :agreement
-  belongs_to :producer, class_name: "ProducerProfile", foreign_key: :producer_id
-  # OR
-  belongs_to :buyer, class_name: "BuyerProfile", foreign_key: :buyer_id
+  belongs_to :agreement_change
+  belongs_to :user
 
   has_many :delivery_windows, as: :deliverable, dependent: :destroy
   accepts_nested_attributes_for :delivery_windows, allow_destroy: true, reject_if: proc { |attrs| attrs['weekday'].blank? or attrs['start_hour'].blank? or attrs['start_hour'].blank? }
@@ -14,7 +13,7 @@ class AgreementChange < ActiveRecord::Base
   ## ATTRIBUTE PROTECTION
   
   attr_accessible :price, :quantity, :frequency,
-    :agreement_id, :producer_id, :buyer_id, :reason, 
+    :agreement_id, :agreement_change_id, :user_id, :reason, 
     :transport_by, :transport_instructions, :agree
 
   ## ATTRIBUTE VALIDATION
@@ -45,9 +44,7 @@ class AgreementChange < ActiveRecord::Base
   default_scope order('created_at DESC')
 
   scope :by_agreed, where(agree: true)
-  scope :by_producer, lambda {|p| where(producer_id: p)}
-  scope :by_buyer, lambda {|b| where(buyer_id: b)}
-  scope :by_producer_or_buyer, lambda {|id| where("producer_id = ? OR buyer_id = ?", id, id)}
+  scope :by_user, lambda {|id| where(user_id: id)}
 
   #########################################
 

@@ -18,7 +18,7 @@ class ConfirmationsController < Devise::ConfirmationsController
     end
   end
 
-  def fixConfirm
+  def fixconfirm
     redirect_to root_url
   end
 end

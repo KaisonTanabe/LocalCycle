@@ -16,8 +16,8 @@ LOCALCYCLE::Application.routes.draw do
     resources :agreement_changes, as: "change", only: ["new","create","update"]
   end
 
-  resources :buyer_profiles, only: ["new","create","show"]
-  resources :producer_profiles, only: ["new","create","show"]
+#  resources :buyer_profiles, only: ["new","create","show"]
+#  resources :producer_profiles, only: ["new","create","show"]
 
   devise_for :users, path_prefix: "d", path_names: { sign_in: 'login', sign_up: 'register' }, 
     controllers: {confirmations: 'confirmations', sessions: 'sessions', registrations: 'registrations'}

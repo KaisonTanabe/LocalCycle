@@ -367,6 +367,11 @@ header.navbar {
 	margin: 4px 6px 0 0;
     }
 }
+.label-pref {
+    position: relative;
+    top: -7px;
+    margin-right: 5px;
+}
 
 .bar {
     display: block;
@@ -376,22 +381,30 @@ header.navbar {
     margin: 0 0 3px;
     position: relative;
     text-indent: -9999px;
-}
-.bar:hover {
-    background-color: #d7df23;
-    border: 1px solid #8cc63f;
-}
-.bar.pending {
-    background-color: #f9ed32;
-    border: 1px solid #ffd02c;
-}
-.bar.complete {
-    background-color: #8cc63f;
-    border: 1px solid #39b54a;
-}
-.bar.proposed {
-    background-color: #8c3fc6;
-    border: 1px solid #394ab5;
+    &:hover {
+	background-color: #f6b328 + #222;
+    }
+    &.pending {
+	background-color: #f9ed32;
+	border: 1px solid #ffd02c;
+	&:hover {
+	    background-color: #f9ed32 + #222;
+	}
+    }
+    &.complete {
+	background-color: #8cc63f;
+	border: 1px solid #39b54a;
+	&:hover {
+	    background-color: #8cc63f + #222;
+	}
+    }
+    &.listed {
+	background-color: #4186cc;
+	border: 1px solid #1c63a9;
+	&:hover {
+	    background-color: #4186cc + #222;
+	}
+    }
 }
 
 #content {
@@ -438,21 +451,6 @@ footer {
 /* =============================================================================
    Pages
    ========================================================================== */
-#key {
-    float: right;
-    margin: -48px 10px 0 0;
-    font-size: 12px;
-    line-height: 1.4;
-    > div {
-	float: left;
-	margin: 0 10px;
-    }
-    .bar {
-	width: 6px;
-	float: left;
-	margin: 4px 6px 0 0;
-    }
-}
 
 .growing_methods {
     margin: -5px -10px;

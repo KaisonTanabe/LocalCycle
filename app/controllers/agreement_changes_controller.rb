@@ -12,8 +12,7 @@ class AgreementChangesController < ApplicationController
 
   def create
     @agreement_change.agreement_id = params["agreement_id"]
-    @agreement_change.producer_id = current_user.profile_id if current_user.producer?
-    @agreement_change.buyer_id = current_user.profile_id if current_user.buyer?
+    @agreement_change.user_id = current_user.id
 
     respond_to do |format|
       if @agreement_change.save
@@ -26,11 +25,9 @@ class AgreementChangesController < ApplicationController
     end
   end
 
-  def update #Agreed!
-    @agreement_change.producer_id = current_user.profile_id if current_user.producer?
-    @agreement_change.buyer_id = current_user.profile_id if current_user.buyer?
+  def update #Hijacked for Agreed!
 
-    @agreement_change.agreement.mark_complete(@agreement_change.buyer_id, @agreement_change.producer_id)
+    @agreement_change.agreement.mark_complete(@agreement_change)
 
     respond_to do |format|
       if @agreement_change.save

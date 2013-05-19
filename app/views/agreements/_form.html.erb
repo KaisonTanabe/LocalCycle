@@ -5,7 +5,6 @@
   <% a = Hash.new
      Product.select("id, name, category_id").each {|p| a[p.id] = p} %>
      window.products = <%= raw(a.to_json) %>;
-     console.log(window.categories);
 </script>
 <%= form_for(@agreement, html: { multipart: true, class: "form-horizontal" }) do |f| %>
   
@@ -202,7 +201,6 @@
     </div>
   </div>
 </div>
-<% end %>
 
 
 <div class="row">
@@ -213,7 +211,7 @@
     <div class="control-group">
       <%= f.label :transport_by, "Preferred Delivery Method:", class: "control-label" %>
       <div class="controls controls-row">
-	<%= f.select :transport_by, [["-- Please Select --",""],["We deliver", "producer"],["Buyers pick up", "buyer"],["We are open to either", "both"]], {selected: (f.object.new_record? ? (current_user.producer? ? current_user.producer_profile.transport_by : current_user.buyer_profile.transport_by ) : "")}, {class: "span4"} %>
+	<%= f.select :transport_by, [["-- Please Select --",""],[(current_user.producer? ? "We deliver" : "Producer delivers"), "producer"],[(current_user.producer? ? "Buyer picks up" : "We pick up"), "buyer"],["Either works", "both"]], {selected: (f.object.new_record? ? current_user.transport_by : "")}, {class: "span4"} %>
 	<span class="help-inline"></span>
       </div>
     </div>
@@ -228,6 +226,14 @@
 	<span class="help-block">Add common Delivery/Pickup windows for your organization.</span>
       </div>
     </div>
+    <div class="control-group">
+      <%= f.label :transport_instructions, "Special Instructions:", class: "control-label" %>
+      <div class="controls controls-row">
+	<%= f.text_area :transport_instructions, rows: 4, class: "span4" %>
+	<span class="help-inline">(optional) Indicate any special instructions you might have.</span>
+      </div>
+    </div>
+
     <!--p><span class="label label-info">NOTE:</span> We expect both parties to integrate the delivery fee into price point of Production Agreements.</p-->
   </div>
 </div>
@@ -241,13 +247,12 @@
     <div class="control-group">
       <label class="req control-label" for="agreement_product_id">Preferred:</label>
       <div class="controls controls-row">
-	<% if current_user.producer? %>
-	<%= f.select :preferred_buyer_profile_ids, options_for_select(BuyerProfile.order('name').collect {|p| [p.name, p.id] }, (@agreement.new_record? and !params[:preferred].blank?) ? params[:preferred] : @agreement.preferred_buyer_profiles.map{ |p| p.id }), {}, {multiple: "", placeholder: "Select " + (current_user.producer? ? "Buyers" : "Producers"), class: "select2 span4" } %>
-	<% end %>
+	<%= f.select :preferred_user_ids, options_for_select(User.by_other(current_user).order('name').collect {|u| [u.name, u.id] }, (@agreement.new_record? and !params[:preferred_user_id].blank?) ? params[:preferred_user_id] : @agreement.preferred_users.map{ |p| p.id }), {}, {multiple: "", placeholder: "Select " + (current_user.producer? ? "Buyers" : "Producers"), class: "select2 span4" } %>
 	<span class="help-inline"><span class="label label-info">HINT:</span> Start typing the organization's name...</span>
     </div>
   </div>
 </div>
+<% end %>
 
 <hr style="clear: both;" />
   

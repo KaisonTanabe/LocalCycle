@@ -2,6 +2,8 @@
 
 <% b = @agreement.buyer %>
 
+<span class="muted">Located <%= pluralize(b.distance_from(current_user.latlong), "mile") %> away</span>
+
 <%= image_tag b.pic.url(:medium), class: "medium" %>
 <p><%= b.description %> <a href="#">Read more &raquo;</a></p>
 
@@ -10,6 +12,8 @@
 <h3>Producer</h3>
 
 <% p = @agreement.producer %>
+
+<span class="muted">Located <%= pluralize(p.distance_from(current_user.latlong), "mile") %> away</span>
 
 <%= image_tag p.pic.url(:medium), class: "medium" %>
 <p>

@@ -2,7 +2,7 @@ class Certification < ActiveRecord::Base
   ############# CONFIGURATION #############
 
   ## SETUP ASSOCIATIONS
-  has_and_belongs_to_many :producer_profiles
+  has_and_belongs_to_many :users
 
   ## ATTRIBUTE PROTECTION
   attr_accessible :cert_type, :name, :audited

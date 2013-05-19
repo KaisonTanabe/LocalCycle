@@ -48,6 +48,9 @@ class DeliveryWindow < ActiveRecord::Base
 
   ############ PUBLIC METHODS #############
 
+  def display
+    weekday + " from " + NORMAL_HOURS[start_hour] + " to " + NORMAL_HOURS[end_hour]
+  end
 
   ############ PRIVATE METHODS ############
   private

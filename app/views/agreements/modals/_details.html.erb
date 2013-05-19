@@ -3,8 +3,26 @@
 <h4><%= @agreement.is_complete? ? "" : "Original" %> Agreement Details</h4>
 <h5><%= @agreement.name %></h5>
 <ul>
-  <li><strong>Price:</strong> <%= number_to_currency(@agreement.price) %>/<%= @agreement.selling_unit %></li>
-  <li><strong>Quantity:</strong> <%= pluralize(@agreement.quantity, @agreement.selling_unit) %>/<%= @agreement.frequency %></li>
+  <li><strong>Price:</strong> <%= number_to_currency(@agreement.price) %>/<span class="label label-info"><%= @agreement.selling_unit %></span></li>
+  <li><strong>Quantity:</strong> <%= @agreement.quantity %> <span class="label label-info"><%= @agreement.selling_unit.pluralize %></span> | <%= @agreement.frequency %></li>
   <li><strong>Duration:</strong> <%= @agreement.duration %></li>
-  <li><strong>Delivery Windows:</strong> [TO DO]</li>
+  <li>
+    <% if @agreement.transport_by == "producer" %>
+      <strong>Producer delivery windows:</strong><br />
+    <% elsif @agreement.transport_by == "buyer" %>
+      <strong>Buyer pickup windows:</strong><br />
+    <% else %>
+      <strong>Either works. Windows:</strong><br />
+    <% end %>
+    <% if @agreement.delivery_windows.any? %>
+      <% @agreement.delivery_windows.each do |dw| %>
+        <%= dw.display %><br />
+      <% end %>
+    <% else %>
+      <em>None proposed</em>
+    <% end %>
+  </li>
+  <% if @agreement.transport_instructions %>
+    <li><strong>Special transportation instructions:</strong><br /><%= @agreement.transport_instructions %></li>
+  <% end %>
 </ul>

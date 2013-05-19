@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  ############# CONFIGURATION #############
+  require 'geokit'
+  include GeoKit::Geocoders
 
 
   ############# CONFIGURATION #############
@@ -9,23 +12,42 @@ class User < ActiveRecord::Base
   has_many :attachments, as: :attachable, dependent: :destroy
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
-  has_one :buyer_profile
-  accepts_nested_attributes_for :buyer_profile, allow_destroy: true
-  has_one :producer_profile
-  accepts_nested_attributes_for :producer_profile, allow_destroy: true
+  has_and_belongs_to_many :certifications
+
+  has_many :delivery_windows, as: :deliverable, dependent: :destroy
+  accepts_nested_attributes_for :delivery_windows, allow_destroy: true, reject_if: proc { |attrs| attrs['weekday'].blank? or attrs['start_hour'].blank? or attrs['start_hour'].blank? }
+
+  has_attached_file :pic, styles: IMAGE_STYLES, default_url: :set_default_url_on_role
+
+  has_many :agreements, foreign_key: :creator_id, dependent: :destroy
 
 
   ## ATTRIBUTE PROTECTION
   attr_accessible :first_name, :last_name, :email, :notes,
-    :attachments_attributes, :role, 
-    :buyer_profile_attributes, :producer_profile_attributes
+    :attachments_attributes, :role, :name, :phone, :growing_methods,
+    :street_address_1, :street_address_2, :city, :state, :country, :zip,
+    :description, :website, :twitter, :facebook, 
+    :certification_ids, :text_updates, :complete,
+    :has_eggs, :has_dairy, :has_livestock, :has_pantry, :pic, :custom_growing_methods,
+    :transport_by, :delivery_windows_attributes, :size
 
 
   ## ATTRIBUTE VALIDATION
-  validates :first_name, :last_name, :email,   presence: true
-  validates :email,                            uniqueness: true
-  validates :role,                inclusion: {:in => ROLES.map{ |r| r.first}}
+  validates :first_name, :last_name, :email,  presence: true
+  validates :email,                           uniqueness: true
+  validates :role,                            inclusion: {:in => ROLES.map{ |r| r.first}}
 
+  validates :name, :phone, :description,
+    :street_address_1, :city, :state, :zip,
+    presence: true,
+    :if => lambda { self.complete == true }
+
+  validates :growing_methods, :size,
+    presence: true,
+    :if => lambda { self.role == "producer" }
+
+  validates_attachment :pic,
+    :size => { :in => 0..2.megabytes }
 
   #########################################
 
@@ -34,16 +56,39 @@ class User < ActiveRecord::Base
 
   ################ CALLBACKS ################
 
-#  before_create {|u| u.build_form()}
-  before_save :strip_whitespace
+  before_save :strip_whitespace, :set_lat_long
   
   #########################################
 
 
   ################ SCOPES #################
 
+  scope :by_size, lambda {|s| where("size = ?", s)}
+  scope :by_growing_methods, lambda {|g| where("growing_methods = ?", g)}
+  scope :order_best_available, order("size ASC")
+
   scope :by_producer, where(role: "producer")
   scope :by_buyer, where(role: "buyer")
+  scope :by_other, lambda {|u| u.producer? ? where(role: "buyer") : where(role: "producer")}
+
+  scope :near, lambda{ |*args|
+    origin = *args.first[:origin]
+    origin_lat, origin_lng = origin
+    origin_lat, origin_lng = (origin_lat.to_f / 180.0 * Math::PI), (origin_lng.to_f / 180.0 * Math::PI)
+    within = *args.first[:within]
+    {
+      :conditions => %(
+        (ACOS(COS(#{origin_lat})*COS(#{origin_lng})*COS(RADIANS(users.lat))*COS(RADIANS(users.lng))+
+        COS(#{origin_lat})*SIN(#{origin_lng})*COS(RADIANS(users.lat))*SIN(RADIANS(users.lng))+
+        SIN(#{origin_lat})*SIN(RADIANS(users.lat)))*3963) <= #{within[0]}
+      ),
+      :select => %( users.*,
+        (ACOS(COS(#{origin_lat})*COS(#{origin_lng})*COS(RADIANS(users.lat))*COS(RADIANS(users.lng))+
+        COS(#{origin_lat})*SIN(#{origin_lng})*COS(RADIANS(users.lat))*SIN(RADIANS(users.lng))+
+        SIN(#{origin_lat})*SIN(RADIANS(users.lat)))*3963) AS distance
+      )
+    }
+  }
 
   #########################################
 
@@ -68,10 +113,10 @@ class User < ActiveRecord::Base
 
   ############ PUBLIC METHODS #############
 
+  def to_csv
+    [first_name, last_name, email]
+  end
 
-
-
-  ############ PUBLIC METHODS #############
 
   def admin?
     role == "admin"
@@ -86,15 +131,6 @@ class User < ActiveRecord::Base
     role == "producer"
   end
 
-  def profile_id
-    return buyer_profile.id if (buyer? and buyer_profile)
-    return producer_profile.id if (producer? and producer_profile)
-  end
-
-  def has_profile?
-    (buyer? and buyer_profile) or (producer? and producer_profile)
-  end
-
   def role_label
     ROLES.key(role)
   end
@@ -107,29 +143,45 @@ class User < ActiveRecord::Base
     last_name.capitalize + ", " + first_name.capitalize
   end
 
-  def to_csv
-    [first_name, last_name, email]
+  def distance_from(otherlatlong)
+    puts street_address_1
+    puts otherlatlong
+    a = Geokit::LatLng.new(latlong)
+    b = Geokit::LatLng.new(otherlatlong)
+    return '%.2f' % a.distance_to(b)
   end
 
-  # Returns the status of the student
-  #  - Green if all systems go
-  #  - Yellow if physical expiring soon
-  #  - Red if requiring form signatures/information
-  #  - Gray if inactive
-  def user_status
-    return "alert-gray" if !active
-    return "error" if !form.complete
-    return "success"
+
+  ## PRODUCER METHODS
+  def display_size
+    return "S" if size == 0
+    return "M" if size == 1
+    return "L" if size == 2
+    return ""
   end
 
 
   ############ PRIVATE METHODS ############
   private
+
+  def set_default_url_on_role
+    "/assets/#{role}_profile_pics/:style/missing.png"
+  end
   
   def strip_whitespace
     self.first_name = self.first_name.strip
     self.last_name = self.last_name.strip
     self.email = self.email.strip
+    self.name = self.name.strip if self.name
+  end
+
+  def set_lat_long
+    if complete
+      res = MultiGeocoder.geocode(self.street_address_1 + (self.street_address_2 ? " " + self.street_address_2 : "") + ", " + self.city + ", " + self.state + " " + self.zip)
+      self.latlong = res.ll
+      self.lat = res.lat
+      self.lng = res.lng
+    end
   end
 
 end

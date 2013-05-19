@@ -3,6 +3,7 @@ class CreateAgreements < ActiveRecord::Migration
     create_table :agreements do |t|
       t.integer    :buyer_id,         null: false, default: 0
       t.integer    :producer_id,      null: false, default: 0
+      t.integer    :creator_id,       null: false               # Same as one of the above
 
       t.string     :agreement_type,   null: false
 
@@ -20,10 +21,14 @@ class CreateAgreements < ActiveRecord::Migration
 
       t.boolean    :locally_packaged,    null: false, default: false
 
-      t.string     :transport_by,        null: false
+      t.string     :transport_by
       t.text       :transport_instructions
 
       t.timestamps
     end
+
+    add_index :agreements, :buyer_id
+    add_index :agreements, :producer_id
+    add_index :agreements, :creator_id
   end
 end

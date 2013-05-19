@@ -1,7 +1,7 @@
-<% producers = ProducerProfile.scoped.order_best_available %>
+<% producers = User.by_producer.order_best_available %>
 <% producers = producers.by_size(params[:size]) unless params[:size].blank? %>
 <% producers = producers.by_growing_methods(params[:growing_methods]) unless params[:growing_methods].blank? %>
-<% producers = producers.near(origin: [current_user.buyer_profile.lat,current_user.buyer_profile.lng], within: params[:distance]) unless params[:distance].blank? or !current_user.buyer_profile %>
+<% producers = producers.near(origin: [current_user.lat,current_user.lng], within: params[:distance]) unless params[:distance].blank? %>
 
 <tr id="collapse<%= p.id %>">
   <td class="row-collapse">
@@ -22,7 +22,13 @@
 	</h5>
       </div>
       <% producers.each do |profile| %>
-        <div class="producer_col"><%= render partial: "producer_profiles/first_col", locals: {profile: profile, p: p} %></div>
+        <div class="producer_col">
+	  <%= image_tag profile.pic.url(:thumb), class: "thumb" %>
+	  <%= link_to profile.name, "#" %> 
+	  <span class="label label-info" title="Producer size classification: <%= SIZES[profile.size].upcase %>"><%= profile.display_size %></span><br /> 
+	  <span class="label label-success"><i class="icon-white icon-certificate"></i> <%= GROWING_METHODS[profile.growing_methods] %></span> 
+	  <span class="muted">(<%= profile.distance_from(current_user.latlong) %> mi)</span>
+	</div>
       <% end %>
     </div>
   </td>
@@ -32,7 +38,15 @@
       [<em>General harvest calendar availability bar here</em>]
     </div>
       <% producers.each do |profile| %>
-        <div class="producer_col"><%= render partial: "producer_profiles/second_col", locals: {profile: profile, p: p} %></div>
+        <div class="producer_col">
+	  <% if profile.agreements.where(product_id: p.id).any? %>
+	    <% profile.agreements.where(product_id: p.id).each do |a| %>
+	      <%= render partial: "bar", locals: {a: a} %>
+	    <% end %>
+	  <% else %>
+	    <em>No supply posted. But that doesn't mean there's none available! <%= link_to "Propose Agreement to this Producer", new_agreement_path(product_id: p.id, preferred_user_id: profile.id), class: "btn btn-mini btn-primary" %></em>
+	  <% end %>
+	</div>
       <% end %>
   </div>
   </td>
