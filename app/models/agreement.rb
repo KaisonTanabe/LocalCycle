@@ -35,8 +35,9 @@ class Agreement < ActiveRecord::Base
 
   validates :locally_packaged, inclusion: {:in => [true, false]}
 
-  validates :start_date, :end_date, presence: true, :if => lambda { self.agreement_type == "seasonal"}
+  validates :frequency, presence: true, :if => lambda { self.agreement_type == "indefinite"}
   validates :start_date, presence: true, :if => lambda { self.agreement_type == "onetime"}
+  validates :start_date, :end_date, :frequency, presence: true, :if => lambda { self.agreement_type == "seasonal"}
 
   #########################################
 
