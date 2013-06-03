@@ -1,0 +1,59 @@
+<%= form_tag "/agreements/#{@agreement.id}/agreement_changes", method: :post, multipart: true, class: "form-horizontal" do |f| %>
+
+  <legend>Counter-Proposal</legend>
+
+  <%= render partial: 'partials/errors', locals: {obj: @agreement_change} %>
+
+  <%= hidden_field_tag "agreement_change[agreement_change_id]", "" %>
+
+  <div class="control-group">
+    <%= label_tag "agreement_change[price]", "Price Per Unit:", class: "control-label" %>
+    <div class="controls controls-row">
+      <div class="input-prepend">
+	<span class="add-on">$</span>
+	<%= text_field_tag "agreement_change[price]", @agreement.price, placeholder: "0.00", class: "span2" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= label_tag "agreement_change[quantity]", "Quantity:", class: "control-label" %>
+    <div class="controls controls-row">
+      <div class="input-append">
+	<%= text_field_tag "agreement_change[quantity]", @agreement.quantity, placeholder: "0", class: "span2" %>
+	<span class="add-on" id="quantity_add_on"><%= UNIT_TYPE[@agreement.selling_unit] %></span>
+      </div>
+    </div>
+  </div>
+
+<!--
+  <div class="control-group">
+    <%#= @agreement_change.label :frequency, "Frequency:", class: "control-label" %>
+    <div class="controls controls-row">
+      <%#= @agreement_change.select :frequency, FREQUENCIES.map {|u| [u.second, u.first]}, {selected: @agreement.frequency}, {class: "span3"} %>
+    </div>
+  </div>
+-->
+  
+  <div class="control-group">
+    <%= label_tag "agreement_change[transport_instructions]", "Delivery Preference:", class: "control-label" %>
+    <div class="controls controls-row">
+      <%= text_area_tag "agreement_change[transport_instructions]", nil, rows: 3, class: "span3" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= label_tag "agreement_change[reason]", "Notes/Reasoning:", class: "control-label" %>
+    <div class="controls controls-row">
+      <%= text_area_tag "agreement_change[reason]", nil, rows: 2, class: "span3" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= label_tag "", "", class: "control-label" %>
+    <div class="controls controls-row">
+      <%= submit_tag 'Submit Counter-Proposal', class: "btn btn-primary" %>
+    </div>
+  </div>
+
+<% end %>

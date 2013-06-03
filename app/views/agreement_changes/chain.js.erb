@@ -1,0 +1,5 @@
+$("#agreement-changes-container").html('<% @agreement_changes.each do |ac| %><%= j render partial: "agreement_changes/agreement_change", locals: {ac: ac} %><% end %>')
+$('a.amendment-btn').on('click', function(e) {
+  $("#agreement-change-form-container").show();
+  $("#agreement-change-form-container #agreement_change_agreement_change_id").val($(this).attr("id"));
+});

@@ -8,10 +8,8 @@ $(loader).fadeToggle('fast', function() {
   <% if @agreement.is_complete?%>
 
     $(title).html("Completed Agreement");
+
     $(content).show().html("<%= j render partial: 'agreements/modals/completed' %>");
-
-
-
 
   <% else %>
 
@@ -19,18 +17,23 @@ $(loader).fadeToggle('fast', function() {
 
     $(content).show().html("<%= j render partial: 'agreements/modals/user' %>");
 
-    <% if @agreement.owned_by(current_user) %>
-      $(toolbar).html('<em>Your proposal.</em>')
-    <% else %>
-      <% if @agreement.agreement_changes.by_user(current_user.id).by_agreed.any? %>
-        $(toolbar).html('<span class="label label-warning">Pending Agreement!<span>')
-      <% else %> <%#new_agreement_change_path(@agreement)%>
-        $(toolbar).html("<%= j (link_to raw('<i class="icon-edit"></i> Propose Amendments'), "#", class: "btn") + " " + (link_to raw('<i class="icon-ok icon-white"></i> Accept Agreement'), agreement_change_index_path(@agreement, agreement_change: {agree: true}), method: :post, confirm: "You will be obligated to fulfill your part of the contract should this agreement be accepted", class: "btn btn-warning") %>")
-      <% end %>
-    <% end %>
-
   <% end %>
 
   $(modal).modal();
+
+  $('#partner-selector').on('change', function(e) {
+    $.ajax({
+      type: "POST",
+      url: "agreements/<%= @agreement.id.to_s %>/agreement_changes/chain.js",
+      data: {user_ids: $(this).val()},
+      success: function() {}
+    });
+  });
+
+  $('a.amendment-btn').on('click', function(e) {
+    $("#agreement-change-form-container").show();
+    $("#agreement-change-form-container #agreement_change_agreement_change_id").val($(this).attr("id"));
+  });
+
 });
 

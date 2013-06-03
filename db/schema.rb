@@ -14,18 +14,18 @@
 ActiveRecord::Schema.define(:version => 20130516152919) do
 
   create_table "agreement_changes", :force => true do |t|
-    t.integer  "agreement_id",                              :null => false
-    t.integer  "agreement_change_id",    :default => 0,     :null => false
-    t.integer  "user_id",                                   :null => false
-    t.boolean  "agree",                  :default => false, :null => false
-    t.integer  "price"
+    t.integer  "agreement_id",                                  :null => false
+    t.integer  "agreement_change_id",    :default => 0,         :null => false
+    t.integer  "user_id",                                       :null => false
+    t.string   "status",                 :default => "pending", :null => false
+    t.float    "price"
     t.integer  "quantity"
     t.string   "frequency"
     t.string   "transport_by"
     t.text     "transport_instructions"
     t.text     "reason"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
   end
 
   add_index "agreement_changes", ["agreement_change_id"], :name => "index_agreement_changes_on_agreement_change_id"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(:version => 20130516152919) do
     t.date     "start_date"
     t.date     "end_date"
     t.float    "price",                                     :null => false
-    t.float    "quantity",                                  :null => false
+    t.integer  "quantity",                                  :null => false
     t.string   "selling_unit",                              :null => false
     t.boolean  "locally_packaged",       :default => false, :null => false
     t.string   "transport_by"

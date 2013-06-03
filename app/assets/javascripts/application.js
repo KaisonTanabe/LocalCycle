@@ -26,7 +26,7 @@
 //= require_tree .
 jQuery(function($){
 
-    $('a.bar').on('click', function(e) {
+    $('a.bar.clickable').on('click', function(e) {
 	e.preventDefault();
 	e.stopPropagation();
 	$('body').modalmanager('loading');
@@ -245,6 +245,7 @@ jQuery(function($){
 	    $('#pastAddress input').val('');
 	}
     })
+
     ////////////////////////////////////////////////////////////////////////////
 
 

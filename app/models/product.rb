@@ -12,7 +12,8 @@ class Product < ActiveRecord::Base
 
   ## ATTRIBUTE PROTECTION  
   
-  attr_accessible :description, :name, :unit_type, :catch_weight, :category_id, :pic
+  attr_accessible :description, :name, :unit_type, :catch_weight, :category_id, :pic, 
+    :start_date, :end_date, :selling_unit
 
 
   ## ATTRIBUTE VALIDATION
@@ -69,6 +70,19 @@ class Product < ActiveRecord::Base
     "ID,Category,Name,Description,Selling Unit,Catch Weight,Season Start Date,Season End Date".split(',') 
   end
 
+  def self.build_from_csv(row)
+    product = Product.where(id: row[0]).first_or_initialize
+    start_date = row[6].split("-")
+    end_date = row[7].split("-")
+    product.attributes = {
+      :unit_type => row[4],
+      :catch_weight => row[5],
+      :start_date => Date.new(start_date[2].to_i, start_date[0].to_i, start_date[1].to_i),
+      :end_date => Date.new(end_date[2].to_i, end_date[0].to_i, end_date[1].to_i),
+    }
+    return product
+  end
+
 
   ############ PUBLIC METHODS #############
 
@@ -88,7 +102,27 @@ class Product < ActiveRecord::Base
     pic? ? pic : category.best_pic
   end
 
+  def bar_margins
+    "margin-left: " + bar_margin_left.to_s + "%; margin-right: " + bar_margin_right.to_s + "%;"
+  end
+
+  def start_bar_margins
+    "margin-left: 0%; margin-right: " + bar_margin_right.to_s + "%;"
+  end
+
+  def end_bar_margins
+    "margin-left: " + bar_margin_left.to_s + "%; margin-right: 0%;"
+  end
+
   ############ PRIVATE METHODS ############
   private
+
+  def bar_margin_left
+    (start_date.yday.to_f/365)*100
+  end
+
+  def bar_margin_right
+    100 - (end_date.yday.to_f/365)*100
+  end
 
 end

@@ -1,28 +1,66 @@
 <hr class="clear" />
+<h4><%= image_tag @agreement.product.best_pic_url(:thumb), class: "thumb" %> <%= @agreement.name %><br />
+<small><strong>Duration:</strong> <%= @agreement.duration %> | <%= FREQUENCIES[@agreement.frequency] %></small></h4>
 
-<h4><%= @agreement.is_complete? ? "" : "Original" %> Agreement Details</h4>
-<h5><%= @agreement.name %></h5>
-<ul>
-  <li><strong>Price:</strong> <%= number_to_currency(@agreement.price) %>/<span class="label label-info"><%= @agreement.selling_unit %></span></li>
-  <li><strong>Quantity:</strong> <%= @agreement.quantity %> <span class="label label-info"><%= @agreement.selling_unit.pluralize %></span> | <%= @agreement.frequency %></li>
-  <li><strong>Duration:</strong> <%= @agreement.duration %></li>
-  <li>
-    <% if @agreement.transport_by == "producer" %>
-      <strong>Producer delivery windows:</strong><br />
-    <% elsif @agreement.transport_by == "buyer" %>
-      <strong>Buyer pickup windows:</strong><br />
-    <% else %>
-      <strong>Either works. Windows:</strong><br />
-    <% end %>
-    <% if @agreement.delivery_windows.any? %>
-      <% @agreement.delivery_windows.each do |dw| %>
-        <%= dw.display %><br />
+<% if agreement.owned_by(current_user) %>
+<%= select_tag "", options_for_select(@agreement.agreement_changes.by_not_user(current_user.id).pluck(:user_id).map {|u| [User.find(u).name, "#{u}:#{@agreement.creator.id}"]}), {prompt: "-- Potential Offers --", id: "partner-selector"} %>
+<% end %>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Price / <span class="label label-info"><%= @agreement.selling_unit %></span></th>
+      <th>Qty (# <span class="label label-info"><%= @agreement.selling_unit.pluralize %></span>)</th>
+      <th>Delivery Windows</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= image_tag @agreement.creator.pic(:thumb), class: "thumb" %></td>
+      <td><%= number_to_currency(@agreement.price) %></td>
+      <td><%= @agreement.quantity %></td>
+      <td>
+	<ul>
+	  <li>
+	    <% if @agreement.transport_by == "producer" %>
+	    <strong>Producer delivers:</strong><br />
+	    <% elsif @agreement.transport_by == "buyer" %>
+	    <strong>Buyer picks up:</strong><br />
+	    <% else %>
+	    <strong>No deliverer preference:</strong><br />
+	    <% end %>
+	    <% if @agreement.delivery_windows.any? %>
+	    <% @agreement.delivery_windows.each do |dw| %>
+            <%= dw.display %><br />
+	    <% end %>
+	    <% else %>
+	    <em>None proposed</em>
+	    <% end %>
+	  </li>
+	  <% if @agreement.transport_instructions and !@agreement.transport_instructions.blank? %>
+	  <li><em>"<%= @agreement.transport_instructions %>"</em></li>
+	  <% end %>
+	</ul>
+      </td>
+    </tr>
+  </tbody>
+  <tbody id="agreement-changes-container">
+    <% if !@agreement.owned_by(current_user) %>
+      <% acs = @agreement.agreement_changes.where("user_id = ? OR user_id = ?", current_user.id, @agreement.creator_id) %>
+      <% if acs.any? %>
+        <% acs.each do |ac| %>
+	  <%= render partial: "agreement_changes/agreement_change", locals: {ac: ac} %>
+	<% end %>
+      <% else %>
+        <tr>
+	  <td colspan="4">
+            <%= link_to raw('<i class="icon-edit"></i> Propose Amendments'), "#", class: "btn amendment-btn", id: "0" %>
+	    <%= link_to raw('<i class="icon-ok icon-white"></i> Accept Agreement'), agreement_change_index_path(@agreement, agreement_change: {status: "agreed"}), method: :post, confirm: "You will be obligated to fulfill your part of the contract should this agreement be accepted.", class: "btn btn-success" %>
+	  </td>
+	</tr>
       <% end %>
-    <% else %>
-      <em>None proposed</em>
     <% end %>
-  </li>
-  <% if @agreement.transport_instructions and !@agreement.transport_instructions.blank? %>
-    <li><strong>Special transportation instructions:</strong><br /><%= @agreement.transport_instructions %></li>
-  <% end %>
-</ul>
+  </tbody>
+</table>
+

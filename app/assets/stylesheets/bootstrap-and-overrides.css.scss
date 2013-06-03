@@ -31,6 +31,20 @@
     }
 }
 
+tr #approval-group {
+    position: absolute;
+    display: none;
+    right: 5px;
+    top: 5px;
+}
+tr:hover #approval-group {
+    display: block;
+}
+
+#agreement-change-form-container {
+    display: none;
+}
+
 .border {
     border: 1px solid #9d8974;
     border-radius: 10px;
@@ -381,6 +395,10 @@ header.navbar {
     margin: 0 0 3px;
     position: relative;
     text-indent: -9999px;
+    &.fat-bar {
+	margin-top: 10px;
+	height: 10px;
+    }
     &:hover {
 	background-color: #f6b328 + #222;
     }

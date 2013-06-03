@@ -17,6 +17,19 @@ require File.expand_path('../seed_product_pics', __FILE__)
 require File.expand_path('../alter_product_tree', __FILE__)
 require File.expand_path('../seed_certifications', __FILE__)
 
+require 'csv'
+infile = File.read('db/seed_product_attributes.csv')
+n, errs = 0, []
+
+CSV.parse(infile) do |row|
+  n += 1 
+  next if n == 1 or row.join.blank? 
+  record = Product.build_from_csv(row) 
+  if record.valid?
+    record.save
+  end
+end
+
 
 b = User.create(
                    first_name: 'Joe',
@@ -57,58 +70,3 @@ p = User.create(
                    complete: true,
                    )
 p.confirm!
-
-a = Agreement.create(
-                 creator_id: b.id,
-                 buyer_id: b.id,
-                 producer_id: p.id,
-
-                 product_id: Product.where(name: "Beet Greens").first.id,
-                 name: "Organic Beet Greens",
-
-                 price: 3.29,
-                 quantity: 80,
-                 selling_unit: "lb",
-
-                 agreement_type: "indefinite",
-                 frequency: "weekly",
-
-                 transport_by: "producer",
-                 transport_instructions: "Producer will deliver Tuesdays 3pm-5pm\nAddress: 480 Spring Street, Williamstown, MA, 01267"
-)
-AgreementChange.create(
-                       user_id: b.id,
-                       agreement_id: a.id,
-                       price: 3.00,
-                       quantity: 100,
-                       frequency: "weekly",
-                       transport_by: "producer",
-                       transport_instructions: "Producer will deliver (pick one)\nTuesdays 3pm-5pm\nThursdays 3pm-5pm\nSaturdays 10am-2pm\nAddress: 480 Spring Street, Williamstown, MA, 01267",
-                       agree: false
-)
-AgreementChange.create(
-                       user_id: p.id,
-                       agreement_id: a.id,
-                       price: 3.50,
-                       quantity: 80,
-                       transport_instructions: "Producer will deliver Tuesdays 3pm-5pm\nAddress: 480 Spring Street, Williamstown, MA, 01267",
-                       reason: "I can supply you with 80lbs at $3.50/lb.",
-                       agree: false
-)
-AgreementChange.create(
-                       user_id: b.id,
-                       agreement_id: a.id,
-                       price: 3.29,
-                       reason: "We'd be willing to do $3.29/lb.",
-                       agree: false
-)
-AgreementChange.create(
-                       user_id: p.id,
-                       agreement_id: a.id,
-                       agree: true
-)
-AgreementChange.create(
-                       user_id: b.id,
-                       agreement_id: a.id,
-                       agree: true
-)

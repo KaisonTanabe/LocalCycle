@@ -132,7 +132,7 @@ class User < ActiveRecord::Base
   end
 
   def role_label
-    ROLES.key(role)
+    ROLES[role]
   end
 
   def full_name

@@ -13,7 +13,9 @@ LOCALCYCLE::Application.routes.draw do
     get 'marketplace', :on => :collection
     get 'table', :on => :collection
     get 'export', :on => :collection
-    resources :agreement_changes, as: "change", only: ["new","create","update"]
+    resources :agreement_changes, as: "change", only: ["new","create","update"] do
+      post 'chain', :on => :collection
+    end
   end
 
 #  resources :buyer_profiles, only: ["new","create","show"]

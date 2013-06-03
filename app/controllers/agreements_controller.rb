@@ -84,8 +84,12 @@ class AgreementsController < ApplicationController
     @agreement.agreement_type = params[:agreement_type] unless params[:agreement_type].nil?
     @image = @agreement.images.build
 
-    current_user.delivery_windows.each do |dw|
-      @agreement.delivery_windows.build(weekday: dw.weekday, start_hour: dw.start_hour, end_hour: dw.end_hour)
+    if current_user.delivery_windows.any? 
+      current_user.delivery_windows.each do |dw|
+        @agreement.delivery_windows.build(weekday: dw.weekday, start_hour: dw.start_hour, end_hour: dw.end_hour)
+      end
+    else
+      @agreement.delivery_windows.build
     end
 
     respond_to do |format|

@@ -98,6 +98,25 @@ class ProductsController < ApplicationController
       :disposition => "attachment; filename=#{filename}.csv"
   end
 
+  def import
+    if request.post? && params[:file].present?
+      errs = import_records(params[:file], "product")
+    end
+    # Export Error file for later upload upon correction 
+    if errs.any? 
+      errFile = "product_errors_#{Date.today.strftime('%b-%d-%y')}.csv"
+      csv_errs = CSV.generate do |csv|
+        csv << Product.csv_header + ",Error"
+        errs.each {|row| csv << row}
+      end 
+      send_data csv_errs, 
+      :type => 'text/csv; charset=iso-8859-1; header=present', 
+      :disposition => "attachment; filename=#{errFile}"
+    else
+      redirect_to products_path, notice: "Successfully imported products" and return
+    end
+  end
+
   private
 
   def filter_and_sort(products, params)

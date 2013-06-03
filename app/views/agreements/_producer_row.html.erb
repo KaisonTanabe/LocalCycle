@@ -35,19 +35,24 @@
   <td colspan="12">
   <div class="collapsable">
     <div class="topDisplay">
-      [<em>General harvest calendar availability bar here</em>]
-    </div>
-      <% producers.each do |profile| %>
-        <div class="producer_col">
-	  <% if profile.agreements.where(product_id: p.id).any? %>
-	    <% profile.agreements.where(product_id: p.id).each do |a| %>
-	      <%= render partial: "bar", locals: {a: a} %>
-	    <% end %>
-	  <% else %>
-	    <em>No supply posted. But that doesn't mean there's none available! <%= link_to "Propose Agreement to this Producer", new_agreement_path(product_id: p.id, preferred_user_id: profile.id), class: "btn btn-mini btn-primary" %></em>
-	  <% end %>
-	</div>
+      <% if p.end_date.year > p.start_date.year %>
+      <a class="bar fat-bar" style="<%= p.start_bar_margins %> "></a>
+      <a class="bar fat-bar" style="<%= p.end_bar_margins %> margin-top: -14px;"></a>
+      <% else %>
+      <a class="bar fat-bar" style="<%= p.bar_margins %>"></a>
       <% end %>
+    </div>
+    <% producers.each do |profile| %>
+      <div class="producer_col">
+	<% if profile.agreements.where(product_id: p.id).any? %>
+	  <% profile.agreements.where(product_id: p.id).each do |a| %>
+	    <%= render partial: "bar", locals: {a: a} %>
+	  <% end %>
+	<% else %>
+	  <em>No supply posted. But that doesn't mean there's none available! <%= link_to "Propose Agreement to this Producer", new_agreement_path(product_id: p.id, preferred_user_id: profile.id), class: "btn btn-mini btn-primary" %></em>
+	<% end %>
+      </div>
+    <% end %>
   </div>
   </td>
 </tr>

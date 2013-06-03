@@ -16,7 +16,7 @@ class CreateAgreements < ActiveRecord::Migration
       t.date       :end_date
 
       t.float      :price,               null: false
-      t.float      :quantity,            null: false
+      t.integer    :quantity,            null: false
       t.string     :selling_unit,        null: false
 
       t.boolean    :locally_packaged,    null: false, default: false

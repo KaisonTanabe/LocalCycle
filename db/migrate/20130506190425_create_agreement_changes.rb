@@ -5,9 +5,9 @@ class CreateAgreementChanges < ActiveRecord::Migration
       t.references   :agreement_change, null: false, default: 0
       t.integer      :user_id,          null: false
 
-      t.boolean      :agree,            null: false, default: false
+      t.string       :status,           null: false, default: "pending"
 
-      t.integer      :price
+      t.float        :price
       t.integer      :quantity
       t.string       :frequency
       t.string       :transport_by

@@ -184,7 +184,7 @@ class Agreement < ActiveRecord::Base
 
   def bar_status(cid)
     return "complete" if (buyer_id > 0 and producer_id > 0)
-    return "pending" if (creator_id != cid) and agreement_changes.by_user(cid).by_agreed.any?
+    return "pending" if (creator_id != cid) and agreement_changes.by_user(cid).any?
     return "listed" if (creator_id == cid)
     return "available"
   end
@@ -196,6 +196,10 @@ class Agreement < ActiveRecord::Base
     # send emails
   end
 
+  def is_preferred(u)
+    preferred_users.include?(u)
+  end
+
   def bar_margins
     if agreement_type == "indefinite"
       ""
@@ -204,8 +208,12 @@ class Agreement < ActiveRecord::Base
     end
   end
 
-  def is_preferred(u)
-    preferred_users.include?(u)
+  def start_bar_margins
+    "margin-left: 0%; margin-right: " + bar_margin_right.to_s + "%;"
+  end
+
+  def end_bar_margins
+    "margin-left: " + bar_margin_left.to_s + "%; margin-right: 0%;"
   end
 
   ############ PRIVATE METHODS ############
