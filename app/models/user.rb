@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
 
   validates :growing_methods, :size,
     presence: true,
-    :if => lambda { self.role == "producer" }
+    :if => lambda { self.role == "producer" and self.complete == true }
 
   validates_attachment :pic,
     :size => { :in => 0..2.megabytes }
