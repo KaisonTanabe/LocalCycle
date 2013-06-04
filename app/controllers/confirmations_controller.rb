@@ -3,7 +3,7 @@ class ConfirmationsController < Devise::ConfirmationsController
   # Overwrite the confirmation methods to allow for "gradual engagement".
 
   def show
-    self.resource = resource_class.find_by_confirmation_token(params[:confirmation_token]) if params[:confirmation_token].present?
+    self.resource = resource_class.find_by_confirmation_token(params[:confirmation_token])
     super if resource.nil? or resource.confirmed?
   end
 
