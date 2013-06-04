@@ -11,7 +11,7 @@
     
       <div class="control-group">
 	<%= f.label :email, class: "control-label" %>
-	<div class="controls"><%= f.password_field :email, placeholder: "user@example.com", autofocus: true %></div>
+	<div class="controls"><%= f.email_field :email, placeholder: "user@example.com", autofocus: true %></div>
       </div>
 
       <%= render partial: 'partials/submit', locals: {f: f, override: 'Resend Instructions'} %>
