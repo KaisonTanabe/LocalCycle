@@ -1,4 +1,4 @@
-<% if a.end_date.year > a.start_date.year %>
+<% if a.end_date and a.end_date.year > a.start_date.year %>
   <a class="bar clickable <%= a.bar_status(current_user.id) %>" style="<%= a.start_bar_margins %>" 
      href="agreements/<%= a.id %>/modal"
      data-target="#ajax-modal" data-toggle="modal" data-placement="top" data-html="true" 
