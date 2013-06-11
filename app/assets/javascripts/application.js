@@ -106,6 +106,16 @@ jQuery(function($){
         $('#'+$(this).attr('toggle_field')).show();
         return true;
     });
+    $('.toggle').on('change', function() {
+        if ($(this).is(':checked')) {
+	    $("."+$(this).attr('data-off')).hide();
+	    $("."+$(this).attr('data-on')).show();
+	} else {
+	    $("."+$(this).attr('data-off')).show();
+	    $("."+$(this).attr('data-on')).hide();
+	}
+        return true;
+    });
     ////////////////////////////////////////////////////////////////////////////
 
 

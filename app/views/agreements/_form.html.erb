@@ -126,77 +126,66 @@
     <p><br /></p>
     <legend>Agreement Options</legend>
   </div>
-
-  <div class="span12">
-    <p><em>LocalCycle</em> gives you the ability to propose <em>one-time</em>, repeating <em>seasonal</em>, or repeating <em>indefinite</em> contract periods for your agreement.<br />
-      (Repeating deliveries can occur with <em>weekly</em> or <em>monthly</em> frequency.)</p>
-    <div class="control-group">
-      <%= f.label :agreement_type, "Agreement Type:", class: "control-label" %>
-      <div class="controls controls-row">
-	<%= f.select :agreement_type, AGREEMENT_TYPES.map {|u| [u.second, u.first]}, {prompt: "-- Please select --"}, {class: "span4"} %>
-      </div>
-    </div>
-  </div>
  
   <div class="span6">
-    <div class="dfagreement_agreement_type dfindefinite dfseasonal dfonetime">
-      <div class="control-group">
-	<%= f.label :selling_unit, "Selling Unit:", class: "control-label" %>
-	<div class="controls controls-row">
-	  <%= f.select :selling_unit, UNIT_TYPE.map {|u| [u.second, u.first]}, {prompt: "-- Please select --"}, {class: "span3"} %>
-	</div>
+    <div class="control-group">
+      <%= f.label :selling_unit, "Selling Unit:", class: "control-label" %>
+      <div class="controls controls-row">
+	<%= f.select :selling_unit, UNIT_TYPE.map {|u| [u.second, u.first]}, {prompt: "-- Please select --"}, {class: "span3"} %>
       </div>
+    </div>
 
-      <div class="control-group">
-	<%= f.label :price, "Price Per Unit:", class: "control-label" %>
-	<div class="controls controls-row">
-	  <div class="input-prepend">
-	    <span class="add-on">$</span>
-	    <%= f.text_field :price, placeholder: "0.00", class: "span2" %>
-	  </div>
-	  <span class="help-inline">Unit selected above</span>
+    <div class="control-group">
+      <%= f.label :price, "Price Per Unit:", class: "control-label" %>
+      <div class="controls controls-row">
+	<div class="input-prepend">
+	  <span class="add-on">$</span>
+	  <%= f.text_field :price, placeholder: "0.00", class: "span2" %>
 	</div>
+	<span class="help-inline">Unit selected above</span>
       </div>
+    </div>
 
-      <div class="control-group">
-	<%= f.label :quantity, "Quantity:", class: "control-label" %>
-	<div class="controls controls-row">
- 	  <div class="input-append">
-	    <%= f.text_field :quantity, placeholder: "0", class: "span2" %>
-	    <span class="add-on" id="quantity_add_on"></span>
-	  </div>
-	  <span class="help-inline">Number of units <%= current_user.buyer? ? "demanded" : "available" %> <span class="dfagreement_frequency dfweekly">(per weekly delivery)</span><span class="dfagreement_frequency dfmonthly">(per monthly delivery)</span></span>
+    <div class="control-group">
+      <%= f.label :quantity, "Quantity:", class: "control-label" %>
+      <div class="controls controls-row">
+ 	<div class="input-append">
+	  <%= f.text_field :quantity, placeholder: "0", class: "span2" %>
+	  <span class="add-on" id="quantity_add_on"></span>
 	</div>
+	<span class="help-inline">Number of units <%= current_user.buyer? ? "demanded" : "available" %> <span class="dfagreement_frequency dfweekly">(per weekly delivery)</span><span class="dfagreement_frequency dfmonthly">(per monthly delivery)</span></span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :frequency, "Delivery Frequency:", class: "control-label" %>
+      <div class="controls controls-row">
+	<%= f.select :frequency, FREQUENCIES.map {|u| [u.second, u.first]}, {prompt: "-- Please select --"}, {class: "span4"} %>
       </div>
     </div>
   </div>
 
   <div class="span6">
-    <div class="dfagreement_agreement_type dfindefinite dfseasonal">
-      <div class="control-group">
-	<%= f.label :frequency, "Delivery Frequency:", class: "control-label" %>
-	<div class="controls controls-row">
-	  <%= f.select :frequency, FREQUENCIES.map {|u| [u.second, u.first]}, {prompt: "-- Please select --"}, {class: "span4"} %>
-	</div>
+    <div class="control-group">
+      <%= f.label :agreement_type, "Agreement Period:", class: "control-label" %>
+      <div class="controls controls-row">
+	<label class="checkbox"><%= f.check_box :agreement_type, class: "toggle", checked: (@agreement.new_record? ? false : @agreement.agreement_type == "indefinite"), data: {on: "nada", off: "agreement-dates"} %> I want it all the time</label>
       </div>
     </div>
-    <div class="dfagreement_agreement_type dfseasonal dfonetime">
+    <div class="agreement-dates">
+      <p>Select dates available or desired</p>
       <div class="control-group">
 	<%= f.label :start_date, "Begin Date:", class: "control-label" %>
 	<div class="controls controls-row controls-date">
 	  <%= f.text_field :start_date, data: {behavior: "datepicker"} %>
-	  <span class="help-inline dfagreement_agreement_type dfseasonal">First week of agreement period</span>
-	  <span class="help-inline dfagreement_agreement_type dfonetime">On what date <%= current_user.producer? ? "will your product be available?" : "is this product is needed?" %></span>
+	  <span class="help-inline">First delivery of agreement period</span>
 	</div>
       </div>    
-    </div>
-    <div class="dfagreement_agreement_type dfseasonal">
       <div class="control-group">
 	<%= f.label :end_date, "End Date:", class: "control-label" %>
 	<div class="controls controls-row controls-date">
 	  <%= f.text_field :end_date, data: {behavior: "datepicker"} %>
-	  <%#= f.date_select :end_date, :prompt => true, :order => [:month, :day, :year] %>
-	  <span class="help-inline">Last week of agreement period</span>
+	  <span class="help-inline">Last delivery of agreement period</span>
 	</div>
       </div>
     </div>

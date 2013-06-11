@@ -34,6 +34,8 @@ class Agreement < ActiveRecord::Base
     :creator_id, :selling_unit, :price, presence: true
 
   validates :locally_packaged, inclusion: {:in => [true, false]}
+  validates :agreement_type, inclusion: {:in => AGREEMENT_TYPES.map {|a| a.first}}
+  validates :frequency, inclusion: {:in => FREQUENCIES.map {|f| f.first}}
 
   validates :frequency, presence: true, :if => lambda { self.agreement_type == "indefinite"}
   validates :start_date, presence: true, :if => lambda { self.agreement_type == "onetime"}

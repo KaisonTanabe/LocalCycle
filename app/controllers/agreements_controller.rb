@@ -102,7 +102,9 @@ class AgreementsController < ApplicationController
   end
 
   def create
-    @agreement.images.build(image: @agreement.product.best_pic) unless params[:agreement][:images_attributes]
+    @agreement.images.build(image: @agreement.product.best_pic) unless params[:agreement][:images_attributes] if @agreement.product
+
+    @agreement.agreement_type = (params[:agreement][:agreement_type] == "1" ? "indefinite" :  "seasonal") unless (@agreement.agreement_type == "onetime")
 
     @agreement.creator_id = current_user.id
     @agreement.buyer_id = current_user.id if current_user.buyer?
