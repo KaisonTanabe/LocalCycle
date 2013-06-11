@@ -41,6 +41,8 @@ class Agreement < ActiveRecord::Base
   validates :start_date, presence: true, :if => lambda { self.agreement_type == "onetime"}
   validates :start_date, :end_date, :frequency, presence: true, :if => lambda { self.agreement_type == "seasonal"}
 
+  validate :start_end_dates
+
   #########################################
 
 
@@ -87,7 +89,8 @@ class Agreement < ActiveRecord::Base
   scope :standing_demand, available_demand.where("agreements.start_date <= ? AND agreement_type = 'onetime'", Date.today)
   scope :standing_mine, lambda{ |cid| available_supply.where('agreements.start_date <= ? AND agreement_type = ? AND creator_id = ?', Date.today, "onetime", cid) }
 
-  scope :near, lambda { |*args|
+
+  scope :near, lambda{ |*args|
     origin = *args.first[:origin]
     origin_lat, origin_lng = origin
     origin_lat, origin_lng = (origin_lat.to_f / 180.0 * Math::PI), (origin_lng.to_f / 180.0 * Math::PI)
@@ -224,6 +227,12 @@ class Agreement < ActiveRecord::Base
 
   ############ PRIVATE METHODS ############
   private
+
+  def start_end_dates
+    if end_date < start_date
+      errors.add(:end_date, 'must be after the agreement start date') 
+    end
+  end
 
   def bar_margin_left
     (start_date.yday.to_f/365)*100

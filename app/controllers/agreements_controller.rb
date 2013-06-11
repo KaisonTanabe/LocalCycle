@@ -166,7 +166,11 @@ class AgreementsController < ApplicationController
     agreements = agreements.by_max_quantity(params[:max_quantity]) unless params[:max_quantity].blank?
 
     agreements = agreements.by_name(params[:name]) unless params[:name].blank?
-    agreements = agreements.includes(:producer).includes(:buyer).near(origin: [current_user.lat,current_user.lng], within: params[:distance]) unless params[:distance].blank?
+    if current_user.producer? 
+      agreements = agreements.includes(:buyer).near(origin: [current_user.lat,current_user.lng], within: params[:distance]) unless params[:distance].blank?
+    else
+      agreements = agreements.includes(:producer).near(origin: [current_user.lat,current_user.lng], within: params[:distance]) unless params[:distance].blank?
+    end
     agreements = agreements.in_category(params[:cat_id]) unless params[:cat_id].blank?
     agreements = agreements.by_buyer(params[:buyer_id]) unless params[:buyer_id].blank?
     agreements = agreements.by_producer(params[:producer_id]) unless params[:producer_id].blank?
