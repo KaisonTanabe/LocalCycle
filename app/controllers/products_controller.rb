@@ -32,6 +32,13 @@ class ProductsController < ApplicationController
     end
   end
 
+  def selling_unit
+
+    respond_to do |format|
+      format.js {}
+    end
+  end
+
 
   def new
 
