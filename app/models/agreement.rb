@@ -30,7 +30,7 @@ class Agreement < ActiveRecord::Base
 
   ## ATTRIBUTE VALIDATION
 
-  validates :product_id, :name, :quantity, :agreement_type,
+  validates :product_id, :name, :agreement_type,
     :creator_id, :selling_unit, :price, presence: true
 
   validates :locally_packaged, inclusion: {:in => [true, false]}
@@ -130,6 +130,10 @@ class Agreement < ActiveRecord::Base
 
 
   ############ PUBLIC METHODS #############
+
+  def quantity
+    read_attribute(:quantity).nil? ? "--" : read_attribute(:quantity)
+  end
 
   def to_csv
     [id, name, email, ""]

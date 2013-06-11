@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130516152919) do
+ActiveRecord::Schema.define(:version => 20130611200805) do
 
   create_table "agreement_changes", :force => true do |t|
     t.integer  "agreement_id",                                  :null => false
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(:version => 20130516152919) do
     t.date     "start_date"
     t.date     "end_date"
     t.float    "price",                                     :null => false
-    t.integer  "quantity",                                  :null => false
+    t.integer  "quantity"
     t.string   "selling_unit",                              :null => false
     t.boolean  "locally_packaged",       :default => false, :null => false
     t.string   "transport_by"

@@ -147,7 +147,7 @@
     </div>
 
     <div class="control-group">
-      <%= f.label :quantity, "Quantity:", class: "control-label" %>
+      <%= f.label :quantity, "Quantity (optional):", class: "control-label" %>
       <div class="controls controls-row">
  	<div class="input-append">
 	  <%= f.text_field :quantity, placeholder: "0", class: "span2" %>
@@ -173,19 +173,12 @@
       </div>
     </div>
     <div class="agreement-dates">
-      <p>Select dates available or desired</p>
       <div class="control-group">
-	<%= f.label :start_date, "Begin Date:", class: "control-label" %>
+	<%= f.label :start_date, "Agreement Dates:", class: "control-label" %>
 	<div class="controls controls-row controls-date">
-	  <%= f.text_field :start_date, data: {behavior: "datepicker"} %>
-	  <span class="help-inline">First delivery of agreement period</span>
-	</div>
-      </div>    
-      <div class="control-group">
-	<%= f.label :end_date, "End Date:", class: "control-label" %>
-	<div class="controls controls-row controls-date">
-	  <%= f.text_field :end_date, data: {behavior: "datepicker"} %>
-	  <span class="help-inline">Last delivery of agreement period</span>
+	  <%= f.text_field :start_date, placeholder: "First delivery", data: {behavior: "datepicker"}, class: "span2" %>
+	  <%= f.text_field :end_date, placeholder: "Last delivery", data: {behavior: "datepicker"}, class: "span2" %>
+	  <span class="help-block">Select dates available or desired.</span>
 	</div>
       </div>
     </div>
