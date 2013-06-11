@@ -156,16 +156,15 @@
 	<span class="help-inline">Number of units <%= current_user.buyer? ? "demanded" : "available" %> <span class="dfagreement_frequency dfweekly">(per weekly delivery)</span><span class="dfagreement_frequency dfmonthly">(per monthly delivery)</span></span>
       </div>
     </div>
+  </div>
 
+  <div class="span6">
     <div class="control-group">
       <%= f.label :frequency, "Delivery Frequency:", class: "control-label" %>
       <div class="controls controls-row">
 	<%= f.select :frequency, FREQUENCIES.map {|u| [u.second, u.first]}, {prompt: "-- Please select --"}, {class: "span4"} %>
       </div>
     </div>
-  </div>
-
-  <div class="span6">
     <div class="control-group">
       <%= f.label :agreement_type, "Agreement Period:", class: "control-label" %>
       <div class="controls controls-row">
