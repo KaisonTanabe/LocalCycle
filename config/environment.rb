@@ -44,6 +44,7 @@ REGISTERABLE_ROLES = {
 }
 
 FREQUENCIES = {
+  "daily" => "Daily",
   "weekly" => "Weekly",
   "monthly" => "Monthly"
 }
