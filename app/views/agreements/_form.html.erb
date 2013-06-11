@@ -227,7 +227,7 @@
     <legend>Preferred Partners</legend>
     <p>List preferred <%= current_user.producer? ? "buyers" : "producers" %> below. They will be notified and have 3 days to respond before your proposal becomes public.</p>
     <div class="control-group">
-      <label class="req control-label" for="agreement_product_id">Preferred:</label>
+      <label class="req control-label" for="agreement_preferred_user_ids">Preferred:</label>
       <div class="controls controls-row">
 	<%= f.select :preferred_user_ids, options_for_select(User.by_other(current_user).order('name').collect {|u| [u.name, u.id] }, (@agreement.new_record? and !params[:preferred_user_id].blank?) ? params[:preferred_user_id] : @agreement.preferred_users.map{ |p| p.id }), {}, {multiple: "", placeholder: "Select " + (current_user.producer? ? "Buyers" : "Producers"), class: "select2 span4" } %>
 	<span class="help-inline"><span class="label label-info">HINT:</span> Start typing the organization's name...</span>
