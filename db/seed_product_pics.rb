@@ -17,3 +17,15 @@ Category.roots.each do |c|
     next
   end
 end
+
+
+Category.leaves.each do |c|
+  begin
+    c.pic = File.open("#{Rails.root}/app/assets/images/subcategory_pics/#{c.name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')}.jpg")
+    c.save!
+    puts "Found category: #{Rails.root}/app/assets/images/subcategory_pics/#{c.name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')}.jpg"
+  rescue
+    next
+  end
+end
+

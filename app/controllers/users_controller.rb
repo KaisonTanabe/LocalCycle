@@ -48,7 +48,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @delivery_window = @user.delivery_windows.build
+    (7 - @user.delivery_windows.count).times {@user.delivery_windows.build}
   end
 
   def update

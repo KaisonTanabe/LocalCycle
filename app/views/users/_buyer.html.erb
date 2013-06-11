@@ -38,7 +38,7 @@
 <div class="control-group">
   <%= f.label :text_updates, "Text Updates:", class: "control-label" %>
   <div class="controls control-row">
-    <label class="checkbox"><%= f.check_box :text_updates %> Check this box to receive updates about production agreement opportunities on my phone.</label>
+    <label class="checkbox"><%= f.check_box :text_updates %> Check this box to receive text message updates about potential production contracts.</label>
   </div>
 </div>
 
@@ -87,25 +87,4 @@
   </div>
 </div>
 
-
-<legend>(Default) Delivery Options</legend>
-<p>To help you list agreements quicker, feel free to provide defaults for your preferred delivery scheme.</p>
-<div class="control-group">
-  <%= f.label :transport_by, "Preferred Delivery Method:", class: "control-label" %>
-  <div class="controls controls-row">
-    <%= f.select :transport_by, [["-- Please Select --",""],["We pickup", "buyer"],["Producers deliver", "producer"],["We are open to either", "both"]], class: "span4" %>
-    <span class="help-inline"></span>
-  </div>
-</div>
-<div class="control-group">
-  <%= f.label :delivery_window, "Delivery Windows: ", class: "req control-label" %>
-  <%= f.fields_for :delivery_windows do |fd| %>
-    <%= render partial: 'delivery_windows/delivery_window', locals: { f: fd } %>
-    <%= new_child_fields_template(f, :delivery_windows, {partial: "delivery_windows/delivery_window"})%>
-  <% end %>
-  <div class="controls">
-    <span class="help-inline"><%= add_child_link "Add Window", :delivery_windows %></span>
-    <span class="help-block">Add common Delivery/Pickup windows for your organization.</span>
-  </div>
-</div>
-<!--p><span class="label label-info">NOTE:</span> We expect both parties to integrate the delivery fee into price point of Production Agreements.</p-->
+<%= render partial: "users/delivery_options", locals: {f: f} %>

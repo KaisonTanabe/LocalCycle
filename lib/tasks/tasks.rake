@@ -22,6 +22,19 @@ task :seed_products => :environment do
   end
 end
 
+task :seed_subcategory_pics => :environment do
+  Category.leaves.each do |c|
+    begin
+      c.pic = File.open("#{Rails.root}/app/assets/images/subcategory_pics/#{c.name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')}.jpg")
+      c.save!
+      puts "Found category: #{Rails.root}/app/assets/images/subcategory_pics/#{c.name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')}.jpg"
+    rescue => error
+      puts error.message
+      next
+    end
+  end
+end
+
 task :fix_products => :environment do  
   Product.all.each do |p|
     puts Category.where(id: p.category_id).first.name + " " + p.name if Product.where(name: p.name).count > 1
