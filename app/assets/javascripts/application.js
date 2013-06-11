@@ -209,9 +209,7 @@ jQuery(function($){
 	if (product) {
 	    var subcategory = categories[product["category_id"]];
 	    var category = categories[subcategory["parent_id"]];
-	    if (productNameSelectID.val() == "") {
-		productNameSelectID.val($('#agreement_product_id option:selected').html());
-	    }
+	    productNameSelectID.val($('#agreement_product_id option:selected').html());
 	    
 	    $("#category_id").val(category["id"]);
 	    resetSelect($("#subcategory_id"), categories[$("#category_id").val()]["option_children"]);
