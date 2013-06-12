@@ -130,7 +130,7 @@ class ProductsController < ApplicationController
   
   def sort_column
     sort = params[:sort] || ''
-    (Product.column_names.include?(sort) || sort == "selling_units.name") ? sort : "products.name"
+    (Product.column_names.include?(sort) || sort == "selling_units.name" || sort == "categories.name") ? sort : "products.name"
   end
 
   def sort_direction

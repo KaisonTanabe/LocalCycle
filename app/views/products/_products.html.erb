@@ -5,7 +5,7 @@
 	  <%= image_tag product.best_pic_url(:thumb), class: "thumb" %>
 	  <%= link_to product.name, edit_product_path(product) %>
 	</td>
-	<td class='category <%= (params[:sort] == "category") ? "sorted" : "" %>'>
+	<td class='category <%= (params[:sort] == "categories.name") ? "sorted" : "" %>'>
 	  <%= image_tag product.category.best_pic_url(:thumb), class: "thumb" %>
 	  <%= link_to product.category.name, edit_category_path(product.category) %>
 	</td>
