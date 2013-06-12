@@ -139,17 +139,31 @@
     <div class="control-group">
       <%= f.label :agreement_type, "Agreement Period:", class: "control-label" %>
       <div class="controls controls-row">
-	<label class="checkbox"><%= f.check_box :agreement_type, class: "toggle", checked: (@agreement.new_record? ? false : @agreement.agreement_type == "indefinite"), data: {on: "nada", off: "agreement-dates"} %> I want it all the time</label>
+	<label class="checkbox"><%= f.check_box :agreement_type, class: "toggle", checked: (@agreement.new_record? ? false : @agreement.agreement_type == "indefinite"), data: {on: "nada", off: "agreement-dates"} %> I <%= current_user.producer? ? "have" : "want" %> it all the time</label>
       </div>
     </div>
+  </div>
 
+  <div class="span6">
+    <div class="agreement-dates">
+      <div class="control-group">
+	<%= f.label :start_date, "End Date:", class: "control-label" %>
+	<div class="controls controls-row controls-date">
+	  <%= f.text_field :end_date, placeholder: "Last delivery", data: {behavior: "datepicker"}, class: "span3" %>
+	</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="span12"></div>
+
+  <div class="span6">
     <div class="control-group">
       <%= f.label :selling_unit, "Selling Unit:", class: "control-label" %>
       <div class="controls controls-row">
-	<%= f.select :selling_unit, UNIT_TYPE.map {|u| [u.second, u.first]}, {prompt: "-- Please select --"}, {class: "span3"} %>
+	<%= f.select :selling_unit, UNIT_TYPE.map {|u| [u.second, u.first]}, {prompt: "-- Please select --"}, {class: "span4"} %>
       </div>
     </div>
-
     <div class="control-group">
       <%= f.label :quantity, "Quantity (optional):", class: "control-label" %>
       <div class="controls controls-row">
@@ -167,17 +181,7 @@
       </div>
     </div>
   </div>
-
   <div class="span6">
-    <div class="agreement-dates">
-      <div class="control-group">
-	<%= f.label :start_date, "End Date:", class: "control-label" %>
-	<div class="controls controls-row controls-date">
-	  <%= f.text_field :end_date, placeholder: "Last delivery", data: {behavior: "datepicker"}, class: "span3" %>
-	</div>
-      </div>
-    </div>
-
     <div class="control-group">
       <%= f.label :price, "Price Per Unit:", class: "control-label" %>
       <div class="controls controls-row">
@@ -185,7 +189,7 @@
 	  <span class="add-on">$</span>
 	  <%= f.text_field :price, placeholder: "0.00", class: "span2" %>
 	</div>
-	<span class="help-inline">Unit selected above</span>
+	<span class="help-inline">"Unit" selected above</span>
       </div>
     </div>
   </div>
