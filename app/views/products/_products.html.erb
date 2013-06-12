@@ -2,12 +2,12 @@
       <% @products.each do |product| %>
         <%= content_tag_for :tr, product do %>
 	<td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
-	  <%= image_tag product.pic.url(:thumb), class: "thumb" %>
+	  <%= image_tag product.best_pic_url(:thumb), class: "thumb" %>
 	  <%= link_to product.name, edit_product_path(product) %>
 	</td>
 	<td class='category <%= (params[:sort] == "category") ? "sorted" : "" %>'>
-	  <%= image_tag product.category.pic.url(:thumb), class: "thumb" %>
-	  <%= product.category.name %>
+	  <%= image_tag product.category.best_pic_url(:thumb), class: "thumb" %>
+	  <%= link_to product.category.name, edit_category_path(product.category) %>
 	</td>
 	<td>
 	  <div class="btn-toolbar">

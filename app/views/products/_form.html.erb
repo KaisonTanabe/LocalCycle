@@ -7,7 +7,7 @@
     <label class="control-label">Thumbnail:</label>
     <% if !f.object.new_record? %>
       <div class="controls controls-row child-field" style="padding: 5px;" >
-        <%= image_tag @product.pic.url(:medium) %>
+        <%= image_tag @product.best_pic_url(:medium) %>
       </div>
     <% end %>
     <div class="controls control-row">

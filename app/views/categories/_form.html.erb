@@ -1,8 +1,20 @@
-<%= form_for(@category, html: {multipart: true}) do |f| %>
+<%= form_for(@category, html: {multipart: true, class: "form-horizontal"}) do |f| %>
 
-  <%= f.file_field :pic %>
+  <legend></legend>
+  <%= render partial: 'partials/errors', locals: {obj: @category} %>
 
-  <div class="actions">
-    <%= f.submit %>
+  <div class="control-group">
+    <label class="control-label">Thumbnail:</label>
+    <% if !f.object.new_record? %>
+      <div class="controls controls-row child-field" style="padding: 5px;" >
+        <%= image_tag @category.best_pic_url(:medium) %>
+      </div>
+    <% end %>
+    <div class="controls control-row">
+      <%= f.file_field :pic, class: "span4" %>
+      <span class="help-block">Upload an pic to use instead of the default. 2MB Limit.</span>
+    </div>
   </div>
+  <%= render partial: 'partials/submit', locals: {f: f, text: "Category"} %>
+
 <% end %>

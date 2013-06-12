@@ -6,15 +6,15 @@
   <li class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog"></i> Manage <b class="caret"></b></a>
     <ul class="dropdown-menu">
-      <li><%= link_to "Agreements", "#" %></li>
-      <% if current_user.buyer? %>
-      <% else %>
-      <li><%= link_to "Inventory", "#" %></li>
-      <% end %>
-      <li><%= link_to "Transactions", "#" %></li>
-
       <% if current_user.admin? %>
+      <li><%= link_to "Products", products_path %></li>
       <li><%= link_to "Users", users_path %></li>
+      <% else %>
+        <li><%= link_to "Agreements", agreements_path %></li>
+        <% if current_user.producer? %>
+          <li><%= link_to "Inventory", agreements_marketplace_path %></li>
+        <% end %>
+        <li><%= link_to "Transactions", "#" %></li>
       <% end %>
     </ul>
   </li>
