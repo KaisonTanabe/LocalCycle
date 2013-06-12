@@ -7,10 +7,8 @@
       <td class='name <%= (params[:sort] == "last_name") ? "sorted" : "" %>'>
 	<%= link_to(user.formal_name, edit_user_path(user)) %>
       </td>
-
       <td class='name <%= (params[:sort] == "last_name") ? "sorted" : "" %>'>
-	<%= user.producer_profile.name if user.producer? and user.producer_profile %>
-	<%= user.buyer_profile.name if user.buyer? and user.buyer_profile %>
+	<%= user.name %>
       </td>
 
       <td class='login <%= (params[:sort] == "current_sign_in_at") ? "sorted" : "" %>'>
