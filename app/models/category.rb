@@ -123,6 +123,10 @@ class Category < ActiveRecord::Base
     (pic? or root?) ? pic : parent.best_pic
   end  
 
+  def readonly?
+    false
+  end
+
   ############ PRIVATE METHODS ############
   private
 
