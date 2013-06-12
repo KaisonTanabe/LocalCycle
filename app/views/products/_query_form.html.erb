@@ -1,4 +1,4 @@
-<tr class="input-row visible-phone">
+<tr class="input-row">
   <%= form_tag(products_path, id: "product-mobile-filter", method: :get) do %>
     <td colspan="4" class="form-search">
       <div class="input-append">
@@ -6,18 +6,7 @@
 	<button type="submit" class="btn-inverse btn"><span class="icon-search icon-white"></span></button>
       </div>
     </td>
-  <% end %>
-</tr>
-<tr class="input-row hidden-phone">
-  <%= form_tag(products_path, id: "product-filter", method: :get, remote: true) do %>
-
-    <%#= hidden_field_tag(:per_page, @per_page) %>
-    <%= hidden_field_tag(:sort, params[:sort]) unless params[:sort].blank? %>
-    <%= hidden_field_tag(:direction, params[:direction]) unless params[:direction].blank? %>
- 
-    <td><%= text_field_tag :name,  params[:name].blank? ? '' : params[:name], placeholder: "By name..." %></td>
-    <td><%= text_field_tag :category,  params[:category].blank? ? '' : params[:category], placeholder: "By category..." %></td>
-
+    <td></td>
     <td>
       <div id="buttons">
 	<div class="btn-group pull-right" style="margin-left: 10px;">
