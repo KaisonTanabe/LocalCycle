@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130611200805) do
+ActiveRecord::Schema.define(:version => 20130612161855) do
 
   create_table "agreement_changes", :force => true do |t|
     t.integer  "agreement_id",                                  :null => false
@@ -166,6 +166,24 @@ ActiveRecord::Schema.define(:version => 20130611200805) do
   end
 
   add_index "products", ["category_id"], :name => "index_products_on_category_id"
+
+  create_table "products_selling_units", :force => true do |t|
+    t.integer "selling_unit_id", :null => false
+    t.integer "product_id",      :null => false
+  end
+
+  add_index "products_selling_units", ["product_id"], :name => "index_products_selling_units_on_product_id"
+  add_index "products_selling_units", ["selling_unit_id"], :name => "index_products_selling_units_on_selling_unit_id"
+
+  create_table "selling_units", :force => true do |t|
+    t.string   "name",       :null => false
+    t.string   "short_name", :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "selling_units", ["name"], :name => "index_selling_units_on_name", :unique => true
+  add_index "selling_units", ["short_name"], :name => "index_selling_units_on_short_name", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "",    :null => false

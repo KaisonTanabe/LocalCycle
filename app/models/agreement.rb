@@ -229,7 +229,7 @@ class Agreement < ActiveRecord::Base
   private
 
   def start_end_dates
-    if end_date < start_date
+    if end_date and start_date and end_date < start_date
       errors.add(:end_date, 'must be after the agreement start date') 
     end
   end

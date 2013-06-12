@@ -1,7 +1,53 @@
-<%= form_for(@product, html: {multipart: true}) do |f| %>
-  <%= f.file_field :pic %>
+<%= form_for(@product, html: {multipart: true, class: "form-horizontal"}) do |f| %>
 
-  <div class="actions">
-    <%= f.submit %>
+  <legend></legend>
+  <%= render partial: 'partials/errors', locals: {obj: @product} %>
+
+  <div class="control-group">
+    <label class="control-label">Thumbnail:</label>
+    <% if !f.object.new_record? %>
+      <div class="controls controls-row child-field" style="padding: 5px;" >
+        <%= image_tag @product.pic.url(:medium) %>
+      </div>
+    <% end %>
+    <div class="controls control-row">
+      <%= f.file_field :pic, class: "span4" %>
+      <span class="help-block">Upload an pic to use instead of the default. 2MB Limit.</span>
+    </div>
   </div>
+
+  <div class="control-group">
+    <%= f.label :name, "Name:", class: "control-label" %>
+    <div class="controls controls-row">
+      <%= f.text_field :name, class: "span4" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">Category:</label>
+    <div class="controls controls-row">
+      <%= f.select :category_id, options_from_collection_for_select(Category.leaves, :id, :name, @product.category.id), {prompt: "-- Please Select --"}, {class: "span4"} %>
+    </div>
+  </div>
+
+  <div class="agreement-dates">
+    <div class="control-group">
+      <%= f.label :start_date, "Seasonal Availability:", class: "control-label" %>
+      <div class="controls controls-row controls-date">
+	<%= f.text_field :start_date, placeholder: "Start", data: {behavior: "datepicker"}, class: "span2" %>
+	<%= f.text_field :end_date, placeholder: "End", data: {behavior: "datepicker"}, class: "span2" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :selling_unit_ids, "Selling Units:", class: "control-label" %>
+    <div class="controls controls-row">
+        <%= f.select :selling_unit_ids, options_for_select(SellingUnit.order('name').collect {|s| [s.name, s.id] }, @product.selling_units.map{|s| s.id}), {}, {multiple: "", placeholder: "-- Please Select --", class: "select2 span4",  } %>
+      <span class="help-inline">Select all possible units to use for this product</span>
+    </div>
+  </div>
+
+  <%= render partial: 'partials/submit', locals: {f: f, text: "Product"} %>
+
 <% end %>

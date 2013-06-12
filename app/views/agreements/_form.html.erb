@@ -18,8 +18,7 @@
     <div class="control-group">
       <label class="req control-label" for="agreement_product_id">Product:</label>
       <div class="controls controls-row">
-	<%= f.select :product_id, 
-	    option_groups_from_collection_for_select(Category.includes(:products).order('name'), :products, :name, :id, :name, (params[:product_id].blank? ? (@agreement.product ? @agreement.product.id : "") : params[:product_id])), {prompt: "-- Please type and select --"}, {class: "select2 span3" } %>
+	<%= f.select :product_id, option_groups_from_collection_for_select(Category.includes(:products).order('name'), :products, :name, :id, :name, (params[:product_id].blank? ? (@agreement.product ? @agreement.product.id : "") : params[:product_id])), {prompt: "-- Please type and select --"}, {class: "select2 span3" } %>
       </div>
     </div>
   </div>
@@ -93,7 +92,7 @@
     <div class="control-group">
       <%= f.label :selling_unit, "Selling Unit:", class: "control-label" %>
       <div class="controls controls-row">
-	<%= f.select :selling_unit, UNIT_TYPE.map {|u| [u.second, u.first]}, {prompt: "-- Please select --"}, {class: "span3"} %>
+	<%= f.select :selling_unit, SellingUnit.all.map {|s| [s.name, s.short_name]}, {prompt: "-- Please select --"}, {class: "span3"} %>
       </div>
     </div>
 

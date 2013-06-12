@@ -1,3 +1,14 @@
+desc "Seeding selling units"
+task :seed_selling_units => :environment do
+  UNIT_TYPE.each do |u|
+    SellingUnit.create(name: u.second, short_name: u.first)
+  end
+  Product.all.each do |p|
+    ids = [SellingUnit.where(short_name: p.unit_type).first.id]
+    p.update_attributes(selling_unit_ids: ids)
+  end
+end
+
 desc "EMAILING list of ineligible students to admins"
 task :seed_products => :environment do
   

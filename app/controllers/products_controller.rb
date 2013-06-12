@@ -7,6 +7,7 @@ class ProductsController < ApplicationController
 
   def index
 
+    @products = @products.includes(:category)
     @products = filter_and_sort(@products, params)
     @products = @products.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
 
@@ -56,7 +57,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        format.html { redirect_to @product, notice: 'Product was successfully created.' }
+        format.html { redirect_to products_url, notice: 'Product was successfully created.' }
         format.json { render json: @product, status: :created, location: @product }
       else
         format.html { render action: "new" }
@@ -70,7 +71,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.update_attributes(params[:product])
-        format.html { redirect_to @product, notice: 'Product was successfully updated.' }
+        format.html { redirect_to products_url, notice: 'Product was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -127,14 +128,8 @@ class ProductsController < ApplicationController
   private
 
   def filter_and_sort(products, params)
-    products = products.available_demand_and_mine_only(current_user.id) unless params[:only_available].blank? or current_user.producer?
-    products = products.available_supply_and_mine_only(current_user.id) unless params[:only_available].blank? or current_user.buyer?
     products = products.by_name(params[:name]) unless params[:name].blank?
-
-    products = products.by_buyer(params[:buyer]) unless params[:buyer].blank?
-    products = products.by_producer(params[:producer]) unless params[:producer].blank?
-
-    products = products.by_category_name(params[:category]) unless params[:category].blank?
+    products = products.by_category(params[:category]) unless params[:category].blank?
     products = products.in_category(params[:cat_id]) unless params[:cat_id].blank?
 
     return products.order(sort_column + " " + sort_direction)

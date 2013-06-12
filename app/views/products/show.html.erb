@@ -1,18 +1,17 @@
-<p id="notice"><%= notice %></p>
-
+<h1><%= @product.name %></h1>
 <p>
-  <b>Category:</b>
-  <%= @product.category %>
+  <b>Category:</b><br />
+  <%= @product.category.name %>
 </p>
 
 <p>
-  <b>Name:</b>
-  <%= @product.name %>
-</p>
-
-<p>
-  <b>Description:</b>
+  <b>Description:</b><br />
   <%= @product.description %>
+</p>
+
+<p>
+  <b>Possible Selling Units:</b><br />
+  <%=raw @product.selling_units.map{|s| s.name}.join("<br />") %>
 </p>
 
 

@@ -102,29 +102,29 @@ AGREEMENT_TYPES = {
 
 UNIT_TYPE = {
   "lb" => "Pound",
-  "3lb" => "3 Pounds",
-  "5lb" => "5 Pounds",
-  "10lb" => "10 Pounds",
-  "15lb" => "15 Pounds",
-  "20lb" => "20 Pounds",
-  "25lb" => "25 Pounds",
+#  "3lb" => "3 Pounds",
+#  "5lb" => "5 Pounds",
+#  "10lb" => "10 Pounds",
+#  "15lb" => "15 Pounds",
+#  "20lb" => "20 Pounds",
+#  "25lb" => "25 Pounds",
   "bunch" => "Bunch",
   "bu" => "Bushel",
-  "(1/2bu)" => "Half Bushel",
-  "(4/5bu)" => "4/5 Bushel",
+  "1/2bu" => "Half Bushel",
+  "4/5bu" => "4/5 Bushel",
   "case" => "Case",
   "doz" => "Dozen",
   "ea" => "Single",
   "flat" => "Flat",
   "gal" => "Gallon",
-  "(1/2gal)" => "Half Gallon",
+  "1/2gal" => "Half Gallon",
   "pack" => "Pack",
   "piece" => "Piece",
   "pt" => "Pint",
-  "(1/2pt)" => "Half Pint",
+  "1/2pt" => "Half Pint",
   "wheel" => "Wheel",
-  "(1/2wheel)" => "Half Wheel",
-  "(1/4wheel)" => "Quarter Wheel"
+  "1/2wheel" => "Half Wheel",
+  "1/4wheel" => "Quarter Wheel"
 }
 
 ###################################

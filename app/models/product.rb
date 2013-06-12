@@ -9,11 +9,14 @@ class Product < ActiveRecord::Base
 
   has_many :agreements
 
+  has_many :products_selling_units, dependent: :destroy
+  has_many :selling_units, through: :products_selling_units
+
 
   ## ATTRIBUTE PROTECTION  
   
-  attr_accessible :description, :name, :unit_type, :catch_weight, :category_id, :pic, 
-    :start_date, :end_date, :selling_unit
+  attr_accessible :description, :name, :selling_unit_ids,
+    :catch_weight, :category_id, :pic, :start_date, :end_date
 
 
   ## ATTRIBUTE VALIDATION

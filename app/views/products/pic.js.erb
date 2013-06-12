@@ -1,2 +1,8 @@
 $("#product_pic_div").html('<%=j image_tag @product.best_pic_url(:medium) %>');
-$("#agreement_selling_unit").val('<%= j @product.unit_type %>');
+$("#agreement_selling_unit").empty();
+var selectValues = {<%= raw @product.selling_units.map{|s| '"' + s.short_name + '" : "' + s.name + '"'}.join(", ") %>}
+$.each(selectValues, function(key, value) {
+     $("#agreement_selling_unit")
+          .append($('<option>', { value : key })
+          .text(value)); 
+});

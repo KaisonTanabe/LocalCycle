@@ -6,7 +6,11 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    agreements_path
+    if resource.admin?
+      products_path
+    else
+      agreements_path
+    end
   end
 
 
