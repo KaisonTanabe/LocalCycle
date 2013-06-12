@@ -35,6 +35,7 @@ class ProductsController < ApplicationController
 
 
   def new
+    @product = Product.new()
 
     respond_to do |format|
       format.html # new.html.erb

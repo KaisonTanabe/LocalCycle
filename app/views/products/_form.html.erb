@@ -26,7 +26,7 @@
   <div class="control-group">
     <label class="control-label">Category:</label>
     <div class="controls controls-row">
-      <%= f.select :category_id, options_from_collection_for_select(Category.leaves, :id, :name, @product.category.id), {prompt: "-- Please Select --"}, {class: "span4"} %>
+      <%= f.select :category_id, options_from_collection_for_select(Category.leaves, :id, :name, (f.object.new_record? ? "" : @product.category.id)), {prompt: "-- Please Select --"}, {class: "span4"} %>
     </div>
   </div>
 
