@@ -124,24 +124,29 @@
   <div class="span12">
     <p><br /></p>
     <legend>Agreement Options</legend>
+    <p>Select dates available or desired.</p>
   </div>
  
   <div class="span6">
+    <div class="agreement-dates">
+      <div class="control-group">
+	<%= f.label :start_date, "Start Date:", class: "control-label" %>
+	<div class="controls controls-row controls-date">
+	  <%= f.text_field :start_date, placeholder: "First delivery", data: {behavior: "datepicker"}, class: "span3" %>
+	</div>
+      </div>
+    </div>
     <div class="control-group">
-      <%= f.label :selling_unit, "Selling Unit:", class: "control-label" %>
+      <%= f.label :agreement_type, "Agreement Period:", class: "control-label" %>
       <div class="controls controls-row">
-	<%= f.select :selling_unit, UNIT_TYPE.map {|u| [u.second, u.first]}, {prompt: "-- Please select --"}, {class: "span3"} %>
+	<label class="checkbox"><%= f.check_box :agreement_type, class: "toggle", checked: (@agreement.new_record? ? false : @agreement.agreement_type == "indefinite"), data: {on: "nada", off: "agreement-dates"} %> I want it all the time</label>
       </div>
     </div>
 
     <div class="control-group">
-      <%= f.label :price, "Price Per Unit:", class: "control-label" %>
+      <%= f.label :selling_unit, "Selling Unit:", class: "control-label" %>
       <div class="controls controls-row">
-	<div class="input-prepend">
-	  <span class="add-on">$</span>
-	  <%= f.text_field :price, placeholder: "0.00", class: "span2" %>
-	</div>
-	<span class="help-inline">Unit selected above</span>
+	<%= f.select :selling_unit, UNIT_TYPE.map {|u| [u.second, u.first]}, {prompt: "-- Please select --"}, {class: "span3"} %>
       </div>
     </div>
 
@@ -155,29 +160,32 @@
 	<span class="help-inline">Number of units <%= current_user.buyer? ? "demanded" : "available" %> <span class="dfagreement_frequency dfweekly">(per weekly delivery)</span><span class="dfagreement_frequency dfmonthly">(per monthly delivery)</span></span>
       </div>
     </div>
-  </div>
-
-  <div class="span6">
     <div class="control-group">
       <%= f.label :frequency, "Delivery Frequency:", class: "control-label" %>
       <div class="controls controls-row">
 	<%= f.select :frequency, FREQUENCIES.map {|u| [u.second, u.first]}, {prompt: "-- Please select --"}, {class: "span4"} %>
       </div>
     </div>
-    <div class="control-group">
-      <%= f.label :agreement_type, "Agreement Period:", class: "control-label" %>
-      <div class="controls controls-row">
-	<label class="checkbox"><%= f.check_box :agreement_type, class: "toggle", checked: (@agreement.new_record? ? false : @agreement.agreement_type == "indefinite"), data: {on: "nada", off: "agreement-dates"} %> I want it all the time</label>
-      </div>
-    </div>
+  </div>
+
+  <div class="span6">
     <div class="agreement-dates">
       <div class="control-group">
-	<%= f.label :start_date, "Agreement Dates:", class: "control-label" %>
+	<%= f.label :start_date, "End Date:", class: "control-label" %>
 	<div class="controls controls-row controls-date">
-	  <%= f.text_field :start_date, placeholder: "First delivery", data: {behavior: "datepicker"}, class: "span2" %>
-	  <%= f.text_field :end_date, placeholder: "Last delivery", data: {behavior: "datepicker"}, class: "span2" %>
-	  <span class="help-block">Select dates available or desired.</span>
+	  <%= f.text_field :end_date, placeholder: "Last delivery", data: {behavior: "datepicker"}, class: "span3" %>
 	</div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :price, "Price Per Unit:", class: "control-label" %>
+      <div class="controls controls-row">
+	<div class="input-prepend">
+	  <span class="add-on">$</span>
+	  <%= f.text_field :price, placeholder: "0.00", class: "span2" %>
+	</div>
+	<span class="help-inline">Unit selected above</span>
       </div>
     </div>
   </div>

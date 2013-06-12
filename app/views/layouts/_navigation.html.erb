@@ -12,7 +12,7 @@
       <% else %>
         <li><%= link_to "Agreements", agreements_path %></li>
         <% if current_user.producer? %>
-          <li><%= link_to "Inventory", agreements_marketplace_path %></li>
+          <li><%= link_to "Inventory", marketplace_agreements_path %></li>
         <% end %>
         <li><%= link_to "Transactions", "#" %></li>
       <% end %>
