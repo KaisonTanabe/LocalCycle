@@ -3,7 +3,7 @@
     <div class="product">
       <%= image_tag a.images[0].image.url(:medium), class: "medium" %>
       
-      <h4><%= link_to a.name, "#" %></h4>
+      <h4><%= a.name %></h4>
       
       <p class="details"><strong><%= number_to_currency(a.price) %></strong> / <span class="label label-info"><%= a.selling_unit %></span> | <%= a.quantity %> <span class="label label-info"><%= a.selling_unit.pluralize %></span> avail.</p>
       
