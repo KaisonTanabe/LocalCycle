@@ -7,7 +7,7 @@
       <td class='name <%= (params[:sort] == "last_name") ? "sorted" : "" %>'>
 	<%= link_to(user.formal_name, edit_user_path(user)) %>
       </td>
-      <td class='name <%= (params[:sort] == "last_name") ? "sorted" : "" %>'>
+      <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
 	<%= user.name %>
       </td>
 

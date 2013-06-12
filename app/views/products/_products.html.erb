@@ -9,7 +9,7 @@
 	  <%= image_tag product.category.best_pic_url(:thumb), class: "thumb" %>
 	  <%= link_to product.category.name, edit_category_path(product.category) %>
 	</td>
-	<td class='selling_units <%= (params[:sort] == "selling_units") ? "sorted" : "" %>'>
+	<td class='selling_units <%= (params[:sort] == "selling_units.name") ? "sorted" : "" %>'>
 	  <%=raw product.selling_units.map{|s| s.name}.join("<br />") %>
 	</td>
 	<td class='start_date <%= (params[:sort] == "start_date") ? "sorted" : "" %>'>
