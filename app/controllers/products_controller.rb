@@ -7,7 +7,7 @@ class ProductsController < ApplicationController
 
   def index
 
-    @products = @products.includes(:category)
+    @products = @products.includes(:category).includes(:selling_units)
     @products = filter_and_sort(@products, params)
     @products = @products.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
 
@@ -27,13 +27,6 @@ class ProductsController < ApplicationController
 
 
   def pic
-
-    respond_to do |format|
-      format.js {}
-    end
-  end
-
-  def selling_unit
 
     respond_to do |format|
       format.js {}
