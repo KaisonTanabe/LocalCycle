@@ -56,9 +56,11 @@
 	<% end %>
       <% else %>
         <tr>
-	  <td colspan="4">
-            <%= link_to raw('<i class="icon-edit"></i> Propose Amendments'), "#", class: "btn amendment-btn", id: "0" %>
-	    <%= link_to raw('<i class="icon-ok icon-white"></i> Accept Agreement'), agreement_change_index_path(@agreement, agreement_change: {status: "agreed"}), method: :post, confirm: "You will be obligated to fulfill your part of the contract should this agreement be accepted.", class: "btn btn-success" %>
+	  <td colspan="5">
+	    <div class="btn-group" id="approval-group">
+              <%= link_to raw('<i class="icon-edit"></i> Propose Amendments'), "#", class: "btn amendment-btn", id: "0" %>
+	      <%= link_to raw('<i class="icon-ok icon-white"></i> Accept Agreement'), agreement_change_index_path(@agreement, agreement_change: {status: "agreed"}), method: :post, confirm: "You will be obligated to fulfill your part of the contract should this agreement be accepted.", class: "btn btn-success" %>
+	    </div>
 	  </td>
 	</tr>
       <% end %>
