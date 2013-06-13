@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
 
   ## ATTRIBUTE VALIDATION
   validates :first_name, :last_name, :email,  presence: true
-  validates :email,                           uniqueness: true
+#  validates :email,                           uniqueness: true
   validates :role,                            inclusion: {:in => ROLES.map{ |r| r.first}}
 
   validates :name, :phone, :description,
