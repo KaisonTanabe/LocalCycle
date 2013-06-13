@@ -73,6 +73,9 @@ class Agreement < ActiveRecord::Base
   scope :available_supply, where(buyer_id: 0)
   scope :available_demand, where(producer_id: 0)
 
+  scope :by_interacted_with, lambda {|id| includes(:agreement_changes).where("agreement_changes.user_id = ?", id)}
+  scope :by_interacted_with_or_mine, lambda {|id| includes(:agreement_changes).where("agreement_changes.user_id = ? OR agreements.creator_id = ?", id, id)}
+
   scope :by_name, lambda { |n| where('UPPER(agreements.name) LIKE UPPER(?)', '%'+n+'%')}
   scope :by_min_price, lambda {|p| where("price >= ?", p.to_i)}
   scope :by_max_price, lambda {|p| where("price <= ?", p.to_i)}

@@ -33,10 +33,13 @@ class AgreementsController < ApplicationController
 
     else
 
-      @agreements = @agreements.available_supply_or_mine(current_user.id) if current_user.buyer?
-      @agreements = @agreements.available_demand_or_mine(current_user.id) if current_user.producer?
+      if params[:status].blank?
+        @agreements = (current_user.producer? ? @agreements.available_demand : @agreements.available_supply)
+      else
+        @agreements = @agreements.by_interacted_with_or_mine(current_user.id)
+      end
       @agreements = filter_and_sort(@agreements, params)
-      
+
       @agreements = @agreements.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
       
       @product_agreements = @agreements.group_by(&:product)
@@ -157,21 +160,24 @@ class AgreementsController < ApplicationController
 
   def filter_and_sort(agreements, params)
 
-    agreements = agreements.by_complete if !params[:status].blank? and params[:status] == "complete"
-    agreements = agreements.by_not_complete if !params[:status].blank? and params[:status] == "proposed"
+    agreements = agreements.by_name(params[:name]) unless params[:name].blank?
+    agreements = agreements.in_category(params[:cat_id]) unless params[:cat_id].blank?
+
+    agreements = agreements.by_creator(current_user.id).by_complete if !params[:status].blank? and params[:status] == "complete"
+    agreements = agreements.by_creator(current_user.id).by_not_complete if !params[:status].blank? and params[:status] == "proposed"
 
     agreements = agreements.by_min_price(params[:min_price]) unless params[:min_price].blank?
     agreements = agreements.by_max_price(params[:max_price]) unless params[:max_price].blank?
     agreements = agreements.by_min_quantity(params[:min_quantity]) unless params[:min_quantity].blank?
     agreements = agreements.by_max_quantity(params[:max_quantity]) unless params[:max_quantity].blank?
 
-    agreements = agreements.by_name(params[:name]) unless params[:name].blank?
     if current_user.producer? 
       agreements = agreements.includes(:buyer).near(origin: [current_user.lat,current_user.lng], within: params[:distance]) unless params[:distance].blank?
     else
       agreements = agreements.includes(:producer).near(origin: [current_user.lat,current_user.lng], within: params[:distance]) unless params[:distance].blank?
     end
-    agreements = agreements.in_category(params[:cat_id]) unless params[:cat_id].blank?
+
+    # Unused
     agreements = agreements.by_buyer(params[:buyer_id]) unless params[:buyer_id].blank?
     agreements = agreements.by_producer(params[:producer_id]) unless params[:producer_id].blank?
     agreements = agreements.by_creator(params[:creator_id]) unless params[:creator_id].blank?
