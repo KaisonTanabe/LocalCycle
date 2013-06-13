@@ -196,8 +196,9 @@ class Agreement < ActiveRecord::Base
 
   def bar_status(cid)
     return "complete" if (buyer_id > 0 and producer_id > 0)
-    return "pending" if (creator_id != cid) and agreement_changes.by_user(cid).any?
-    return "listed" if (creator_id == cid)
+    return "terminated" if (creator_id != cid and agreement_changes.by_user(cid).by_terminated.any?)
+    return "pending" if agreement_changes.by_user(cid).any?
+    return "listed" if creator_id == cid
     return "available"
   end
 

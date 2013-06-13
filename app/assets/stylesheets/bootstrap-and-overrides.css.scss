@@ -32,14 +32,21 @@
 }
 
 tr #approval-group {
+    text-align: center;
+    display: block;
+}
+
+/**
+tr #approval-group {
     position: absolute;
     display: none;
-    right: 5px;
-    top: 5px;
+    right: 0;
+    top: -10px;
 }
 tr:hover #approval-group {
     display: block;
 }
+**/
 
 #agreement-change-form-container {
     display: none;
@@ -424,6 +431,15 @@ header.navbar {
 	    background-color: #4186cc + #222;
 	}
     }
+    &.terminated {
+	background-color: #ef6e6e;
+	border: 1px solid #e34545;
+	opacity: 0.5;
+	&:hover {
+	    opacity: 1;
+	    background-color: #ef6e6e + #222;
+	}
+    }
 }
 
 #content {
@@ -785,6 +801,12 @@ input, select, textarea, .checkbox, .radio {
 @media only screen and (max-width: 767px) {
     tr.visible-phone {
 	display: table-row !important;
+    }
+}
+@media only screen and (min-width: 768px) {
+    #ajax-modal {
+	width: 800px;
+	margin-left: -400px;
     }
 }
 

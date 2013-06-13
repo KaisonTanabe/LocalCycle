@@ -10,9 +10,10 @@
   <thead>
     <tr>
       <th></th>
-      <th>Price / <span class="label label-info"><%= @agreement.selling_unit %></span></th>
-      <th>Qty (# <span class="label label-info"><%= @agreement.selling_unit.pluralize %></span>)</th>
+      <th style="min-width: 100px;">Price / <span class="label label-info"><%= @agreement.selling_unit %></span></th>
+      <th style="min-width: 100px;">Qty (# <span class="label label-info"><%= @agreement.selling_unit.pluralize %></span>)</th>
       <th>Delivery Windows</th>
+      <th>Comments/Reasons</th>
     </tr>
   </thead>
   <tbody>
@@ -43,6 +44,7 @@
 	  <% end %>
 	</ul>
       </td>
+      <td></td>
     </tr>
   </tbody>
   <tbody id="agreement-changes-container">

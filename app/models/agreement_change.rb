@@ -45,7 +45,8 @@ class AgreementChange < ActiveRecord::Base
 
   default_scope order('created_at ASC')
 
-  scope :by_agreed, where(agree: true)
+  scope :by_agreed, where(status: "agreed")
+  scope :by_terminated, where(status: "terminated")
   scope :by_user, lambda {|id| where(user_id: id)}
   scope :by_not_user, lambda {|id| where("user_id != ?", id)}
 
@@ -61,14 +62,27 @@ class AgreementChange < ActiveRecord::Base
 
   def row_status
     if !successor
-      return "warning" if status == "pending"
       return "success" if status == "agreed"
-      return "error" if status == "rejected"
+      return "warning" if status == "pending"
+      return "error" if status == "terminated"
     end
   end
 
   def agreed?
     status == "agreed"
+  end
+
+  def pending?
+    status == "pending"
+  end
+
+  def terminated?
+    status == "terminated"
+  end
+
+  def terminate_chain
+    self.update_column("status", "terminated")
+    agreement_change.terminate_chain if agreement_change
   end
 
   ############ PRIVATE METHODS ############

@@ -47,6 +47,7 @@ class AgreementChangesController < ApplicationController
     respond_to do |format|
       if @agreement_change.update_attributes(params[:agreement_change])
         @agreement.mark_complete(@agreement_change) if @agreement_change.agreed?
+        @agreement_change.terminate_chain if @agreement_change.terminated?
         format.html { redirect_to agreements_path, notice: 'Agreement amendments successfully proposed.' }
         format.json { render json: @agreement_change, status: :created, location: @agreement_change }
       else
