@@ -47,5 +47,6 @@ LOCALCYCLE::Application.routes.draw do
   match "about" => 'public#about'
   match "contact" => 'public#contact'
   match "test" => 'public#test'
+  match "d/users" => 'public#index'
 
 end
