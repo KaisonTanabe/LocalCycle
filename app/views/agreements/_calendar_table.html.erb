@@ -1,9 +1,8 @@
 <%= render "partials/filters" %>
 
-<table id="agreementTable" style="margin-top: -20px;" class="table table-hover table-striped">
+<table id="agreementTable" style="margin-top: -20px;" class="table">
   <thead>
     <tr>
-      <th width="10px"></th>
       <th width="270px">
 	<%= form_tag(agreements_path, method: :get) do %>
 	<div class="form-search pull-left">
@@ -36,15 +35,15 @@
           <%= render partial: "producer_row", locals: {p: p} %>
         <% end %>
       <% else %>
-        <tr><td colspan="14"><em>No matching products...</em></td></tr>
+        <tr><td colspan="13"><em>No matching products...</em></td></tr>
       <% end %>
     <% else %>
       <% if @product_agreements.any? %>
         <% @product_agreements.each do |p, agreements| %>
-          <%= render partial: "buyer_row", locals: {p: p, agreements: agreements} %>
+          <%= render partial: "agreement_row", locals: {p: p, agreements: agreements} %>
         <% end %>
       <% else %>
-        <tr><td colspan="14"><em>No matching agreements...</em></td></tr>
+        <tr><td colspan="13"><em>No matching agreements...</em></td></tr>
       <% end %>
     <% end %>
     

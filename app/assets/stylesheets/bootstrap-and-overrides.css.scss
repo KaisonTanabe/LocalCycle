@@ -36,6 +36,10 @@ tr #approval-group {
     display: block;
 }
 
+.collapsed {
+    display: none;
+}
+
 /**
 tr #approval-group {
     position: absolute;
@@ -73,7 +77,7 @@ tr:hover #approval-group {
 #agreementTable {
     background: #fff;
     border-top: 2px solid #dadada;
-
+    td:last-child, th { text-align: center; }
     tr {
 	td div.collapsable {
 	    height: 44px;
@@ -87,10 +91,31 @@ tr:hover #approval-group {
 	}
     }
 }
-.producer_col {
-    height: 40px;
-    margin-bottom: 10px;
+.producer-close {
+    float: right;
 }
+tr.glowing {
+    box-shadow: 0 0 100px #000;
+}
+.producer-col {
+    clear: both;
+    height: 40px;
+    padding-bottom: 10px;
+    &.bar-col {
+	border-bottom: 1px solid #ddd;
+	&:last-child {
+	    border-bottom: none;
+	}
+	&:first-child {
+	    border-top: 2px solid #bbb;
+	}
+    }
+}
+.producer-col-container {
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
 .topDisplay {
     height: 40px;
     margin-bottom: 10px;
@@ -131,7 +156,10 @@ div.products {
 	}
     }
 }
-#agreementTable h5 { margin-right: -100px; }
+#agreementTable h5 { 
+    margin-right: -100px;
+    margin-top: -2px;
+}
 
 /* =============================================================================
    Extra Defaults
@@ -404,8 +432,12 @@ header.navbar {
     position: relative;
     text-indent: -9999px;
     &.fat-bar {
+	cursor: pointer;
 	margin-top: 10px;
 	height: 10px;
+	&.faded {
+	    opacity: 0.25;
+	}
     }
     &:hover {
 	background-color: #f6b328 + #222;

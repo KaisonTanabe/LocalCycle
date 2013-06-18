@@ -33,6 +33,12 @@ jQuery(function($){
 	$.rails.handleRemote( $(this) );
     })
 
+    $('a.fat-bar, a.producer-close').on('click', function(e) {
+	$(this).parent().parent().toggleClass("glowing");
+	$($(this).attr("data-target")).toggleClass("collapsed");
+	$(this).toggleClass("faded");
+    });
+
     $('.row-collapse #toggle').on('click', function(e) {
 	$($(e.target).attr("some")).toggleClass("expanded");
     });
@@ -205,21 +211,23 @@ jQuery(function($){
     });
     function populateBrowsingFields() {
 	var productNameSelectID = $("#agreement_name");
-	var product = products[$('#agreement_product_id').val()];
-	if (product) {
-	    var subcategory = categories[product["category_id"]];
-	    var category = categories[subcategory["parent_id"]];
-	    productNameSelectID.val($('#agreement_product_id option:selected').html());
-	    
-	    $("#category_id").val(category["id"]);
-	    resetSelect($("#subcategory_id"), categories[$("#category_id").val()]["option_children"]);
-	    $("#subcategory_id").val(subcategory["id"]);
-	    resetSelect($("#fake_product_id"), categories[$("#subcategory_id").val()]["option_products"]);
-	    $("#fake_product_id").val(product["id"]);
-	    $.ajax({
-		url: "/products/" + $("#agreement_product_id option:selected").val() + "/pic",
-		type: 'GET'
-	    });
+	if (typeof products !== undefined) {
+	    var product = products[$('#agreement_product_id').val()];
+	    if (product) {
+		var subcategory = categories[product["category_id"]];
+		var category = categories[subcategory["parent_id"]];
+		productNameSelectID.val($('#agreement_product_id option:selected').html());
+		
+		$("#category_id").val(category["id"]);
+		resetSelect($("#subcategory_id"), categories[$("#category_id").val()]["option_children"]);
+		$("#subcategory_id").val(subcategory["id"]);
+		resetSelect($("#fake_product_id"), categories[$("#subcategory_id").val()]["option_products"]);
+		$("#fake_product_id").val(product["id"]);
+		$.ajax({
+		    url: "/products/" + $("#agreement_product_id option:selected").val() + "/pic",
+		    type: 'GET'
+		});
+	    }
 	}
     }
     $('#agreement_product_id').on("change", function(e) {populateBrowsingFields();});

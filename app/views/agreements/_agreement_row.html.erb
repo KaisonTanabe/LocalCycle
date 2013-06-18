@@ -1,9 +1,4 @@
 <tr id="collapse<%= p.id %>">
-  <td class="row-collapse">
-    <!--a id="toggle">
-      <i class="icon-plus" some="#collapse<%= p.id %>"></i>
-    </a>
-  </td-->
   <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
     <%= image_tag p.best_pic_url(:thumb), class: "thumb" %>
     
