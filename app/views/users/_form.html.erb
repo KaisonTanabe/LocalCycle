@@ -14,7 +14,7 @@
     <%= f.label :email, "Email Address: ", class: "req control-label" %>
     <div class="controls controls-row">
       <%= f.email_field :email, placeholder: "user@example.com", class: "span4" %>
-      <% if !@user.new_record? %><span class="help-block">You will be logged out and prompted to confirm email if changed.</span><% end %>
+      <% if !@user.new_record? %><span class="help-block">You will be logged out and prompted to confirm your email if changed.</span><% end %>
     </div>
   </div>
   
