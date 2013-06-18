@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :certifications
 
   has_many :delivery_windows, as: :deliverable, dependent: :destroy
-  accepts_nested_attributes_for :delivery_windows, allow_destroy: true, reject_if: proc { |attrs| attrs['weekday'].blank? or attrs['start_hour'].blank? or attrs['start_hour'].blank? }
+  accepts_nested_attributes_for :delivery_windows, allow_destroy: true, reject_if: proc { |attrs| attrs['weekday'].blank? or attrs['start_hour'].blank? or attrs['start_hour'].blank? or attrs['transport_by'].blank? }
 
   has_attached_file :pic, styles: IMAGE_STYLES, default_url: :set_default_url_on_role
 
@@ -26,10 +26,11 @@ class User < ActiveRecord::Base
   attr_accessible :first_name, :last_name, :email, :notes,
     :attachments_attributes, :role, :name, :phone, :growing_methods,
     :street_address_1, :street_address_2, :city, :state, :country, :zip,
-    :description, :website, :twitter, :facebook, 
+    :description, :website, :twitter, :facebook, :pic, 
     :certification_ids, :text_updates, :complete,
-    :has_eggs, :has_dairy, :has_livestock, :has_pantry, :pic, :custom_growing_methods,
-    :transport_by, :delivery_windows_attributes, :size
+    :has_eggs, :has_dairy, :has_livestock, :has_pantry, 
+    :custom_growing_methods,
+    :delivery_windows_attributes, :size
 
 
   ## ATTRIBUTE VALIDATION

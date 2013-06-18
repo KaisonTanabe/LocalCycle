@@ -16,7 +16,7 @@ class AgreementChange < ActiveRecord::Base
   
   attr_accessible :price, :quantity, :frequency, :status,
     :agreement_id, :agreement_change_id, :user_id, :reason, 
-    :transport_by, :transport_instructions, :agree
+    :transport_instructions, :agree
 
   ## ATTRIBUTE VALIDATION
 

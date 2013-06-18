@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130612161855) do
+ActiveRecord::Schema.define(:version => 20130618023142) do
 
   create_table "agreement_changes", :force => true do |t|
     t.integer  "agreement_id",                                  :null => false
@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(:version => 20130612161855) do
     t.float    "price"
     t.integer  "quantity"
     t.string   "frequency"
-    t.string   "transport_by"
     t.text     "transport_instructions"
     t.text     "reason"
     t.datetime "created_at",                                    :null => false
@@ -47,7 +46,6 @@ ActiveRecord::Schema.define(:version => 20130612161855) do
     t.integer  "quantity"
     t.string   "selling_unit",                              :null => false
     t.boolean  "locally_packaged",       :default => false, :null => false
-    t.string   "transport_by"
     t.text     "transport_instructions"
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
@@ -118,6 +116,7 @@ ActiveRecord::Schema.define(:version => 20130612161855) do
     t.integer  "end_hour"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.string   "transport_by"
   end
 
   create_table "images", :force => true do |t|
@@ -226,7 +225,6 @@ ActiveRecord::Schema.define(:version => 20130612161855) do
     t.boolean  "has_dairy",              :default => false, :null => false
     t.boolean  "has_pantry",             :default => false, :null => false
     t.boolean  "text_updates",           :default => true,  :null => false
-    t.string   "transport_by"
     t.boolean  "complete",               :default => false, :null => false
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false

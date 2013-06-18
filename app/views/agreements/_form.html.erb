@@ -202,13 +202,6 @@
     <legend>Delivery Method</legend>
     <p>Add or remove possible delivery windows. The other party will be required to pick one that works with their schedule.</p>
     <div class="control-group">
-      <%= f.label :transport_by, "Preferred Delivery Method:", class: "control-label" %>
-      <div class="controls controls-row">
-	<%= f.select :transport_by, [["-- Please Select --",""],[(current_user.producer? ? "We deliver" : "Producer delivers"), "producer"],[(current_user.producer? ? "Buyer picks up" : "We pick up"), "buyer"],["Either works", "both"]], {selected: (f.object.new_record? ? current_user.transport_by : "")}, {class: "span4"} %>
-	<span class="help-inline"></span>
-      </div>
-    </div>
-    <div class="control-group">
       <%= f.label :delivery_window, "Delivery Windows: ", class: "req control-label" %>
       <%= f.fields_for :delivery_windows do |fd| %>
         <%= render partial: 'delivery_windows/delivery_window', locals: { f: fd } %>

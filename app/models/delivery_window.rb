@@ -7,11 +7,11 @@ class DeliveryWindow < ActiveRecord::Base
 
   ## ATTRIBUTE PROTECTION
   
-  attr_accessible :weekday, :start_hour, :end_hour, :deliverable_id, :deliverable_type
+  attr_accessible :weekday, :start_hour, :end_hour, :deliverable_id, :deliverable_type, :transport_by
 
   ## ATTRIBUTE VALIDATION
 
-  validates :weekday, :start_hour, :end_hour, presence: true
+  validates :weekday, :start_hour, :end_hour, :transport_by, presence: true
 
   #########################################
 

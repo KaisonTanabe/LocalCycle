@@ -1,5 +1,6 @@
 <% if f.object.new_record? %>
   <div class="controls controls-row child-field" style="margin-bottom: 5px;">
+    <%= f.select :weekday, [["-- Please Type --",""],["Pickup", "pickup"],["Dropoff", "dropoff"],["Either", "either"]], {style: "width: 180px;"} %> &nbsp;
     <%= f.select :weekday, WEEKDAYS.map {|k,v| [v, k]}, {prompt: "-- Select Weekday --"}, {style: "width: 180px;"} %> &nbsp;
     <%= f.select :start_hour, NORMAL_HOURS.map {|k,v| [v, k]}, {prompt: "From..."}, {style: "width: 100px;"} %> to
     <%= f.select :end_hour, NORMAL_HOURS.map {|k,v| [v, k]}, {prompt: "To..."}, {style: "width: 100px;"} %>

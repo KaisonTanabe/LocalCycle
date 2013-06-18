@@ -25,7 +25,7 @@ class Agreement < ActiveRecord::Base
   attr_accessible :product_id, :name, :description, :producer_id, :buyer_id, :creator_id,
     :agreement_type, :start_date, :end_date,
     :selling_unit, :price, :locally_packaged, :frequency, :quantity,
-    :transport_by, :transport_instructions,
+    :transport_instructions,
     :images_attributes, :delivery_windows_attributes, :preferred_user_ids
 
   ## ATTRIBUTE VALIDATION

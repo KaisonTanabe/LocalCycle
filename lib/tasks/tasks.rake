@@ -9,6 +9,13 @@ task :seed_selling_units => :environment do
   end
 end
 
+desc "Add default transport_by"
+task :update_delivery_windows => :environment do
+  DeliveryWindow.all.each do |d|
+    d.update_attributes(transport_by: "either")
+  end
+end
+
 desc "EMAILING list of ineligible students to admins"
 task :seed_products => :environment do
   
