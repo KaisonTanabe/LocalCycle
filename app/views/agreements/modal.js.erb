@@ -35,5 +35,27 @@ $(loader).fadeToggle('fast', function() {
     $("#agreement-change-form-container #agreement_change_agreement_change_id").val($(this).attr("id"));
   });
 
+    $('form a.add_child').on('click', function() {
+	var assoc = $(this).attr('data-association');
+	var content = $('#' + assoc + '_fields_template').html();
+	var regexp = new RegExp('new_' + assoc, 'g');
+	var new_id = new Date().getTime();
+	content=content.replace(regexp, new_id+'');
+	$(this).parent().parent().before(content);
+	//inputPrompts();
+	return false;
+    });
+    // Remove fields for new object
+    $('form a.remove-new-child').on('click', function() {
+	$(this).parents('.child-field').remove();
+	return false;
+    });
+    $('a.remove-old-child').on('click', function() {
+	var hidden_destroy_field = $(this).parent().next('input.destroy-field');
+	hidden_destroy_field.val(1);
+	$(this).parents('.child-field').hide();
+	return false;
+    });
+
 });
 

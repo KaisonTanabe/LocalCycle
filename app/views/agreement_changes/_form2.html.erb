@@ -1,0 +1,72 @@
+<%= form_for [@agreement, @agreement_change], multipart: true, class: "form-horizontal" do |f| %>
+
+  <legend>Counter-Proposal</legend>
+
+  <%= hidden_field_tag "agreement_change[agreement_change_id]", "" %>
+
+  <div class="control-group">
+    <%= f.label :price, "Price Per Unit:", class: "control-label" %>
+    <div class="controls controls-row">
+      <div class="input-prepend">
+	<span class="add-on">$</span>
+	<%= f.text_field :price, value: @agreement.price, placeholder: "0.00", class: "span2" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :quantity, "Quantity:", class: "control-label" %>
+    <div class="controls controls-row">
+      <div class="input-append">
+	<%= f.text_field :quantity, value: @agreement.quantity, placeholder: "0", class: "span2" %>
+	<span class="add-on" id="quantity_add_on"><%= UNIT_TYPE[@agreement.selling_unit] %></span>
+      </div>
+    </div>
+  </div>
+
+<!--
+  <div class="control-group">
+    <%#= f.label :frequency, "Frequency:", class: "control-label" %>
+    <div class="controls controls-row">
+      <%#= f.select :frequency, FREQUENCIES.map {|u| [u.second, u.first]}, {selected: @agreement.frequency}, {class: "span3"} %>
+    </div>
+  </div>
+-->
+
+<% unless @agreement.agreement_changes.by_user(current_user.id).any? %>
+    <div class="control-group">
+      <%= f.label :delivery_window, "Delivery Windows: ", class: "req control-label" %>
+      <%= f.fields_for :delivery_windows do |fd| %>
+        <%= render partial: 'delivery_windows/delivery_window', locals: { f: fd } %>
+        <%= new_child_fields_template(f, :delivery_windows, {partial: "delivery_windows/delivery_window"})%>
+      <% end %>
+<!--
+      <div class="controls">
+	<span class="help-inline"><%= add_child_link "Add Window", :delivery_windows %></span>
+	<span class="help-block">Add common Delivery/Pickup windows for your organization.</span>
+      </div>
+-->
+    </div>
+<% end %>  
+
+  <div class="control-group">
+    <%= f.label :transport_instructions, "Delivery Preference:", class: "control-label" %>
+    <div class="controls controls-row">
+      <%= f.text_area :transport_instructions, rows: 3, class: "span3" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :reason, "Notes/Reasoning:", class: "control-label" %>
+    <div class="controls controls-row">
+      <%= f.text_area :reason, rows: 2, class: "span3" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls controls-row">
+      <%= f.submit 'Submit Counter-Proposal', class: "btn btn-primary" %>
+    </div>
+  </div>
+
+<% end %>

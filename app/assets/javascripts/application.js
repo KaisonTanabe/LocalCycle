@@ -107,7 +107,7 @@ jQuery(function($){
 	return false;
     });
     // Remove fields for existing object
-    $('form a.remove-old-child').on('click', function() {
+    $('a.remove-old-child').on('click', function() {
 	var hidden_destroy_field = $(this).parent().next('input.destroy-field');
 	hidden_destroy_field.val(1);
 	$(this).parents('.child-field').hide();

@@ -2,8 +2,6 @@
 
   <legend>Counter-Proposal</legend>
 
-  <%= render partial: 'partials/errors', locals: {obj: @agreement_change} %>
-
   <%= hidden_field_tag "agreement_change[agreement_change_id]", "" %>
 
   <div class="control-group">
@@ -28,9 +26,9 @@
 
 <!--
   <div class="control-group">
-    <%#= @agreement_change.label :frequency, "Frequency:", class: "control-label" %>
+    <%#= f.label :frequency, "Frequency:", class: "control-label" %>
     <div class="controls controls-row">
-      <%#= @agreement_change.select :frequency, FREQUENCIES.map {|u| [u.second, u.first]}, {selected: @agreement.frequency}, {class: "span3"} %>
+      <%#= f.select :frequency, FREQUENCIES.map {|u| [u.second, u.first]}, {selected: @agreement.frequency}, {class: "span3"} %>
     </div>
   </div>
 -->

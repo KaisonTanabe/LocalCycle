@@ -7,6 +7,9 @@ class AgreementChange < ActiveRecord::Base
   belongs_to :agreement_change
   belongs_to :user
 
+  has_many :delivery_windows, as: :deliverable, dependent: :destroy
+  accepts_nested_attributes_for :delivery_windows, allow_destroy: true, reject_if: proc { |attrs| attrs['weekday'].blank? or attrs['start_hour'].blank? or attrs['start_hour'].blank? }
+
   has_one :successor, class_name: "AgreementChange", foreign_key: "agreement_change_id"
 
   has_many :delivery_windows, as: :deliverable, dependent: :destroy
@@ -16,7 +19,7 @@ class AgreementChange < ActiveRecord::Base
   
   attr_accessible :price, :quantity, :frequency, :status,
     :agreement_id, :agreement_change_id, :user_id, :reason, 
-    :transport_instructions, :agree
+    :transport_instructions, :delivery_windows_attributes
 
   ## ATTRIBUTE VALIDATION
 

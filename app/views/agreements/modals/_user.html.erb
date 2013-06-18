@@ -6,5 +6,14 @@
 
 <div id="agreement-change-form-container">
   <% @agreement_change = AgreementChange.new %>
-  <%= render partial: "agreement_changes/form" %>
+  <%
+    if @agreement.delivery_windows.any?
+      @agreement.delivery_windows.each do |dw|
+        @agreement_change.delivery_windows.build(weekday: dw.weekday, start_hour: dw.start_hour, end_hour: dw.end_hour, transport_by: dw.transport_by)
+      end
+    else
+      @agreement_change.delivery_windows.build
+    end
+     %>
+  <%= render partial: "agreement_changes/form2" %>
 </div>

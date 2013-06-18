@@ -2,16 +2,25 @@
   <td><%= image_tag ac.user.pic(:thumb), class: "thumb", title: ac.user.name %></td>
   <td><%= ac.price.blank? ? "--" : number_to_currency(ac.price) %></td>
   <td><%= ac.quantity.blank? ? "--" : ac.quantity %></td>
-  <td><%= ac.transport_instructions.blank? ? "--" : ac.transport_instructions %></td>
+  <td>
+    <% if ac.delivery_windows.any? %>
+      <% ac.delivery_windows.each do |dw| %>
+        <%= dw.display %><br />
+      <% end %>
+    <% end %>
+    <% unless ac.transport_instructions.blank? %>
+      <%= ac.transport_instructions %>
+    <% end %>
+  </td>
   <td><%= ac.reason.blank? ? "--" : ac.reason %></td>
 </tr>
 <% if !ac.successor and (ac.user != current_user) and ac.pending? %>
 <tr>
   <td colspan="5">
     <div class="btn-group" id="approval-group">
-      <%= link_to raw('<i class="icon-ok icon-white"></i> Agreed!'), agreement_change_path(@agreement, ac, "agreement_change[status]" => "agreed"), method: :put, title: "Approve this amendment!", confirm: "Are you sure? You will be obligated to fulfill your part of the contract with " + ac.user.name + ".", class: "btn btn-success" %>
+      <%= link_to raw('<i class="icon-ok icon-white"></i> Agreed!'), agreement_agreement_change_path(@agreement, ac, "agreement_change[status]" => "agreed"), method: :put, title: "Approve this amendment!", confirm: "Are you sure? You will be obligated to fulfill your part of the contract with " + ac.user.name + ".", class: "btn btn-success" %>
       <%= link_to raw('<i class="icon-edit icon-white"></i> Propose Amendments'), "#", title: "Propose further amendments with " + ac.user.name + ".", id: ac.id, class: "btn btn-primary amendment-btn" %> 
-      <%= link_to raw('<i class="icon-white icon-remove"></i> End Negotiation'), agreement_change_path(@agreement, ac, "agreement_change[status]" => "terminated"), method: :put, title: "End negotiation with " + ac.user.name + ". Common courtesy if you don't believe you will reach an agreement", class: "btn btn-danger" %>
+      <%= link_to raw('<i class="icon-white icon-remove"></i> End Negotiation'), agreement_agreement_change_path(@agreement, ac, "agreement_change[status]" => "terminated"), method: :put, title: "End negotiation with " + ac.user.name + ". Common courtesy if you don't believe you will reach an agreement", class: "btn btn-danger" %>
     </div>
   </td>
 </tr>
