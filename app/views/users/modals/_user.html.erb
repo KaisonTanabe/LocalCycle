@@ -1,0 +1,16 @@
+<%= image_tag u.pic.url(:medium), class: "medium" %>
+
+<p class="muted"><% if u.size %><span class="label label-warning"><%= ACREAGE[u.size] %></span><% end %> Located <%= pluralize(u.distance_from(current_user.latlong), "mile") %> away</p>
+
+<p>
+  <% if u.growing_methods %>
+    <span class="label label-success"><i class="icon-white icon-certificate"></i> <%= GROWING_METHODS[u.growing_methods] %></span>
+  <% end %>
+  <% u.certifications.each do |c| %>
+    <span class="label label-info"><i class="icon-white icon-certificate"></i><%= c.name %></span>
+  <% end %><br />
+</p>
+
+<p><%= u.description %></p>
+
+<hr class="clear" />

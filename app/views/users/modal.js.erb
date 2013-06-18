@@ -1,0 +1,12 @@
+var title       =   '.modal-title',
+    loader      =   '.ajax-loader',
+    content     =   '.modal-body-content',
+    toolbar     =   'div.modal-footer';
+    modal       =   '#ajax-modal'
+
+$(loader).fadeToggle('fast', function() {
+  $(title).html("<%= @user.name %>");
+  $(content).show().html("<%= j render partial: 'users/modals/user', locals: {u: @user} %>");
+  $(modal).modal();
+});
+
