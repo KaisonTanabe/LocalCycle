@@ -89,7 +89,7 @@ class AgreementsController < ApplicationController
 
     if current_user.delivery_windows.any? 
       current_user.delivery_windows.each do |dw|
-        @agreement.delivery_windows.build(weekday: dw.weekday, start_hour: dw.start_hour, end_hour: dw.end_hour)
+        @agreement.delivery_windows.build(weekday: dw.weekday, start_hour: dw.start_hour, end_hour: dw.end_hour, transport_by: dw.transport_by)
       end
     else
       @agreement.delivery_windows.build

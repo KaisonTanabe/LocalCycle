@@ -24,13 +24,6 @@
       <td>
 	<ul>
 	  <li>
-	    <% if @agreement.transport_by == "producer" %>
-	    <strong>Producer delivers:</strong><br />
-	    <% elsif @agreement.transport_by == "buyer" %>
-	    <strong>Buyer picks up:</strong><br />
-	    <% else %>
-	    <strong>No deliverer preference:</strong><br />
-	    <% end %>
 	    <% if @agreement.delivery_windows.any? %>
 	    <% @agreement.delivery_windows.each do |dw| %>
             <%= dw.display %><br />

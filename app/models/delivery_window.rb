@@ -13,6 +13,7 @@ class DeliveryWindow < ActiveRecord::Base
 
   validates :weekday, :start_hour, :end_hour, :transport_by, presence: true
 
+
   #########################################
 
 
@@ -49,7 +50,7 @@ class DeliveryWindow < ActiveRecord::Base
   ############ PUBLIC METHODS #############
 
   def display
-    WEEKDAYS[weekday] + " from " + NORMAL_HOURS[start_hour] + " to " + NORMAL_HOURS[end_hour]
+    transport_by.capitalize + ": " + WEEKDAYS[weekday] + " from " + NORMAL_HOURS[start_hour] + " to " + NORMAL_HOURS[end_hour]
   end
 
   ############ PRIVATE METHODS ############
