@@ -33,6 +33,13 @@ jQuery(function($){
 	$.rails.handleRemote( $(this) );
     })
 
+    $('.get-modal').on('click', function(e) {
+	e.preventDefault();
+	e.stopPropagation();
+	$('body').modalmanager('loading');
+	$.rails.handleRemote( $(this) );
+    })
+
     $('a.fat-bar, a.producer-close').on('click', function(e) {
 	$(this).parent().parent().toggleClass("glowing");
 	$($(this).attr("data-target")).toggleClass("collapsed");
@@ -211,7 +218,7 @@ jQuery(function($){
     });
     function populateBrowsingFields() {
 	var productNameSelectID = $("#agreement_name");
-	if (typeof products !== undefined) {
+	if (typeof products !== 'undefined') {
 	    var product = products[$('#agreement_product_id').val()];
 	    if (product) {
 		var subcategory = categories[product["category_id"]];

@@ -1,7 +1,7 @@
 <% if a.end_date and a.end_date.year > a.start_date.year %>
   <a class="bar clickable <%= a.bar_status(current_user.id) %>" style="<%= a.start_bar_margins %>" 
      href="agreements/<%= a.id %>/modal"
-     data-target="#ajax-modal" data-toggle="modal" data-placement="top" data-html="true" 
+     data-target="#ajax-modal" data-toggle="modal" data-placement="top" data-html="true"
      data-original-title="<%= a.user_names %>" 
      data-content="<strong><% if a.is_preferred(current_user) %><span class='label label-warning pull-right'><i class='icon-star icon-white' title='You are a preferred partner'></i></span><% end %><%= a.name %></strong><br /><strong>Price:</strong> <%= number_to_currency(a.price) %> / <span class='label label-info'><%= a.selling_unit %></span><br /><strong>Amount:</strong> <%= a.quantity %> <span class='label label-info'><%= a.selling_unit.pluralize %></span> | <%= a.frequency %><br /><strong>Duration:</strong> <%= a.duration %><br /><br /><small>Click bar for contract details...</small>" title="<%= a.user_names %>"></a>
   <a class="bar clickable <%= a.bar_status(current_user.id) %>" style="<%= a.end_bar_margins %> margin-top: -10px;" 

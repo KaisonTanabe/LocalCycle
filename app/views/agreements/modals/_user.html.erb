@@ -1,17 +1,6 @@
 <% p = @agreement.creator %>
 
-<p class="muted">Located <%= pluralize(p.distance_from(current_user.latlong), "mile") %> away</p>
-
-<%= image_tag p.pic.url(:medium), class: "medium" %>
-<p>
-  <% if p.growing_methods %>
-    <span class="label label-success"><i class="icon-white icon-certificate"></i> <%= GROWING_METHODS[p.growing_methods] %></span>
-  <% end %>
-  <% p.certifications.each do |c| %>
-    <span class="label label-info"><i class="icon-white icon-certificate"></i><%= c.name %></span>
-  <% end %>
-</p>
-<p><%= p.description %> <a href="#">Read more &raquo;</a></p>
+<%= render partial: "users/modals/user", locals: {u: p} %>
 
 <%= render partial: "agreements/modals/details", locals: {agreement: @agreement} %>
 

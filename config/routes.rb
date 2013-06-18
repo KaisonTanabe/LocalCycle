@@ -21,7 +21,7 @@ LOCALCYCLE::Application.routes.draw do
 #  resources :buyer_profiles, only: ["new","create","show"]
 #  resources :producer_profiles, only: ["new","create","show"]
 
-  devise_for :users, path_prefix: "d", path_names: { sign_in: 'login', sign_up: 'register' }, 
+  devise_for :users, path_prefix: "d", path_names: { sign_in: 'login', sign_up: 'register' },
     controllers: {confirmations: 'confirmations', sessions: 'sessions', registrations: 'registrations'}
 
   devise_scope :user do
@@ -32,6 +32,7 @@ LOCALCYCLE::Application.routes.draw do
 
   resources :users do
     get 'prompt', :on => :member
+    get 'modal', :on => :member
   end
 
   # Temporary model to collect email addresses on BETA page

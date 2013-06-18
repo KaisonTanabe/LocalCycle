@@ -14,6 +14,7 @@ class Ability
       can :manage, AgreementChange
       can [:index, :marketplace, :pic], Product
       can :manage, User, id: user.id
+      can :modal, User
     end
 
     if user and user.producer?
@@ -21,6 +22,7 @@ class Ability
       can :manage, AgreementChange
       can [:index, :marketplace, :pic], Product
       can :manage, User, id: user.id
+      can :modal, User
     end
 
   end

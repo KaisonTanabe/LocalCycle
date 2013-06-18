@@ -78,6 +78,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def modal
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
 
 
   def export 

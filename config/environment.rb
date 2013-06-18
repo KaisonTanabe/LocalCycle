@@ -32,6 +32,11 @@ SIZES = {
   1 => "Medium",
   2 => "Large"
 }
+ACREAGE = {
+  0 => "Small: 0-10",
+  1 => "Medium: 10-50",
+  2 => "Large: 50+"
+}
 DISTANCES = {
   20 => "20 miles",
   50 => "50 miles",
