@@ -33,6 +33,7 @@ class AgreementChangesController < ApplicationController
 
     one_id, two_id = params[:user_ids].split(':')
     @agreement_changes = @agreement.agreement_changes.where("user_id = ? OR user_id = ?", one_id, two_id)
+    @agreement_changes.delete_if{|a| a.user_id == a.agreement.creator_id and a.agreement_change.user_id.to_s != two_id}
 
     respond_to do |format|
       format.html 

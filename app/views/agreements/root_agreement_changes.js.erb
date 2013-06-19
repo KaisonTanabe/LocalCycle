@@ -1,0 +1,13 @@
+$("#agreement-changes-container").html('<%= j render partial: "agreements/modals/root_agreement_changes" %>').hide().fadeIn()
+
+$(".agreement-changes-header td").html("Responses below... <small>(click row to expand dialog)</small>")
+
+  $('tr.partner-selector').on('click', function(e) {
+    $.ajax({
+      type: "POST",
+      url: "agreements/<%= @agreement.id.to_s %>/agreement_changes/chain.js",
+      data: {user_ids: $(this).data("users")},
+      success: function() {}
+    });
+  });
+

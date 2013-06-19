@@ -1,11 +1,11 @@
 <h4><%= image_tag @agreement.product.best_pic_url(:thumb), class: "thumb" %> <%= @agreement.name %><br />
 <small><strong>Duration:</strong> <%= @agreement.duration %> | <%= FREQUENCIES[@agreement.frequency] %></small></h4>
 
-<% if agreement.owned_by(current_user) %>
-<%= select_tag "", options_for_select(@agreement.agreement_changes.by_not_user(current_user.id).pluck(:user_id).map {|u| [User.find(u).name, "#{u}:#{@agreement.creator.id}"]}), {prompt: "-- Potential Offers --", id: "partner-selector"} %>
-<% end %>
+<%# if agreement.owned_by(current_user) %>
+<%#= select_tag "", options_for_select(@agreement.agreement_changes.by_not_user(current_user.id).pluck(:user_id).map {|u| [User.find(u).name, "#{u}:#{@agreement.creator.id}"]}), {prompt: "-- Potential Offers --", id: "partner-selector"} %>
+<%# end %>
 
-<table class="table table-hover">
+<table class="table">
   <thead>
     <tr>
       <th></th>
@@ -17,7 +17,7 @@
   </thead>
   <tbody>
     <tr>
-      <td><%= image_tag @agreement.creator.pic(:thumb), class: "thumb" %></td>
+      <td class="centered"><strong>Original<br />Agreement</strong></td>
       <td><%= number_to_currency(@agreement.price) %></td>
       <td><%= @agreement.quantity %></td>
       <td>
@@ -38,13 +38,24 @@
       </td>
       <td></td>
     </tr>
+    <tr class="agreement-changes-header">
+      <td colspan="5">
+	<% if @agreement.owned_by(current_user) %>
+	  Responses below... <small>(click row to expand dialog)</small>
+	<% else %>
+	  <% if @agreement.agreement_changes.by_user(current_user.id).any? %>
+	    Counter-Proposal dialog
+	  <% end %>
+	<% end %>
+      </td>
+    </tr>
   </tbody>
   <tbody id="agreement-changes-container">
     <% if !@agreement.owned_by(current_user) %>
       <% acs = @agreement.agreement_changes.where("user_id = ? OR user_id = ?", current_user.id, @agreement.creator_id) %>
       <% if acs.any? %>
         <% acs.each do |ac| %>
-	  <%= render partial: "agreement_changes/agreement_change", locals: {ac: ac} %>
+	  <%= render partial: "agreement_changes/agreement_change", locals: {ac: ac, collapsed: ""} %>
 	<% end %>
       <% else %>
         <tr>
@@ -56,6 +67,8 @@
 	  </td>
 	</tr>
       <% end %>
+    <% else %>
+      <%= render partial: "agreements/modals/root_agreement_changes" %>
     <% end %>
   </tbody>
 </table>

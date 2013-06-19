@@ -48,6 +48,7 @@ class AgreementChange < ActiveRecord::Base
 
   default_scope order('created_at ASC')
 
+  scope :roots, where(agreement_change_id: 0)
   scope :by_agreed, where(status: "agreed")
   scope :by_terminated, where(status: "terminated")
   scope :by_user, lambda {|id| where(user_id: id)}
@@ -63,9 +64,18 @@ class AgreementChange < ActiveRecord::Base
 
   ############ PUBLIC METHODS #############
 
-  def row_status
-    if !successor
+  def is_leaf?
+    !successor
+  end
+
+  def is_root?
+    !agreement_change
+  end
+  
+  def row_status(cid)
+    if is_leaf?
       return "success" if status == "agreed"
+      return "info" if status == "pending" and cid == user_id
       return "warning" if status == "pending"
       return "error" if status == "terminated"
     end

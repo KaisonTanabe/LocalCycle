@@ -1,0 +1,5 @@
+<% if @agreement.agreement_changes.any? %>
+  <% @agreement.agreement_changes.each do |ac| %>
+    <%= render partial: "agreement_changes/agreement_change", locals: {ac: ac, collapsed: "collapsed"} if ac.is_leaf? %>
+  <% end %>
+<% end %>

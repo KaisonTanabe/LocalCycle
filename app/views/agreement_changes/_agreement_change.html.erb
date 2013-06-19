@@ -1,4 +1,4 @@
-<tr class="<%= ac.row_status %>">
+<tr class="<%= ac.row_status(current_user.id) %> <%= collapsed.blank? ? '' : 'partner-selector' %>" data-users="<%= "#{@agreement.creator_id}:#{ac.user_id == @agreement.creator_id ? ac.agreement_change.user_id : ac.user_id}" %>">
   <td><%= image_tag ac.user.pic(:thumb), class: "thumb", title: ac.user.name %></td>
   <td><%= ac.price.blank? ? "--" : number_to_currency(ac.price) %></td>
   <td><%= ac.quantity.blank? ? "--" : ac.quantity %></td>
@@ -15,7 +15,7 @@
   <td><%= ac.reason.blank? ? "--" : ac.reason %></td>
 </tr>
 <% if !ac.successor and (ac.user != current_user) and ac.pending? %>
-<tr>
+<tr class="<%= collapsed %>">
   <td colspan="5">
     <div class="btn-group" id="approval-group">
       <%= link_to raw('<i class="icon-ok icon-white"></i> Agreed!'), agreement_agreement_change_path(@agreement, ac, "agreement_change[status]" => "agreed"), method: :put, title: "Approve this amendment!", confirm: "Are you sure? You will be obligated to fulfill your part of the contract with " + ac.user.name + ".", class: "btn btn-success" %>

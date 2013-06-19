@@ -83,6 +83,13 @@ class AgreementsController < ApplicationController
     end
   end
 
+  def root_agreement_changes
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def new
     @agreement.agreement_type = params[:agreement_type] unless params[:agreement_type].nil?
     @image = @agreement.images.build

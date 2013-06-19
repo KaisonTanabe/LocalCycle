@@ -9,6 +9,7 @@ LOCALCYCLE::Application.routes.draw do
 
   resources :agreements do
     get 'modal', :on => :member
+    get 'root_agreement_changes', :on => :member
     put 'accept', :on => :member
     get 'marketplace', :on => :collection
     get 'table', :on => :collection

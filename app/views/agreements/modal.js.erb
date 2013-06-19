@@ -21,11 +21,11 @@ $(loader).fadeToggle('fast', function() {
 
   $(modal).modal();
 
-  $('#partner-selector').on('change', function(e) {
+  $('tr.partner-selector').on('click', function(e) {
     $.ajax({
       type: "POST",
       url: "agreements/<%= @agreement.id.to_s %>/agreement_changes/chain.js",
-      data: {user_ids: $(this).val()},
+      data: {user_ids: $(this).data("users")},
       success: function() {}
     });
   });
@@ -45,6 +45,7 @@ $(loader).fadeToggle('fast', function() {
 	//inputPrompts();
 	return false;
     });
+
     // Remove fields for new object
     $('form a.remove-new-child').on('click', function() {
 	$(this).parents('.child-field').remove();

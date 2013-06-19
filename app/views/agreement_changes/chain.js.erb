@@ -1,5 +1,16 @@
-$("#agreement-changes-container").html('<% @agreement_changes.each do |ac| %><%= j render partial: "agreement_changes/agreement_change", locals: {ac: ac} %><% end %>')
+$("#agreement-changes-container").html('<% @agreement_changes.each do |ac| %><%= j render partial: "agreement_changes/agreement_change", locals: {ac: ac, collapsed: ""} %><% end %>').hide().fadeIn()
+
+$(".agreement-changes-header td").html("<%=j 'Response Chain...' %> <a class='btn btn-inverse btn-small pull-right' id='root-agreement-changes'>Back to all</a>")
+
 $('a.amendment-btn').on('click', function(e) {
   $("#agreement-change-form-container").show();
   $("#agreement-change-form-container #agreement_change_agreement_change_id").val($(this).attr("id"));
 });
+
+  $('a#root-agreement-changes').on('click', function(e) {
+    $.ajax({
+      type: "GET",
+      url: "agreements/<%= @agreement.id.to_s %>/root_agreement_changes.js",
+      success: function() {}
+    });
+  });
