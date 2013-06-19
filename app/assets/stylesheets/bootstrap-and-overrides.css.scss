@@ -36,6 +36,14 @@ tr #approval-group {
     display: block;
 }
 
+h5 img.thumb {
+   float: none;
+}
+.glowing h5 img.thumb {
+   float: left;
+   margin-top: 2px;
+}
+
 .collapsed {
     display: none;
 }
@@ -162,7 +170,6 @@ div.products {
 }
 #agreementTable h5 { 
     margin-right: -100px;
-    margin-top: -2px;
 }
 
 /* =============================================================================
@@ -437,7 +444,7 @@ header.navbar {
     text-indent: -9999px;
     &.fat-bar {
 	cursor: pointer;
-	margin-top: 10px;
+	margin-top: 6px;
 	height: 10px;
 	&.faded {
 	    opacity: 0.25;

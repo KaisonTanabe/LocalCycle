@@ -5,12 +5,8 @@
 
 <tr>
   <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
-    <%= image_tag p.best_pic_url(:thumb), class: "thumb" %>    
-    <h5><%= link_to p.name, "#" %>
-      <% if false %>
-      <small><%= pluralize(agreements.count, "producer") %></small>
-      <% end %>
-      <br />
+    <h5><%= image_tag p.best_pic_url(:thumb), class: "thumb" %>
+      <%= p.name %><br />
       <%= link_to "Post Demand to All Producers", new_agreement_path(product_id: p.id), class: "btn btn-mini btn-primary collapse#{p.id} collapsed" %>
     </h5>
     <div class="collapse<%= p.id %> collapsed producer-col-container">
