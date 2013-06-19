@@ -1,5 +1,4 @@
 <tr class="<%= ac.row_status(current_user.id) %> <%= collapsed.blank? ? '' : 'partner-selector' %>" data-users="<%= "#{@agreement.creator_id}:#{ac.user_id == @agreement.creator_id ? ac.agreement_change.user_id : ac.user_id}" %>">
-  <td><%= image_tag ac.user.pic(:thumb), class: "thumb", title: ac.user.name %></td>
   <td><%= ac.price.blank? ? "--" : number_to_currency(ac.price) %></td>
   <td><%= ac.quantity.blank? ? "--" : ac.quantity %></td>
   <td>
@@ -13,6 +12,7 @@
     <% end %>
   </td>
   <td><%= ac.reason.blank? ? "--" : ac.reason %></td>
+  <td><%= image_tag ac.user.pic(:thumb), class: "thumb", title: ac.user.name %></td>
 </tr>
 <% if !ac.successor and (ac.user != current_user) and ac.pending? %>
 <tr class="<%= collapsed %>">

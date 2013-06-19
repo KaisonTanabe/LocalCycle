@@ -8,16 +8,15 @@
 <table class="table">
   <thead>
     <tr>
-      <th></th>
       <th style="min-width: 100px;">Price / <span class="label label-info"><%= @agreement.selling_unit %></span></th>
       <th style="min-width: 100px;">Qty (# <span class="label label-info"><%= @agreement.selling_unit.pluralize %></span>)</th>
       <th>Delivery Windows</th>
       <th>Comments/Reasons</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td class="centered"><strong>Original<br />Agreement</strong></td>
       <td><%= number_to_currency(@agreement.price) %></td>
       <td><%= @agreement.quantity %></td>
       <td>
@@ -37,6 +36,7 @@
 	</ul>
       </td>
       <td></td>
+      <td class="centered"><strong>Original<br />Agreement</strong></td>
     </tr>
     <tr class="agreement-changes-header">
       <td colspan="5">

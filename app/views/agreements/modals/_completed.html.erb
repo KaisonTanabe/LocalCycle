@@ -2,28 +2,12 @@
 
 <% b = @agreement.buyer %>
 
-<span class="muted">Located <%= pluralize(b.distance_from(current_user.latlong), "mile") %> away</span>
-
-<%= image_tag b.pic.url(:medium), class: "medium" %>
-<p><%= b.description %> <a href="#">Read more &raquo;</a></p>
-
-<hr style="clear: both;" />
+<%= render partial: "users/modals/user", locals: {u: b} %>
 
 <h3>Producer</h3>
 
 <% p = @agreement.producer %>
 
-<span class="muted">Located <%= pluralize(p.distance_from(current_user.latlong), "mile") %> away</span>
-
-<%= image_tag p.pic.url(:medium), class: "medium" %>
-<p>
-  <span class="label label-success"><i class="icon-white icon-certificate"></i> <%= GROWING_METHODS[p.growing_methods] %></span>
-  <% p.certifications.each do |c| %>
-  <span class="label label-info"><i class="icon-white icon-certificate"></i><%= c.name %></span>
-  <% end %>
-</p>
-<p><%= p.description %> <a href="#">Read more &raquo;</a></p>
-
-<% p = @agreement.producer %>
+<%= render partial: "users/modals/user", locals: {u: p} %>
 
 <%= render partial: "agreements/modals/details", locals: {agreement: @agreement} %>
