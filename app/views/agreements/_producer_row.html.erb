@@ -1,4 +1,4 @@
-<% producers = User.by_producer.order_best_available %>
+<% producers = User.by_producer.order_best_available(p.id) %>
 <% producers = producers.by_size(params[:size]) unless params[:size].blank? %>
 <% producers = producers.by_growing_methods(params[:growing_methods]) unless params[:growing_methods].blank? %>
 <% producers = producers.near(origin: [current_user.lat,current_user.lng], within: params[:distance]) unless params[:distance].blank? %>
@@ -11,15 +11,20 @@
     </h5>
     <div class="collapse<%= p.id %> collapsed producer-col-container">
     <% producers.each do |profile| %>
+      <% if profile.products.include?(p) %>
       <div class="producer-col" data-original-title="<%= profile.name %>">
 	<%= image_tag profile.pic.url(:thumb), class: "thumb" %>
 	<a href="users/<%= profile.id %>/modal" class="get-modal" data-target="#ajax-modal" data-toggle="modal" data-html="true"><%= profile.name %></a>
-<!--
-	<span class="label label-info" title="Producer size classification: <%= SIZES[profile.size].upcase %>"><%= profile.display_size %></span><br /> 
-	<span class="label label-success"><i class="icon-white icon-certificate"></i> <%= GROWING_METHODS[profile.growing_methods] %></span>
-	<span class="muted">(<%= profile.distance_from(current_user.latlong) %> mi)</span>
--->
       </div>
+      <% end %>
+    <% end %>
+    <% producers.each do |profile| %>
+      <% if !profile.products.include?(p) %>
+      <div class="producer-col" data-original-title="<%= profile.name %>">
+	<%= image_tag profile.pic.url(:thumb), class: "thumb" %>
+	<a href="users/<%= profile.id %>/modal" class="get-modal" data-target="#ajax-modal" data-toggle="modal" data-html="true"><%= profile.name %></a>
+      </div>
+      <% end %>
     <% end %>
     </div>
   </td>
@@ -33,6 +38,7 @@
     <% end %>
     <div class="collapse<%= p.id %> collapsed producer-col-container">
     <% producers.each do |profile| %>
+      <% if profile.products.include?(p) %>
       <div class="producer-col bar-col">
 	<% if profile.agreements.where(product_id: p.id).any? %>
           <% profile.agreements.where(product_id: p.id).each do |a| %>
@@ -42,6 +48,20 @@
           <%= link_to "Propose Agreement to this Producer", new_agreement_path(product_id: p.id, preferred_user_id: profile.id), class: "btn btn-mini btn-primary", style: "margin-top: 12px;" %>
         <% end %>
       </div>
+      <% end %>
+    <% end %>
+    <% producers.each do |profile| %>
+      <% if !profile.products.include?(p) %>
+      <div class="producer-col bar-col">
+	<% if profile.agreements.where(product_id: p.id).any? %>
+          <% profile.agreements.where(product_id: p.id).each do |a| %>
+	    <%= render partial: "bar", locals: {a: a} %>
+	  <% end %>
+        <% else %>
+          <%= link_to "Propose Agreement to this Producer", new_agreement_path(product_id: p.id, preferred_user_id: profile.id), class: "btn btn-mini btn-primary", style: "margin-top: 12px;" %>
+        <% end %>
+      </div>
+      <% end %>
     <% end %>
     </div>
   </td>
