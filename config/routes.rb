@@ -45,8 +45,9 @@ LOCALCYCLE::Application.routes.draw do
   root :to => 'public#index'
 
   # Public pages
-  match "faq" => 'public#faq'
-  match "about" => 'public#about'
+  match "for-farmers" => 'public#for_farmers'
+  match "for-buyers" => 'public#for_buyers'
+  match "about-us" => 'public#about_us'
   match "contact" => 'public#contact'
   match "test" => 'public#test'
   match "d/users" => 'public#index'

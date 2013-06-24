@@ -6,10 +6,13 @@ class PublicController < ApplicationController
     redirect_to agreements_path if user_signed_in?
   end
 
-  def faq
+  def for_farmers
   end
 
-  def about
+  def for_buyers
+  end
+
+  def about_us
   end
 
   def contact
