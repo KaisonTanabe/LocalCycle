@@ -58,6 +58,9 @@ class UsersController < ApplicationController
       params[:user][:certification_ids] ||= []
     end
 
+    params[:user][:category_ids] ||= []
+    params[:user][:product_ids] ||= []
+
     respond_to do |format|
       if @user.update_attributes(params[:user])
         format.html { redirect_to current_user.admin? ? users_path : agreements_path, notice: @user.role.capitalize + ' was successfully updated.' }

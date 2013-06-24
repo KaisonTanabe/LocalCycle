@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130618023142) do
+ActiveRecord::Schema.define(:version => 20130624181113) do
 
   create_table "agreement_changes", :force => true do |t|
     t.integer  "agreement_id",                                  :null => false
@@ -82,6 +82,14 @@ ActiveRecord::Schema.define(:version => 20130618023142) do
   end
 
   add_index "categories", ["parent_id"], :name => "index_categories_on_parent_id"
+
+  create_table "categories_users", :force => true do |t|
+    t.integer "user_id",     :null => false
+    t.integer "category_id", :null => false
+  end
+
+  add_index "categories_users", ["category_id"], :name => "index_categories_users_on_category_id"
+  add_index "categories_users", ["user_id"], :name => "index_categories_users_on_user_id"
 
   create_table "category_hierarchies", :id => false, :force => true do |t|
     t.integer "ancestor_id",   :null => false
@@ -174,6 +182,14 @@ ActiveRecord::Schema.define(:version => 20130618023142) do
   add_index "products_selling_units", ["product_id"], :name => "index_products_selling_units_on_product_id"
   add_index "products_selling_units", ["selling_unit_id"], :name => "index_products_selling_units_on_selling_unit_id"
 
+  create_table "products_users", :force => true do |t|
+    t.integer "user_id",    :null => false
+    t.integer "product_id", :null => false
+  end
+
+  add_index "products_users", ["product_id"], :name => "index_products_users_on_product_id"
+  add_index "products_users", ["user_id"], :name => "index_products_users_on_user_id"
+
   create_table "selling_units", :force => true do |t|
     t.string   "name",       :null => false
     t.string   "short_name", :null => false
@@ -183,6 +199,26 @@ ActiveRecord::Schema.define(:version => 20130618023142) do
 
   add_index "selling_units", ["name"], :name => "index_selling_units_on_name", :unique => true
   add_index "selling_units", ["short_name"], :name => "index_selling_units_on_short_name", :unique => true
+
+  create_table "user_categories", :force => true do |t|
+    t.integer  "user_id",     :null => false
+    t.integer  "category_id", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "user_categories", ["category_id"], :name => "index_user_categories_on_category_id"
+  add_index "user_categories", ["user_id"], :name => "index_user_categories_on_user_id"
+
+  create_table "user_products", :force => true do |t|
+    t.integer  "user_id",    :null => false
+    t.integer  "product_id", :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "user_products", ["product_id"], :name => "index_user_products_on_product_id"
+  add_index "user_products", ["user_id"], :name => "index_user_products_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "",    :null => false
@@ -242,5 +278,25 @@ ActiveRecord::Schema.define(:version => 20130618023142) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
+
+  create_table "users_categories", :force => true do |t|
+    t.integer  "user_id",     :null => false
+    t.integer  "category_id", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "users_categories", ["category_id"], :name => "index_users_categories_on_category_id"
+  add_index "users_categories", ["user_id"], :name => "index_users_categories_on_user_id"
+
+  create_table "users_products", :force => true do |t|
+    t.integer  "user_id",    :null => false
+    t.integer  "product_id", :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "users_products", ["product_id"], :name => "index_users_products_on_product_id"
+  add_index "users_products", ["user_id"], :name => "index_users_products_on_user_id"
 
 end

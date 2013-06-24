@@ -22,7 +22,7 @@
   <div class="control-group">
     <%= f.label :pin, "Role: ", class: "req control-label" %>
     <div class="controls controls-row">
-      <%= f.select :role, ROLES, class: "span4" %>
+      <%= f.select :role, ROLES.map {|r| [r.second, r.first]}, class: "span4" %>
     </div>
   </div>
   
@@ -38,9 +38,12 @@
 
   <% if @user.buyer? %>
     <%= render partial: 'users/buyer', locals: {f: f} %>
+    <%= render partial: 'users/product_selection', locals: {f: f} %>  
   <% elsif @user.producer? %>
     <%= render partial: 'users/producer', locals: {f: f} %>
+    <%= render partial: 'users/product_selection', locals: {f: f} %>  
   <% end %>
+
   
   <%= render partial: 'partials/submit', locals: {f: f, text: 'User'} %>
 

@@ -48,6 +48,15 @@ h5 img.thumb {
     display: none;
 }
 
+#product_selection {
+    .products, .categories, .roots {
+        margin: 0 0 0 50px;
+        .checkbox {
+            padding-top: 0;
+        }
+    }
+}
+
 /**
 tr #approval-group {
     position: absolute;

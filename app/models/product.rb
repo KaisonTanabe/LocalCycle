@@ -3,6 +3,7 @@ class Product < ActiveRecord::Base
   ############# CONFIGURATION #############
 
   ## SETUP ASSOCIATIONS
+  has_and_belongs_to_many :users
 
   belongs_to :category
   has_attached_file :pic, styles: IMAGE_STYLES, default_url: DEFAULT_PAPERCLIP_IMAGE

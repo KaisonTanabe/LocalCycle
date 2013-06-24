@@ -1,0 +1,23 @@
+<legend>Product Selection</legend>
+<p><span class="label label-info">Optional:</span> Checking boxes next to all of the categories/products you <% if @user.producer? %>are capable and willing to produce<% else %>are interested in<% end %> will prioritize your organization for potential agreements for those items.</p>
+<div id="product_selection" class="row">
+  <div class="span12">
+    <div class="control-group">
+      <% Category.roots.each do |r| %>
+      <div class="controls control-row roots">
+        <label class="checkbox"><%= check_box_tag "user[category_ids][]", r.id, (!f.object.new_record? and @user.categories.include?(r)), class: "root_box" %><%= r.name %></label>
+        <% r.children.each do |c| %>
+        <div class="controls control-row categories" style="display:none;">
+          <label class="checkbox"><%= check_box_tag "user[category_ids][]", c.id, (!f.object.new_record? and @user.categories.include?(c)), class: "category_box" %><%= c.name %></label>
+          <% c.products.each do |p| %>
+          <div class="controls control-row products" style="display:none;">
+            <label class="checkbox"><%= check_box_tag "user[product_ids][]", p.id, (!f.object.new_record? and @user.products.include?(p)), class: "product_box" %><%= p.name %></label>
+          </div>
+          <% end %>
+        </div>
+        <% end %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

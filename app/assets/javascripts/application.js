@@ -196,6 +196,15 @@ jQuery(function($){
     $("#specific_certs input[type='radio']").on("change", function() {toggleCerts()}); // Show currently selected
     toggleCerts();
 
+    function toggleProducts() {
+	$("#product_selection input.root_box:checked").parent().siblings(".categories").show();
+	$("#product_selection input.root_box:not(:checked)").parent().siblings(".categories").hide();
+	$("#product_selection input.category_box:checked").parent().siblings(".products").show();
+	$("#product_selection input.category_box:not(:checked)").parent().siblings(".products").hide();
+    }
+    $("#product_selection input[type='checkbox']").on("change", function() {toggleProducts()});
+    toggleProducts();
+
     
     /** AGREEMENT FORM **/
     function resetSelect(elem, data) {

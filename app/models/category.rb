@@ -3,10 +3,11 @@ class Category < ActiveRecord::Base
   ############# CONFIGURATION #############
 
   acts_as_tree
-  has_many :products
 
   ## SETUP ASSOCIATIONS
+  has_and_belongs_to_many :users
 
+  has_many :products
 
   ## ATTRIBUTE PROTECTION
 

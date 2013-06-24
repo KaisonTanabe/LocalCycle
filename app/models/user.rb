@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
   has_and_belongs_to_many :certifications
+  has_and_belongs_to_many :products
+  has_and_belongs_to_many :categories
 
   has_many :delivery_windows, as: :deliverable, dependent: :destroy
   accepts_nested_attributes_for :delivery_windows, allow_destroy: true, reject_if: proc { |attrs| attrs['weekday'].blank? or attrs['start_hour'].blank? or attrs['start_hour'].blank? or attrs['transport_by'].blank? }
@@ -29,7 +31,7 @@ class User < ActiveRecord::Base
     :description, :website, :twitter, :facebook, :pic, 
     :certification_ids, :text_updates, :complete,
     :has_eggs, :has_dairy, :has_livestock, :has_pantry, 
-    :custom_growing_methods,
+    :custom_growing_methods, :product_ids, :category_ids,
     :delivery_windows_attributes, :size
 
 
