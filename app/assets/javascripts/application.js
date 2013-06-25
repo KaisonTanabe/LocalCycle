@@ -41,7 +41,7 @@ jQuery(function($){
     })
 
     $('.fat-bar, a.producer-close').on('click', function(e) {
-	$(this).parent().parent().toggleClass("glowing");
+	$(this).parent().parent().parent().toggleClass("glowing");
 	$($(this).attr("data-target")).toggleClass("collapsed");
 	$(this).toggleClass("faded");
     });
