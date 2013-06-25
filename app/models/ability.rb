@@ -9,7 +9,7 @@ class Ability
       can :manage, [User, Agreement, Product, Category]
     end
 
-    if user and user.buyer? or user.producer?
+    if user and (user.buyer? or user.producer?)
       can :manage, Agreement
       can :manage, AgreementChange
       can [:index, :marketplace, :pic], Product
