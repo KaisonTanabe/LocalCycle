@@ -9,20 +9,12 @@ class Ability
       can :manage, [User, Agreement, Product, Category]
     end
 
-    if user and user.buyer?
+    if user and user.buyer? or user.producer?
       can :manage, Agreement
       can :manage, AgreementChange
       can [:index, :marketplace, :pic], Product
       can :manage, User, id: user.id
-      can :modal, User
-    end
-
-    if user and user.producer?
-      can :manage, Agreement
-      can :manage, AgreementChange
-      can [:index, :marketplace, :pic], Product
-      can :manage, User, id: user.id
-      can :modal, User
+      can [:show, :modal], User
     end
 
   end

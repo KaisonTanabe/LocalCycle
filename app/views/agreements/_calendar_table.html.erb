@@ -40,7 +40,7 @@
     <% else %>
       <% if @product_agreements.any? %>
         <% @product_agreements.each do |p, agreements| %>
-          <%= render partial: "agreement_row", locals: {p: p, agreements: agreements} %>
+          <%= render partial: "agreements/agreement_row", locals: {p: p, agreements: agreements} %>
         <% end %>
       <% else %>
         <tr><td colspan="13"><em>No matching agreements...</em></td></tr>

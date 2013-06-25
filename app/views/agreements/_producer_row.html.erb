@@ -1,7 +1,15 @@
+<% if @user %>
+
+<% producers = [@user] %>
+
+<% else %>
+
 <% producers = User.by_producer.order_best_available(p.id) %>
 <% producers = producers.by_size(params[:size]) unless params[:size].blank? %>
 <% producers = producers.by_growing_methods(params[:growing_methods]) unless params[:growing_methods].blank? %>
 <% producers = producers.near(origin: [current_user.lat,current_user.lng], within: params[:distance]) unless params[:distance].blank? %>
+
+<% end %>
 
 <tr>
   <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
@@ -14,7 +22,7 @@
       <% if profile.products.include?(p) %>
       <div class="producer-col" data-original-title="<%= profile.name %>">
 	<%= image_tag profile.pic.url(:thumb), class: "thumb" %>
-	<a href="users/<%= profile.id %>/modal" class="get-modal" data-target="#ajax-modal" data-toggle="modal" data-html="true"><%= profile.name %></a>
+	<a href="/users/<%= profile.id %>/modal" class="get-modal" data-target="#ajax-modal" data-toggle="modal" data-html="true"><%= profile.name %></a>
       </div>
       <% end %>
     <% end %>

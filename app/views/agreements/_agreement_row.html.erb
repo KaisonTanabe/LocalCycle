@@ -13,7 +13,7 @@
   <td colspan="12">
     <% if agreements.any? %>
       <% agreements.each do |a| %>
-        <%= render partial: "bar", locals: {a: a} %>
+        <%= render partial: "agreements/bar", locals: {a: a} %>
       <% end %>
     <% else %>
       <em>No demand posted. But that doesn't mean no one's buying! <%= link_to "Post Supply Agreement", new_agreement_path(product_id: p.id), class: "btn btn-mini btn-primary" %></em>
