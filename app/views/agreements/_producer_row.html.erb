@@ -30,7 +30,7 @@
   </td>
   <td colspan="12">
     <!--a class="btn btn-mini btn-danger producer-close collapsed collapse<%= p.id %>"><i class="icon-remove icon-white" data-target=".collapse<%= p.id %>"></i></a-->
-    <div class="bar-container <%= p.greenhouse_grown ? 'greenhouse' : '' %>">
+    <div class="bar-container <%= p.greenhouse_grown == true ? 'greenhouse' : '' %>">
     <% if p.end_date.year > p.start_date.year %>
     <a class="bar fat-bar" data-target=".collapse<%= p.id %>" style="<%= p.start_bar_margins %> "></a>
     <a class="bar fat-bar" data-target=".collapse<%= p.id %>" style="<%= p.end_bar_margins %> margin-top: -14px;"></a>
