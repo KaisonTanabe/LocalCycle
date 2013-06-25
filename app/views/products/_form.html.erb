@@ -48,6 +48,13 @@
     </div>
   </div>
 
+  <div class="control-group">
+    <%= f.label :greenhouse_grown, "Greenhouse Grown:", class: "control-label" %>
+    <div class="controls controls-row">
+        <label class="checkbox"><%= f.check_box :greenhouse_grown %> This product can be grown in a greenhouse</label>
+    </div>
+  </div>
+
   <%= render partial: 'partials/submit', locals: {f: f, text: "Product"} %>
 
 <% end %>

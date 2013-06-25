@@ -40,7 +40,7 @@ jQuery(function($){
 	$.rails.handleRemote( $(this) );
     })
 
-    $('a.fat-bar, a.producer-close').on('click', function(e) {
+    $('.fat-bar, a.producer-close').on('click', function(e) {
 	$(this).parent().parent().toggleClass("glowing");
 	$($(this).attr("data-target")).toggleClass("collapsed");
 	$(this).toggleClass("faded");

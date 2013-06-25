@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130624181113) do
+ActiveRecord::Schema.define(:version => 20130624233749) do
 
   create_table "agreement_changes", :force => true do |t|
     t.integer  "agreement_id",                                  :null => false
@@ -170,6 +170,7 @@ ActiveRecord::Schema.define(:version => 20130624181113) do
     t.string   "pic_content_type"
     t.integer  "pic_file_size"
     t.datetime "pic_updated_at"
+    t.boolean  "greenhouse_grown", :default => false,        :null => false
   end
 
   add_index "products", ["category_id"], :name => "index_products_on_category_id"

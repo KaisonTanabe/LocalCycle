@@ -16,7 +16,7 @@ class Product < ActiveRecord::Base
 
   ## ATTRIBUTE PROTECTION  
   
-  attr_accessible :description, :name, :selling_unit_ids,
+  attr_accessible :description, :name, :selling_unit_ids, :greenhouse_grown,
     :catch_weight, :category_id, :pic, :start_date, :end_date
 
 
