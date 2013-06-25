@@ -1,4 +1,4 @@
-<% with_link ||= true %>
+<% with_link ||= "true" %>
 
 <%= image_tag u.pic.url(:medium), class: "medium" %>
 
@@ -13,6 +13,8 @@
   <% end %><br />
 </p>
 
-<p><%= u.description %> <%= with_link ? (link_to raw('View full profile &raquo;'), u) : "" %></p>
+<p><%= u.description %></p>
+
+<p><%= with_link == "true" ? (link_to raw('View full profile &raquo;'), u, class: "btn") : "" %></p>
 
 <hr class="clear" />

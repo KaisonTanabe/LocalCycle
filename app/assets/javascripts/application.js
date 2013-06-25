@@ -50,6 +50,14 @@ jQuery(function($){
 	$($(e.target).attr("some")).toggleClass("expanded");
     });
 
+    $('#target_user_id').on('change', function(e) {
+        var url = $(this).val(); // get selected value
+        if (url) { // require a URL
+            window.location = url; // redirect
+        }
+        return false;
+    });
+
     ////////////////////////////////////////////////////////////////////////////
     //// Plugin initializers
 

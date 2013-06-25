@@ -7,11 +7,14 @@
 	<%= form_tag(agreements_path, method: :get) do %>
 	<div class="form-search pull-left">
 	  <div class="input-append">
-	    <%= text_field_tag :name, params[:name].blank? ? '' : params[:name], placeholder: "Search by name...", class: "search-query span2" %>
+	    <%= text_field_tag :name, params[:name].blank? ? '' : params[:name], placeholder: "Search for food...", class: "search-query span2" %>
 	    <button type="submit" class="btn-inverse btn"><span class="icon-search icon-white"></span></button>
 	  </div>
 	</div>
 	<% end %>
+        <%= form_tag(users_path, method: :get, style: "clear: left; padding: 5px 0 0 0;") do %>
+          <%= select_tag "target_user_id", options_for_select(User.by_producer.map{|p| [p.name, "/users/" + p.id.to_s]}), {prompt: "Search for farm...", class: "select2 span3" } %>
+        <% end %>
       </th>
       <th>JAN</th>
       <th>FEB</th>

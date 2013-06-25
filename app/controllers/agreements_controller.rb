@@ -189,7 +189,8 @@ class AgreementsController < ApplicationController
     agreements = agreements.by_producer(params[:producer_id]) unless params[:producer_id].blank?
     agreements = agreements.by_creator(params[:creator_id]) unless params[:creator_id].blank?
 
-    return agreements.order(sort_column + " " + sort_direction)
+    return agreements.order("producer_id ASC")
+#    return agreements.order(sort_column + " " + sort_direction)
   end
   
   def sort_product_column
