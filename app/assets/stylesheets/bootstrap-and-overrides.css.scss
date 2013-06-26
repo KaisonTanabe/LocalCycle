@@ -97,9 +97,10 @@ tr:hover #approval-group {
     margin-right: 15px;
 }
 #agreementTable {
-    background: #fff;
+    background: #fff url(calendar-bg-large.png) 290px 0 repeat-y;
     border-top: 2px solid #dadada;
     td:last-child, th { text-align: center; }
+    th { background: #fff;}
     tr {
 	td div.collapsable {
 	    height: 44px;
@@ -849,20 +850,23 @@ input, select, textarea, .checkbox, .radio {
    ========================================================================== */
 
 @media (min-width: 979px) and (max-width: 1199px) {
-.public {
-    header {
-	#navigation {
-            margin-left: -10%;
-	    ul li {
-		padding-left: 3%;
-		a {
-		    font-size: 16px;
+    .public {
+        header {
+	    #navigation {
+                margin-left: -10%;
+	        ul li {
+		    padding-left: 3%;
+		    a {
+		        font-size: 16px;
+                    }
                 }
             }
         }
     }
-}
 
+    #agreementTable {
+        background: #fff url(calendar-bg.png) 290px 0 repeat-y;
+    }
     .controls-date {
 	width: 300px;
 	select + select {
