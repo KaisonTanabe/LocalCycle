@@ -34,6 +34,7 @@
       </a>
     </div>
     <h1><img class="big-icon" src="/assets/icon-caln.png" alt="Calendar Icon" />  <%= params['cat_id'].blank? ? "Production Agreements" : Category.where(id: params["cat_id"].to_i).first.name %> <%= raw("<small>(" + @product_agreements.count.to_s + ")</small>") if current_user.admin? %></h1>
+    <div id="key-holder"><%= render "partials/key" %></div>
   </div>
 </div>
 
