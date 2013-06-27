@@ -12,7 +12,10 @@
       <th style="min-width: 100px;">Qty (# <span class="label label-info"><%= @agreement.selling_unit.pluralize %></span>)</th>
       <th>Delivery Windows</th>
       <th>Comments/Reasons</th>
-      <th></th>
+      <th>
+          <%= (link_to raw('<i class="icon-edit icon-white"></i> Edit'), edit_agreement_path(@agreement), class: "btn btn-mini btn-primary", title: "Edit original agreement" ) unless @agreement.agreement_changes.any? or !@agreement.owned_by(current_user) %>
+          <%= (link_to raw('<i class="icon-trash icon-white"></i> Delete'), edit_agreement_path(@agreement), class: "btn btn-mini btn-danger" ) unless @agreement.is_complete? or !@agreement.owned_by(current_user) %>
+      </th>
     </tr>
   </thead>
   <tbody>
