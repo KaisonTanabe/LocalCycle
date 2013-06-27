@@ -10,9 +10,10 @@ class Ability
     end
 
     if user and (user.buyer? or user.producer?)
-      can :manage, Agreement
-      can :manage, AgreementChange
-      can [:index, :marketplace, :pic], Product
+      can :manage, Agreement, creator_id: user.id
+      can [:index, :marketplace, :pic, :show, :modal, :root_agreement_changes], Agreement
+      can :manage, AgreementChange, creator_id: user.id
+      can [:show, :chain], AgreementChange
       can :manage, User, id: user.id
       can [:show, :modal], User
     end

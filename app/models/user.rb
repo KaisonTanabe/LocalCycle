@@ -37,7 +37,6 @@ class User < ActiveRecord::Base
 
   ## ATTRIBUTE VALIDATION
   validates :first_name, :last_name, :email,  presence: true
-#  validates :email,                           uniqueness: true
   validates :role,                            inclusion: {:in => ROLES.map{ |r| r.first}}
 
   validates :name, :phone, :description,
@@ -99,7 +98,7 @@ class User < ActiveRecord::Base
   ############ CLASS METHODS ##############
 
   def self.csv_header
-    "First Name,Last Name,Email".split(',')
+    "First Name,Last Name,Name,Email".split(',')
   end
 
   def self.build_from_csv(row) 
@@ -108,7 +107,8 @@ class User < ActiveRecord::Base
     user.attributes = {
       :first_name => row[0],
       :last_name => row[1],
-      :email => row[2]
+      :name => row[2],
+      :email => row[3]
     }
     return user
   end 

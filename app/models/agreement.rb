@@ -121,30 +121,19 @@ class Agreement < ActiveRecord::Base
   ############ CLASS METHODS ##############
 
   def self.csv_header 
-    "First Name,Last Name,Email,Teams".split(',') 
   end
 
   def self.build_from_csv(row) 
-    # find existing customer from email or create new 
-    agreement = Agreement.where(email: row[2]).first_or_initialize
-    agreement.attributes = {
-      :first_name => row[0],
-      :last_name => row[1],
-      :email => row[2],
-      :teams => Team.names_to_records(row[3].split("||"))
-    }
-    return agreement
   end 
 
 
   ############ PUBLIC METHODS #############
 
-  def quantity
-    read_attribute(:quantity).nil? ? "--" : read_attribute(:quantity)
+  def to_csv
   end
 
-  def to_csv
-    [id, name, email, ""]
+  def quantity
+    read_attribute(:quantity).nil? ? "--" : read_attribute(:quantity)
   end
 
   def users
@@ -158,26 +147,24 @@ class Agreement < ActiveRecord::Base
     users.map {|u| u.name }.join(' + ')
   end
 
+  def owned_by(u)
+    creator_id == u.id
+  end
+
   def has_producer?
     producer_id != 0
   end
   def has_buyer?
     buyer_id != 0
   end
+
   def is_complete?
     has_buyer? and has_producer?
   end
 
-  def owned_by(u)
-    creator_id == u.id
+  def is_preferred(u)
+    preferred_users.include?(u)
   end
-
-#  def deadline_is_possible?
-#    return if [deadline.blank?, begins_at.blank?].any?
-#    if deadline > begins_at
-#      errors.add(:deadline, 'must be possible')
-#    end
-#  end
 
   def duration
     if agreement_type == "onetime"
@@ -209,10 +196,6 @@ class Agreement < ActiveRecord::Base
     self.buyer_id = ac.user.id if ac.user.buyer?
     self.save!
     # send emails
-  end
-
-  def is_preferred(u)
-    preferred_users.include?(u)
   end
 
   def bar_margins
