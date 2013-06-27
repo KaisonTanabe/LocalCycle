@@ -16,18 +16,18 @@
           <%= select_tag "target_user_id", options_for_select(User.by_producer.map{|p| [p.name, "/users/" + p.id.to_s]}), {prompt: "Search for farm...", class: "select2 span3" } %>
         <% end %>
       </th>
-      <th>JAN</th>
-      <th>FEB</th>
-      <th>MAR</th>
-      <th>APR</th>
-      <th>MAY</th>
-      <th>JUN</th>
-      <th>JUL</th>
-      <th>AUG</th>
-      <th>SEP</th>
-      <th>OCT</th>
-      <th>NOV</th>
-      <th>DEC</th>
+      <th><%= (params[:month] == "1") ? "JAN" : (link_to "JAN", params.merge({"month" => 1}), title: "Show only agreements available in this month") %></th>
+      <th><%= (params[:month] == "2") ? "FEB" : (link_to "FEB", params.merge({"month" => 2}), title: "Show only agreements available in this month") %></th>
+      <th><%= (params[:month] == "3") ? "MAR" : (link_to "MAR", params.merge({"month" => 3}), title: "Show only agreements available in this month") %></th>
+      <th><%= (params[:month] == "4") ? "APR" : (link_to "APR", params.merge({"month" => 4}), title: "Show only agreements available in this month") %></th>
+      <th><%= (params[:month] == "5") ? "MAY" : (link_to "MAY", params.merge({"month" => 5}), title: "Show only agreements available in this month") %></th>
+      <th><%= (params[:month] == "6") ? "JUN" : (link_to "JUN", params.merge({"month" => 6}), title: "Show only agreements available in this month") %></th>
+      <th><%= (params[:month] == "7") ? "JUL" : (link_to "JUL", params.merge({"month" => 7}), title: "Show only agreements available in this month") %></th>
+      <th><%= (params[:month] == "8") ? "AUG" : (link_to "AUG", params.merge({"month" => 8}), title: "Show only agreements available in this month") %></th>
+      <th><%= (params[:month] == "9") ? "SEP" : (link_to "SEP", params.merge({"month" => 9}), title: "Show only agreements available in this month") %></th>
+      <th><%= (params[:month] == "10") ? "OCT" : (link_to "OCT", params.merge({"month" => 10}), title: "Show only agreements available in this month") %></th>
+      <th><%= (params[:month] == "11") ? "NOV" : (link_to "NOV", params.merge({"month" => 11}), title: "Show only agreements available in this month") %></th>
+      <th><%= (params[:month] == "12") ? "DEC" : (link_to "DEC", params.merge({"month" => 12}), title: "Show only agreements available in this month") %></th>
     </tr>
   </thead>
 

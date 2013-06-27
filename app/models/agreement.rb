@@ -70,6 +70,8 @@ class Agreement < ActiveRecord::Base
   scope :by_complete, where("buyer_id > 0 AND producer_id > 0")
   scope :by_not_complete, where("buyer_id = 0 OR producer_id = 0")
 
+  scope :in_month, lambda{|m| {:conditions => ['agreement_type = ? OR (end_date >= ? AND start_date <= ?)', "indefinite", Date.new(Date.today.year, m.to_i, 1), Date.new(Date.today.year, m.to_i, 1).end_of_month]}}
+
   scope :available_supply, where(buyer_id: 0)
   scope :available_demand, where(producer_id: 0)
 

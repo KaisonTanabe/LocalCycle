@@ -168,6 +168,7 @@ class AgreementsController < ApplicationController
   def filter_and_sort(agreements, params)
 
     agreements = agreements.by_name(params[:name]) unless params[:name].blank?
+    agreements = agreements.in_month(params[:month]) unless params[:month].blank?
     agreements = agreements.in_category(params[:cat_id]) unless params[:cat_id].blank?
 
     agreements = agreements.by_creator(current_user.id).by_complete if !params[:status].blank? and params[:status] == "complete"
