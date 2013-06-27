@@ -11,7 +11,7 @@
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <%= yield(:head) %>
-  <body class="public">
+  <body class="public <%= yield(:body_class) %>">
     <div id="vignette"></div>
     <header id="header">
       <div class="container">

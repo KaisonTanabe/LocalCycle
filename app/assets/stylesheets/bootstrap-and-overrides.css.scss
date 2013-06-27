@@ -570,6 +570,9 @@ footer {
     &:active, &.active { background: rgba(100,200,100,0.1); }
 }
 
+.home #content {
+    background: url(col-divider.png) 48% 0 no-repeat;
+}
 
 .public {
     padding: 20px 0 0;
@@ -593,7 +596,6 @@ footer {
 	}
     }
     #content {
-	background: url(col-divider.png) 48% 0 no-repeat;
 	form {
 	    width: 320px;
 	    margin: 9px auto 0;
