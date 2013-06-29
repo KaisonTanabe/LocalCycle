@@ -14,6 +14,7 @@ gem 'paperclip'
 gem 'browsernizer'
 gem 'closure_tree'
 gem 'geokit'
+gem 'wicked_pdf'
 #group :development, :test do
   #gem 'thin'
   #gem 'heroku'

@@ -141,6 +141,8 @@ GEM
     uuidtools (2.1.4)
     warden (1.2.1)
       rack (>= 1.0)
+    wicked_pdf (0.9.6)
+      rails
     will_paginate (3.0.4)
     with_advisory_lock (0.0.6)
       activerecord (>= 3.0.0)
@@ -167,3 +169,4 @@ DEPENDENCIES
   sass-rails (~> 3.2.3)
   select2-rails
   uglifier (>= 1.0.3)
+  wicked_pdf
