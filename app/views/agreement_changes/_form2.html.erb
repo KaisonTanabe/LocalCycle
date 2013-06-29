@@ -1,4 +1,4 @@
-<%= form_for [@agreement, @agreement_change], multipart: true, class: "form-horizontal" do |f| %>
+<%= form_for [@agreement, @agreement_change], multipart: true do |f| %>
 
   <legend>Counter-Proposal</legend>
 
@@ -15,12 +15,16 @@
   </div>
 
   <div class="control-group">
+    <%= f.label :selling_unit, "Selling Unit:", class: "control-label" %>
+    <div class="controls controls-row">
+      <%= f.select :selling_unit, options_for_select(@agreement.product.selling_units.map {|s| [s.name, s.short_name]}, @agreement.selling_unit), placeholder: "0", class: "span2" %>
+    </div>
+  </div>
+
+  <div class="control-group">
     <%= f.label :quantity, "Quantity:", class: "control-label" %>
     <div class="controls controls-row">
-      <div class="input-append">
-	<%= f.text_field :quantity, value: @agreement.quantity, placeholder: "0", class: "span2" %>
-	<span class="add-on" id="quantity_add_on"><%= UNIT_TYPE[@agreement.selling_unit] %></span>
-      </div>
+      <%= f.text_field :quantity, value: @agreement.quantity, placeholder: "0", class: "span2" %>
     </div>
   </div>
 
@@ -40,12 +44,10 @@
         <%= render partial: 'delivery_windows/delivery_window', locals: { f: fd } %>
         <%= new_child_fields_template(f, :delivery_windows, {partial: "delivery_windows/delivery_window"})%>
       <% end %>
-<!--
       <div class="controls">
 	<span class="help-inline"><%= add_child_link "Add Window", :delivery_windows %></span>
 	<span class="help-block">Add common Delivery/Pickup windows for your organization.</span>
       </div>
--->
     </div>
 <% end %>  
 
