@@ -12,8 +12,10 @@
 	  </div>
 	</div>
 	<% end %>
-        <%= form_tag(users_path, method: :get, style: "clear: left; padding: 5px 0 0 0;") do %>
-          <%= select_tag "target_user_id", options_for_select(User.by_producer.map{|p| [p.name, "/users/" + p.id.to_s]}), {prompt: "Search for farm...", class: "select2 span3" } %>
+        <% if !producer_signed_in? %>
+          <%= form_tag(users_path, method: :get, style: "clear: left; padding: 5px 0 0 0;") do %>
+            <%= select_tag "target_user_id", options_for_select(User.by_producer.map{|p| [p.name, "/users/" + p.id.to_s]}), {prompt: "Search for farm...", class: "select2 span3" } %>
+          <% end %>
         <% end %>
       </th>
       <th><%= (params[:month] == "1") ? "JAN" : (link_to "JAN", params.merge({"month" => 1}), title: "Show only agreements available in this month") %></th>

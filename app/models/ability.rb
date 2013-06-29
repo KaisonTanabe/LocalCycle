@@ -12,7 +12,7 @@ class Ability
     if user and (user.buyer? or user.producer?)
       can :manage, Agreement, creator_id: user.id
       can [:index, :marketplace, :pic, :show, :modal, :root_agreement_changes], Agreement
-      can :manage, AgreementChange, creator_id: user.id
+      can :manage, AgreementChange, user_id: user.id
       can [:show, :chain], AgreementChange
       can :manage, User, id: user.id
       can [:show, :modal], User
