@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130624233749) do
+ActiveRecord::Schema.define(:version => 20130629004237) do
 
   create_table "agreement_changes", :force => true do |t|
     t.integer  "agreement_id",                                  :null => false
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20130624233749) do
     t.text     "reason"
     t.datetime "created_at",                                    :null => false
     t.datetime "updated_at",                                    :null => false
+    t.string   "selling_unit"
   end
 
   add_index "agreement_changes", ["agreement_change_id"], :name => "index_agreement_changes_on_agreement_change_id"

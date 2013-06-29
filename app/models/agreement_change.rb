@@ -17,13 +17,13 @@ class AgreementChange < ActiveRecord::Base
 
   ## ATTRIBUTE PROTECTION
   
-  attr_accessible :price, :quantity, :frequency, :status,
-    :agreement_id, :agreement_change_id, :user_id, :reason, 
+  attr_accessible :price, :quantity, :frequency, :status, :selling_unit,
+    :agreement_id, :agreement_change_id, :user_id, :reason,
     :transport_instructions, :delivery_windows_attributes
 
   ## ATTRIBUTE VALIDATION
 
-  #validates
+  validates :selling_unit, presence: true
 
   #########################################
 

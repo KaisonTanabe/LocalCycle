@@ -12,7 +12,7 @@
 	  </div>
 	</div>
 	<% end %>
-        <% if !producer_signed_in? %>
+        <% if !current_user.producer? %>
           <%= form_tag(users_path, method: :get, style: "clear: left; padding: 5px 0 0 0;") do %>
             <%= select_tag "target_user_id", options_for_select(User.by_producer.map{|p| [p.name, "/users/" + p.id.to_s]}), {prompt: "Search for farm...", class: "select2 span3" } %>
           <% end %>

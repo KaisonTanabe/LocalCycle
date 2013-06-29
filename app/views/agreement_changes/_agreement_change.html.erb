@@ -1,6 +1,6 @@
 <tr class="<%= ac.row_status(current_user.id) %> <%= collapsed.blank? ? '' : 'partner-selector' %>" data-users="<%= "#{@agreement.creator_id}:#{ac.user_id == @agreement.creator_id ? ac.agreement_change.user_id : ac.user_id}" %>">
-  <td><%= ac.price.blank? ? "--" : number_to_currency(ac.price) %></td>
-  <td><%= ac.quantity.blank? ? "--" : ac.quantity %></td>
+  <td><%= number_to_currency(ac.price) %> / <span class="label label-info"><%= ac.selling_unit %></span></td>
+  <td><%= ac.quantity %> <span class="label label-info"><%= ac.selling_unit.pluralize %></span></td>
   <td>
     <% if ac.delivery_windows.any? %>
       <% ac.delivery_windows.each do |dw| %>

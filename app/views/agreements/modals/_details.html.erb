@@ -8,8 +8,8 @@
 <table class="table">
   <thead>
     <tr>
-      <th style="min-width: 100px;">Price / <span class="label label-info"><%= @agreement.selling_unit %></span></th>
-      <th style="min-width: 100px;">Qty (# <span class="label label-info"><%= @agreement.selling_unit.pluralize %></span>)</th>
+      <th style="min-width: 110px;">Price</th>
+      <th style="min-width: 110px;">Qty</th>
       <th>Delivery Windows</th>
       <th>Comments/Reasons</th>
       <th>
@@ -20,8 +20,8 @@
   </thead>
   <tbody>
     <tr>
-      <td><%= number_to_currency(@agreement.price) %></td>
-      <td><%= @agreement.quantity %></td>
+      <td><%= number_to_currency(@agreement.price) %> / <span class="label label-info"><%= @agreement.selling_unit %></span></td>
+      <td><%= @agreement.quantity %> <span class="label label-info"><%= @agreement.selling_unit.pluralize %></span></td>
       <td>
 	<ul>
 	  <li>
