@@ -16,5 +16,6 @@
 <p><%= u.description %></p>
 
 <p><%= with_link == "true" ? (link_to raw('View full profile &raquo;'), u, class: "btn") : "" %></p>
+<p><%= @user.producer? ? (link_to raw('Print PDF &raquo;'), user_path(u, format: 'pdf'), class: "btn") : '' %></p>
 
 <hr class="clear" />
