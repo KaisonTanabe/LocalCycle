@@ -98,7 +98,7 @@ GROWING_METHODS = {
   4 => "Biodynamic"
 }
 GROWING_METHODS_TEXT = {
-  0 => 'Custom'
+  0 => 'Custom',
   1 => '<strong style="color: #8bc63e;">Responsible</strong> Farms have a reverence for the ecological and social wellbeing of local communities. Many employ conventional farming methods, but go a step beyond industrial agriculture.</label>
   <ul>
     <li>All produce farms must utilize Integrated Pest Management and crop rotation at a minimum, and be GMO-free.</li>
