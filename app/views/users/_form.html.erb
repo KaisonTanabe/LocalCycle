@@ -36,11 +36,11 @@
 
   <p><br /></p>
 
-  <% if @user.buyer? %>
-    <%= render partial: 'users/buyer', locals: {f: f} %>
-    <%= render partial: 'users/product_selection', locals: {f: f} %>  
-  <% elsif @user.producer? %>
+  <% if @user.producer? %>
     <%= render partial: 'users/producer', locals: {f: f} %>
+    <%= render partial: 'users/product_selection', locals: {f: f} %>  
+  <% else %>
+    <%= render partial: 'users/buyer', locals: {f: f} %>
     <%= render partial: 'users/product_selection', locals: {f: f} %>  
   <% end %>
 

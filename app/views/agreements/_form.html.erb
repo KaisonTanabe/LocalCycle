@@ -11,6 +11,23 @@
 <legend></legend>
 <%= render partial: 'partials/errors', locals: {obj: @agreement} %>
 
+<% if current_user.admin? %>
+<div class="row">
+  <div class="span12">
+    <div class=" admin-section">
+      <legend>Choose Agreement Owner <small>(Admin Only)</small></legend>
+      <div class="control-group">
+        <label class="req control-label" for="agreement_creator_id">Agreement Owner:</label>
+        <div class="controls controls-row">
+	  <%= f.select :creator_id, options_from_collection_for_select(User.by_not_admin.order('name'), :id, :name), {prompt: "-- Please Select --"}, {class: "select2 span3" } %>
+          <span class="help-inline">As an Admin, you may select an agreement owner.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+
 <div class="row">
   <div class="span12"><h2>Two Methods:</h2></div>
   <div class="span6 skinny-label">

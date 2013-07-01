@@ -69,6 +69,7 @@ class User < ActiveRecord::Base
   scope :by_growing_methods, lambda {|g| where("growing_methods = ?", g)}
   scope :order_best_available, order("size ASC")
 
+  scope :by_not_admin, where("role != 'admin' AND name != ''")
   scope :by_producer, where("role = 'producer' AND name != ''")
   scope :by_buyer, where("role = 'buyer' AND name != ''")
   scope :by_other, lambda {|u| u.producer? ? where("role = 'buyer' AND name != ''") : where("role = 'producer' AND name != ''")}

@@ -9,6 +9,7 @@
       <% if current_user.admin? %>
       <li><%= link_to "Products", products_path %></li>
       <li><%= link_to "Users", users_path %></li>
+      <li><%= link_to "Agreements", table_agreements_path %></li>
       <% else %>
         <li><%= link_to "Agreements", agreements_path %></li>
         <% if current_user.producer? %>

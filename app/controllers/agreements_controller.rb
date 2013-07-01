@@ -116,9 +116,9 @@ class AgreementsController < ApplicationController
 
     @agreement.agreement_type = (params[:agreement][:agreement_type] == "1" ? "indefinite" :  "seasonal") unless (@agreement.agreement_type == "onetime")
 
-    @agreement.creator_id = current_user.id
-    @agreement.buyer_id = current_user.id if current_user.buyer?
-    @agreement.producer_id = current_user.id if current_user.producer?
+    @agreement.creator_id ||= current_user.id
+    @agreement.buyer_id = @agreement.creator_id if User.where(id: @agreement.creator_id).first.buyer? or User.where(id: @agreement.creator_id).first.admin?
+    @agreement.producer_id = @agreement.creator_id if User.where(id: @agreement.creator_id).first.producer?
 
     respond_to do |format|
       if @agreement.save
