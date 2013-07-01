@@ -18,7 +18,7 @@
 	<i class="icon-question-sign"></i>
       </a>
     </div>
-    <h1><img class="big-icon" src="/assets/icon-mrkt.png" alt="Marketplace Icon" />  <%= params['cat_id'].blank? ? "Produce For Sale" : Category.where(id: params["cat_id"].to_i).first.name %> <%= raw("<small>(" + pluralize(@agreements.count, 'result') + ")</small>") %></h1>
+    <h1><img class="big-icon" src="/assets/icon-marketplace.png" alt="Marketplace Icon" />  <%= params['cat_id'].blank? ? "Produce For Sale" : Category.where(id: params["cat_id"].to_i).first.name %> <%= raw("<small>(" + pluralize(@agreements.count, 'result') + ")</small>") %></h1>
   </div>
 </div>
 
