@@ -40,6 +40,9 @@ class UsersController < ApplicationController
   end
 
   def create
+    @user.skip_confirmation!
+    @user.password = "TempPass42"
+    @user.password_confirmation = "TempPass42"
     respond_to do |format|
       if @user.save
         format.html { redirect_to edit_user_path(@user), notice: 'User successfully created.' }
