@@ -23,8 +23,14 @@
 //= require bootstrap-modalmanager
 //= require bootstrap-modal
 //= require parsley.min
+//= require jquery.slimscroll.min
 //= require_tree .
 jQuery(function($){
+
+//   $('#cat-nav .dropdown-menu').on('show', function() {
+//       slimScroll({});
+//    });
+
 
     $('a.bar.clickable').on('click', function(e) {
 	e.preventDefault();

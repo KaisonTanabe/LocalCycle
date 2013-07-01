@@ -38,7 +38,7 @@
 	    </div>
 	  </div>
 
-	  <% if current_user.producer? %>
+<% if current_user.producer? %>
 	  <div class="control-group">
 	    <label for="min_price" class="control-label">Price Options:</label>
 	    <div class="controls controls-row">
@@ -49,7 +49,8 @@
 	      &nbsp; &lt; &nbsp;
 	      <div class="input-prepend">
 		<span class="add-on">$</span>
-		<%= text_field_tag :max_price, params[:max_price].blank? ? '' : params[:max_price], placeholder: "Max...", class: "span1" %>
+		<%= text_field_tag :max_price, params[:max_price].blank? ? '' : params[:max_price], 
+                    placeholder: "Max...", class: "span1" %>
 	      </div>
 	      per unit
 	    </div>
@@ -59,34 +60,41 @@
 	    <label for="min_quantity" class="control-label">Quantity Options:</label>
 	    <div class="controls controls-row">
 	      <div class="input-append">
-		<%= text_field_tag :min_quantity, params[:min_quantity].blank? ? '' : params[:min_quantity], placeholder: "Min...", class: "span1" %>
+		<%= text_field_tag :min_quantity, params[:min_quantity].blank? ? '' : params[:min_quantity], 
+                    placeholder: "Min...", class: "span1" %>
 		<span class="add-on">units</span>
 	      </div>
 	      &nbsp; &lt; &nbsp;
 	      <div class="input-append">
-		<%= text_field_tag :max_quantity, params[:max_quantity].blank? ? '' : params[:max_quantity], placeholder: "Max...", class: "span1" %>
+		<%= text_field_tag :max_quantity, params[:max_quantity].blank? ? '' : params[:max_quantity], 
+                    placeholder: "Max...", class: "span1" %>
 		<span class="add-on">units</span>
 	      </div>
 	    </div>
 	  </div>
 
-	  <% else %>
+<% else %>
 
 	  <div class="control-group">
 	    <label for="size" class="control-label">Only Sizes:</label>
 	    <div class="controls controls-row">
-	      <%= select_tag :size, options_for_select(SIZES.map{|s| [s.second, s.first]}, params[:size].blank? ? '' : params[:size]), {prompt: "-- Please Select --", class: "span4"} %>
+	      <%= select_tag :size, options_for_select(SIZES.map{|s| [s.second, s.first]}, 
+                  params[:size].blank? ? '' : params[:size]), 
+                  {prompt: "-- Please Select --", class: "span4"} %>
 	    </div>
 	  </div>
 
 	  <div class="control-group">
 	    <label for="growing_methods" class="control-label">Growing Methods:</label>
 	    <div class="controls controls-row">
-	      <%= select_tag :growing_methods, options_for_select(GROWING_METHODS.map{|g| [g.second, g.first]}, params[:growing_methods].blank? ? '' : params[:growing_methods]), {prompt: "-- Please Select --", class: "span4"} %>
+	      <%= select_tag :growing_methods, options_for_select(GROWING_METHODS.map{|g| [g.second, g.first]}, 
+                  params[:growing_methods].blank? ? '' : params[:growing_methods]), 
+                  {prompt: "-- Please Select --", class: "span4"} %>
 	    </div>
 	  </div>
 
-	  <% end %>
+<% end %>
+
 	  <div class="control-group">
 	    <div class="controls controls-row">
 	      <% unless current_user.producer? %>
@@ -99,6 +107,12 @@
 	  </div>
 	</div>
 	<div class="span6">
+	  <div class="control-group">
+	    <label for="growing_methods" class="control-label">Free Delivery:</label>
+	    <div class="controls controls-row">
+	      <label class="checkbox" style="display: inline-block;"><%= check_box_tag :free_delivery, "yes", params[:free_delivery].blank? ? false : true %></label>
+	    </div>
+	  </div>          
 	</div>
 	<% end %>
 	<div style="height: 30px;"></div>

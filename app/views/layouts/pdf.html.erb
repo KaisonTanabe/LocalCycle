@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <header id="header">
+      <%= wicked_pdf_image_tag 'localcycle-logo.png', style: "vertical-align: middle; height: 55px;" %> <small style="color: #f8c279;">A LocalCycle Partnership..</small>
+    </header>
+    <div id="content" role="main">
+      <%= yield %>
+    </div>
+    <footer id="footer">
+      <%= wicked_pdf_image_tag 'producer-bg-bot.png', style: "width: 100%;" %>
+    </footer>
+  </body>
+</html>

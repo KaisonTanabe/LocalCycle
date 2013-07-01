@@ -15,6 +15,7 @@ gem 'browsernizer'
 gem 'closure_tree'
 gem 'geokit'
 gem 'wicked_pdf'
+gem 'jquery-slimscroll-rails'
 #group :development, :test do
   #gem 'thin'
   #gem 'heroku'

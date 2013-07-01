@@ -97,6 +97,19 @@ GROWING_METHODS = {
   3 => "Organic",
   4 => "Biodynamic"
 }
+GROWING_METHODS_TEXT = {
+  0 => 'Custom'
+  1 => '<strong style="color: #8bc63e;">Responsible</strong> Farms have a reverence for the ecological and social wellbeing of local communities. Many employ conventional farming methods, but go a step beyond industrial agriculture.</label>
+  <ul>
+    <li>All produce farms must utilize Integrated Pest Management and crop rotation at a minimum, and be GMO-free.</li>
+    <li>All livestock farmers must not be CAFOs, must treat animals humanely, must raise animals that are hormone-free, and must avoid the use of antibiotics.</li>
+    <li>All mid to large sized farms on LocalCycle must employ worker safety systems to ensure quality of work life for all employees.</li>
+  </ul>
+  <small>If your farm goes beyond these basic requirements but is not certified organic, see <em>Green</em> label.</small>',
+  2 => '<strong style="color: #60ac37;">Green</strong> farms go beyond <em>Responsible</em>, additionally meeting several requirements of organic farming without being organic certified. Green Farms do not employ synthetic pesticides nor chemical fertilizers.',
+  3 => '<strong style="color: #39b54a;">Organic (certified)</strong> food is produced without antibiotics, growth hormones, conventional pesticides, petroleum-based fertilizers or sewage sludge-based fertilizers, bioengineering, or ionizing radiation. U.S. Department of Agriculture (USDA) certification is required before a product can be labeled "organic."',
+  4 => '<strong style="color: #146527;">Biodynamic (certified)</strong> agriculture considers both the material and spiritual context of food production and works with terrestrial as well as cosmic influences. The influence of planetary rhythms on the growth of plants and animals, in terms of the ripening power of light and warmth, is managed by guiding cultivation times with an astronomical calendar. All organic principles apply to biodynamic farming.'
+}
 
 AGREEMENT_TYPES = {
   "onetime" => "One Time",
