@@ -42,7 +42,7 @@ class UsersController < ApplicationController
   def create
     respond_to do |format|
       if @user.save
-        format.html { redirect_to teams_user_path(@user), notice: USER_LABEL.capitalize + ' was successfully created.' }
+        format.html { redirect_to edit_user_path(@user), notice: 'User successfully created.' }
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render action: "new" }

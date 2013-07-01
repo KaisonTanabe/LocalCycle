@@ -2,13 +2,13 @@
   <%= @user.name %>
   <%= wicked_pdf_image_tag 'producer-bg-top.png', style: "height: 120px; margin-left: -50px; vertical-align: bottom;" %>
 </h1>
-<h2 style="color: #0b9444; margin-left: 150px;">About Us</h2>
-<p>
+<h2 style="font-family: 'Rockwell Extra Bold'; color: #0b9444; margin-left: 150px;">About Us</h2>
+<p style="font-family: 'Rockwell Extra Bold';">
   <%= @user.description %>
 </p>
-<h2 style="color: #f7941e; margin-left: 300px;">Growing Methods</h2>
+<h2 style="font-family: 'Rockwell Extra Bold'; color: #f7941e; margin-left: 300px;">Growing Methods</h2>
 <% if @user.growing_methods == 0 %>
-<p><%= @user.custom_growing_methods %></p>
+<p style="font-family: 'Rockwell Extra Bold';"><%= @user.custom_growing_methods %></p>
 <% else %>
-<p><%=raw GROWING_METHODS_TEXT[@user.growing_methods] %></p>
+<p style="font-family: 'Rockwell Extra Bold';"><%=raw GROWING_METHODS_TEXT[@user.growing_methods] %></p>
 <% end %>
