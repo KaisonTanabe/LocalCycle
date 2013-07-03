@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130629004237) do
+ActiveRecord::Schema.define(:version => 20130703145720) do
 
   create_table "agreement_changes", :force => true do |t|
     t.integer  "agreement_id",                                  :null => false
@@ -223,12 +223,12 @@ ActiveRecord::Schema.define(:version => 20130629004237) do
   add_index "user_products", ["user_id"], :name => "index_user_products_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "",    :null => false
-    t.string   "encrypted_password",     :default => "",    :null => false
+    t.string   "email",                    :default => "",    :null => false
+    t.string   "encrypted_password",       :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
+    t.integer  "sign_in_count",            :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -237,7 +237,7 @@ ActiveRecord::Schema.define(:version => 20130629004237) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.integer  "failed_attempts",        :default => 0
+    t.integer  "failed_attempts",          :default => 0
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.string   "name"
@@ -245,7 +245,7 @@ ActiveRecord::Schema.define(:version => 20130629004237) do
     t.string   "street_address_2"
     t.string   "city"
     t.string   "state"
-    t.string   "country",                :default => "US"
+    t.string   "country",                  :default => "US"
     t.string   "zip"
     t.float    "lat"
     t.float    "lng"
@@ -258,22 +258,28 @@ ActiveRecord::Schema.define(:version => 20130629004237) do
     t.integer  "size"
     t.integer  "growing_methods"
     t.text     "custom_growing_methods"
-    t.boolean  "has_eggs",               :default => false, :null => false
-    t.boolean  "has_livestock",          :default => false, :null => false
-    t.boolean  "has_dairy",              :default => false, :null => false
-    t.boolean  "has_pantry",             :default => false, :null => false
-    t.boolean  "text_updates",           :default => true,  :null => false
-    t.boolean  "complete",               :default => false, :null => false
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
-    t.string   "first_name",                                :null => false
-    t.string   "last_name",                                 :null => false
-    t.string   "role",                                      :null => false
+    t.boolean  "has_eggs",                 :default => false, :null => false
+    t.boolean  "has_livestock",            :default => false, :null => false
+    t.boolean  "has_dairy",                :default => false, :null => false
+    t.boolean  "has_pantry",               :default => false, :null => false
+    t.boolean  "text_updates",             :default => true,  :null => false
+    t.boolean  "complete",                 :default => false, :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+    t.string   "first_name",                                  :null => false
+    t.string   "last_name",                                   :null => false
+    t.string   "role",                                        :null => false
     t.text     "notes"
     t.string   "pic_file_name"
     t.string   "pic_content_type"
     t.integer  "pic_file_size"
     t.datetime "pic_updated_at"
+    t.string   "billing_street_address_1"
+    t.string   "billing_street_address_2"
+    t.string   "billing_city"
+    t.string   "billing_state"
+    t.string   "billing_country",          :default => "US"
+    t.string   "billing_zip"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

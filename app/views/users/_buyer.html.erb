@@ -42,6 +42,7 @@
   </div>
 </div>
 
+<div id="shipping-address">
 <div class="control-group">
   <%= f.label :street_address_1, "Delivery Address: ", class: "req control-label" %>
   <div class="controls controls-row">
@@ -61,6 +62,40 @@
     <%= f.text_field :state, placeholder: "State", class: "span1" %>
     <%= f.text_field :zip, placeholder: "Zip", class: "span1" %>
   </div>
+</div>
+</div>
+
+<div class="control-group">
+  <div class="controls controls-row">
+      <div style="float: left;" class="btn-group" id="same" data-toggle="buttons-radio">
+        <button type="button" class="btn yes">Yes</button>
+        <button type="button" class="btn no">No</button>
+      </div>
+      <p style="padding-top: 5px;">&nbsp; <strong>Billing address same as delivery address?</strong></p>
+  </div>
+</div>
+
+<div id="billing-address">
+<div class="control-group">
+  <%= f.label :billing_street_address_1, "Delivery Address: ", class: "req control-label" %>
+  <div class="controls controls-row">
+    <%= f.text_field :billing_street_address_1, placeholder: "Address 1", class: "span4" %>
+  </div>
+</div>
+<div class="control-group">
+  <%= f.label :billing_street_address_2, raw('&nbsp'), class: "control-label" %>
+  <div class="controls controls-row">
+    <%= f.text_field :billing_street_address_2, placeholder: "Address 2", class: "span4" %>
+  </div>
+</div>
+<div class="control-group">
+  <%= f.label :billing_city, raw('&nbsp'), class: "req control-label" %>
+  <div class="controls controls-row">
+    <%= f.text_field :billing_city, placeholder: "City", class: "span2" %>
+    <%= f.text_field :billing_state, placeholder: "State", class: "span1" %>
+    <%= f.text_field :billing_zip, placeholder: "Zip", class: "span1" %>
+  </div>
+</div>
 </div>
 
 <legend>Promotional Information</legend>

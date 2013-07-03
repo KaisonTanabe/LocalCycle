@@ -31,6 +31,17 @@ jQuery(function($){
 //       slimScroll({});
 //    });
 
+    $("#same .btn").on("click", function() {
+        if ($(this).hasClass("yes")) {
+            $("#user_billing_street_address_1").val($("#user_street_address_1").val());
+            $("#user_billing_street_address_2").val($("#user_street_address_2").val());
+            $("#user_billing_city").val($("#user_city").val());
+            $("#user_billing_state").val($("#user_state").val());
+            $("#user_billing_zip").val($("#user_zip").val());
+        } else {
+            $("#billing-address input").val("");
+        }
+    });
 
     $('a.bar.clickable').on('click', function(e) {
 	e.preventDefault();
