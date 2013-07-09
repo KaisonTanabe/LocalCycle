@@ -1,0 +1,10 @@
+<% if obj.errors.any? %>
+  <div class="alert alert-error">
+    <a class="close" data-dismiss="alert">&#215;</a>
+    <%=raw content_tag :div, obj.errors.full_messages.map {|e| e}.join(". "), :id => "flash_error" %>
+  </div>
+
+  <% if Rails.env.development? %>
+  <% end %>
+<% end %>
+  

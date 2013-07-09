@@ -3,19 +3,19 @@ LOCALCYCLE::Application.routes.draw do
   resources :categories
 
   resources :products do
-    get 'pic', :on => :member
-    get 'export', :on => :collection
+    get 'pic', on: :member
+    get 'export', on: :collection
   end
 
   resources :agreements do
-    get 'modal', :on => :member
-    get 'root_agreement_changes', :on => :member
-    put 'accept', :on => :member
-    get 'marketplace', :on => :collection
-    get 'table', :on => :collection
-    get 'export', :on => :collection
+    get 'modal', on: :member
+    get 'root_agreement_changes', on: :member
+    put 'accept', on: :member
+    get 'marketplace', on: :collection
+    get 'table', on: :collection
+    get 'export', on: :collection
     resources :agreement_changes, only: ["new","create","update"] do
-      post 'chain', :on => :collection
+      post 'chain', on: :collection
     end
   end
 
@@ -32,8 +32,8 @@ LOCALCYCLE::Application.routes.draw do
   end
 
   resources :users do
-    get 'prompt', :on => :member
-    get 'modal', :on => :member
+    get 'prompt', on: :member
+    get 'modal', on: :member
   end
 
   # Temporary model to collect email addresses on BETA page

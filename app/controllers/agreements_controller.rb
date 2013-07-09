@@ -6,6 +6,9 @@ class AgreementsController < ApplicationController
   require 'csv'
 
   def table
+    @agreement = Agreement.new()
+
+    @agreement.agreement_type = params[:agreement_type] unless params[:agreement_type].nil?
 
     @agreements = @agreements.available_supply_or_mine(current_user.id) if current_user.buyer?
     @agreements = @agreements.available_demand_or_mine(current_user.id) if current_user.producer?
@@ -114,6 +117,9 @@ class AgreementsController < ApplicationController
   def create
     @agreement.images.build(image: @agreement.product.best_pic) unless params[:agreement][:images_attributes] if @agreement.product
 
+    @agreement.name = Product.where(id: params[:agreement][:product_id]).first.name if params[:agreement][:name].blank?
+    @agreement.frequency = "weekly" if params[:agreement][:frequency].blank?
+
     @agreement.agreement_type = (params[:agreement][:agreement_type] == "1" ? "indefinite" :  "seasonal") unless (@agreement.agreement_type == "onetime")
 
     @agreement.creator_id ||= current_user.id
@@ -124,9 +130,11 @@ class AgreementsController < ApplicationController
       if @agreement.save
         format.html { redirect_to agreements_path, notice: 'Agreement was successfully created.' }
         format.json { render json: @agreement, status: :created, location: @agreement }
+        format.js { render :create }
       else
         format.html { render action: "new" }
         format.json { render json: @agreement.errors, status: :unprocessable_entity }
+        format.js { render :create_error }
       end
     end
   end

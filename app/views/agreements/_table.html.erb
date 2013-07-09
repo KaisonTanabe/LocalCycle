@@ -1,16 +1,62 @@
+<%= form_for(@agreement, html: { multipart: true, class: "form-horizontal", remote: true }) do |f| %>
+
+<div id="error-div"></div>
+
 <table id="agreementAdminTable" class="table table-hover table-striped">
   <thead id="query">
-    <%#= render "query_form" %>
+    <tr>
+      <th>
+	<%= f.select :product_id, option_groups_from_collection_for_select(Category.includes(:products).order('name'), :products, :name, :id, :name, (params[:product_id].blank? ? (@agreement.product ? @agreement.product.id : "") : params[:product_id])), {prompt: "-- Select Product --"}, {class: "select2", style: "width: 180px;" } %>
+      </th>
+      <% if current_user.admin? %>
+      <th>
+        <%= f.select :creator_id, options_from_collection_for_select(User.by_not_admin.order('name'), :id, :name), {prompt: "-- Select Owner --"}, {class: "select2", style: "width: 180px;" } %>
+      </th>
+      <% end %>
+      <th>
+        <div class="input-prepend">
+	  <span class="add-on">$</span>
+	  <%= f.text_field :price, placeholder: "0.00", style: "width: 40px;" %>
+	</div>
+      </th>
+      <th>
+        <div class="input-append">
+	  <%= f.text_field :quantity, placeholder: "0", style: "width: 30px;" %>
+	  <span class="add-on" id="quantity_add_on">units</span>
+	</div>
+        <%= f.hidden_field :selling_unit, value: "lb" %>
+      </th>
+      <th>
+	<label class="checkbox"><%= f.check_box :agreement_type, checked: (@agreement.new_record? ? false : @agreement.agreement_type == "indefinite"), class: "x-toggle-visible", data: {show: "#datepickers", hide: "#datepickers"} %> All the time</label>
+	<%= f.text_field :start_date, placeholder: "First delivery", data: {behavior: "datepicker"}, style: "width: 85px;" %>
+	<%= f.text_field :end_date, placeholder: "Last delivery", data: {behavior: "datepicker"}, style: "width: 85px;" %>
+      </th>
+      <th>
+        <%= f.submit "Create", class: "btn btn-primary" %>
+      </th>
+    </tr>
   </thead>
-    
+  
+  <thead id="query">
+    <%= render "brief_form" %>
+  </thead>
+  
   <thead id="sorters">
     <%= render "sorters" %>
   </thead>
-
+  
   <tbody id="agreement-ajax">
-    <%= render "agreements" %>
+    <% if @agreements.any? %>
+      <% @agreements.each do |agreement| %>
+        <%= render partial: "agreements/agreement_admin_row", locals: {agreement: agreement} %>
+      <% end %>
+    <% else %>
+      <tr><td colspan="6"><em>No matching Agreements...</em> </td></tr>
+    <% end %>
   </tbody>
 </table>
+<% end %>
+
 <div id="pagination">
   <%= will_paginate @agreements %>
 </div>

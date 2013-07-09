@@ -1,0 +1,21 @@
+    <%= content_tag_for :tr, agreement, class: (agreement.status(current_user.id)) do %>
+      <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
+        <!--a href="/agreements/<%= agreement.id %>/modal" data-target="#ajax-modal" data-toggle="modal"><%= agreement.name %></a-->
+        <%= link_to(agreement.name, edit_agreement_path(agreement)) %>
+      </td>
+      <td class='owner <%= (params[:sort] == "owner") ? "sorted" : "" %>'>
+	<a href="/users/<%= agreement.creator_id %>/modal" class="get-modal" data-target="#ajax-modal" data-toggle="modal" data-html="true"><%= agreement.creator.name %></a>
+      </td>
+      <td class='price <%= (params[:sort] == "price") ? "sorted" : "" %>'>
+        <%= number_to_currency(agreement.price) %>/<%= agreement.selling_unit %>
+      </td>
+      <td class='quantity <%= (params[:sort] == "quantity") ? "sorted" : "" %>'>
+        <%= pluralize(agreement.quantity, "unit") %>
+      </td>
+      <td class='duration hidden-phone <%= (params[:sort] == "duration") ? "sorted" : "" %>'>
+        <%= agreement.duration %>
+      </td>
+      <td>
+        <%= render partial: "agreements/buttons", locals: {agreement: agreement} %>
+      </td>
+    <% end %>
