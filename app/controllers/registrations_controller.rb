@@ -8,7 +8,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def create
     # add custom create logic here
-    @role = "producer"
+    @role = "market_manager"
     @role = params["user"]["role"] if params["user"]["role"] and REGISTERABLE_ROLES.include?(params["user"]["role"])
     super
   end

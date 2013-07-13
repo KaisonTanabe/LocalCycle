@@ -1,10 +1,21 @@
+class Market < ActiveRecord::Base
   ############# CONFIGURATION #############
-
+ 
   ## SETUP ASSOCIATIONS
 
-  ## ATTRIBUTE PROTECTION
+  has_many :goods
+  has_many :delivery_locations
+  has_many :market_managers, class_name: "User", foreign_key: :market_id
+  has_many :producers, class_name: "User", foreign_key: :market_id
+  has_many :buyers, class_name: "User", foreign_key: :market_id
 
-  #attr_accessible
+  ## ATTRIBUTE PROTECTION
+  
+  attr_accessible :name, :brief, :description,
+    :street_address_1, :street_address_2, 
+    :city, :state, :country, :zip,
+    :billing_street_address_1, :billing_street_address_2, 
+    :billing_city, :billing_state, :billing_country, :billing_zip,
 
   ## ATTRIBUTE VALIDATION
 
@@ -48,3 +59,4 @@
 
   ############ PRIVATE METHODS ############
   private
+end

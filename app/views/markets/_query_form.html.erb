@@ -1,0 +1,26 @@
+<tr class="input-row">
+  <%= form_tag(markets_path, id: "product-mobile-filter", method: :get) do %>
+    <td>
+      <%= text_field_tag :name,  params[:name].blank? ? '' : params[:name], placeholder: "By name..." %>
+    </td>
+    <td>
+      <%= text_field_tag :market_managers,  params[:market_managers].blank? ? '' : params[:market_managers], placeholder: "By manager..." %>
+    </td>
+    <td>
+      <%= text_field_tag :state,  params[:state].blank? ? '' : params[:state], placeholder: "By state..." %>
+    </td>
+    <td>
+      <div id="buttons">
+	<div class="btn-group pull-right" style="margin-left: 10px;">
+	  <button class="btn btn-inverse"><i class="icon-list-alt icon-white"></i> Export...</button>
+	  <button class="btn dropdown-toggle btn-inverse" data-toggle="dropdown">
+	    <span class="caret"></span>
+	  </button>
+	  <ul class="dropdown-menu">
+	    <li><%= link_to "CSV File", export_markets_path(params), id: "export_csv" %></li>
+	  </ul>
+	</div>
+      </div>
+    </td>
+  <% end %>
+</tr>

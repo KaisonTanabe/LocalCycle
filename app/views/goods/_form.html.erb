@@ -1,0 +1,264 @@
+<script type="text/javascript">
+  <% a = Hash.new
+     Category.select("id, name, parent_id").each {|c| a[c.id] = c } %>
+     window.categories = <%= raw(a.to_json(:methods => %w(option_children option_products))) %>;
+  <% a = Hash.new
+     Product.select("id, name, category_id").each {|p| a[p.id] = p} %>
+     window.products = <%= raw(a.to_json) %>;
+</script>
+<%= form_for(@good, html: { multipart: true, class: "form-horizontal" }) do |f| %>
+  
+<legend></legend>
+<%= render partial: 'partials/errors', locals: {obj: @good} %>
+
+<% if current_user.admin? %>
+<div class="row">
+  <div class="span12">
+    <div class=" admin-section">
+      <legend>Choose Good Owner <small>(Admin Only)</small></legend>
+      <div class="control-group">
+        <label class="req control-label" for="good_creator_id">Good Owner:</label>
+        <div class="controls controls-row">
+	  <%= f.select :creator_id, options_from_collection_for_select(User.by_not_admin.order('name'), :id, :name), {prompt: "-- Please Select --"}, {class: "select2 span3" } %>
+          <span class="help-inline">As an Admin, you may select an good owner.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<div class="row">
+  <div class="span12"><h2>Two Methods:</h2></div>
+  <div class="span6 skinny-label">
+    <h4>1. Quick-select system.</h4>
+    <div class="control-group">
+      <label class="req control-label" for="good_product_id">Product:</label>
+      <div class="controls controls-row">
+	<%= f.select :product_id, option_groups_from_collection_for_select(Category.includes(:products).order('name'), :products, :name, :id, :name, (params[:product_id].blank? ? (@good.product ? @good.product.id : "") : params[:product_id])), {prompt: "-- Please type and select --"}, {class: "select2 span3" } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="span6 skinny-label">
+    <h4>2. Browse the product tree.</h4>
+    <div class="control-group">
+      <label class="control-label">Category:</label>
+      <div class="controls controls-row">
+	<%= select_tag "category_id", options_from_collection_for_select(Category.roots, :id, :name), {prompt: "-- Please select --", class: "span3" } %>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">Sub-category:</label>
+      <div class="controls controls-row">
+	<%= select_tag "subcategory_id", options_from_collection_for_select(Category.leaves, :id, :name), {prompt: "-- Please select --", disabled: true, class: "span3" } %>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">Product:</label>
+      <div class="controls controls-row">
+	<%= select_tag "fake_product_id", options_from_collection_for_select(Product.all, :id, :name), {prompt: "-- Please select --", disabled: true, class: "span3" } %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="span12">
+    <hr />
+  </div>
+
+  <div class="span6">
+    <div class="control-group">
+      <%= f.label :name, "Title:", class: "control-label" %>
+      <div class="controls controls-row">
+	<%= f.text_field :name, class: "span4" %>
+	<span class="help-inline">Further differentiate <%= current_user.producer? ? "your product" : "your proposal" %>.</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :description, "Description:", class: "control-label" %>
+      <div class="controls controls-row">
+	<%= f.text_area :description, rows: 4, class: "span4" %>
+	<span class="help-inline">(optional) Add a detailed description or custom instructions<%= current_user.producer? ? "." : " for what you are looking for." %></span>
+      </div>
+    </div>
+    <% if current_user.producer? %>
+    <div class="control-group">
+      <%= f.label :locally_packaged, "Locally Packaged:", class: "control-label" %>
+      <div class="controls control-row">
+	<label class="checkbox"><%= f.check_box :locally_packaged %> Check this box if this product locally packaged, but not grown or raised locally.</label>
+      </div>
+    </div>
+    <% end %>
+  </div>
+  <div class="span6">
+    <%= f.fields_for :images do |fi| %>
+      <%= render partial: "goods/image", locals: {f: fi} %>
+    <% end %>
+  </div>
+</div>
+
+<% if params["good_type"] == "onetime" %>
+<div class="row">
+  <div class="span12">
+    <legend>Pricing Options</legend>
+    <%= f.hidden_field :good_type, value: "onetime" %>
+    <%= f.hidden_field :start_date, value: Date.today %>
+  </div>
+  <div class="span6">
+    <div class="control-group">
+      <%= f.label :selling_unit, "Selling Unit:", class: "control-label" %>
+      <div class="controls controls-row">
+	<%= f.select :selling_unit, SellingUnit.all.map {|s| [s.name, s.short_name]}, {prompt: "-- Please select --"}, {class: "span3"} %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :price, "Price Per Unit:", class: "control-label" %>
+      <div class="controls controls-row">
+	<div class="input-prepend">
+	  <span class="add-on">$</span>
+	  <%= f.text_field :price, placeholder: "0.00", class: "span2" %>
+	</div>
+	<span class="help-inline">Unit selected above</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :quantity, "Quantity:", class: "control-label" %>
+      <div class="controls controls-row">
+ 	<div class="input-append">
+	  <%= f.text_field :quantity, placeholder: "0", class: "span2" %>
+	  <span class="add-on" id="quantity_add_on"></span>
+	</div>
+	<span class="help-inline">Number of units <%= current_user.buyer? ? "demanded" : "available" %></span>
+      </div>
+    </div>
+  </div>
+</div>
+<% else %>
+<div class="row">
+  <div class="span12">
+    <p><br /></p>
+    <legend>Good Options</legend>
+    <p>Select dates available or desired.</p>
+  </div>
+ 
+  <div class="span6">
+    <div class="good-dates">
+      <div class="control-group">
+	<%= f.label :start_date, "Start Date:", class: "control-label" %>
+	<div class="controls controls-row controls-date">
+	  <%= f.text_field :start_date, placeholder: "First delivery", data: {behavior: "datepicker"}, class: "span3" %>
+	</div>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :good_type, "Good Period:", class: "control-label" %>
+      <div class="controls controls-row">
+	<label class="checkbox"><%= f.check_box :good_type, class: "toggle", checked: (@good.new_record? ? false : @good.good_type == "indefinite"), data: {on: "nada", off: "good-dates"} %> I <%= current_user.producer? ? "have" : "want" %> it all the time</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="span6">
+    <div class="good-dates">
+      <div class="control-group">
+	<%= f.label :start_date, "End Date:", class: "control-label" %>
+	<div class="controls controls-row controls-date">
+	  <%= f.text_field :end_date, placeholder: "Last delivery", data: {behavior: "datepicker"}, class: "span3" %>
+	</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="span12"></div>
+
+  <div class="span6">
+    <div class="control-group">
+      <%= f.label :selling_unit, "Selling Unit:", class: "control-label" %>
+      <div class="controls controls-row">
+	<%= f.select :selling_unit, UNIT_TYPE.map {|u| [u.second, u.first]}, {prompt: "-- Please select --"}, {class: "span4"} %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :quantity, "Quantity (optional):", class: "control-label" %>
+      <div class="controls controls-row">
+ 	<div class="input-append">
+	  <%= f.text_field :quantity, placeholder: "0", class: "span2" %>
+	  <span class="add-on" id="quantity_add_on"></span>
+	</div>
+	<span class="help-inline">Number of units <%= current_user.buyer? ? "demanded" : "available" %> <span class="dfgood_frequency dfweekly">(per weekly delivery)</span><span class="dfgood_frequency dfmonthly">(per monthly delivery)</span></span>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :frequency, "Delivery Frequency:", class: "control-label" %>
+      <div class="controls controls-row">
+	<%= f.select :frequency, FREQUENCIES.map {|u| [u.second, u.first]}, {prompt: "-- Please select --"}, {class: "span4"} %>
+      </div>
+    </div>
+  </div>
+  <div class="span6">
+    <div class="control-group">
+      <%= f.label :price, "Price Per Unit:", class: "control-label" %>
+      <div class="controls controls-row">
+	<div class="input-prepend">
+	  <span class="add-on">$</span>
+	  <%= f.text_field :price, placeholder: "0.00", class: "span2" %>
+	</div>
+	<span class="help-inline">"Unit" selected above</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="span12">
+    <p><br /></p>
+    <legend>Delivery Method</legend>
+    <p>Add or remove possible delivery windows. The other party will be required to pick one that works with their schedule.</p>
+    <div class="control-group">
+      <%= f.label :delivery_window, "Delivery Windows: ", class: "req control-label" %>
+      <%= f.fields_for :delivery_windows do |fd| %>
+        <%= render partial: 'delivery_windows/delivery_window', locals: { f: fd } %>
+        <%= new_child_fields_template(f, :delivery_windows, {partial: "delivery_windows/delivery_window"})%>
+      <% end %>
+      <div class="controls">
+	<span class="help-inline"><%= add_child_link "Add Window", :delivery_windows %></span>
+	<span class="help-block">Add common Delivery/Pickup windows for your organization.</span>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :transport_instructions, "Special Instructions:", class: "control-label" %>
+      <div class="controls controls-row">
+	<%= f.text_area :transport_instructions, rows: 4, class: "span4" %>
+	<span class="help-inline">(optional) Indicate any special instructions you might have.</span>
+      </div>
+    </div>
+
+    <!--p><span class="label label-info">NOTE:</span> We expect both parties to integrate the delivery fee into price point of Production Goods.</p-->
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="span12">
+    <p><br /></p>
+    <legend>Preferred Partners</legend>
+    <p>List preferred <%= current_user.producer? ? "buyers" : "producers" %> below. They will be notified and have 3 days to respond before your proposal becomes public.</p>
+    <div class="control-group">
+      <label class="req control-label" for="good_preferred_user_ids">Preferred:</label>
+      <div class="controls controls-row">
+	<%= f.select :preferred_user_ids, options_for_select(User.by_other(current_user).order('name').collect {|u| [u.name, u.id] }, (@good.new_record? and !params[:preferred_user_id].blank?) ? params[:preferred_user_id] : @good.preferred_users.map{ |p| p.id }), {}, {multiple: "", placeholder: "Select " + (current_user.producer? ? "Buyers" : "Producers"), class: "select2 span4" } %>
+	<span class="help-inline"><span class="label label-info">HINT:</span> Start typing the organization's name...</span>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<hr style="clear: both;" />
+  
+  <%= render partial: 'partials/submit', locals: {f: f, override: (params["good_type"] == "onetime") ? 'Post Product Supply' : 'Post Good' } %>
+
+<% end %>

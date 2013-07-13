@@ -24,6 +24,12 @@ GENDER = {
 
 ROLES = {
   "admin" => "Admin",
+  "market_manager" => "Market Manager",
+  "buyer" => "Buyer",
+  "producer" => "Producer"
+}
+REGISTERABLE_ROLES = {
+  "market_manager" => "Market Manager",
   "buyer" => "Buyer",
   "producer" => "Producer"
 }
@@ -42,10 +48,6 @@ DISTANCES = {
   50 => "50 miles",
   100 => "100 miles",
   250 => "250 miles"
-}
-REGISTERABLE_ROLES = {
-  "buyer" => "Buyer",
-  "producer" => "Producer"
 }
 
 FREQUENCIES = {
@@ -120,6 +122,7 @@ AGREEMENT_TYPES = {
 
 UNIT_TYPE = {
   "lb" => "Pound",
+  "oz" => "Ounce",
 #  "3lb" => "3 Pounds",
 #  "5lb" => "5 Pounds",
 #  "10lb" => "10 Pounds",

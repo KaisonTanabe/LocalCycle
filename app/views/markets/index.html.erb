@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="span12">
+    <div class="btn-group pull-right actions-bar">
+      <%= link_to 'New Market', new_market_path, class: "btn btn-primary" unless current_user.buyer? %>
+      <%= link_to raw('<span class="icon-question-sign"></span>'), "#", class: "btn" %>
+    </div>
+    <h1><img class="big-icon" src="/assets/icon-agreements-calendar.png" alt="Calendar Icon" /> Markets</h1>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="span12">
+
+    <table id="market-table" class="table table-hover table-striped">
+      <thead id="query">
+	<%= render "query_form" %>
+      </thead>
+      
+      <thead id="sorters">
+	<%= render "sorters" %>
+      </thead>
+
+      <tbody id="market-ajax">
+        <% if @markets.any? %>
+          <% @markets.each do |market| %>
+	    <%= render partial: "market", locals: {market: market} %>
+          <% end %>
+
+        <% else %>
+          <tr><td colspan="4"><em>No matching Markets...</em> </td></tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <div id="pagination">
+      <%= will_paginate @markets %>
+    </div>
+  </div>
+</div>

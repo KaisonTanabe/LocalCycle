@@ -7,6 +7,14 @@ LOCALCYCLE::Application.routes.draw do
     get 'export', on: :collection
   end
 
+  resources :goods do
+    get 'export', on: :collection
+  end
+
+  resources :markets do
+    get 'export', on: :collection
+  end
+
   resources :agreements do
     get 'modal', on: :member
     get 'root_agreement_changes', on: :member
@@ -18,9 +26,6 @@ LOCALCYCLE::Application.routes.draw do
       post 'chain', on: :collection
     end
   end
-
-#  resources :buyer_profiles, only: ["new","create","show"]
-#  resources :producer_profiles, only: ["new","create","show"]
 
   devise_for :users, path_prefix: "d", path_names: { sign_in: 'login', sign_up: 'register' },
     controllers: {confirmations: 'confirmations', sessions: 'sessions', registrations: 'registrations'}

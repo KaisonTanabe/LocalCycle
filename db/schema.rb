@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130703145720) do
+ActiveRecord::Schema.define(:version => 20130712150158) do
 
   create_table "agreement_changes", :force => true do |t|
     t.integer  "agreement_id",                                  :null => false
@@ -117,6 +117,24 @@ ActiveRecord::Schema.define(:version => 20130703145720) do
   add_index "certifications_users", ["certification_id"], :name => "index_certifications_users_on_certification_id"
   add_index "certifications_users", ["user_id"], :name => "index_certifications_users_on_user_id"
 
+  create_table "delivery_locations", :force => true do |t|
+    t.integer  "market_id"
+    t.string   "name"
+    t.string   "street_address_1"
+    t.string   "street_address_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country",          :default => "US"
+    t.string   "zip"
+    t.float    "lat"
+    t.float    "lng"
+    t.string   "latlong"
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+  end
+
+  add_index "delivery_locations", ["market_id"], :name => "index_delivery_locations_on_market_id"
+
   create_table "delivery_windows", :force => true do |t|
     t.integer  "deliverable_id"
     t.string   "deliverable_type"
@@ -127,6 +145,28 @@ ActiveRecord::Schema.define(:version => 20130703145720) do
     t.datetime "updated_at",       :null => false
     t.string   "transport_by"
   end
+
+  create_table "goods", :force => true do |t|
+    t.integer  "creator_id",                        :null => false
+    t.integer  "buyer_id",        :default => 0,    :null => false
+    t.integer  "producer_id",     :default => 0,    :null => false
+    t.integer  "market_id",                         :null => false
+    t.integer  "product_id",                        :null => false
+    t.integer  "selling_unit_id",                   :null => false
+    t.integer  "quantity"
+    t.boolean  "indefinite",      :default => true, :null => false
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+  end
+
+  add_index "goods", ["buyer_id"], :name => "index_goods_on_buyer_id"
+  add_index "goods", ["creator_id"], :name => "index_goods_on_creator_id"
+  add_index "goods", ["market_id"], :name => "index_goods_on_market_id"
+  add_index "goods", ["producer_id"], :name => "index_goods_on_producer_id"
+  add_index "goods", ["product_id"], :name => "index_goods_on_product_id"
+  add_index "goods", ["selling_unit_id"], :name => "index_goods_on_selling_unit_id"
 
   create_table "images", :force => true do |t|
     t.integer  "imageable_id"
@@ -147,6 +187,34 @@ ActiveRecord::Schema.define(:version => 20130703145720) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "markets", :force => true do |t|
+    t.string   "name"
+    t.text     "brief"
+    t.text     "description"
+    t.string   "street_address_1"
+    t.string   "street_address_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country",                  :default => "US"
+    t.string   "zip"
+    t.string   "billing_street_address_1"
+    t.string   "billing_street_address_2"
+    t.string   "billing_city"
+    t.string   "billing_state"
+    t.string   "billing_country",          :default => "US"
+    t.string   "billing_zip"
+    t.float    "lat"
+    t.float    "lng"
+    t.string   "latlong"
+    t.string   "phone"
+    t.string   "website"
+    t.string   "twitter"
+    t.string   "facebook"
+    t.integer  "size"
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+  end
+
   create_table "preferred_user_agreements", :force => true do |t|
     t.integer  "agreement_id", :null => false
     t.integer  "user_id",      :null => false
@@ -156,6 +224,16 @@ ActiveRecord::Schema.define(:version => 20130703145720) do
 
   add_index "preferred_user_agreements", ["agreement_id"], :name => "index_preferred_user_agreements_on_agreement_id"
   add_index "preferred_user_agreements", ["user_id"], :name => "index_preferred_user_agreements_on_user_id"
+
+  create_table "price_points", :force => true do |t|
+    t.integer  "good_id",    :null => false
+    t.float    "price",      :null => false
+    t.integer  "quantity",   :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "price_points", ["good_id"], :name => "index_price_points_on_good_id"
 
   create_table "products", :force => true do |t|
     t.string   "name",                                       :null => false
@@ -280,10 +358,12 @@ ActiveRecord::Schema.define(:version => 20130703145720) do
     t.string   "billing_state"
     t.string   "billing_country",          :default => "US"
     t.string   "billing_zip"
+    t.integer  "market_id"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["market_id"], :name => "index_users_on_market_id"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
 

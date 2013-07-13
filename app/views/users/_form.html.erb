@@ -38,11 +38,10 @@
 
   <% if @user.producer? %>
     <%= render partial: 'users/producer', locals: {f: f} %>
-    <%= render partial: 'users/product_selection', locals: {f: f} %>  
-  <% else %>
+  <% elsif @user.buyer? %>
     <%= render partial: 'users/buyer', locals: {f: f} %>
-    <%= render partial: 'users/product_selection', locals: {f: f} %>  
   <% end %>
+  <%#= render partial: 'users/product_selection', locals: {f: f} %>  
 
   
   <%= render partial: 'partials/submit', locals: {f: f, text: 'User'} %>

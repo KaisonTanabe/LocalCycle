@@ -1,7 +1,10 @@
 	<tr class="sorters">
 	  <th><%= sortable "role", "Role", parsed_params %></th>
 	  <th><%= sortable "last_name", "Name", parsed_params %></th>
+	  <th><%= sortable "market", "Market", parsed_params %></th>
 	  <th><%= sortable "name", "Organization", parsed_params %></th>
+          <% if current_user.admin? %>
 	  <th><%= sortable "current_sign_in_at", "Last Login", parsed_params %></th>
+          <% end %>
 	  <th>Actions</th>
 	</tr>

@@ -1,0 +1,27 @@
+<tr>
+  <th>
+    <%= f.select :, option_groups_from_collection_for_select(Category.includes(:products).order('name'), :products, :name, :id, :name, (params[:product_id].blank? ? (@user.product ? @user.product.id : "") : params[:product_id])), {prompt: "-- Select Product --"}, {class: "select2", style: "width: 180px;" } %>
+  </th>
+  <% if current_user.admin? %>
+  <th>
+    <%= f.select :creator_id, options_from_collection_for_select(User.by_producer.order('name'), :id, :name), {prompt: "-- Select Producer --"}, {class: "select2", style: "width: 180px;" } %>
+  </th>
+  <% end %>
+  <th>
+    <%= f.text_field :quantity, placeholder: "Qty", style: "width: 40px;" %>
+  </th>
+  <th>
+    <%= "[Price Points]" %>
+    <%= f.hidden_field :selling_unit, value: "lb" %>
+  </th>
+  <th>
+    <label class="checkbox"><%= f.check_box :indefinite, checked: (@user.new_record? ? false : @user.user_type == "indefinite"), class: "x-toggle-visible", data: {show: "#datepickers", hide: "#datepickers"} %> All the time</label>
+    <%= f.text_field :start_date, placeholder: "First delivery", data: {behavior: "datepicker"}, style: "width: 85px;" %>
+    <%= f.text_field :end_date, placeholder: "Last delivery", data: {behavior: "datepicker"}, style: "width: 85px;" %>
+  </th>
+  <th>
+    <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+    <i class="icon-white icon-plus"></i> Post Supply
+    <% end %>
+  </th>
+</tr>

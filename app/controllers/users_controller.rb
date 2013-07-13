@@ -6,7 +6,9 @@ class UsersController < ApplicationController
   
   require 'csv'
 
-  def index 
+  def index
+    @user = User.new()
+
     @users = filter_and_sort(@users, params)
     @users = @users.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
 

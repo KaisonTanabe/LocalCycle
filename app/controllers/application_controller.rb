@@ -6,11 +6,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    if resource.admin?
-      products_path
-    else
-      agreements_path
-    end
+    resource.complete ? goods_path : edit_user_path(resource)
   end
 
   def import_records(file, model)
@@ -18,9 +14,9 @@ class ApplicationController < ActionController::Base
     n, errs = 0, []
     
     CSV.parse(infile) do |row|
-      n += 1 
-      # SKIP: header i.e. first row OR blank row 
-      next if n == 1 or row.join.blank? 
+      n += 1
+      # SKIP: header i.e. first row OR blank row
+      next if n == 1 or row.join.blank?
       # build_from_csv method will map attributes & 
       # build new record
       record = model.capitalize.constantize.build_from_csv(row) 

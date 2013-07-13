@@ -1,0 +1,24 @@
+<%= content_tag_for :tr, user do %>
+  <td class='role <%= (params[:sort] == "role") ? "sorted" : "" %>'>
+    <%= image_tag user.role_avatar %>
+  </td>
+  <td class='last_name <%= (params[:sort] == "last_name") ? "sorted" : "" %>'>
+    <%= link_to(user.formal_name, edit_user_path(user)) %>
+  </td>
+  <td class='market <%= (params[:sort] == "market") ? "sorted" : "" %>'>
+    <%= user.market %>
+  </td>
+  <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
+    <%= user.name %>
+  </td>
+
+  <% if current_user.admin? %>
+  <td class='login <%= (params[:sort] == "current_sign_in_at") ? "sorted" : "" %>'>
+    <%= user.current_sign_in_at ? user.current_sign_in_at.strftime("%b %-d %I:%M %P") : "Never" %>
+  </td>
+  <% end %>
+
+  <td>
+    <%= render partial: "users/buttons", locals: {user: user} %>
+  </td>
+<% end %>

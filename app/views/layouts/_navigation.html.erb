@@ -7,16 +7,25 @@
     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog"></i> Manage <b class="caret"></b></a>
     <ul class="dropdown-menu">
       <% if current_user.admin? %>
+      <li><%= link_to "Markets", markets_path %></li>
+      <li><%= link_to "Goods", goods_path %></li>
       <li><%= link_to "Products", products_path %></li>
       <li><%= link_to "Users", users_path %></li>
-      <li><%= link_to "Agreements", table_agreements_path %></li>
       <% else %>
-        <li><%= link_to "Agreements", agreements_path %></li>
-        <% if current_user.producer? %>
-          <li><%= link_to "Inventory", marketplace_agreements_path %></li>
-        <% end %>
-        <li><%= link_to "Transactions", "#" %></li>
+      <li><%= link_to "Market", market_path(current_user.market) if current_user.complete? %></li>
       <% end %>
+
+      <% if current_user.market_manager? %>
+      <li><%= link_to "Users", users_path %></li>
+      <% end %>
+
+      <li><%= link_to "Goods", goods_path %></li>
+
+<!--
+      <li><%= link_to "Inventory", marketplace_agreements_path %></li>
+      <li><%= link_to "Agreements", agreements_path %></li>
+      <li><%= link_to "Agreements", table_agreements_path %></li>
+-->
     </ul>
   </li>
   

@@ -1,14 +1,26 @@
+class DeliveryLocation < ActiveRecord::Base
   ############# CONFIGURATION #############
-
+ 
   ## SETUP ASSOCIATIONS
+  
+  belongs_to :market
+
+  has_many :delivery_windows, as: :deliverable, dependent: :destroy
+  accepts_nested_attributes_for :delivery_windows, allow_destroy: true, reject_if: proc { |attrs| attrs['weekday'].blank? or attrs['start_hour'].blank? or attrs['end_hour'].blank? or attrs['transport_by'].blank? }
+  
 
   ## ATTRIBUTE PROTECTION
+  
+  attr_accessible :name, :market_id,
+    :street_address_1, :street_address_2, 
+    :city, :state, :country, :zip,
 
-  #attr_accessible
 
   ## ATTRIBUTE VALIDATION
 
-  #validates
+  validates :market_id, :name, :street_address_1,
+    :city, :state, :country, :zip,
+    presence: true
 
   #########################################
 
@@ -48,3 +60,4 @@
 
   ############ PRIVATE METHODS ############
   private
+end

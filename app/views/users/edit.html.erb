@@ -8,7 +8,7 @@
       <h1>Editing <%= @user.full_name %>'s Profile</h1>
       <h6></h6>
     <% else %>
-      <h1>Your Profile</h1>
+      <h1>Your <%= ROLES[current_user.role] %> Profile</h1>
       <h6></h6>
     <% end %>
   </div>
