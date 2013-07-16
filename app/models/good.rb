@@ -5,6 +5,7 @@ class Good < ActiveRecord::Base
   ## SETUP ASSOCIATIONS
   belongs_to :product
   belongs_to :selling_unit
+  belongs_to :market
   belongs_to :buyer, class_name: "User", foreign_key: :buyer_id
   belongs_to :producer, class_name: "User", foreign_key: :producer_id
   belongs_to :creator, class_name: "User", foreign_key: :creator_id
@@ -15,16 +16,18 @@ class Good < ActiveRecord::Base
   ## ATTRIBUTE PROTECTION  
   
   attr_accessible :product_id, :price_point_ids, :selling_unit_id, :quantity,
-    :indefinite, :start_date, :end_date
+    :indefinite, :start_date, :end_date, :creator_id, :market_id
 
 
   ## ATTRIBUTE VALIDATION
 
-  validates :name, :category_id, presence: true
+  validates :product_id, :selling_unit_id, :market_id, :creator_id, presence: true
 
-  validates_attachment :pic,
-    :size => { :in => 0..2.megabytes }
+  validates :indefinite,
+    :inclusion => {:in => [true, false]}
 
+  validates :start_date, :end_date, presence: true,
+    :if => lambda { self.indefinite == false }
   #########################################
 
 
@@ -46,22 +49,21 @@ class Good < ActiveRecord::Base
 
   ################ SCOPES #################
 
-  scope :available_demand_only, includes(:agreements).where("agreements.buyer_id = 0")
-  scope :available_supply_only, includes(:agreements).where("agreements.producer_id = 0")
-  scope :available_demand_and_mine_only, lambda {|b| includes(:agreements).where("agreements.buyer_id = 0 OR agreements.buyer_id = ?", b)}
-  scope :available_supply_and_mine_only, lambda {|p| includes(:agreements).where("agreements.producer_id = 0 OR agreements.producer_id = ?", p)}
-
   scope :in_month, lambda{|m| {:conditions => ['end_date >= ? AND start_date <= ?', Date.new(Date.today.year, m.to_i, 1), Date.new(Date.today.year, m.to_i, 1).end_of_month]}}
 
-  scope :by_category_name, lambda {|c| includes(:category).where("categories.name = ?", c)}
-  scope :by_name, lambda { |n| where('UPPER(goods.name) LIKE UPPER(?)', '%'+n+'%')}
-  scope :in_category, lambda { |c| includes(:category).where(category_id: Category.where(id: c).first.self_and_descendant_ids) }
+  scope :available_supply, where(buyer_id: 0)
+  scope :available_demand, where(producer_id: 0)
 
-  scope :by_producer, lambda { |p| includes(:agreements).where("agreements.producer_id = ?", p) }
-  scope :by_buyer, lambda { |p| includes(:agreements).where("agreements.buyer_id = ?", p) }
-
-  scope :by_standing_supply, includes(:agreements).where("agreements.start_date <= ? AND agreements.agreement_type = ? AND agreements.buyer_id IS NULL", Date.today, "onetime")
-  scope :by_standing_demand, includes(:agreements).where("agreements.start_date <= ? AND agreements.agreement_type = ? AND agreements.producer_id IS NULL", Date.today, "onetime")
+  scope :by_name, lambda { |n| where('UPPER(products.name) LIKE UPPER(?)', '%'+n+'%')}
+#  scope :by_min_price, lambda {|p| where("price >= ?", p.to_i)}
+#  scope :by_max_price, lambda {|p| where("price <= ?", p.to_i)}
+  scope :by_min_quantity, lambda {|q| where("quantity >= ?", q.to_i)}
+  scope :by_max_quantity, lambda {|q| where("quantity <= ?", q.to_i)}
+  scope :by_buyer, lambda {|b| where("buyer_id = ?", b)}
+  scope :by_producer, lambda {|p| where("producer_id = ?", p)}
+  scope :by_creator, lambda {|p| where("creator_id = ?", p)}
+  scope :by_product, lambda {|p| where("product_id = ?", p)}
+  scope :in_category, lambda { |c| includes(:product).where("products.category_id IN (?)", Category.where(id: c).first.self_and_descendant_ids) }
 
   #########################################
 
@@ -94,39 +96,41 @@ class Good < ActiveRecord::Base
     [id, cat_name, name, description, unit_type, catch_weight, start_date, end_date]
   end
 
-  def cat_name
-    Category.where(id: category_id).first.name
+  def quantity
+    read_attribute(:quantity).nil? ? "--" : read_attribute(:quantity)
   end
 
-  def best_pic_url(sym)
-    pic? ? pic.url(sym) : category.best_pic_url(sym)
+  def users
+    users = []
+    users << buyer if buyer
+    users << producer if producer
+    return users
+  end
+  def user_names
+    users.map {|u| u.name }.join(' + ')
   end
 
-  def best_pic
-    pic? ? pic : category.best_pic
+  def created_by?(u)
+    creator_id == u.id
+  end
+  def has_producer?
+    producer_id != 0
+  end
+  def has_buyer?
+    buyer_id != 0
   end
 
-  def bar_margins
-    "margin-left: " + bar_margin_left.to_s + "%; margin-right: " + bar_margin_right.to_s + "%;"
-  end
-
-  def start_bar_margins
-    "margin-left: 0%; margin-right: " + bar_margin_right.to_s + "%;"
-  end
-
-  def end_bar_margins
-    "margin-left: " + bar_margin_left.to_s + "%; margin-right: 0%;"
+  def duration
+    if agreement_type == "onetime"
+      "Once"
+    elsif agreement_type == "indefinite"
+      "Indefinite"
+    else
+      start_date.strftime("%b %e") + " - " + end_date.strftime("%b %e")
+    end
   end
 
   ############ PRIVATE METHODS ############
   private
-
-  def bar_margin_left
-    (start_date.yday.to_f/365)*100
-  end
-
-  def bar_margin_right
-    100 - (end_date.yday.to_f/365)*100
-  end
 
 end

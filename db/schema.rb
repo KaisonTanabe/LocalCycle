@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130712150158) do
+ActiveRecord::Schema.define(:version => 20130713162910) do
 
   create_table "agreement_changes", :force => true do |t|
     t.integer  "agreement_id",                                  :null => false
@@ -191,12 +191,7 @@ ActiveRecord::Schema.define(:version => 20130712150158) do
     t.string   "name"
     t.text     "brief"
     t.text     "description"
-    t.string   "street_address_1"
-    t.string   "street_address_2"
-    t.string   "city"
-    t.string   "state"
-    t.string   "country",                  :default => "US"
-    t.string   "zip"
+    t.string   "phone"
     t.string   "billing_street_address_1"
     t.string   "billing_street_address_2"
     t.string   "billing_city"
@@ -206,13 +201,15 @@ ActiveRecord::Schema.define(:version => 20130712150158) do
     t.float    "lat"
     t.float    "lng"
     t.string   "latlong"
-    t.string   "phone"
     t.string   "website"
     t.string   "twitter"
     t.string   "facebook"
-    t.integer  "size"
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
+    t.string   "pic_file_name"
+    t.string   "pic_content_type"
+    t.integer  "pic_file_size"
+    t.datetime "pic_updated_at"
   end
 
   create_table "preferred_user_agreements", :force => true do |t|
@@ -280,26 +277,6 @@ ActiveRecord::Schema.define(:version => 20130712150158) do
   add_index "selling_units", ["name"], :name => "index_selling_units_on_name", :unique => true
   add_index "selling_units", ["short_name"], :name => "index_selling_units_on_short_name", :unique => true
 
-  create_table "user_categories", :force => true do |t|
-    t.integer  "user_id",     :null => false
-    t.integer  "category_id", :null => false
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  add_index "user_categories", ["category_id"], :name => "index_user_categories_on_category_id"
-  add_index "user_categories", ["user_id"], :name => "index_user_categories_on_user_id"
-
-  create_table "user_products", :force => true do |t|
-    t.integer  "user_id",    :null => false
-    t.integer  "product_id", :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "user_products", ["product_id"], :name => "index_user_products_on_product_id"
-  add_index "user_products", ["user_id"], :name => "index_user_products_on_user_id"
-
   create_table "users", :force => true do |t|
     t.string   "email",                    :default => "",    :null => false
     t.string   "encrypted_password",       :default => "",    :null => false
@@ -366,25 +343,5 @@ ActiveRecord::Schema.define(:version => 20130712150158) do
   add_index "users", ["market_id"], :name => "index_users_on_market_id"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
-
-  create_table "users_categories", :force => true do |t|
-    t.integer  "user_id",     :null => false
-    t.integer  "category_id", :null => false
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  add_index "users_categories", ["category_id"], :name => "index_users_categories_on_category_id"
-  add_index "users_categories", ["user_id"], :name => "index_users_categories_on_user_id"
-
-  create_table "users_products", :force => true do |t|
-    t.integer  "user_id",    :null => false
-    t.integer  "product_id", :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "users_products", ["product_id"], :name => "index_users_products_on_product_id"
-  add_index "users_products", ["user_id"], :name => "index_users_products_on_user_id"
 
 end

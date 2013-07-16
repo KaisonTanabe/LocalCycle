@@ -1,0 +1,10 @@
+<h2>Your Market</h2>
+<legend></legend>
+
+<%= f.fields_for :market do |mf| %>
+
+  <%= render partial: "markets/form_fields", locals: {f: mf} %>
+
+  <%#= render partial: "users/delivery_options", locals: {f: f} %>
+
+<% end %>

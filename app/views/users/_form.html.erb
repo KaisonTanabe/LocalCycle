@@ -34,14 +34,25 @@
   </div>
   <% end %>
 
+  <div class="control-group">
+    <%= f.label :pic, "Profile Pic:", class: "control-label" %>
+    <div class="controls controls-row">
+      <%= (image_tag f.object.pic.url(:medium)) if f.object.pic? %>
+      <%= f.file_field :pic, class: "span4" %>
+      <span class="help-block">Upload an image to represent yourself. 2MB Limit.</span>
+    </div>
+  </div>
+  
   <p><br /></p>
 
   <% if @user.producer? %>
-    <%= render partial: 'users/producer', locals: {f: f} %>
+    <%= render partial: 'users/producer_fields', locals: {f: f} %>
   <% elsif @user.buyer? %>
-    <%= render partial: 'users/buyer', locals: {f: f} %>
+    <%= render partial: 'users/buyer_fields', locals: {f: f} %>
+  <% elsif @user.market_manager? %>
+    <%= render partial: 'users/market_manager_fields', locals: {f: f} %>
   <% end %>
-  <%#= render partial: 'users/product_selection', locals: {f: f} %>  
+  <%#= render partial: 'users/product_selection_fields', locals: {f: f} %>  
 
   
   <%= render partial: 'partials/submit', locals: {f: f, text: 'User'} %>

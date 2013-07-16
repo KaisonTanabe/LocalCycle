@@ -6,7 +6,7 @@
     <%= link_to(user.formal_name, edit_user_path(user)) %>
   </td>
   <td class='market <%= (params[:sort] == "market") ? "sorted" : "" %>'>
-    <%= user.market %>
+    <%= link_to user.market.name, market_path(user.market) if user.market %>
   </td>
   <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
     <%= user.name %>

@@ -7,10 +7,10 @@
 
     <%= f.hidden_field :role, value: @role %>
 
-    <legend><%= @role.capitalize %> Registration</legend>
+    <legend><%= ROLES[@role] %> Registration</legend>
 
     <ol>
-      <li>Register as a <%= @role %> below.</li>
+      <li>Register as a <%= ROLES[@role] %> below.</li>
       <li>Check your email (at the address supplied below).</li>
       <li>You will receive an email within 5 minutes prompting you to confirm and complete your profile.<br />
 	<em>If you do not receive an email, check your spam folder. If still missing, email <a href="mailto:<%= SUPPORT_EMAIL %>?subject=Confirmation Email Never Received..."><%= SUPPORT_EMAIL %></a>.</em></li>

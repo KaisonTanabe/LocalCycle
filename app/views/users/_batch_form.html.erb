@@ -1,27 +1,35 @@
 <tr>
   <th>
-    <%= f.select :, option_groups_from_collection_for_select(Category.includes(:products).order('name'), :products, :name, :id, :name, (params[:product_id].blank? ? (@user.product ? @user.product.id : "") : params[:product_id])), {prompt: "-- Select Product --"}, {class: "select2", style: "width: 180px;" } %>
+    <%= f.select :role, REGISTERABLE_ROLES.map{|r| [r.second, r.first]}, {prompt: "Role"}, {style: "width: 70px;" } %>
+    <%= f.hidden_field :complete, value: true %>
+  </th>
+  <th>
+    <%= f.text_field :first_name, placeholder: "First Name", style: "width: 81px;" %>
+    <%= f.text_field :last_name, placeholder: "Last Name", style: "width: 81px;" %><br />
+    <%= f.text_field :email, placeholder: "Email", style: "width: 180px;" %><br />
+    <%= f.text_field :phone, placeholder: "Phone #", style: "width: 180px;" %>
+  </th>
+  <th>
+    <% if current_user.admin? %>
+    <%= f.select :market_id, options_from_collection_for_select(Market.order("name ASC"), :id, :name), {prompt: "-- Select Market --"}, {class: "select2", style: "width: 180px;" } %>
+    <% else %>
+    <%= f.hidden_field :market_id, value: current_user.market_id %>
+    <% end %>
+  </th>
+  <th>
+    <%= f.text_field :name, placeholder: "Organization Name", style: "width: 186px;" %><br />
+    <%= f.text_field :street_address_1, placeholder: "Address 1", style: "width: 186px;" %><br />
+    <%= f.text_field :street_address_2, placeholder: "Address 2", style: "width: 186px;" %><br />
+    <%= f.text_field :city, placeholder: "City", style: "width: 80px;" %>
+    <%= f.text_field :state, placeholder: "State", style: "width: 40px;" %>
+    <%= f.text_field :zip, placeholder: "Zip", style: "width: 30px;" %>
   </th>
   <% if current_user.admin? %>
+  <th></th>
+  <% end %>  
   <th>
-    <%= f.select :creator_id, options_from_collection_for_select(User.by_producer.order('name'), :id, :name), {prompt: "-- Select Producer --"}, {class: "select2", style: "width: 180px;" } %>
-  </th>
-  <% end %>
-  <th>
-    <%= f.text_field :quantity, placeholder: "Qty", style: "width: 40px;" %>
-  </th>
-  <th>
-    <%= "[Price Points]" %>
-    <%= f.hidden_field :selling_unit, value: "lb" %>
-  </th>
-  <th>
-    <label class="checkbox"><%= f.check_box :indefinite, checked: (@user.new_record? ? false : @user.user_type == "indefinite"), class: "x-toggle-visible", data: {show: "#datepickers", hide: "#datepickers"} %> All the time</label>
-    <%= f.text_field :start_date, placeholder: "First delivery", data: {behavior: "datepicker"}, style: "width: 85px;" %>
-    <%= f.text_field :end_date, placeholder: "Last delivery", data: {behavior: "datepicker"}, style: "width: 85px;" %>
-  </th>
-  <th>
-    <%= button_tag type: 'submit', class: "btn btn-primary" do %>
-    <i class="icon-white icon-plus"></i> Post Supply
+    <%= button_tag type: 'submit', class: "btn btn-primary pull-right" do %>
+    <i class="icon-white icon-plus"></i> Create User
     <% end %>
   </th>
 </tr>

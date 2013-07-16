@@ -3,7 +3,12 @@
   <%= link_to market.name, edit_market_path(market) %>
 </td>
 <td class='market_managers <%= (params[:sort] == "market_managers.name") ? "sorted" : "" %>'>
-  <%=raw market.market_managers.map {|m| link_to m.name, user_path(m)}.join('<br />') %>
+  <% market.market_managers.each do |mm| %>
+    <%= link_to mm.name, mm %>
+  <% end %>
+</td>
+<td class='state <%= (params[:sort] == "state") ? "sorted" : "" %>'>
+  <%= market.billing_state %>
 </td>
 <td>
   <div class="btn-toolbar">

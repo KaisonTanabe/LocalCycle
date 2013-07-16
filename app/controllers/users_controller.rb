@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   # Initialize Cancan authorization for this controller
-  load_and_authorize_resource
+  load_and_authorize_resource# except: "create"
 
   helper_method :sort_column, :sort_direction
   
@@ -42,6 +42,8 @@ class UsersController < ApplicationController
   end
 
   def create
+    @user = User.new(params[:user])
+
     @user.skip_confirmation!
     @user.password = "TempPass42"
     @user.password_confirmation = "TempPass42"
@@ -49,15 +51,21 @@ class UsersController < ApplicationController
       if @user.save
         format.html { redirect_to edit_user_path(@user), notice: 'User successfully created.' }
         format.json { render json: @user, status: :created, location: @user }
+        format.js { render :create }
       else
         format.html { render action: "new" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.js { render :create_error }
       end
     end
   end
 
   def edit
+    # Initialize 4 delivery windows to encourage multiple options
     (4 - @user.delivery_windows.count).times {@user.delivery_windows.build}
+
+    # Create dummy market to update if market manager
+    @user.market ||= Market.create() if @user.market_manager?
   end
 
   def update
@@ -67,12 +75,12 @@ class UsersController < ApplicationController
       params[:user][:certification_ids] ||= []
     end
 
-    params[:user][:category_ids] ||= []
-    params[:user][:product_ids] ||= []
+#    params[:user][:category_ids] ||= []
+#    params[:user][:product_ids] ||= []
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to current_user.admin? ? users_path : agreements_path, notice: @user.role.capitalize + ' was successfully updated.' }
+        format.html { redirect_to (current_user.admin? ? users_path : goods_path), notice: ROLES[@user.role] + ' was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

@@ -1,6 +1,6 @@
 <tr class="input-row">
-  <%= form_tag(goods_path, id: "product-mobile-filter", method: :get) do %>
-    <td colspan="<%= (current_user.admin? or current_user.market_manager?) ? '5' : '4' %>" class="form-search">
+  <%= form_tag(users_path, id: "product-mobile-filter", method: :get) do %>
+    <td colspan="<%= current_user.admin? ? '5' : '4' %>" class="form-search">
       <div class="input-append">
 	<%= text_field_tag :name,  params[:name].blank? ? '' : params[:name], placeholder: "Search by name...", class: "search-query" %>
 	<button type="submit" class="btn-inverse btn"><span class="icon-search icon-white"></span></button>
@@ -14,7 +14,7 @@
 	    <span class="caret"></span>
 	  </button>
 	  <ul class="dropdown-menu">
-	    <li><%= link_to "CSV File", export_goods_path(params), id: "export_csv" %></li>
+	    <li><%= link_to "CSV File", export_users_path(params), id: "export_csv" %></li>
 	  </ul>
 	</div>
       </div>

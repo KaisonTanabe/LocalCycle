@@ -39,6 +39,7 @@ LOCALCYCLE::Application.routes.draw do
   resources :users do
     get 'prompt', on: :member
     get 'modal', on: :member
+    get 'export', on: :collection
   end
 
   # Temporary model to collect email addresses on BETA page

@@ -25,37 +25,36 @@ class User < ActiveRecord::Base
   has_many :goods, foreign_key: :creator_id, dependent: :destroy
 
   belongs_to :market
-
+  accepts_nested_attributes_for :market
 
   ## ATTRIBUTE PROTECTION
   attr_accessible :first_name, :last_name, :email, :notes,
     :attachments_attributes, :role, :name, :phone, :growing_methods,
     :street_address_1, :street_address_2, 
-    :city, :state, :country, :zip,
+    :city, :state, :country, :zip, 
     :billing_street_address_1, :billing_street_address_2, 
     :billing_city, :billing_state, :billing_country, :billing_zip,
     :description, :website, :twitter, :facebook, :pic, 
     :certification_ids, :text_updates, :complete,
     :has_eggs, :has_dairy, :has_livestock, :has_pantry, 
-    :custom_growing_methods, :product_ids, :category_ids,
-    :delivery_windows_attributes, :size, :market_id
+    :custom_growing_methods, :delivery_windows_attributes, :size,
+    :market_id, :market_attributes
+ #   :product_ids, :category_ids
 
 
   ## ATTRIBUTE VALIDATION
-  validates :first_name, :last_name, :email,  presence: true
-  validates :role,                            inclusion: {:in => ROLES.map{ |r| r.first}}
+  validates :first_name, :last_name,  presence: true
+  validates :role,                    inclusion: {:in => ROLES.map{ |r| r.first}}
 
-  validates :name, :phone, :description, :country,
-    :street_address_1, :city, :state, :zip,
-    presence: true,
-    :if => lambda { self.complete == true }
-
-  validates :growing_methods, :size,
+  validates  :name, :phone,
+    :street_address_1, :city, :state, :zip, :country,
+    #:growing_methods, :size, :description,
     presence: true,
     :if => lambda { self.role == "producer" and self.complete == true }
 
-  validates :billing_street_address_1,
-    :billing_city, :billing_state, :billing_country, :billing_zip,
+  validates :name, :phone,
+    :street_address_1, :city, :state, :zip, :country,
+    #:description, :billing_street_address_1, :billing_city, :billing_state, :billing_country, :billing_zip,
     presence: true,
     :if => lambda { self.role == "buyer" and self.complete == true }
 

@@ -36,7 +36,7 @@
           <% end %>
 
         <% else %>
-          <tr><td colspan="<%= current_user.admin? ? '6' : '5' %>"><em>No matching Goods...</em> </td></tr>
+          <tr><td colspan="<%= (current_user.admin? or current_user.market_manager?) ? '6' : '5' %>"><em>No matching Goods...</em> </td></tr>
         <% end %>
       </tbody>
     </table>

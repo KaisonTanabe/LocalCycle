@@ -9,17 +9,21 @@ class Market < ActiveRecord::Base
   has_many :producers, class_name: "User", foreign_key: :market_id
   has_many :buyers, class_name: "User", foreign_key: :market_id
 
+  has_attached_file :pic, styles: IMAGE_STYLES, default_url: :set_default_url_on_role
+
   ## ATTRIBUTE PROTECTION
   
-  attr_accessible :name, :brief, :description,
-    :street_address_1, :street_address_2, 
-    :city, :state, :country, :zip,
+  attr_accessible :name, :brief, :description, :pic, :phone,
     :billing_street_address_1, :billing_street_address_2, 
     :billing_city, :billing_state, :billing_country, :billing_zip,
+    :website, :twitter, :facebook
 
   ## ATTRIBUTE VALIDATION
 
-  #validates
+  validates :name, :brief, :phone,
+    :billing_street_address_1,
+    :billing_city, :billing_state, :billing_country, :billing_zip,
+    presence: true
 
   #########################################
 

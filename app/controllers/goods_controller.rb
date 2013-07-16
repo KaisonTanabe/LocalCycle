@@ -57,9 +57,11 @@ class GoodsController < ApplicationController
       if @good.save
         format.html { redirect_to goods_url, notice: 'Good was successfully created.' }
         format.json { render json: @good, status: :created, location: @good }
+        format.js { render :create }
       else
         format.html { render action: "new" }
         format.json { render json: @good.errors, status: :unprocessable_entity }
+        format.js { render :create_error }
       end
     end
   end
