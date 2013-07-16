@@ -13,7 +13,7 @@ class DeliveryLocation < ActiveRecord::Base
   
   attr_accessible :name, :market_id,
     :street_address_1, :street_address_2, 
-    :city, :state, :country, :zip,
+    :city, :state, :country, :zip
 
 
   ## ATTRIBUTE VALIDATION
