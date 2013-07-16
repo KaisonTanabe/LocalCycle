@@ -54,7 +54,7 @@ class Good < ActiveRecord::Base
   scope :available_supply, where(buyer_id: 0)
   scope :available_demand, where(producer_id: 0)
 
-  scope :by_name, lambda { |n| where('UPPER(products.name) LIKE UPPER(?)', '%'+n+'%')}
+  scope :by_name, lambda { |n| includes(:product).where('UPPER(products.name) LIKE UPPER(?)', '%'+n+'%')}
 #  scope :by_min_price, lambda {|p| where("price >= ?", p.to_i)}
 #  scope :by_max_price, lambda {|p| where("price <= ?", p.to_i)}
   scope :by_min_quantity, lambda {|q| where("quantity >= ?", q.to_i)}
@@ -121,9 +121,7 @@ class Good < ActiveRecord::Base
   end
 
   def duration
-    if agreement_type == "onetime"
-      "Once"
-    elsif agreement_type == "indefinite"
+    if indefinite == true
       "Indefinite"
     else
       start_date.strftime("%b %e") + " - " + end_date.strftime("%b %e")

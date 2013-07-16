@@ -11,7 +11,7 @@ class GoodsController < ApplicationController
 
     @good = Good.new()
 
-    @goods = @goods.includes(:product, :selling_units)
+    @goods = @goods.includes(:product, :selling_unit)
     @goods = filter_and_sort(@goods, params)
     @goods = @goods.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
 
@@ -138,7 +138,7 @@ class GoodsController < ApplicationController
   
   def sort_column
     sort = params[:sort] || ''
-    (Good.column_names.include?(sort) || sort == "selling_units.name" || sort == "categories.name") ? sort : "goods.name"
+    (Good.column_names.include?(sort) || sort == "selling_units.name") ? sort : "products.name"
   end
 
   def sort_direction
