@@ -1,6 +1,7 @@
 class PublicController < ApplicationController
 
-  layout 'public'
+  layout 'public', except: "placeholder"
+  layout 'placeholder', only: "placeholder"
 
   def index
     redirect_to goods_path if user_signed_in?
@@ -19,6 +20,9 @@ class PublicController < ApplicationController
   end
 
   def test
+  end
+
+  def placeholder
   end
 
 end

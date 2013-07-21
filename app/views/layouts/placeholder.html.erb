@@ -19,27 +19,30 @@
         <div class="row">
           <div class="span6 offset3">
 	    <div class="row">
-	      <div class="panel">
+	      <div class="panel centered">
 
-		<h1><img src="assets/localcycle-logo.png" alt="LocalCycle" style="margin-top: -20px;" /> <span>L</span>ocal<span>C</span>ycle</h1>
-
-		<hr />
-
-		<h5>Connecting local producers with wholesale buyers</h5>
-		<h5>We enable producers and buyers to see and act upon future demand and supply through production agreements.</h5>
+		<h1><img src="assets/localcycle-logo.png" alt="LocalCycle" style="padding-top: -20px;" /> <span>L</span>ocal<span>C</span>ycle</h1>
 
 		<hr />
 
-		<h6>Sign up below to get in early.</h6>
+		<p>LocalCycle provides local food organizers the flexible toolkit to <i><strong>create, manage, and scale wholesale marketplaces with distribution points.</strong></i><br />
+                  <br />
+                  Local farmers and buyers can join these marketplaces and are empowered to <i><strong>transact directly</strong></i> with one another, saving both time and money.
+                </p>
+
+		<hr />
+
+		<h6>www.localcycle.org is currently in development, and is expected to be released in early September!</h6>
+		<h6>Enter your email address below, and we’ll contact you when it’s up and running!</h6>
 
 		<p id="response"></p>
 
 		<%= form_for("lead", url: leads_path,  html: {class: "form-horizontal", action: "post", remote: true}) do |f| %>
 		<div class="input-append">
 		  <%= f.email_field :email, placeholder: "Enter your email..." %>
-		  <%= f.submit "Notify me", class: "btn-success btn" %>
+		  <%= f.submit "Notify me", class: "btn-success btn", style: "width: 120px;" %>
 		</div>
-		<small>...but don't spam me</small>
+		<small style="width: 120px;display: inline-block;">...but don't spam me</small>
 		<% end %>
 		
 	      </div>
