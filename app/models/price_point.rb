@@ -3,13 +3,15 @@ class PricePoint < ActiveRecord::Base
 
   ## SETUP ASSOCIATIONS
 
+  belongs_to :good
+
   ## ATTRIBUTE PROTECTION
 
-  attr_accessible :price, :quantity, :good_id
+  attr_accessible :price, :quantity
 
   ## ATTRIBUTE VALIDATION
 
-  validates :price, :quantity, :good_id, presence: true
+  validates :price, :quantity, presence: true
 
   #########################################
 

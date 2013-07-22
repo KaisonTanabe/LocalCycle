@@ -23,6 +23,7 @@
 //= require bootstrap-modalmanager
 //= require bootstrap-modal
 //= require parsley.min
+//= require form_helpers
 //= require_tree .
 jQuery(function($){
 

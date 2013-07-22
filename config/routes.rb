@@ -48,7 +48,7 @@ LOCALCYCLE::Application.routes.draw do
   # Reserved for admin to test different user views
   match 'become' => "users#become"
 
-  root :to => 'public#placeholder'
+  root :to => 'public#index'
 
   # Public pages
   match "for-farmers" => 'public#for_farmers'

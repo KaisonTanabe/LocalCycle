@@ -31,6 +31,13 @@
     }
 }
 
+#batch .controls {
+    margin: 0;
+    .form-only {
+        display: none;
+    }
+}
+
 tr #approval-group {
     text-align: center;
     display: block;

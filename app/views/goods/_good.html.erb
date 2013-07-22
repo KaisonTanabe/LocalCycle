@@ -10,10 +10,12 @@
   </td>
   <% end %>
   <td class='quantity <%= (params[:sort] == "quantity") ? "sorted" : "" %>'>
-    <%=raw good.quantity.to_s + " <span class='label label-info'>" + good.selling_unit.short_name + "</span>" %>
+    <%=raw good.quantity.to_s + " <span class='label label-info'>" + good.selling_unit.short_name.pluralize + "</span>" %>
   </td>
   <td class='price <%= (params[:sort] == "price") ? "sorted" : "" %>'>
-    <%=raw good.price_points.map{|pp| number_to_currency(pp.price) + " @ >" + pp.quantity + "<span class='label label-info'>" + good.selling_unit.short_name + "</span>"}.join('<br />') %>
+    <% good.price_points.order("quantity ASC").each do |pp| %>
+      <%= number_to_currency(pp.price) %> <strong style="font-size: 15px;">@</strong> &gt;<%= pp.quantity %><span class='label label-info'><%= good.selling_unit.short_name.pluralize %></span><br />
+    <% end %>
   </td>
   <td class='availability <%= (params[:sort] == "availability") ? "sorted" : "" %>'>
     <%=raw good.duration %>

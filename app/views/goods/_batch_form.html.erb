@@ -1,6 +1,7 @@
 <tr>
   <th>
     <%= f.select :product_id, option_groups_from_collection_for_select(Category.includes(:products).order('name'), :products, :name, :id, :name, (params[:product_id].blank? ? (@good.product ? @good.product.id : "") : params[:product_id])), {prompt: "-- Select Product --"}, {class: "select2", style: "width: 180px;" } %>
+    <%= f.hidden_field :market_id, value: current_user.market_id if current_user.producer?%>
   </th>
   <% if current_user.admin? or current_user.market_manager? %>
   <th>
@@ -16,11 +17,17 @@
     <%= f.text_field :quantity, placeholder: "Qty", style: "width: 40px;" %>
   </th>
   <th>
-    <%= "[Price Points]" %>
+    <%= f.fields_for :price_points do |fpp| %>
+      <%= render partial: 'price_points/form', locals: { f: fpp } %>
+      <%= new_child_fields_template(f, :price_points, {partial: "price_points/form"})%>
+    <% end %>
+    <div class="controls">
+      <span class="help-inline"><%= add_child_link "Price Point", :price_points %></span>
+    </div>
     <%= f.hidden_field :selling_unit_id, value: SellingUnit.where(short_name: "lb").first.id %>
   </th>
   <th>
-    <label class="checkbox"><%= f.check_box :indefinite, checked: (@good.new_record? ? false : @good.good_type == "indefinite"), class: "x-toggle-visible", data: {show: "#datepickers", hide: "#datepickers"} %> All the time</label>
+    <label class="checkbox"><%= f.check_box :indefinite, class: "x-toggle-visible", data: {show: "#good_start_date", hide: "#good_start_date"} %> All the time</label>
     <%= f.text_field :start_date, placeholder: "First delivery", data: {behavior: "datepicker"}, style: "width: 85px;" %>
     <%= f.text_field :end_date, placeholder: "Last delivery", data: {behavior: "datepicker"}, style: "width: 85px;" %>
   </th>

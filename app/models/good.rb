@@ -10,13 +10,14 @@ class Good < ActiveRecord::Base
   belongs_to :producer, class_name: "User", foreign_key: :producer_id
   belongs_to :creator, class_name: "User", foreign_key: :creator_id
 
-  has_many :price_points
+  has_many :price_points, dependent: :destroy
+  accepts_nested_attributes_for :price_points, allow_destroy: true, reject_if: proc { |attrs| attrs['price'].blank? or attrs['quantity'].blank? }
 
 
   ## ATTRIBUTE PROTECTION  
   
-  attr_accessible :product_id, :price_point_ids, :selling_unit_id, :quantity,
-    :indefinite, :start_date, :end_date, :creator_id, :market_id
+  attr_accessible :product_id, :selling_unit_id, :quantity,
+    :indefinite, :start_date, :end_date, :creator_id, :market_id, :price_points_attributes
 
 
   ## ATTRIBUTE VALIDATION
@@ -25,6 +26,8 @@ class Good < ActiveRecord::Base
 
   validates :indefinite,
     :inclusion => {:in => [true, false]}
+
+  validate :must_have_price_point
 
   validates :start_date, :end_date, presence: true,
     :if => lambda { self.indefinite == false }
@@ -91,6 +94,12 @@ class Good < ActiveRecord::Base
 
 
   ############ PUBLIC METHODS #############
+
+  def must_have_price_point
+    if price_points.empty? or price_points.all? {|pp| pp.marked_for_destruction? }
+      errors.add(:base, 'Must have at least one price point')
+    end
+  end
 
   def to_csv
     [id, cat_name, name, description, unit_type, catch_weight, start_date, end_date]

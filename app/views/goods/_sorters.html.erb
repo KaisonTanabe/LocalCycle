@@ -3,8 +3,8 @@
   <% if current_user.admin? or current_user.market_manager? %>
   <th><%= sortable "producer", "Producer", parsed_params %></th>
   <% end %>
-  <th><%= sortable "quantity", "Qty", parsed_params %></th>
-  <th><%= sortable "price", "Prices", parsed_params %></th>
+  <th><%= sortable "quantity", "Qty Avail", parsed_params %></th>
+  <th><%= sortable "price", "Price Points", parsed_params %></th>
   <th><%= sortable "availability", "Availability", parsed_params %></th>
   <th><span>Actions</span></th>
 </tr>

@@ -21,8 +21,8 @@ module ApplicationHelper
     link_to(name, "javascript:void(0)", :class => "remove_child")
   end
 
-  def add_child_link(name, association)
-    link_to(raw('<span class="icon icon-plus"></span> ' + name), "javascript:void(0)", :class => "add_child btn", :"data-association" => association)
+  def add_child_link(name, association, cls="")
+    link_to(raw('<span class="icon icon-plus"></span> ' + name), "javascript:void(0)", :class => cls + " add_child btn", :"data-association" => association)
   end
 
   def new_child_fields_template(form_builder, association, options = {})

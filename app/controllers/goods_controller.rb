@@ -10,8 +10,10 @@ class GoodsController < ApplicationController
     redirect_to edit_user_path(current_user) and return unless current_user.complete
 
     @good = Good.new()
+    @good.price_points.build()
 
     @goods = @goods.includes(:product, :selling_unit)
+    @goods = @goods.by_creator(current_user) if current_user.producer?
     @goods = filter_and_sort(@goods, params)
     @goods = @goods.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
 
