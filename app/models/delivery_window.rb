@@ -11,7 +11,7 @@ class DeliveryWindow < ActiveRecord::Base
 
   ## ATTRIBUTE VALIDATION
 
-  validates :weekday, :start_hour, :end_hour, :transport_by, presence: true
+  validates :weekday, :start_hour, :end_hour, presence: true
 
 
   #########################################

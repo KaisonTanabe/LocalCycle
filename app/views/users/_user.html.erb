@@ -5,14 +5,14 @@
   <td class='last_name <%= (params[:sort] == "last_name") ? "sorted" : "" %>'>
     <%= link_to(user.formal_name, edit_user_path(user)) %>
   </td>
-  <td class='market <%= (params[:sort] == "market") ? "sorted" : "" %>'>
-    <%= link_to user.market.name, market_path(user.market) if user.market %>
-  </td>
   <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
     <%= user.name %>
   </td>
 
   <% if current_user.admin? %>
+  <td class='market <%= (params[:sort] == "market") ? "sorted" : "" %>'>
+    <%= link_to user.market.name, market_path(user.market) if user.market %>
+  </td>
   <td class='login <%= (params[:sort] == "current_sign_in_at") ? "sorted" : "" %>'>
     <%= user.current_sign_in_at ? user.current_sign_in_at.strftime("%b %-d %I:%M %P") : "Never" %>
   </td>

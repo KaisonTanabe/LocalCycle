@@ -1,6 +1,6 @@
 <tr class="input-row">
   <%= form_tag(users_path, id: "product-mobile-filter", method: :get) do %>
-    <td colspan="<%= current_user.admin? ? '5' : '4' %>" class="form-search">
+    <td colspan="<%= current_user.admin? ? '5' : '3' %>" class="form-search">
       <div class="input-append">
 	<%= text_field_tag :name,  params[:name].blank? ? '' : params[:name], placeholder: "Search by name...", class: "search-query" %>
 	<button type="submit" class="btn-inverse btn"><span class="icon-search icon-white"></span></button>

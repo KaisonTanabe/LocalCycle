@@ -4,10 +4,12 @@ class Market < ActiveRecord::Base
   ## SETUP ASSOCIATIONS
 
   has_many :goods
-  has_many :delivery_locations
   has_many :market_managers, class_name: "User", foreign_key: :market_id
   has_many :producers, class_name: "User", foreign_key: :market_id
   has_many :buyers, class_name: "User", foreign_key: :market_id
+
+  has_many :delivery_windows, as: :deliverable, dependent: :destroy
+  accepts_nested_attributes_for :delivery_windows, allow_destroy: true, reject_if: proc { |attrs| attrs['weekday'].blank? or attrs['start_hour'].blank? or attrs['start_hour'].blank? }
 
   has_attached_file :pic, styles: IMAGE_STYLES, default_url: :set_default_url_on_role
 
@@ -16,7 +18,7 @@ class Market < ActiveRecord::Base
   attr_accessible :name, :brief, :description, :pic, :phone,
     :billing_street_address_1, :billing_street_address_2, 
     :billing_city, :billing_state, :billing_country, :billing_zip,
-    :website, :twitter, :facebook
+    :website, :twitter, :facebook, :delivery_windows_attributes
 
   ## ATTRIBUTE VALIDATION
 

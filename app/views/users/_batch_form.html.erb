@@ -2,19 +2,13 @@
   <th>
     <%= f.select :role, REGISTERABLE_ROLES.map{|r| [r.second, r.first]}, {prompt: "Role"}, {style: "width: 70px;" } %>
     <%= f.hidden_field :complete, value: true %>
+    <%= f.hidden_field :market_id, value: current_user.market_id unless current_user.admin? %>
   </th>
   <th>
     <%= f.text_field :first_name, placeholder: "First Name", style: "width: 81px;" %>
     <%= f.text_field :last_name, placeholder: "Last Name", style: "width: 81px;" %><br />
     <%= f.text_field :email, placeholder: "Email", style: "width: 180px;" %><br />
     <%= f.text_field :phone, placeholder: "Phone #", style: "width: 180px;" %>
-  </th>
-  <th>
-    <% if current_user.admin? %>
-    <%= f.select :market_id, options_from_collection_for_select(Market.order("name ASC"), :id, :name), {prompt: "-- Select Market --"}, {class: "select2", style: "width: 180px;" } %>
-    <% else %>
-    <%= f.hidden_field :market_id, value: current_user.market_id %>
-    <% end %>
   </th>
   <th>
     <%= f.text_field :name, placeholder: "Organization Name", style: "width: 186px;" %><br />
@@ -25,6 +19,9 @@
     <%= f.text_field :zip, placeholder: "Zip", style: "width: 30px;" %>
   </th>
   <% if current_user.admin? %>
+  <th>
+    <%= f.select :market_id, options_from_collection_for_select(Market.order("name ASC"), :id, :name), {prompt: "-- Select Market --"}, {class: "select2", style: "width: 180px;" } %>
+  </th>
   <th></th>
   <% end %>  
   <th>

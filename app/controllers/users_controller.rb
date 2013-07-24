@@ -61,11 +61,11 @@ class UsersController < ApplicationController
   end
 
   def edit
-    # Initialize 4 delivery windows to encourage multiple options
-    (4 - @user.delivery_windows.count).times {@user.delivery_windows.build}
-
     # Create dummy market to update if market manager
     @user.market ||= Market.create() if @user.market_manager?
+
+    # Initialize 4 delivery windows to encourage multiple options
+    (4 - @user.market.delivery_windows.count).times {@user.market.delivery_windows.build} if @user.market_manager?
   end
 
   def update

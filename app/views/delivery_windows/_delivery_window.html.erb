@@ -1,6 +1,6 @@
 <% if f.object.new_record? %>
   <div class="controls controls-row child-field" style="margin-bottom: 5px;">
-    <%= f.select :transport_by, [["-- Select Type --",""],["Pickup", "pickup"],["Dropoff", "dropoff"],["Either", "either"]], {}, {style: "width: 140px;"} %> &nbsp;
+    <%#= f.select :transport_by, [["-- Select Type --",""],["Pickup", "pickup"],["Dropoff", "dropoff"],["Either", "either"]], {}, {style: "width: 140px;"} %> &nbsp;
     <%= f.select :weekday, WEEKDAYS.map {|k,v| [v, k]}, {prompt: "-- Select Weekday --"}, {style: "width: 170px;"} %> &nbsp;
     <%= f.select :start_hour, NORMAL_HOURS.map {|k,v| [v, k]}, {prompt: "From..."}, {style: "width: 100px;"} %> to
     <%= f.select :end_hour, NORMAL_HOURS.map {|k,v| [v, k]}, {prompt: "To..."}, {style: "width: 100px;"} %>
@@ -9,7 +9,7 @@
   </div>
 <% else %>
   <div class="controls controls-row child-field" style="padding: 5px;" >
-    <strong><%= f.object.transport_by.capitalize %></strong>: <%= WEEKDAYS[f.object.weekday].pluralize + " - " + NORMAL_HOURS[f.object.start_hour] + " to " + NORMAL_HOURS[f.object.end_hour] %>
+    <strong><%#= f.object.transport_by.capitalize %></strong><%= WEEKDAYS[f.object.weekday].pluralize + " - " + NORMAL_HOURS[f.object.start_hour] + " to " + NORMAL_HOURS[f.object.end_hour] %>
     <span class="help-inline"><%= link_to raw('<span class="icon-white icon-remove"></span> Remove'), 'javascript:void(0)', class: 'remove-old-child btn btn-mini btn-inverse' %></span>
     <%= f.hidden_field :_destroy, class: 'destroy-field', value: '0' %>
   </div>

@@ -11,7 +11,7 @@ class DeliveryLocation < ActiveRecord::Base
 
   ## ATTRIBUTE PROTECTION
   
-  attr_accessible :name, :market_id,
+  attr_accessible :name, :market_id, :delivery_windows_attributes,
     :street_address_1, :street_address_2, 
     :city, :state, :country, :zip
 
