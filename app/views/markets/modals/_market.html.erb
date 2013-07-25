@@ -1,0 +1,16 @@
+<%= image_tag market.pic.url(:medium), class: "medium pull-left" %>
+
+<p><%= market.description %></p>
+
+<ul>
+  <li><strong>Phone:</strong> <%= market.phone %></li>
+  <li><strong>Address:</strong> <%= market.address %></li>
+  <li><strong>Website:</strong> <%= market.website %></li>
+  <li><strong>Twitter:</strong> <%= market.twitter %></li>
+  <li><strong>Facebook:</strong> <%= market.facebook %></li>
+  <li><strong>Delivery Windows:</strong>
+    <%= market.delivery_windows.each do |dw| %>
+      <%= dw.display %><br />
+    <% end %>
+  </li>
+</ul>

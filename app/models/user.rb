@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
   ############# CONFIGURATION #############
-#  require 'geokit'
-#  include GeoKit::Geocoders
-
+=begin
+  require 'geokit'
+  include GeoKit::Geocoders
+=end
 
   ############# CONFIGURATION #############
 
@@ -13,15 +14,18 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
   has_and_belongs_to_many :certifications
-#  has_and_belongs_to_many :products
-#  has_and_belongs_to_many :categories
+=begin
+  has_and_belongs_to_many :products
+  has_and_belongs_to_many :categories
 
   has_many :delivery_windows, as: :deliverable, dependent: :destroy
   accepts_nested_attributes_for :delivery_windows, allow_destroy: true, reject_if: proc { |attrs| attrs['weekday'].blank? or attrs['start_hour'].blank? or attrs['start_hour'].blank? or attrs['transport_by'].blank? }
 
+  has_many :agreements, foreign_key: :creator_id, dependent: :destroy
+=end
+
   has_attached_file :pic, styles: IMAGE_STYLES, default_url: :set_default_url_on_role
 
-  has_many :agreements, foreign_key: :creator_id, dependent: :destroy
   has_many :goods, foreign_key: :creator_id, dependent: :destroy
 
   belongs_to :market
@@ -38,8 +42,7 @@ class User < ActiveRecord::Base
     :certification_ids, :text_updates, :complete,
     :has_eggs, :has_dairy, :has_livestock, :has_pantry, 
     :custom_growing_methods, :delivery_windows_attributes, :size,
-    :market_id, :market_attributes
- #   :product_ids, :category_ids
+    :market_id, :market_attributes, :product_ids, :category_ids
 
 
   ## ATTRIBUTE VALIDATION
@@ -48,13 +51,12 @@ class User < ActiveRecord::Base
 
   validates  :name, :phone,
     :street_address_1, :city, :state, :zip, :country,
-    #:growing_methods, :size, :description,
+    :growing_methods, :size, :description,
     presence: true,
     :if => lambda { self.role == "producer" and self.complete == true }
 
-  validates :name, :phone,
+  validates :name, :phone, :description,
     :street_address_1, :city, :state, :zip, :country,
-    #:description, :billing_street_address_1, :billing_city, :billing_state, :billing_country, :billing_zip,
     presence: true,
     :if => lambda { self.role == "buyer" and self.complete == true }
 
@@ -75,15 +77,16 @@ class User < ActiveRecord::Base
 
   ################ SCOPES #################
 
-  scope :by_size, lambda {|s| where("size = ?", s)}
-  scope :by_growing_methods, lambda {|g| where("growing_methods = ?", g)}
-  scope :order_best_available, order("size ASC")
-
   scope :by_not_admin, where("role != 'admin' AND name != ''")
   scope :by_producer, where("role = 'producer' AND name != ''")
   scope :by_buyer, where("role = 'buyer' AND name != ''")
   scope :by_market_manager, where("role = 'marketmanager' AND name != ''")
   scope :by_other, lambda {|u| u.producer? ? where("role = 'buyer' AND name != ''") : where("role = 'producer' AND name != ''")}
+
+=begin
+  scope :by_size, lambda {|s| where("size = ?", s)}
+  scope :by_growing_methods, lambda {|g| where("growing_methods = ?", g)}
+  scope :order_best_available, order("size ASC")
 
   scope :near, lambda{ |*args|
     origin = *args.first[:origin]
@@ -103,6 +106,7 @@ class User < ActiveRecord::Base
       )
     }
   }
+=end
 
   #########################################
 
@@ -139,9 +143,6 @@ class User < ActiveRecord::Base
   def buyer?
     role == "buyer"
   end
-  def foodhub?
-    role == "foodhub"
-  end
   def producer?
     role == "producer"
   end
@@ -161,14 +162,14 @@ class User < ActiveRecord::Base
     last_name.capitalize + ", " + first_name.capitalize
   end
 
-#  def distance_from(otherlatlong)
-#    puts street_address_1
-#    puts otherlatlong
-#    a = Geokit::LatLng.new(latlong)
-#    b = Geokit::LatLng.new(otherlatlong)
-#    return '%.2f' % a.distance_to(b)
-#  end
-
+=begin
+  def distance_from(otherlatlong)
+    puts street_address_1
+    puts otherlatlong
+    a = Geokit::LatLng.new(latlong)
+    b = Geokit::LatLng.new(otherlatlong)
+    return '%.2f' % a.distance_to(b)
+  end
 
   ## PRODUCER METHODS
   def display_size
@@ -177,6 +178,7 @@ class User < ActiveRecord::Base
     return "L" if size == 2
     return ""
   end
+=end
 
   def role_avatar
     "/assets/#{role}_profile_pics/thumb/missing.png"
@@ -197,13 +199,15 @@ class User < ActiveRecord::Base
     self.name = self.name.strip if self.name
   end
 
-#  def set_lat_long
-#    if complete
-#      res = MultiGeocoder.geocode(self.street_address_1 + (self.street_address_2 ? " " + self.street_address_2 : "") + ", " + self.city + ", " + self.state + " " + self.zip)
-#      self.latlong = res.ll
-#      self.lat = res.lat
-#      self.lng = res.lng
-#    end
-#  end
+=begin
+  def set_lat_long
+    if complete
+      res = MultiGeocoder.geocode(self.street_address_1 + (self.street_address_2 ? " " + self.street_address_2 : "") + ", " + self.city + ", " + self.state + " " + self.zip)
+      self.latlong = res.ll
+      self.lat = res.lat
+      self.lng = res.lng
+    end
+  end
+=end
 
 end

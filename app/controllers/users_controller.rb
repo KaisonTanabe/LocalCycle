@@ -26,6 +26,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
+      format.js
       format.pdf do
         render :pdf => "Profile",
         layout: "pdf.html"
@@ -97,14 +98,6 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  def modal
-
-    respond_to do |format|
-      format.js
-    end
-  end
-
 
 
   def export 

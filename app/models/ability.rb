@@ -6,7 +6,10 @@ class Ability
     # Define abilities for the passed in user here. 
 
     if user and user.admin?
-      can :manage, [User, Product, Category, Good, Market, Agreement, AgreementChange]
+      can :manage, [User, Product, Category, Good, Market]
+=begin
+      can :manage, [Agreement, AgreementChange]
+=end
     end
 
     if user and (user.market_manager?)
@@ -23,10 +26,12 @@ class Ability
       can :manage, User, id: user.id
       can [:show, :modal], User, market_id: user.market_id
 
+=begin
       can :manage, Agreement, creator_id: user.id
       can [:index, :marketplace, :pic, :show, :modal, :root_agreement_changes], Agreement
       can :manage, AgreementChange, user_id: user.id
       can [:show, :chain], AgreementChange
+=end
     end
 
   end

@@ -1,21 +1,5 @@
-<% with_link ||= "true" %>
+<%= render partial: "users/modals/producer", locals: {user: user} if user.producer? %>
+<%= render partial: "users/modals/buyer", locals: {user: user} if user.buyer? %>
+<%= render partial: "users/modals/market_manager", locals: {user: user} if user.market_manager? %>
 
-<%= image_tag u.pic.url(:medium), class: "medium" %>
-
-<p class="muted"><% if u.size %><span class="label label-warning"><%= ACREAGE[u.size] %></span><% end %> Located <%= pluralize(u.distance_from(current_user.latlong), "mile") %> away</p>
-
-<p>
-  <% if u.growing_methods %>
-    <span class="label label-success"><i class="icon-white icon-certificate"></i> <%= GROWING_METHODS[u.growing_methods] %></span>
-  <% end %>
-  <% u.certifications.each do |c| %>
-    <span class="label label-info"> <i class="icon-white icon-certificate"></i><%= c.name %></span>
-  <% end %>
-</p>
-
-<p><%= u.description %></p>
-
-<p><%= with_link == "true" ? (link_to raw('View full profile &raquo;'), u, class: "btn") : "" %></p>
-<p><%= u.producer? ? (link_to raw('Print PDF &raquo;'), user_path(u, format: 'pdf'), class: "btn") : '' %></p>
-
-<hr class="clear" />
+<br class="clear" />

@@ -50,7 +50,7 @@ class DeliveryWindow < ActiveRecord::Base
   ############ PUBLIC METHODS #############
 
   def display
-    transport_by.capitalize + ": " + WEEKDAYS[weekday] + " - " + NORMAL_HOURS[start_hour] + " to " + NORMAL_HOURS[end_hour]
+    WEEKDAYS[weekday] + " - " + NORMAL_HOURS[start_hour] + " to " + NORMAL_HOURS[end_hour]
   end
 
   ############ PRIVATE METHODS ############

@@ -6,9 +6,9 @@
   <% if current_user.admin? or current_user.market_manager? %>
   <th>
     <% if current_user.admin? %>
-    <%= f.select :market_id, options_from_collection_for_select(Market.order('name'), :id, :name), {prompt: "-- Select Market --"}, {style: "width: 180px; margin-bottom: 5px;" } %><br />
+      <%= f.select :market_id, options_from_collection_for_select(Market.order('name'), :id, :name), {prompt: "-- Select Market --"}, {style: "width: 180px; margin-bottom: 5px;" } %><br />
     <% else %>
-    <%= f.hidden_field :market_id, value: current_user.market_id %>
+      <%= f.hidden_field :market_id, value: current_user.market_id %>
     <% end %>
     <%= f.select :creator_id, options_from_collection_for_select(User.by_producer.order('name'), :id, :name), {prompt: "-- Select Producer --"}, {class: "select2", style: "width: 180px;" } %>
   </th>

@@ -1,10 +1,12 @@
 <%= content_tag_for :tr, market do %>
+
 <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
-  <%= link_to market.name, edit_market_path(market) %>
+  <%= link_to market.name, market, data: {target: "#ajax-modal", toggle: "modal", placement: "top", data: "true", remote: "true"} %>
 </td>
+
 <td class='market_managers <%= (params[:sort] == "market_managers.name") ? "sorted" : "" %>'>
   <% market.market_managers.each do |mm| %>
-    <%= link_to mm.name, mm %>
+    <%= link_to mm.full_name, mm, data: {target: "#ajax-modal", toggle: "modal", placement: "top", data: "true", remote: "true"} %>
   <% end %>
 </td>
 <td class='state <%= (params[:sort] == "state") ? "sorted" : "" %>'>

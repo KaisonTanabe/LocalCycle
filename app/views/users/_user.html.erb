@@ -3,15 +3,15 @@
     <%= image_tag user.role_avatar %>
   </td>
   <td class='last_name <%= (params[:sort] == "last_name") ? "sorted" : "" %>'>
-    <%= link_to(user.formal_name, edit_user_path(user)) %>
+    <%= user.formal_name %>
   </td>
   <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
-    <%= user.name %>
+    <%= link_to user.name, user, data: {target: "#ajax-modal", toggle: "modal", placement: "top", data: "true", remote: "true"} %>
   </td>
 
   <% if current_user.admin? %>
   <td class='market <%= (params[:sort] == "market") ? "sorted" : "" %>'>
-    <%= link_to user.market.name, market_path(user.market) if user.market %>
+    <%= link_to user.market.name, user.market, data: {target: "#ajax-modal", toggle: "modal", placement: "top", data: "true", remote: "true"} if user.market %>
   </td>
   <td class='login <%= (params[:sort] == "current_sign_in_at") ? "sorted" : "" %>'>
     <%= user.current_sign_in_at ? user.current_sign_in_at.strftime("%b %-d %I:%M %P") : "Never" %>

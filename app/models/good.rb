@@ -109,6 +109,10 @@ class Good < ActiveRecord::Base
     read_attribute(:quantity).nil? ? "--" : read_attribute(:quantity)
   end
 
+  def name
+    product.name
+  end
+
   def users
     users = []
     users << buyer if buyer

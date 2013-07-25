@@ -1,12 +1,12 @@
 <%= content_tag_for :tr, good do %>
   <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
     <%= image_tag good.product.best_pic_url(:thumb), class: "thumb" %>
-    <%= link_to good.product.name, edit_good_path(good) %>
+    <%= link_to good.product.name, good, data: {target: "#ajax-modal", toggle: "modal", placement: "top", data: "true", remote: "true"} %>
   </td>
   <% if current_user.admin? or current_user.market_manager? %>
   <td class='producer <%= (params[:sort] == "producer.name") ? "sorted" : "" %>'>
     <%= image_tag good.creator.pic(:thumb), class: "thumb" %>
-    <%= link_to good.creator.name, user_path(good.creator) %>
+    <%= link_to good.creator.name, good.creator, data: {target: "#ajax-modal", toggle: "modal", placement: "top", data: "true", remote: "true"} %>
   </td>
   <% end %>
   <td class='quantity <%= (params[:sort] == "quantity") ? "sorted" : "" %>'>

@@ -5,7 +5,9 @@ class Category < ActiveRecord::Base
   acts_as_tree
 
   ## SETUP ASSOCIATIONS
+=begin
   has_and_belongs_to_many :users
+=end
 
   has_many :products
 

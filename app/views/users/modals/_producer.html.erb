@@ -1,0 +1,23 @@
+<%= image_tag user.pic.url(:medium), class: "medium pull-left" %>
+
+<p>Belongs to <strong><%= user.market.name %></strong></p>
+
+<p class="muted">
+  <span class="label label-warning"><%= ACREAGE[user.size] %></span>
+  <!-- Located <%#= pluralize(user.distance_from(current_user.latlong), "mile") %> away-->
+</p>
+
+<p>
+  <% if user.growing_methods %>
+    <span class="label label-success">
+      <i class="icon-white icon-certificate"></i> <%= GROWING_METHODS[user.growing_methods] %>
+    </span>
+  <% end %>
+  <% user.certifications.each do |c| %>
+    <span class="label label-info"> <i class="icon-white icon-certificate"></i><%= c.name %></span>
+  <% end %>
+</p>
+
+<p><%= user.description %></p>
+
+<p><%= link_to raw('Print PDF &raquo;'), user_path(user, format: 'pdf'), class: "btn" %></p>

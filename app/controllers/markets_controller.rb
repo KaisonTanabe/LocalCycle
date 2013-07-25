@@ -23,6 +23,7 @@ class MarketsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @market }
+      format.js
       format.pdf do
         render :pdf => "Profile",
         layout: "pdf.html"
@@ -51,7 +52,7 @@ class MarketsController < ApplicationController
   end
 
   def edit
-    @market.delivery_locations.build
+    @market.delivery_windows.build
   end
 
   def update
@@ -73,13 +74,6 @@ class MarketsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to markets_url(params.to_hash) }
       format.json { head :no_content }
-    end
-  end
-
-  def modal
-
-    respond_to do |format|
-      format.js
     end
   end
 

@@ -3,7 +3,9 @@ class Product < ActiveRecord::Base
   ############# CONFIGURATION #############
 
   ## SETUP ASSOCIATIONS
+=begin
   has_and_belongs_to_many :users
+=end
 
   belongs_to :category
   has_attached_file :pic, styles: IMAGE_STYLES, default_url: DEFAULT_PAPERCLIP_IMAGE
@@ -73,7 +75,7 @@ class Product < ActiveRecord::Base
 
   #def self.
   def self.csv_header 
-    "ID,Category,Name,Description,Selling Unit,Catch Weight,Season Start Date,Season End Date".split(',') 
+    "ID,Category,Name,Description,Catch Weight,Seasonal Start Date,Seasonal End Date".split(',') 
   end
 
   def self.build_from_csv(row)
@@ -81,7 +83,6 @@ class Product < ActiveRecord::Base
     start_date = row[6].split("-")
     end_date = row[7].split("-")
     product.attributes = {
-      :unit_type => row[4],
       :catch_weight => row[5],
       :start_date => Date.new(start_date[2].to_i, start_date[0].to_i, start_date[1].to_i),
       :end_date => Date.new(end_date[2].to_i, end_date[0].to_i, end_date[1].to_i),
@@ -93,11 +94,11 @@ class Product < ActiveRecord::Base
   ############ PUBLIC METHODS #############
 
   def to_csv
-    [id, cat_name, name, description, unit_type, catch_weight, start_date, end_date]
+    [id, category.name, name, description, catch_weight, start_date, end_date]
   end
 
-  def cat_name
-    Category.where(id: category_id).first.name
+  def availability
+    start_date.strftime("%b %-d") + " - " + end_date.strftime("%b %-d")
   end
 
   def best_pic_url(sym)
@@ -108,6 +109,11 @@ class Product < ActiveRecord::Base
     pic? ? pic : category.best_pic
   end
 
+  def possible_units
+    selling_units.map {|su| su.short_name }.join(" &middot; ")
+  end
+
+=begin
   def bar_margins
     "margin-left: " + bar_margin_left.to_s + "%; margin-right: " + bar_margin_right.to_s + "%;"
   end
@@ -130,5 +136,6 @@ class Product < ActiveRecord::Base
   def bar_margin_right
     100 - (end_date.yday.to_f/365)*100
   end
+=end
 
 end

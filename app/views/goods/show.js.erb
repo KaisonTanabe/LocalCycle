@@ -1,0 +1,12 @@
+var title       =   '.modal-title',
+    loader      =   '.ajax-loader',
+    content     =   '.modal-body-content',
+    toolbar     =   'div.modal-footer';
+    modal       =   '#ajax-modal'
+
+$(loader).fadeToggle('fast', function() {
+  $(title).html("<%= @good.product.name %>");
+  $(content).show().html("<%= j render partial: 'goods/modals/good', locals: {good: @good} %>");
+  $(modal).modal();
+});
+

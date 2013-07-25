@@ -8,10 +8,12 @@ LOCALCYCLE::Application.routes.draw do
   end
 
   resources :goods do
+    get 'modal', on: :member
     get 'export', on: :collection
   end
 
   resources :markets do
+    get 'modal', on: :member
     get 'export', on: :collection
   end
 
@@ -37,8 +39,8 @@ LOCALCYCLE::Application.routes.draw do
   end
 
   resources :users do
-    get 'prompt', on: :member
     get 'modal', on: :member
+    get 'prompt', on: :member
     get 'export', on: :collection
   end
 

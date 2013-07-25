@@ -15,7 +15,7 @@
 
     <h1><%= @user.name %></h1>
 
-    <%= render partial: "users/modals/user", locals: {u: @user, with_link: "false"} %>
+    <%= render partial: "users/modals/user", locals: {user: @user, with_link: "false"} %>
 
     <h3>Available Agreements</h3>
     <table id="agreementTable" class="table">

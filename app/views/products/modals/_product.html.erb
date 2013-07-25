@@ -1,0 +1,11 @@
+<%= image_tag product.best_pic_url(:medium), class: "medium pull-left" %>
+
+<ul>
+  <li><strong>Category:</strong> <%= product.category.name %></li>
+  <li><strong>Description:</strong> <%= product.description %></li>
+  <li><strong>Seasonal Availability:</strong> <%= product.availability %></li>
+  <li><strong>Common Selling Units:</strong> <%=raw product.possible_units %></li>
+  <!--li><strong>Catch Weight:</strong> <%= product.catch_weight ? "Yes" : "No" %></li-->
+</ul>
+
+<br class="clear" />
