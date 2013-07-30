@@ -5,6 +5,22 @@ class GoodsController < ApplicationController
   
   require 'csv'
 
+  def marketplace
+    # Ensure profile has been created
+    redirect_to edit_user_path(current_user) and return unless current_user.complete
+
+    @goods = Good.scoped.includes(:product)
+    @goods = filter_and_sort(@goods, params)
+    @goods = @goods.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
+
+    @product_goods = @goods.group_by(&:product)
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @goods }
+    end
+  end
+
   def index
     # Ensure profile has been created
     redirect_to edit_user_path(current_user) and return unless current_user.complete
@@ -131,6 +147,8 @@ class GoodsController < ApplicationController
   private
 
   def filter_and_sort(goods, params)
+    goods = goods.by_market(current_user.market_id) unless current_user.admin?
+    goods = goods.by_market(params[:market]) unless params[:market].blank?
     goods = goods.by_name(params[:name]) unless params[:name].blank?
     goods = goods.by_category(params[:category]) unless params[:category].blank?
     goods = goods.by_product(params[:product]) unless params[:product].blank?

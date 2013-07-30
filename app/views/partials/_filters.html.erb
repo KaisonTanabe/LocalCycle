@@ -8,12 +8,23 @@
     </ul>
   </li>
   <% end %>
-  <li class="pull-right <%= params['commit'] == 'Filter Agreements' ? 'active' : '' %>" id="filter-toggle">
-    <a title="Advanced search options" href="#" data-toggle="collapse" data-target="#product-filter"><i class="icon-cog"></i> <b class="caret" style="margin-top: 9px;"></b></a>
+  <li class="pull-right">
+    <%= form_tag(marketplace_goods_path, method: :get, class: "pull-right") do %>
+    <div class="form-search pull-left">
+      <div class="input-append">
+	<%= text_field_tag :name, params[:name].blank? ? '' : params[:name], placeholder: "Search by name...", class: "search-query span2" %>
+	<button type="submit" class="btn-inverse btn"><span class="icon-search icon-white"></span></button>
+      </div>
+    </div>
+    <% end %>
   </li>
+  <!--li class="pull-right <%= params['commit'] == 'Filter Agreements' ? 'active' : '' %>" id="filter-toggle">
+    <a title="Advanced search options" href="#" data-toggle="collapse" data-target="#product-filter"><i class="icon-cog"></i> <b class="caret" style="margin-top: 9px;"></b></a>
+  </li-->
 </ul>
 
-<div class="row">
+
+<!--div class="row">
   <div class="span12 input-row">
     <div class="row">
       <div id="product-filter" class="collapse <%= params['commit'] == 'Filter Agreements' ? 'in' : '' %>">
@@ -119,4 +130,4 @@
       </div>
     </div>
   </div>
-</div>
+</div-->

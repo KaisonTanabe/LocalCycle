@@ -66,6 +66,7 @@ class Good < ActiveRecord::Base
   scope :by_producer, lambda {|p| where("producer_id = ?", p)}
   scope :by_creator, lambda {|p| where("creator_id = ?", p)}
   scope :by_product, lambda {|p| where("product_id = ?", p)}
+  scope :by_market, lambda {|m| where("market_id = ?", m)}
   scope :in_category, lambda { |c| includes(:product).where("products.category_id IN (?)", Category.where(id: c).first.self_and_descendant_ids) }
 
   #########################################

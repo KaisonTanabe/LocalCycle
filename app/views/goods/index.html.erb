@@ -18,6 +18,8 @@
     
     <div id="error-div"></div>
 
+    <%= render "partials/filters" %>
+
     <table id="good-table" class="table table-hover table-striped">
       <thead id="batch">
         <%= render partial: "batch_form", locals: {f: f} %>

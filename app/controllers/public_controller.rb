@@ -4,7 +4,7 @@ class PublicController < ApplicationController
   layout 'placeholder', only: "placeholder"
 
   def index
-    redirect_to goods_path if user_signed_in?
+    redirect_to home_path_for(current_user) if user_signed_in?
   end
 
   def for_farmers

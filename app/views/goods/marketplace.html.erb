@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="span12">
+    <div class="pull-right actions-bar">
+      <%= link_to raw('<span class="icon-question-sign"></span>'), "#", class: "btn" %>
+    </div>
+    <h1><img class="big-icon" src="/assets/icon-mrkt.png" alt="Marketplace Icon" />  <%= params['cat_id'].blank? ? "Produce For Sale" : Category.where(id: params["cat_id"].to_i).first.name %> <%= raw("<small>(" + pluralize(@goods.count, 'result') + ")</small>") %></h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="span12">
+
+    <%= render "partials/filters" %>
+    
+    <div class="products">
+      <% if @product_goods.any? %>
+        <% @product_goods.each do |p, goods| %>
+          <% goods.each do |good| %>
+            <%= render partial: "marketplace_good", locals: {p: p, good: good} %>
+	  <% end %>
+        <% end %>
+      <% else %>
+        <p><em>No matching goods...</em></p>
+      <% end %>
+
+      <div id="pagination">
+        <%= will_paginate @product_goods %>
+      </div>
+    </div>
+
+  </div>
+</div>

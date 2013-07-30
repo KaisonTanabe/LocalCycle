@@ -6,7 +6,17 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    resource.complete ? goods_path : edit_user_path(resource)
+    resource.complete ? home_path_for(resource) : edit_user_path(resource)
+  end
+
+  def home_path_for(resource)
+    if current_user.admin?
+      users_path
+    elsif current_user.buyer?
+      marketplace_goods_path
+    else
+      goods_path
+    end
   end
 
   def import_records(file, model)

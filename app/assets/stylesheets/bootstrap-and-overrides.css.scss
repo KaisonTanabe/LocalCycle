@@ -745,9 +745,13 @@ a.dropdown-toggle::after {
 .nav-tabs .dropdown-toggle .caret {
     border-top-color: #39b54a;
 }
-ul#cat-nav li.dropdown:hover > ul.dropdown-menu {
-    display: block;    
-    margin-top: 0;
+ul#cat-nav {
+    margin-bottom: 0;
+    li.dropdown:hover > ul.dropdown-menu {
+	display: block;    
+	margin-bottom: 0;
+	margin-top: -1px;
+    }
 }
 ul.dropdown-menu li.active a {
     color: #fff;

@@ -18,7 +18,11 @@
       <li><%= link_to "Users", users_path %></li>
       <% end %>
 
+      <% if current_user.buyer? %>
+      <li><%= link_to "Goods", marketplace_goods_path %></li>
+      <% else %>
       <li><%= link_to "Goods", goods_path %></li>
+      <% end %>
 
 <!--
       <li><%= link_to "Inventory", marketplace_agreements_path %></li>
