@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130713162910) do
+ActiveRecord::Schema.define(:version => 20130731034113) do
 
   create_table "agreement_changes", :force => true do |t|
     t.integer  "agreement_id",                                  :null => false
@@ -152,13 +152,13 @@ ActiveRecord::Schema.define(:version => 20130713162910) do
     t.integer  "producer_id",     :default => 0,    :null => false
     t.integer  "market_id",                         :null => false
     t.integer  "product_id",                        :null => false
-    t.integer  "selling_unit_id",                   :null => false
     t.integer  "quantity"
-    t.boolean  "indefinite",      :default => true, :null => false
     t.date     "start_date"
     t.date     "end_date"
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
+    t.integer  "selling_unit_id", :default => 1,    :null => false
+    t.boolean  "available",       :default => true, :null => false
   end
 
   add_index "goods", ["buyer_id"], :name => "index_goods_on_buyer_id"
@@ -166,7 +166,6 @@ ActiveRecord::Schema.define(:version => 20130713162910) do
   add_index "goods", ["market_id"], :name => "index_goods_on_market_id"
   add_index "goods", ["producer_id"], :name => "index_goods_on_producer_id"
   add_index "goods", ["product_id"], :name => "index_goods_on_product_id"
-  add_index "goods", ["selling_unit_id"], :name => "index_goods_on_selling_unit_id"
 
   create_table "images", :force => true do |t|
     t.integer  "imageable_id"
@@ -223,11 +222,12 @@ ActiveRecord::Schema.define(:version => 20130713162910) do
   add_index "preferred_user_agreements", ["user_id"], :name => "index_preferred_user_agreements_on_user_id"
 
   create_table "price_points", :force => true do |t|
-    t.integer  "good_id",    :null => false
-    t.float    "price",      :null => false
-    t.integer  "quantity",   :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "good_id",                        :null => false
+    t.float    "price",                          :null => false
+    t.integer  "quantity",                       :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.integer  "selling_unit_id", :default => 1, :null => false
   end
 
   add_index "price_points", ["good_id"], :name => "index_price_points_on_good_id"

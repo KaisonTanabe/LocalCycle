@@ -11,26 +11,24 @@ class Good < ActiveRecord::Base
   belongs_to :creator, class_name: "User", foreign_key: :creator_id
 
   has_many :price_points, dependent: :destroy
-  accepts_nested_attributes_for :price_points, allow_destroy: true, reject_if: proc { |attrs| attrs['price'].blank? or attrs['quantity'].blank? }
+  accepts_nested_attributes_for :price_points, allow_destroy: true, reject_if: proc { |attrs| attrs['price'].blank? or attrs['quantity'].blank? or attrs['selling_unit_id'].blank? }
 
 
   ## ATTRIBUTE PROTECTION  
   
-  attr_accessible :product_id, :selling_unit_id, :quantity,
-    :indefinite, :start_date, :end_date, :creator_id, :market_id, :price_points_attributes
+  attr_accessible :product_id, :quantity, :start_date, :end_date, :creator_id, :market_id, :price_points_attributes, :available, :selling_unit_id
 
 
   ## ATTRIBUTE VALIDATION
 
-  validates :product_id, :selling_unit_id, :market_id, :creator_id, presence: true
+  validates :product_id, :market_id, :creator_id, presence: true
 
-  validates :indefinite,
+  validates :available,
     :inclusion => {:in => [true, false]}
 
   validate :must_have_price_point
 
-  validates :start_date, :end_date, presence: true,
-    :if => lambda { self.indefinite == false }
+  validates :end_date, presence: true
   #########################################
 
 
@@ -135,11 +133,7 @@ class Good < ActiveRecord::Base
   end
 
   def duration
-    if indefinite == true
-      "Indefinite"
-    else
-      start_date.strftime("%b %e") + " - " + end_date.strftime("%b %e")
-    end
+    "Expires " + end_date.strftime("%b %e")
   end
 
   ############ PRIVATE METHODS ############

@@ -8,6 +8,7 @@ LOCALCYCLE::Application.routes.draw do
   end
 
   resources :goods do
+    get 'toggle_available', on: :member
     get 'marketplace', on: :collection
     get 'export', on: :collection
   end

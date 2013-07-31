@@ -21,17 +21,16 @@
     <%= render "partials/filters" %>
 
     <table id="good-table" class="table table-hover table-striped">
-      <thead id="batch">
-        <%= render partial: "batch_form", locals: {f: f} %>
-      </thead>
 
-      <thead id="query">
-	<%#= render "query_form" %>
-      </thead>
-      
       <thead id="sorters">
 	<%= render "sorters" %>
       </thead>
+
+      <% unless current_user.buyer? %>
+      <thead id="batch">
+        <%= render partial: "batch_form", locals: {f: f} %>
+      </thead>
+      <% end %>
 
       <tbody id="good-ajax">
         <% if @goods.any? %>

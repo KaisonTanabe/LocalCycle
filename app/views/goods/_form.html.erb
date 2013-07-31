@@ -4,30 +4,46 @@
   <%= render partial: 'partials/errors', locals: {obj: @good} %>
 
   <div class="control-group">
+    <%= f.label :available, "Available:", class: "control-label" %>
+    <div class="controls-row controls">
+      <label class="checkbox"><%= f.check_box :available %></label>
+    </div>
+  </div>
+
+  <div class="control-group">
     <%= f.label :product_id, "Product:", class: "control-label" %>
     <div class="controls-row controls">
       <%= f.select :product_id, option_groups_from_collection_for_select(Category.includes(:products).order('name'), :products, :name, :id, :name, (params[:product_id].blank? ? (@good.product ? @good.product.id : "") : params[:product_id])), {prompt: "-- Select Product --"}, {class: "select2 span4" } %>
     </div>
   </div>
-  
-  <% if current_user.admin? or current_user.market_manager? %>
+
+  <% if current_user.market_manager? or current_user.admin? %>
   <div class="control-group">
-    <%= f.label :market_id, "Market:", class: "control-label" %>
+    <%= f.label :producer_id, "Producer:", class: "control-label" %>
     <div class="controls-row controls">
-      <% if current_user.admin? %>
-        <%= f.select :market_id, options_from_collection_for_select(Market.order('name'), :id, :name), {prompt: "-- Select Market --"}, {style: "width: 180px; margin-bottom: 5px;" } %><br />
-      <% else %>
-        <%= f.hidden_field :market_id, value: current_user.market_id %>
-      <% end %>
       <%= f.select :creator_id, options_from_collection_for_select(User.by_producer.order('name'), :id, :name, (params[:creator_id].blank? ? (@good.creator ? @good.creator.id : "") : params[:creator_id])), {prompt: "-- Select Producer --"}, {class: "select2 span4" } %>
     </div>
   </div>
-
+  <% else %>
+    <%= f.hidden_field :creator_id, value: current_user.id %>
   <% end %>
+  
+  <% if current_user.admin? %>
+  <div class="control-group">
+    <%= f.label :market_id, "Market:", class: "control-label" %>
+    <div class="controls-row controls">
+      <%= f.select :market_id, options_from_collection_for_select(Market.order('name'), :id, :name), {prompt: "-- Select Market --"}, {style: "width: 180px; margin-bottom: 5px;" } %><br />
+    </div>
+  </div>
+  <% else %>
+    <%= f.hidden_field :market_id, value: current_user.market_id %>
+  <% end %>
+
   <div class="control-group">
     <%= f.label :quantity, "Quantity:", class: "control-label" %>
     <div class="controls-row controls">
       <%= f.text_field :quantity, placeholder: "Qty", class: "span2" %>
+      <%= f.select :selling_unit_id, SellingUnit.all.map {|s| [s.name, s.id]}, {prompt: "Unit"}, {class: "span2"} %>
     </div>
   </div>
 
@@ -40,15 +56,13 @@
     <div class="controls">
       <span class="help-inline"><%= add_child_link "Price Point", :price_points %></span>
     </div>
-    <%= f.hidden_field :selling_unit_id, value: SellingUnit.where(short_name: "lb").first.id %>
   </div>
 
   <div class="controls-group">
     <%= f.label :start_date, "Duration:", class: "control-label" %>
     <div class="control-row controls">
-      <label class="checkbox"><%= f.check_box :indefinite, class: "x-toggle-visible", data: {show: "#good_start_date", hide: "#good_start_date"} %> All the time</label>
       <%= f.text_field :start_date, placeholder: "First delivery", data: {behavior: "datepicker"}, class: "span2" %>
-      <%= f.text_field :end_date, placeholder: "Last delivery", data: {behavior: "datepicker"}, class: "span2" %>
+      <%= f.text_field :end_date, placeholder: "Last delivery", data: {behavior: "datepicker"}, class: "span2", style: "margin-left: 30px;" %>
     </div>
   </div>
     

@@ -24,12 +24,14 @@
 //= require bootstrap-modal
 //= require parsley.min
 //= require form_helpers
+//= require ajax-available
 //= require_tree .
 jQuery(function($){
-
+ 
 //   $('#cat-nav .dropdown-menu').on('show', function() {
 //       slimScroll({});
 //    });
+
 
     $("#same .btn").on("click", function() {
         if ($(this).hasClass("yes")) {

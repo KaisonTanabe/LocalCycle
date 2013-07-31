@@ -9,7 +9,7 @@ class GoodsController < ApplicationController
     # Ensure profile has been created
     redirect_to edit_user_path(current_user) and return unless current_user.complete
 
-    @goods = Good.scoped.includes(:product)
+    @goods = Good.scoped.includes(:product, :price_points)
     @goods = filter_and_sort(@goods, params)
     @goods = @goods.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
 
@@ -28,7 +28,7 @@ class GoodsController < ApplicationController
     @good = Good.new()
     @good.price_points.build()
 
-    @goods = @goods.includes(:product, :selling_unit)
+    @goods = @goods.includes(:product, :price_points)
     @goods = @goods.by_creator(current_user) if current_user.producer?
     @goods = filter_and_sort(@goods, params)
     @goods = @goods.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
@@ -106,6 +106,17 @@ class GoodsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to goods_url }
       format.json { head :no_content }
+    end
+  end
+
+  def toggle_available
+    @good = Good.find(params[:id])
+
+    @good.update_column("available", !@good.available)
+    
+    respond_to do |format|
+      format.html { redirect_to goods_url, notice: "#{@good.name} is #{@good.available ? 'now' : 'no longer'} available" }
+      format.json { render json: { id: @good.id, available: @good.available, message: "#{@good.name} is #{@good.available ? 'now' : 'no longer'} available" } }
     end
   end
 

@@ -1,7 +1,8 @@
 <tr class="sorters">
-  <th><%= sortable "product", "Product", parsed_params %></th>
+  <th></th>
+  <th style="width: 160px;"><%= sortable "product", "Product", parsed_params %></th>
   <% if current_user.admin? or current_user.market_manager? %>
-  <th><%= sortable "producer", "Producer", parsed_params %></th>
+  <th style="width: 160px;"><%= sortable "producer", "Producer", parsed_params %></th>
   <% end %>
   <th><%= sortable "quantity", "Qty Avail", parsed_params %></th>
   <th><%= sortable "price", "Price Points", parsed_params %></th>

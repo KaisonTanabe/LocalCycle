@@ -3,11 +3,8 @@
     <span class="add-on">$</span>
     <%= f.text_field :price, placeholder: "0.00", class: "span1" %>
   </div>
-  <span style="font-size:15px;">@</span>
-  <div class="input-append">
-    <%= f.text_field :quantity, placeholder: "00", class: "span1" %>
-    <span class="add-on">lbs</span>
-  </div>
-  <span class="help-inline"><%= link_to raw('<span class="icon-white icon-remove"></span> <span class="form-only">Remove</span>'), 'javascript:void(0)', class: 'remove-old-child btn btn-mini btn-inverse' %></span>
+  <%= f.text_field :quantity, placeholder: "Qty", class: "span1", style: "margin-left: 5px;" %>
+  <%= f.select :selling_unit_id, SellingUnit.all.map {|s| [s.short_name, s.id]}, {prompt: "Unit"}, {class: "span1", style: "margin-left: 5px;"} %>
+  <span class="help-inline" style="display: inline;"><%= link_to raw('<span class="icon-white icon-remove"></span> <span class="form-only">Remove</span>'), 'javascript:void(0)', class: 'remove-old-child btn btn-mini btn-inverse' %></span>
   <%= f.hidden_field :_destroy, class: 'destroy-field', value: '0' %>
 </div>

@@ -4,14 +4,15 @@ class PricePoint < ActiveRecord::Base
   ## SETUP ASSOCIATIONS
 
   belongs_to :good
+  belongs_to :selling_unit
 
   ## ATTRIBUTE PROTECTION
 
-  attr_accessible :price, :quantity
+  attr_accessible :price, :quantity, :selling_unit_id
 
   ## ATTRIBUTE VALIDATION
 
-  validates :price, :quantity, presence: true
+  validates :selling_unit_id, :price, :quantity, presence: true
 
   #########################################
 

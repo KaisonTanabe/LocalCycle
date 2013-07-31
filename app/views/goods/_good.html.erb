@@ -1,4 +1,9 @@
-<%= content_tag_for :tr, good do %>
+<%= content_tag_for :tr, good, class: (current_user.buyer? ? (good.available ? "success" : "error") : "") do %>
+  <td>
+    <% if current_user.market_manager? or current_user.admin? or good.created_by?(current_user) %>
+      <%= link_to toggle_available_good_path(good), class: 'ajax-available', data: { type: 'json' }, remote: true do %><span title="Click to toggle availability of <%= good.name %>" class="label label-<%= good.available ? 'success' : 'important' %>"><i class="icon-ok icon-white"></i></span><% end %>
+    <% end %>
+  </td>
   <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
     <%= image_tag good.product.best_pic_url(:thumb), class: "thumb" %>
     <%= link_to good.product.name, good, data: {target: "#ajax-modal", toggle: "modal", placement: "top", data: "true", remote: "true"} %>
@@ -14,7 +19,7 @@
   </td>
   <td class='price <%= (params[:sort] == "price") ? "sorted" : "" %>'>
     <% good.price_points.order("quantity ASC").each do |pp| %>
-      <%= number_to_currency(pp.price) %> <strong style="font-size: 15px;">@</strong> &gt;<%= pp.quantity %><span class='label label-info'><%= good.selling_unit.short_name.pluralize %></span><br />
+      <%= number_to_currency(pp.price) %> <strong style="font-size: 15px;">@</strong> &gt;<%= pp.quantity %> <span class='label label-info'><%= pp.selling_unit.short_name.pluralize %></span><br />
     <% end %>
   </td>
   <td class='availability <%= (params[:sort] == "availability") ? "sorted" : "" %>'>

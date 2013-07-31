@@ -4,5 +4,6 @@ class SellingUnit < ActiveRecord::Base
   has_many :products_selling_units, dependent: :destroy
   has_many :products, through: :products_selling_units
 
+  has_many :price_points
   has_many :goods
 end
