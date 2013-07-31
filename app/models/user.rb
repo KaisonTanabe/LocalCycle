@@ -154,10 +154,6 @@ class User < ActiveRecord::Base
     ROLES[role]
   end
 
-  def name
-    market_manager? ? market.name : read_attribute(:name)
-  end
-
   def full_name
     first_name.capitalize + " " + last_name.capitalize
   end
