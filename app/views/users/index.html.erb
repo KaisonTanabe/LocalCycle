@@ -19,16 +19,17 @@
     <div id="error-div"></div>
 
     <table id="user-table" class="table table-hover table-striped">
+      
+      <thead id="sorters">
+	<%= render "sorters" %>
+      </thead>
+
       <thead id="batch">
         <%= render partial: "batch_form", locals: {f: f} %>
       </thead>
 
       <thead id="query">
 	<%= render "query_form" %>
-      </thead>
-      
-      <thead id="sorters">
-	<%= render "sorters" %>
       </thead>
 
       <tbody id="user-ajax">
