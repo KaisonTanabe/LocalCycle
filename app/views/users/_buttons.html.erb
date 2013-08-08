@@ -1,7 +1,7 @@
 
   <div class="btn-toolbar visible-desktop">
     <div class="btn-group">
-      <%= link_to raw('<i class="icon-edit"></i> Edit'), edit_user_path(user), title: "Edit user info", class: "btn btn-small" %>
+      <%= link_to raw('<i class="icon-edit"></i> Details'), edit_user_path(user), title: "Edit user info", class: "btn btn-small" %>
       <%= (link_to raw('<i class="icon-trash"></i>'), user_path(user, full_params.to_hash), data: {confirm: "Are you sure you want to permanently delete this user and all their information?"}, title: "Delete this user from the system", method: :delete, class: "btn btn-small") %>
       <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
 	<i class="icon-bell"></i><span class="caret"></span>

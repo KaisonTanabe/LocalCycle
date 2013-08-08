@@ -3,7 +3,8 @@
 <div class="row">
   <div class="span12">
     <div class="btn-group pull-right actions-bar">
-      <%#= link_to 'New Good', new_good_path, class: "btn btn-primary" unless current_user.buyer? %>
+      <%= link_to raw('<span class="icon-th-large icon-white"></span> Product View'), marketplace_goods_path, class: "btn btn-primary" %>
+      <%#= link_to 'New Good', new_good_path, class: "btn btn-primary" %>
       <%= link_to raw('<span class="icon-question-sign"></span>'), "#", class: "btn" %>
     </div>
     <h1><img class="big-icon" src="/assets/icon-agreements-calendar.png" alt="Calendar Icon" /> Goods</h1>

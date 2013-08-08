@@ -18,7 +18,7 @@
 	<%= link_to raw('<span class="icon-trash"></span> Delete'), good_path(good, full_params.to_hash), data: {confirm: "Are you sure you want to permanently delete this good and all its information?"}, title: "Delete this good from the system", method: :delete, class: "btn btn-small" %>
       </div>
     <% else %>
-      <%= link_to "Purchase", "#", class: "btn btn-warning" %>
+      <%= link_to "Add to Cart", "#", class: "btn btn-warning" %>
     <% end %>
   </p>
 </div>

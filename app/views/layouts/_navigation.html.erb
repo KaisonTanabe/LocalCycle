@@ -1,7 +1,17 @@
 <ul class="nav pull-right">
   <%= yield :nav_bar %>
 
-  <li><%= link_to raw('<i class="icon-user"></i> ' + current_user.full_name), edit_user_path(current_user) %></li>
+  <li><%= link_to raw('<i class="icon-user"></i> ' + current_user.first_name), edit_user_path(current_user) %></li>
+
+  <% if current_user.producer? %>
+  <li><%= link_to raw('<i class="icon-list-alt"></i> My Goods'), goods_path %></li>
+  <% end %>
+
+  <% if current_user.buyer? %>
+  <li><%= link_to raw('<i class="icon-th-large"></i> Available Goods'), marketplace_goods_path %></li>
+  <li><%= link_to raw('<i class="icon-list-alt"></i> Wish List'), "#" %></li>
+  <li><%= link_to raw('<i class="icon-shopping-cart"></i> Cart'), "#" %></li>
+  <% end %>
   
   <li class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog"></i> Manage <b class="caret"></b></a>
@@ -32,5 +42,5 @@
     </ul>
   </li>
   
-  <li><%= link_to raw('<i class="icon-remove-circle"></i> Log Out'), destroy_user_session_path, method: :delete %></li>
+  <li><%= link_to raw('<i class="icon-remove-circle"></i> Logout'), destroy_user_session_path, method: :delete %></li>
 </ul>

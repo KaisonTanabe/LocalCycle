@@ -1,6 +1,7 @@
 <div class="row">
   <div class="span12">
-    <div class="pull-right actions-bar">
+    <div class="btn-group pull-right actions-bar">
+      <%= link_to raw('<span class="icon-list icon-white"></span> Table View'), goods_path, class: "btn btn-primary" %>
       <%= link_to raw('<span class="icon-question-sign"></span>'), "#", class: "btn" %>
     </div>
     <h1><img class="big-icon" src="/assets/icon-mrkt.png" alt="Marketplace Icon" />  <%= params['cat_id'].blank? ? "Produce For Sale" : Category.where(id: params["cat_id"].to_i).first.name %> <%= raw("<small>(" + pluralize(@goods.count, 'result') + ")</small>") %></h1>

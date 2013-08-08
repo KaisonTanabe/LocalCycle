@@ -33,15 +33,6 @@
     </div>
   </div>
   <% end %>
-
-  <div class="control-group">
-    <%= f.label :pic, "Profile Pic:", class: "control-label" %>
-    <div class="controls controls-row">
-      <%= (image_tag f.object.pic.url(:medium)) if f.object.pic? %>
-      <%= f.file_field :pic, class: "span4" %>
-      <span class="help-block">Upload an image to represent yourself. 2MB Limit.</span>
-    </div>
-  </div>
   
   <p><br /></p>
 
