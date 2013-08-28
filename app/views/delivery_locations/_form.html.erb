@@ -1,0 +1,17 @@
+<div class="controls controls-row child-field" style="margin-bottom: 5px;">
+  <%= f.text_field :street_address_1, placeholder: "Address 1", class: "span4" %><br />
+  <%= f.text_field :street_address_2, placeholder: "Address 2", class: "span4" %><br />
+  <%= f.text_field :city, placeholder: "City", class: "span2" %>
+  <%= f.text_field :state, placeholder: "State", class: "span1" %>
+  <%= f.text_field :zip, placeholder: "Zip", class: "span1" %>
+  
+  <p><strong>Delivery Windows</strong><br />
+    Please provide common pickup and dropoff windows for this location.</p>
+  <%= f.fields_for :delivery_windows do |fd| %>
+    <%= render partial: 'delivery_windows/delivery_window', locals: { f: fd } %>
+    <%= new_child_fields_template(f, :delivery_windows, {partial: "delivery_windows/delivery_window"})%>
+  <% end %>
+  <span class="help-inline"><%= add_child_link "Add Window", :delivery_windows %></span>
+  <span class="help-block">Add common "pickup and dropoff" windows for your organization.</span>
+</div>
+    <!--p><span class="label label-info">NOTE:</span> We expect both parties to integrate the delivery fee into price point of Production Agreements.</p-->

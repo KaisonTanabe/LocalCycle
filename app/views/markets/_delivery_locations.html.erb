@@ -1,0 +1,9 @@
+<div class="control-group">
+  <%= f.fields_for :delivery_locations do |fl| %>
+    <%= render partial: 'delivery_locations/form', locals: { f: fl } %>
+    <%= new_child_fields_template(f, :delivery_locations, {partial: "delivery_locations/form"})%>
+  <% end %>
+  <div class="controls">
+    <span class="help-inline"><%= add_child_link "Add Location", :delivery_locations %></span>
+  </div>
+</div>
