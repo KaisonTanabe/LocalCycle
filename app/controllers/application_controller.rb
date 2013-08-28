@@ -41,4 +41,6 @@ class ApplicationController < ActionController::Base
     end
     return errs
   end
+  
+
 end

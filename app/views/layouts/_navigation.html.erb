@@ -4,7 +4,9 @@
   <li><%= link_to raw('<i class="icon-user"></i> ' + current_user.first_name), edit_user_path(current_user) %></li>
 
   <% if current_user.producer? %>
-  <li><%= link_to raw('<i class="icon-list-alt"></i> My Goods'), goods_path %></li>
+  <li><%= link_to raw('<i class="icon-list-alt"></i> Post Supply'), goods_path %></li>
+  <li><%= link_to raw('<i class="icon-list-alt"></i> View Demand'), "#" %></li>
+
   <% end %>
 
   <% if current_user.buyer? %>
