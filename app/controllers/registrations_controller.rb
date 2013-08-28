@@ -9,7 +9,12 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     # add custom create logic here
     @role = "market_manager"
-    @role = params["user"]["role"] if params["user"]["role"] and REGISTERABLE_ROLES.include?(params["user"]["role"])
+    # Make sure user is a registerable role. If not set to market_manager
+    if params["user"]["role"] and REGISTERABLE_ROLES.include?(params["user"]["role"])
+      @role = params["user"]["role"]
+    else
+      params["user"]["role"] = @role
+    end
     super
   end
 
