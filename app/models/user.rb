@@ -49,13 +49,13 @@ class User < ActiveRecord::Base
   validates :first_name, :last_name,  presence: true
   validates :role,                    inclusion: {:in => ROLES.map{ |r| r.first}}
 
-  validates  :name, :phone,
+  validates  :name, :phone, :market_id,
     :street_address_1, :city, :state, :zip, :country,
     :growing_methods, :size, 
     presence: true,
     :if => lambda { self.role == "producer" and self.complete == true }
 
-  validates :name, :phone, 
+  validates :name, :phone, :market_id,
     :street_address_1, :city, :state, :zip, :country,
     presence: true,
     :if => lambda { self.role == "buyer" and self.complete == true }

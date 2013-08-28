@@ -133,7 +133,7 @@ class Good < ActiveRecord::Base
   end
 
   def duration
-    "Expires " + end_date.strftime("%b %e")
+    "Expires " + end_date.strftime("%b %e") if end_date
   end
 
   ############ PRIVATE METHODS ############

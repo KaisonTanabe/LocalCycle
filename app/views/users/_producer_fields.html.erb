@@ -1,4 +1,12 @@
 <div class="control-group">
+  <%= f.label :market_id, "Market:", class: "control-label" %>
+  <div class="controls controls-row">
+    <%= f.select :market_id, Market.all.map {|m| [m.name, m.id]}, {prompt: "-- Please Select --"}, {class: "span4"} %>
+    <span class="help-inline">Which market do you belong to?</span>
+  </div>
+</div>
+
+<div class="control-group">
   <%= f.label :pic, "Profile Pic:", class: "control-label" %>
   <div class="controls controls-row">
     <%= (image_tag f.object.pic.url(:medium)) if f.object.pic? %>

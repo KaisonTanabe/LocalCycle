@@ -23,7 +23,7 @@
       <li><%= link_to "Products", products_path %></li>
       <li><%= link_to "Users", users_path %></li>
       <% else %>
-      <li><%= link_to "Market", market_path(current_user.market) if current_user.complete? %></li>
+      <li><%= link_to "Market", market_path(current_user.market) if current_user.complete? and current_user.market %></li>
       <% end %>
 
       <% if current_user.market_manager? %>

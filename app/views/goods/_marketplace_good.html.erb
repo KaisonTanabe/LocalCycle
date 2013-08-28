@@ -5,7 +5,7 @@
   
   <p class="details">
     <% good.price_points.order("quantity ASC").each do |pp| %>
-      <%= number_to_currency(pp.price) %> <strong style="font-size: 15px;">@</strong> &gt;<%= pp.quantity %> <span class='label label-info'><%= pp.selling_unit.short_name.pluralize %></span><br />
+      <%= number_to_currency(pp.price) %> <strong style="font-size: 15px;">@</strong> &gt;<%= pp.quantity %> <span class='label label-info'><%= pp.selling_unit.short_name.pluralize if pp.selling_unit %></span><br />
     <% end %>
     <%= good.quantity %> <span class="label label-info"><%= good.selling_unit.short_name.pluralize %></span> avail.<br />
     <%= good.duration %>

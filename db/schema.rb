@@ -152,12 +152,12 @@ ActiveRecord::Schema.define(:version => 20130731034113) do
     t.integer  "producer_id",     :default => 0,    :null => false
     t.integer  "market_id",                         :null => false
     t.integer  "product_id",                        :null => false
+    t.integer  "selling_unit_id",                   :null => false
     t.integer  "quantity"
     t.date     "start_date"
     t.date     "end_date"
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
-    t.integer  "selling_unit_id", :default => 1,    :null => false
     t.boolean  "available",       :default => true, :null => false
   end
 
@@ -166,6 +166,7 @@ ActiveRecord::Schema.define(:version => 20130731034113) do
   add_index "goods", ["market_id"], :name => "index_goods_on_market_id"
   add_index "goods", ["producer_id"], :name => "index_goods_on_producer_id"
   add_index "goods", ["product_id"], :name => "index_goods_on_product_id"
+  add_index "goods", ["selling_unit_id"], :name => "index_goods_on_selling_unit_id"
 
   create_table "images", :force => true do |t|
     t.integer  "imageable_id"
