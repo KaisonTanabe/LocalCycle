@@ -33,7 +33,7 @@ table {
   }
   // Bottom align for column headings
   thead th {
-    vertical-align: bottom;
+    vertical-align: top;
   }
   // Remove top border from thead by default
   caption + thead tr:first-child th,

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130830235219) do
+ActiveRecord::Schema.define(:version => 20130903221800) do
 
   create_table "agreement_changes", :force => true do |t|
     t.integer  "agreement_id",                                  :null => false
@@ -247,6 +247,8 @@ ActiveRecord::Schema.define(:version => 20130830235219) do
     t.datetime "updated_at",                     :null => false
     t.integer  "selling_unit_id", :default => 1, :null => false
     t.integer  "buyer_id"
+    t.integer  "network_id"
+    t.integer  "market_id"
   end
 
   add_index "price_points", ["good_id"], :name => "index_price_points_on_good_id"
