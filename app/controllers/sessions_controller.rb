@@ -6,8 +6,9 @@ class SessionsController < Devise::SessionsController
     super
   end
   
+  
   def check_activation!
-    if User.find_by_email(params[:user][:email]) !=nil && !User.find_by_email(params[:user][:email]).activated 
+    if User.find(:first, :conditions => ["email = lower(?)", params[:user][:email]]) !=nil && !User.find(:first, :conditions => ["email = lower(?)", params[:user][:email]]).activated 
       set_flash_message(:notice, :inactive) 
       redirect_to "/login"
     end
