@@ -1,0 +1,14 @@
+<tr>
+  <th>
+		
+    <%= f.text_field :name%>
+  </th>
+  
+  <% if current_user.admin? %>
+  <% end %>  
+  <th>
+    <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+    <i class="icon-white icon-plus"></i> Create Network
+    <% end %>
+  </th>
+</tr>

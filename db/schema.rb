@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130731034113) do
+ActiveRecord::Schema.define(:version => 20130830235219) do
 
   create_table "agreement_changes", :force => true do |t|
     t.integer  "agreement_id",                                  :null => false
@@ -210,6 +210,23 @@ ActiveRecord::Schema.define(:version => 20130731034113) do
     t.string   "pic_content_type"
     t.integer  "pic_file_size"
     t.datetime "pic_updated_at"
+    t.integer  "network_id"
+    t.integer  "day_of_week"
+    t.integer  "cycle"
+    t.time     "start_time"
+    t.time     "end_time"
+    t.boolean  "all_buyers"
+  end
+
+  create_table "markets_users", :id => false, :force => true do |t|
+    t.integer "market_id"
+    t.integer "user_id"
+  end
+
+  create_table "networks", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "preferred_user_agreements", :force => true do |t|
@@ -229,6 +246,7 @@ ActiveRecord::Schema.define(:version => 20130731034113) do
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
     t.integer  "selling_unit_id", :default => 1, :null => false
+    t.integer  "buyer_id"
   end
 
   add_index "price_points", ["good_id"], :name => "index_price_points_on_good_id"
@@ -277,6 +295,14 @@ ActiveRecord::Schema.define(:version => 20130731034113) do
 
   add_index "selling_units", ["name"], :name => "index_selling_units_on_name", :unique => true
   add_index "selling_units", ["short_name"], :name => "index_selling_units_on_short_name", :unique => true
+
+  create_table "user_networks", :force => true do |t|
+    t.integer  "network_id"
+    t.integer  "user_id"
+    t.boolean  "approved"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                    :default => "",    :null => false
@@ -336,12 +362,12 @@ ActiveRecord::Schema.define(:version => 20130731034113) do
     t.string   "billing_state"
     t.string   "billing_country",          :default => "US"
     t.string   "billing_zip"
-    t.integer  "market_id"
+    t.string   "institution"
+    t.boolean  "activated"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["market_id"], :name => "index_users_on_market_id"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
 

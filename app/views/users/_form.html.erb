@@ -32,9 +32,13 @@
       <span class="help-block">Scratch space for other information linked to this user.</span>
     </div>
   </div>
-  <% end %>
+
+
+<% end %>
   
   <p><br /></p>
+
+	
 
   <% if @user.producer? %>
     <%= render partial: 'users/producer_fields', locals: {f: f} %>
@@ -42,8 +46,23 @@
     <%= render partial: 'users/buyer_fields', locals: {f: f} %>
   <% elsif @user.market_manager? %>
     <%= render partial: 'users/market_manager_fields', locals: {f: f} %>
-  <% end %>
-  <%#= render partial: 'users/product_selection_fields', locals: {f: f} %>  
+	<% end %>
+	<legend> Networks/Markets</legend>
+
+  <div class="control-group">
+ 		<div class="controls controls-row">
+		<%= hidden_field_tag "user[market_ids][]" %>
+			<%= f.fields_for :user_networks do |ff|%>
+						<%= render :partial => 'users/user_network_fields', locals:  {f: ff} %>
+			<%end%>
+			<%= link_to_add_user_network "<div class=\"btn\">Add Network</div>".html_safe, f, :user_networks %>
+	    
+		
+			</div>
+	</div>
+	
+	
+<%#= render partial: 'users/product_selection_fields', locals: {f: f} %>  
 
   
   <%= render partial: 'partials/submit', locals: {f: f, text: 'User'} %>

@@ -8,7 +8,7 @@ class PricePoint < ActiveRecord::Base
 
   ## ATTRIBUTE PROTECTION
 
-  attr_accessible :price, :quantity, :selling_unit_id
+  attr_accessible :price, :quantity, :selling_unit_id, :buyer_id
 
   ## ATTRIBUTE VALIDATION
 

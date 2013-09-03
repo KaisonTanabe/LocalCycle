@@ -2,7 +2,6 @@
   <th>
     <%= f.select :role, REGISTERABLE_ROLES.map{|r| [r.second, r.first]}, {prompt: "Role"}, {style: "width: 70px;" } %>
     <%= f.hidden_field :complete, value: true %>
-    <%= f.hidden_field :market_id, value: current_user.market_id unless current_user.admin? %>
   </th>
   <th>
     <%= f.text_field :first_name, placeholder: "First Name", style: "width: 81px;" %>
@@ -20,7 +19,6 @@
   </th>
   <% if current_user.admin? %>
   <th>
-    <%= f.select :market_id, options_from_collection_for_select(Market.order("name ASC"), :id, :name), {prompt: "-- Select Market --"}, {class: "select2", style: "width: 180px;" } %>
   </th>
   <th></th>
   <% end %>  

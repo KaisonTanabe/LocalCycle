@@ -3,6 +3,7 @@ ruby '1.9.3'
 gem  'rails'
 
 gem 'devise'
+gem 'formtastic'
 gem 'cancan'
 gem 'mail'
 gem 'pg'

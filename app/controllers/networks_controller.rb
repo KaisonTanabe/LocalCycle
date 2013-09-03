@@ -1,4 +1,4 @@
-class MarketsController < ApplicationController
+class NetworksController < ApplicationController
   # Initialize Cancan authorization for this controller
   load_and_authorize_resource
 
@@ -7,8 +7,8 @@ class MarketsController < ApplicationController
   require 'csv'
 
   def index 
-    @markets = filter_and_sort(@markets, params)
-    @markets = @markets.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
+    @networks = filter_and_sort(@networks, params)
+    @networks = @networks.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
 
     @first_login = (params[:first_login] == "true")
    
@@ -22,7 +22,7 @@ class MarketsController < ApplicationController
   def show
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @market }
+      format.json { render json: @network }
       format.js
       format.pdf do
         render :pdf => "Profile",
@@ -35,44 +35,45 @@ class MarketsController < ApplicationController
   def new
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @market }
+      format.json { render json: @network }
     end
   end
 
   def create
     respond_to do |format|
-      if @market.save
-        format.html { redirect_to  markets_path, notice: 'Market successfully created.' }
-        format.json { render json: @market, status: :created, location: @market }
+      if @network.save
+        format.html { redirect_to networks_path, notice: 'Network successfully created.' }
+        format.json { render json: @network, status: :created, location: @network }
+        format.js { render :create }
+        
       else
         format.html { render action: "new" }
-        format.json { render json: @market.errors, status: :unprocessable_entity }
+        format.json { render json: @network.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
-    @market.delivery_windows.build
   end
 
   def update
 
     respond_to do |format|
-      if @market.update_attributes(params[:market])
-        format.html { redirect_to markets_path, notice: 'Market was successfully updated.' }
+      if @network.update_attributes(params[:market])
+        format.html { redirect_to networks_path, notice: 'Netowrk was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @market.errors, status: :unprocessable_entity }
+        format.json { render json: @network.errors, status: :unprocessable_entity }
       end
     end
   end  
 
   def destroy
-    @market.destroy
+    @network.destroy
 
     respond_to do |format|
-      format.html { redirect_to markets_url(params.to_hash) }
+      format.html { redirect_to networks_url(params.to_hash) }
       format.json { head :no_content }
     end
   end
@@ -80,12 +81,12 @@ class MarketsController < ApplicationController
 
 
   def export 
-    @markets = filter_and_sort(@markets, params)
+    @networks = filter_and_sort(@networks, params)
 
-    filename = "markets_#{Date.today.strftime('%d%b%y')}"
+    filename = "networks_#{Date.today.strftime('%d%b%y')}"
     csv_data = CSV.generate do |csv|
-      csv << Market.csv_header
-      @markets.each do |s|
+      csv << Network.csv_header
+      @networks.each do |s|
         csv << s.to_csv
       end
     end
@@ -101,15 +102,15 @@ class MarketsController < ApplicationController
 
   private
 
-  def filter_and_sort(markets, params)
-    markets = markets.by_name(params[:name]) unless params[:name].blank?
+  def filter_and_sort(networks, params)
+    networks = networks.by_name(params[:name]) unless params[:name].blank?
 
-    return markets.order(sort_column + " " + sort_direction)
+    return networks.order(sort_column + " " + sort_direction)
   end
   
   def sort_column
     sort = params[:sort] || ''
-    Market.column_names.include?(sort) ? sort : "name"
+    Network.column_names.include?(sort) ? sort : "name"
   end
 
   def sort_direction

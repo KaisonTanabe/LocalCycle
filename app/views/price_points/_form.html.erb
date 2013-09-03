@@ -5,6 +5,9 @@
   </div>
   <%= f.text_field :quantity, placeholder: "Qty", class: "span1", style: "margin-left: 5px;" %>
   <%= f.select :selling_unit_id, SellingUnit.all.map {|s| [s.short_name, s.id]}, {prompt: "Unit"}, {class: "span1", style: "margin-left: 5px;"} %>
+	<%= f.select :buyer_id, User.where(:market_id => current_user.market_id).all.map {|s| ["#{s.first_name} #{s.last_name}", s.id]}, {prompt: "All Buyers"}, {class: "span2", style: "margin-left: 5px;"} %>
+	
   <span class="help-inline" style="display: inline;"><%= link_to raw('<span class="icon-white icon-remove"></span> <span class="form-only">Remove</span>'), 'javascript:void(0)', class: 'remove-old-child btn btn-mini btn-inverse' %></span>
+
   <%= f.hidden_field :_destroy, class: 'destroy-field', value: '0' %>
 </div>

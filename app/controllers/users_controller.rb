@@ -116,7 +116,10 @@ class UsersController < ApplicationController
   end
 
 
-
+  def activate
+    @user.update_attribute(:activated, true);
+    render :nothing => true
+  end
 
 
 

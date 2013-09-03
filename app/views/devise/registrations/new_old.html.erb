@@ -2,14 +2,19 @@
     
   <div class="row wide">
 
-  <%= semantic_form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: "form-horizontal"}) do |f| %>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: "form-horizontal"}) do |f| %>
 
     <%= f.hidden_field :role, value: @role %>
 
     <legend><%= ROLES[@role] %> Registration</legend>
 
-    We are in beta now, but sign up below and we'll contact you when we're opening up in your area!
-		
+    <ol>
+      <li>Register as a <%= ROLES[@role] %> below.</li>
+      <li>Check your email (at the address supplied below).</li>
+      <li>You will receive an email within 5 minutes prompting you to confirm and complete your profile.<br />
+	<em>If you do not receive an email, check your spam folder. If still missing, email <a href="mailto:<%= SUPPORT_EMAIL %>?subject=Confirmation Email Never Received..."><%= SUPPORT_EMAIL %></a>.</em></li>
+      <li>You will then be signed in and able to find agreements!</li>
+    </ol>
 
     <hr />
 
@@ -23,32 +28,12 @@
       </div>
     </div>
     <div class="control-group">
-		      <%= f.label :institution, "Institution: ", class: "req control-label" %>
-		      <div class="controls controls-row">
-			<%= f.text_field :institution, class: "span4" %>
-			</div>
-		</div>
-    <div class="control-group">
       <%= f.label :email, "Email Address: ", class: "req control-label" %>
       <div class="controls controls-row">
 	<%= f.email_field :email, placeholder: "user@example.com", class: "span4" %>
       </div>
     </div>
-		 <div class="control-group">
-	      <%= f.label :zip, "Zip Code: ", class: "req control-label" %>
-	      <div class="controls controls-row">
-		<%= f.text_field :zip, class: "span2" %>
-	      </div>
-	    </div>
-			 <div class="control-group">
-				<div class="controls controls-row">
-	      
-					<%=f.input :network_ids, as: :check_boxes, label: "Requested Networks", collection: Network.all.collect{|n| [n.name, n.id]}, multiple: true%>
-	    
-		     </div>
-		    </div>
 
-			<%= f.hidden_field :activated, :value=> false %>
 
     <%= render partial: 'partials/submit', locals: {f: f, override: 'Register'} %>
     

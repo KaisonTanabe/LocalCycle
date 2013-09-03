@@ -16,7 +16,10 @@ LOCALCYCLE::Application.routes.draw do
   resources :markets do
     get 'export', on: :collection
   end
-
+  resources :networks do
+    get 'export', on: :collection
+  end
+  
   resources :agreements do
     get 'root_agreement_changes', on: :member
     put 'accept', on: :member
@@ -40,6 +43,10 @@ LOCALCYCLE::Application.routes.draw do
   resources :users do
     get 'prompt', on: :member
     get 'export', on: :collection
+    member do 
+      post 'activate'
+      
+    end
   end
 
   # Temporary model to collect email addresses on BETA page

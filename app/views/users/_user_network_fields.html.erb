@@ -1,0 +1,39 @@
+			<div class="row-fluid well">
+				
+				<% if f.object.network %>
+					<div class = "span3"><h4><b><%=f.object.network.name%></b></h4>
+					<%= f.hidden_field :network_id%><br/>
+					<%= f.hidden_field :_destroy %>
+					
+					<%= link_to "Remove", "#", :class=>"btn btn-danger remove_field"%> <%= link_to("Approve", "#", :class=>"btn btn-success") if !f.object.approved%>
+					</div>
+				<%else%>
+					<div class= "span3"> 
+						<%= f.select :network_id, (Network.all - @user.networks).collect{|n| [n.name,  n.id]}, :prompt=> "Select Network"%><br/><br/>
+						<%= f.hidden_field :_destroy %>
+						
+						<%= link_to "Remove", "#", :class=>"btn btn-danger remove_field" %>
+						<%= f.hidden_field :approved, :value=> true%><br/>
+						
+					</div>
+				<%end%>
+				
+				<div class = "span8"> 
+					<% if f.object.approved == true%>
+					<div class="row-fluid"> <h4>Select Markets:</h4></div>
+					<div class="row-fluid"> 
+						<% f.object.network.markets.each do |m|%>
+				     <div class="span2">
+							<%= check_box_tag "user[market_ids][]", m.id, @user.markets.include?(m) %>
+				     	<%= m.name%>
+						</div>
+				   <% end %>
+				 </div>
+					
+					
+					<%end%>
+		
+					<%= f.hidden_field :user_id%><br/>
+					
+				</div>
+			</div>

@@ -4,7 +4,13 @@ common: &common
   password: <%= ENV['PG_PASSWORD'] %>
 
 development:
-  <<: *common
+  adapter: postgresql
+  encoding: unicode
+  port: 5432
+  host: localhost
+  pool: 5
+  username: admin
+  password:  
   database: lc_dev
 
 staging:

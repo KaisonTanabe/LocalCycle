@@ -158,7 +158,7 @@ class GoodsController < ApplicationController
   private
 
   def filter_and_sort(goods, params)
-    goods = goods.by_market(current_user.market_id) unless current_user.admin?
+    #goods = goods.by_market(current_user.markets.first.id) unless current_user.admin?
     goods = goods.by_market(params[:market]) unless params[:market].blank?
     goods = goods.by_name(params[:name]) unless params[:name].blank?
     goods = goods.by_category(params[:category]) unless params[:category].blank?

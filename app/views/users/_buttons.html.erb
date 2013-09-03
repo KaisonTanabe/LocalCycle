@@ -9,6 +9,8 @@
       <ul class="dropdown-menu">
 	<li><%= link_to raw('<i class="icon-user"></i> Prompt'), prompt_user_path(user), title: "Send email to user prompting them to login and XXX." %></li>
       </ul>
+			<%=link_to "<div class='btn btn-success btn-small'>Activate</div>".html_safe, activate_user_path(user), :class=>"activate_user", :method=>:post, :remote=> true if user.activated == false || user.activated == nil%> 
+
     </div>
   </div>
 
@@ -20,5 +22,7 @@
     </a>
     <ul class="dropdown-menu">
       <li><%= link_to raw('<i class="icon-user"></i> Prompt'), prompt_user_path(user), title: "Send email to user prompting them to login and XXX." %></li>
-      </ul>
+    </ul>
+		<%=link_to "<div class='btn btn-success btn-small '>Activate</div>".html_safe, activate_user_path(user), :class=>"activate_user", :method=>:post, :remote=> true if user.activated == false || user.activated == nil%> 
+
   </div>

@@ -19,11 +19,13 @@
     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog"></i> Manage <b class="caret"></b></a>
     <ul class="dropdown-menu">
       <% if current_user.admin? %>
+      <li><%= link_to "Networks", networks_path %></li>
+
       <li><%= link_to "Markets", markets_path %></li>
       <li><%= link_to "Products", products_path %></li>
       <li><%= link_to "Users", users_path %></li>
       <% else %>
-      <li><%= link_to "Market", market_path(current_user.market) if current_user.complete? and current_user.market %></li>
+      <li><%= link_to "Market", markets_path if current_user.complete? and current_user.markets.count > 0 %></li>
       <% end %>
 
       <% if current_user.market_manager? %>

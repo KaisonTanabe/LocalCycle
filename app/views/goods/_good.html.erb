@@ -19,7 +19,7 @@
   </td>
   <td class='price <%= (params[:sort] == "price") ? "sorted" : "" %>'>
     <% good.price_points.order("quantity ASC").each do |pp| %>
-      <%= number_to_currency(pp.price) %> <strong style="font-size: 15px;">@</strong> &gt;<%= pp.quantity %> <span class='label label-info'><%= pp.selling_unit.short_name.pluralize %></span><br />
+      <%= number_to_currency(pp.price) %> <strong style="font-size: 15px;">@</strong> &gt;<%= pp.quantity %> <span class='label label-info'><%= pp.selling_unit.short_name.pluralize %></span> <% buyer = pp.buyer_id ? User.find(pp.buyer_id): nil%><%= "Buyer: #{buyer.first_name} #{buyer.last_name}" if buyer !=nil %> <br />
     <% end %>
   </td>
   <td class='availability <%= (params[:sort] == "availability") ? "sorted" : "" %>'>

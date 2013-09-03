@@ -1,0 +1,10 @@
+<%= form_for(@network, html: { multipart: true, class: "form-horizontal" }) do |f| %>
+
+  <legend></legend>
+  <%= render partial: 'partials/errors', locals: {obj: @network} %>
+
+  <%= render partial: 'form_fields', locals: {f: f} %>
+
+  <%= render partial: 'partials/submit', locals: {f: f, text: 'Network' } %>
+
+<% end %>

@@ -10,9 +10,11 @@
   </td>
 
   <% if current_user.admin? %>
-  <td class='market <%= (params[:sort] == "market") ? "sorted" : "" %>'>
-    <%= link_to user.market.name, user.market, data: {target: "#ajax-modal", toggle: "modal", placement: "top", data: "true", remote: "true"} if user.market %>
-  </td>
+  	<td>
+			<% user.networks.each do |n|%>
+				<%= "#{n.name}"%><br/s>
+			<%end%>
+	  </td>
   <td class='login <%= (params[:sort] == "current_sign_in_at") ? "sorted" : "" %>'>
     <%= user.current_sign_in_at ? user.current_sign_in_at.strftime("%b %-d %I:%M %P") : "Never" %>
   </td>

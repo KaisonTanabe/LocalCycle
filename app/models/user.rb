@@ -28,8 +28,11 @@ class User < ActiveRecord::Base
 
   has_many :goods, foreign_key: :creator_id, dependent: :destroy
 
-  belongs_to :market
-  accepts_nested_attributes_for :market
+  has_and_belongs_to_many :markets
+  
+  has_many :user_networks
+  has_many :networks, :through=> :user_networks
+  accepts_nested_attributes_for :user_networks, :allow_destroy => true
 
   ## ATTRIBUTE PROTECTION
   attr_accessible :first_name, :last_name, :email, :notes,
@@ -42,20 +45,20 @@ class User < ActiveRecord::Base
     :certification_ids, :text_updates, :complete,
     :has_eggs, :has_dairy, :has_livestock, :has_pantry, 
     :custom_growing_methods, :delivery_windows_attributes, :size,
-    :market_id, :market_attributes, :product_ids, :category_ids
+    :market_ids, :market_attributes, :product_ids, :category_ids, :institution, :activated, :user_networks_attributes, :network_ids
 
 
   ## ATTRIBUTE VALIDATION
   validates :first_name, :last_name,  presence: true
   validates :role,                    inclusion: {:in => ROLES.map{ |r| r.first}}
 
-  validates  :name, :phone, :market_id,
+  validates  :name, :phone,
     :street_address_1, :city, :state, :zip, :country,
     :growing_methods, :size, 
     presence: true,
     :if => lambda { self.role == "producer" and self.complete == true }
 
-  validates :name, :phone, :market_id,
+  validates :name, :phone,
     :street_address_1, :city, :state, :zip, :country,
     presence: true,
     :if => lambda { self.role == "buyer" and self.complete == true }
