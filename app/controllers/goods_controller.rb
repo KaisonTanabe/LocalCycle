@@ -99,6 +99,10 @@ class GoodsController < ApplicationController
     end
   end
 
+  def buyer_panel
+    render :layout=>false
+  end
+  
 
   def destroy
     @good.destroy

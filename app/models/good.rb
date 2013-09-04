@@ -5,7 +5,6 @@ class Good < ActiveRecord::Base
   ## SETUP ASSOCIATIONS
   belongs_to :product
   belongs_to :selling_unit
-  belongs_to :market
   belongs_to :buyer, class_name: "User", foreign_key: :buyer_id
   belongs_to :producer, class_name: "User", foreign_key: :producer_id
   belongs_to :creator, class_name: "User", foreign_key: :creator_id
@@ -21,7 +20,7 @@ class Good < ActiveRecord::Base
 
   ## ATTRIBUTE VALIDATION
 
-  validates :product_id, :market_id, :creator_id, presence: true
+  validates :product_id, :creator_id, presence: true
 
   validates :available,
     :inclusion => {:in => [true, false]}

@@ -5,8 +5,8 @@ class Market < ActiveRecord::Base
 
   has_many :goods
   has_and_belongs_to_many :market_managers, class_name: "User", foreign_key: :market_id, :conditions => proc { "role = 'market_manager'" }
-  has_and_belongs_to_many :producers, class_name: "User", foreign_key: :market_id
-  has_and_belongs_to_many :buyers, class_name: "User", foreign_key: :market_id
+  has_and_belongs_to_many :producers, class_name: "User", foreign_key: :market_id, :conditions => proc { "role = 'producer'" }
+  has_and_belongs_to_many :buyers, class_name: "User", foreign_key: :market_id, :conditions => proc { "role = 'buyer'" }
 
   has_many :delivery_windows, as: :deliverable, dependent: :destroy
   accepts_nested_attributes_for :delivery_windows, allow_destroy: true, reject_if: proc { |attrs| attrs['weekday'].blank? or attrs['start_hour'].blank? or attrs['start_hour'].blank? }

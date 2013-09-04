@@ -1,0 +1,31 @@
+
+<legend>Select Buyers/Markets </legend>
+<%= form_tag do %>
+	<span id="modal_form_data">
+	<% current_user.networks.each do |n|%>
+		<h4><%= n.name%></h4>
+			<% current_user.markets.where(:network_id => n.id).each do |market|%>
+			<div class="row-fluid ">
+				
+				<div class="span12 well">
+					<h5> <%= check_box_tag :market_flag, market.id %><%=market.name%></h5>
+					<div class="row-fluid">
+						<div class="span1"></div>
+					<% market.buyers.each do |buyer|%>
+							<div class="span2">
+								<%= check_box_tag :buyer_flag, buyer.id %><%="#{buyer.first_name} #{buyer.last_name}"%>
+							</div>
+					<%end%>
+					<div class="button_bar"> <div class="btn btn-primary btn-small select_all">Select All</div><div class="btn btn-primary btn-small select_none">Select None</div></div>
+					</div>
+				</div>
+				</div>
+				
+			<%end%>
+	<%end%>
+	</div>
+	<br/>
+	<%= submit_tag "Update Buyers", :class=> "btn btn-primary update_buyers"%>
+	</span>
+	
+<%end%>

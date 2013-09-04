@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130903221800) do
+ActiveRecord::Schema.define(:version => 20130904214310) do
 
   create_table "agreement_changes", :force => true do |t|
     t.integer  "agreement_id",                                  :null => false
@@ -150,7 +150,6 @@ ActiveRecord::Schema.define(:version => 20130903221800) do
     t.integer  "creator_id",                        :null => false
     t.integer  "buyer_id",        :default => 0,    :null => false
     t.integer  "producer_id",     :default => 0,    :null => false
-    t.integer  "market_id",                         :null => false
     t.integer  "product_id",                        :null => false
     t.integer  "selling_unit_id",                   :null => false
     t.integer  "quantity"
@@ -163,7 +162,6 @@ ActiveRecord::Schema.define(:version => 20130903221800) do
 
   add_index "goods", ["buyer_id"], :name => "index_goods_on_buyer_id"
   add_index "goods", ["creator_id"], :name => "index_goods_on_creator_id"
-  add_index "goods", ["market_id"], :name => "index_goods_on_market_id"
   add_index "goods", ["producer_id"], :name => "index_goods_on_producer_id"
   add_index "goods", ["product_id"], :name => "index_goods_on_product_id"
   add_index "goods", ["selling_unit_id"], :name => "index_goods_on_selling_unit_id"
@@ -246,9 +244,7 @@ ActiveRecord::Schema.define(:version => 20130903221800) do
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
     t.integer  "selling_unit_id", :default => 1, :null => false
-    t.integer  "buyer_id"
-    t.integer  "network_id"
-    t.integer  "market_id"
+    t.text     "buyers"
   end
 
   add_index "price_points", ["good_id"], :name => "index_price_points_on_good_id"

@@ -69,6 +69,11 @@ class NetworksController < ApplicationController
     end
   end  
 
+  def markets_for
+    format.json { render json:@network.markets }
+    
+  end
+  
   def destroy
     @network.destroy
 

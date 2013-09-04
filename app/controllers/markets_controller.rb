@@ -32,6 +32,13 @@ class MarketsController < ApplicationController
   end
 
 
+  
+  def buyers_for
+    format.json { render json: @market.users }
+    
+  end
+  
+
   def new
     respond_to do |format|
       format.html # new.html.erb

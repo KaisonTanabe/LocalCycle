@@ -1,7 +1,5 @@
-<div class="controls controls-row child-field" style="margin-bottom: 5px; margin-left: 0px; width: 400px">
-	
-  <span class="help-inline" style="display: inline;"><%= link_to raw('<span class="icon-white icon-remove"></span>'), 'javascript:void(0)', class: 'remove-old-child btn btn-mini btn-inverse' %></span>
- 
+<div class="controls controls-row child-field " style="margin-bottom: 5px; width: 400px">
+  <span class="help-inline" style="display: inline;"><%= link_to raw('<span class="icon-white icon-remove"></span> '), 'javascript:void(0)', class: 'remove-old-child btn btn-mini btn-inverse' %></span>
 
   <%= f.hidden_field :_destroy, class: 'destroy-field', value: '0' %>
   
@@ -11,11 +9,10 @@
   </div>
 	
   <%= f.text_field :quantity, placeholder: "Qty", class: "span1", style: "margin-left: 5px;" %>
-  <%= f.select :selling_unit_id, SellingUnit.all.map {|s| [s.short_name, s.id]}, {prompt: "Unit"}, {style: "margin-left: 5px; width: 70px"} %>
+  <%= f.select :selling_unit_id, SellingUnit.all.map {|s| [s.short_name, s.id]}, {prompt: "Unit"}, {class: "span1", style: "margin-left: 5px;"} %>
 
+	
 	<%=link_to "Edit Buyers", buyer_panel_goods_path, :class=>"btn btn-small edit_buyers", :remote=> true %>
 	<div class="show_buyers"></div>
 	<%= f.hidden_field :buyers, :class=> "buyer_json"%>
-
-
 </div>

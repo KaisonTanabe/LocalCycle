@@ -1,9 +1,11 @@
 <%= content_tag_for :tr, good, class: (current_user.buyer? ? (good.available ? "success" : "error") : "") do %>
-  <td>
-    <% if current_user.market_manager? or current_user.admin? or good.created_by?(current_user) %>
-      <%= link_to toggle_available_good_path(good), class: 'ajax-available', data: { type: 'json' }, remote: true do %><span title="Click to toggle availability of <%= good.name %>" class="label label-<%= good.available ? 'success' : 'important' %>"><i class="icon-ok icon-white"></i></span><% end %>
-    <% end %>
-  </td>
+
+<%= form_for(@good, html: { multipart: true, class: "form-horizontal" }) do |f| %>
+<td>
+	<% if current_user.market_manager? or current_user.admin? or good.created_by?(current_user) %>
+	   <%= link_to toggle_available_good_path(good), class: 'ajax-available', data: { type: 'json' }, remote: true do %><span title="Click to toggle availability of <%= good.name %>" class="label label-<%= good.available ? 'success' : 'important' %>"><i class="icon-ok icon-white"></i></span><% end %>
+	 <% end %>
+</td>
   <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
     <%= image_tag good.product.best_pic_url(:thumb), class: "thumb" %>
     <%= link_to good.product.name, good, data: {target: "#ajax-modal", toggle: "modal", placement: "top", data: "true", remote: "true"} %>
@@ -14,17 +16,41 @@
     <%= link_to good.creator.name, good.creator, data: {target: "#ajax-modal", toggle: "modal", placement: "top", data: "true", remote: "true"} %>
   </td>
   <% end %>
-  <td class='quantity <%= (params[:sort] == "quantity") ? "sorted" : "" %>'>
-    <%=raw good.quantity.to_s + " <span class='label label-info'>" + good.selling_unit.short_name.pluralize + "</span>" %>
+
+  <% if current_user.admin? or current_user.market_manager? %>
+
+  <td>
+      <%= f.select :creator_id, options_from_collection_for_select(User.by_producer.order('name'), :id, :name, (params[:creator_id].blank? ? (@good.creator ? @good.creator.id : "") : params[:creator_id])), {prompt: "-- Select Producer --"}, {class: "select2 span4" } %>
+
   </td>
-  <td class='price <%= (params[:sort] == "price") ? "sorted" : "" %>'>
-    <% good.price_points.order("quantity ASC").each do |pp| %>
-      <%= number_to_currency(pp.price) %> <strong style="font-size: 15px;">@</strong> &gt;<%= pp.quantity %> <span class='label label-info'><%= pp.selling_unit.short_name.pluralize %></span> <% network = pp.network_id ? Network.find(pp.network_id): nil%><% market = pp.market_id ? Market.find(pp.market_id): nil%><% buyer = pp.buyer_id ? User.find(pp.buyer_id): nil%><%= "Network: #{network.name} " if network !=nil %><%= "Market: #{market.name}" if market !=nil %><%= "Buyer: #{buyer.first_name} #{buyer.last_name}" if buyer !=nil %> <br />
+  <%end%>
+
+
+  <td>
+		<span class="controls controls-row">
+      <%= f.text_field :quantity, placeholder: "Qty", class: "span2", style: "width: 30px" %>
+      <%= f.select :selling_unit_id, SellingUnit.all.map {|s| [s.name, s.id]}, {prompt: "Unit"}, {class: "span1", style: "margin-left: 5px;"} %>
+		</div>
+  </td>
+
+  <td>
+    <%= f.fields_for :price_points do |fpp| %>
+      <%= render partial: 'price_points/form', locals: { f: fpp } %>
+      <%= new_child_fields_template(f, :price_points, {partial: "price_points/form"})%>
     <% end %>
+    <span class="controls">
+
+      <span class="help-inline", style= "margin-left: -185px;"><%= add_child_link "Price Point", :price_points %></span>
+			</div>
   </td>
-  <td class='availability <%= (params[:sort] == "availability") ? "sorted" : "" %>'>
-    <%=raw good.duration %>
+
+
+  <td>
+      <%= f.text_field :start_date, placeholder: "First delivery", data: {behavior: "datepicker"}, class: "span2", size: 30,  style: "width: 90px; margin-bottom: 5px;"%>
+      <%= f.text_field :end_date, placeholder: "Last delivery", data: {behavior: "datepicker"}, class: "span2", size: 30, style: "width: 90px" %>
   </td>
+    
+ 
   <td>
     <div class="btn-toolbar">
       <div class="btn-group">
@@ -37,4 +63,7 @@
       </div>
     </div>
   </td>
-<% end %>
+
+	<% end %>
+	<% end %>
+

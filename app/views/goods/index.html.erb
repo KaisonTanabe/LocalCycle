@@ -17,33 +17,33 @@
 
     <%= form_for(@good, html: { multipart: true, class: "form-horizontal", remote: true }) do |f| %>
     
-    <div id="error-div"></div>
+    	<div id="error-div"></div>
 
-    <%= render "partials/filters" %>
+    	<%= render "partials/filters" %>
 
-    <table id="good-table" class="table table-hover table-striped">
+    	<table id="good-table" class="table table-hover table-striped">
 
-      <thead id="sorters">
-	<%= render "sorters" %>
-      </thead>
+  	    <thead id="sorters">
+					<%= render "sorters" %>
+	      </thead>
 
-      <% unless current_user.buyer? %>
-      <thead id="batch">
-        <%= render partial: "batch_form", locals: {f: f} %>
-      </thead>
-      <% end %>
+	      <% unless current_user.buyer? %>
+	      <thead id="batch">
+	        <%= render partial: "batch_form", locals: {f: f} %>
+	      </thead>
+	      <% end %>
+			
+	      <tbody id="good-ajax">
+	        <% if @goods.any? %>
+	          <% @goods.each do |good| %>
+		    <%= render partial: "good", locals: {good: good} %>
+	          <% end %>
 
-      <tbody id="good-ajax">
-        <% if @goods.any? %>
-          <% @goods.each do |good| %>
-	    <%= render partial: "good", locals: {good: good} %>
-          <% end %>
-
-        <% else %>
-          <tr><td colspan="<%= (current_user.admin? or current_user.market_manager?) ? '7' : '6' %>"><em>No matching Goods...</em> </td></tr>
-        <% end %>
-      </tbody>
-    </table>
+	        <% else %>
+	          <tr><td colspan="<%= (current_user.admin? or current_user.market_manager?) ? '7' : '6' %>"><em>No matching Goods...</em> </td></tr>
+	        <% end %>
+	      </tbody>
+	    </table>
 
     <% end %>
 

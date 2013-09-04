@@ -7,10 +7,13 @@ LOCALCYCLE::Application.routes.draw do
     get 'export', on: :collection
   end
 
+  resources :price_points
+
   resources :goods do
     get 'toggle_available', on: :member
     get 'marketplace', on: :collection
     get 'export', on: :collection
+    get 'buyer_panel', on: :collection
   end
 
   resources :markets do

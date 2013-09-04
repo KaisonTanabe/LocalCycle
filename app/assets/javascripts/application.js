@@ -120,7 +120,11 @@ jQuery(function($){
     // Render fields for an associated object
     $('form a.add_child').on('click', function() {
 	var assoc = $(this).attr('data-association');
-	var content = $('#' + assoc + '_fields_template').html();
+	var content = $(this).parents('tr').first().find('#' + assoc + '_fields_template').html();
+	if (content == null) {
+		content = $('#' + assoc + '_fields_template').html();
+		
+	}	
 	var regexp = new RegExp('new_' + assoc, 'g');
 	var new_id = new Date().getTime();
 	content=content.replace(regexp, new_id+'');
