@@ -48,14 +48,19 @@
 
   <div class="control-group">
     <%= f.label :price_points, "Price Points:", class: "control-label" %>
-    <%= f.fields_for :price_points do |fpp| %>
-      <%= render partial: 'price_points/form', locals: { f: fpp } %>
-      <%= new_child_fields_template(f, :price_points, {partial: "price_points/form"})%>
-    <% end %>
-    <div class="controls">
-      <span class="help-inline"><%= add_child_link "Price Point", :price_points %></span>
-    </div>
-  </div>
+
+		<div class="span4">
+   	 <%= f.fields_for :price_points do |fpp| %>
+	      <%= render partial: 'price_points/form', locals: { f: fpp } %>
+	      <%= new_child_fields_template(f, :price_points, {partial: "price_points/form"})%>
+	    <% end %>
+
+	    <div class="controls span4" style="margin-left: 0px">
+	      <span class="help-inline" ><%= add_child_link "Price Point", :price_points %></span>
+	    </div>
+
+		</div>
+  </div><br/>
 
   <div class="controls-group">
     <%= f.label :start_date, "Duration:", class: "control-label" %>
