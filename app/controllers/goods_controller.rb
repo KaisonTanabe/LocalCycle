@@ -1,3 +1,5 @@
+require 'uri'
+
 class GoodsController < ApplicationController
   load_and_authorize_resource
 
@@ -87,7 +89,7 @@ class GoodsController < ApplicationController
 
 
   def update
-
+    puts "Goods #{params}"
     respond_to do |format|
       if @good.update_attributes(params[:good])
         format.html { redirect_to goods_url, notice: 'Good was successfully updated.' }
@@ -100,6 +102,8 @@ class GoodsController < ApplicationController
   end
 
   def buyer_panel
+    @target_id = params[:target]
+    @data = URI.unescape(params[:data])
     render :layout=>false
   end
   

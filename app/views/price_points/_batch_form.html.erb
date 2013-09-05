@@ -11,8 +11,8 @@
   <%= f.text_field :quantity, placeholder: "Qty", class: "span1", style: "margin-left: 5px;" %>
   <%= f.select :selling_unit_id, SellingUnit.all.map {|s| [s.short_name, s.id]}, {prompt: "Unit"}, {class: "span1", style: "margin-left: 5px;"} %>
 
-	
-	<%=link_to "Edit Buyers", buyer_panel_goods_path, :class=>"btn btn-small edit_buyers", :remote=> true %>
+	<%- rval= rand(1..9999999999)%>
+	<%=link_to "Edit Buyers", buyer_panel_goods_path(target: rval), :class=>"btn btn-small edit_buyers", :remote=> true, :data =>{:target => "#{rval}"} %>
 	<div class="show_buyers"></div>
-	<%= f.hidden_field :buyers, :class=> "buyer_json"%>
+	<%= f.hidden_field :buyers, :class=> "buyer_json_#{rval}"%>
 </div>

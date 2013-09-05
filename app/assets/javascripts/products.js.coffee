@@ -3,6 +3,13 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
+	$(document).on 'change', "input[id^='good_']", (e)->
+		$(this).parents(".good").first().find(".save_line").show()
+	
+	$(document).on 'change', "select[id^='good_']", (e)->
+		$(this).parents(".good").first().find(".save_line").show()
+	
+	
 	$(document).on 'click', 'input#market_flag', (e)->
 		$(this).parents(".well").first().find("input#buyer_flag").toggle()
 		$(this).parents(".well").first().find('.button_bar').toggle()
@@ -30,4 +37,26 @@ $ ->
 					markets = markets + ","
 				markets = markets + "\""+ $(f).attr("value") + "\":[]"
 		markets = markets + "}"
-		$(this).parents(".well").find('input.buyer_json').attr("value",markets)
+		target = $(this).attr("data-target")
+		$(".buyer_json_"+target).attr("value",markets)
+		$('#MyModal').modal('hide')
+		$(".buyer_json_"+target).parents(".good").first().find(".save_line").show()
+		
+	$(document).on 'click', '.save_line', (e)->
+		url = $(this).data('url') 
+		self = this
+		e.preventDefault()
+		data = ''
+		$('form').each (i, o) ->
+			if $(o).attr("action") == url
+				data = $(o).serialize()
+		$.ajax({
+			type: "PUT",
+			url: $(this).data('url'),
+			data: data,
+			success: (e)->
+				$(self).hide()
+				
+		})
+		
+	

@@ -1,6 +1,6 @@
 <%= content_tag_for :tr, good, class: (current_user.buyer? ? (good.available ? "success" : "error") : "") do %>
 
-<%= form_for(@good, html: { multipart: true, class: "form-horizontal" }) do |f| %>
+<%= form_for(good, html: { multipart: true, class: "form-horizontal" }) do |f| %>
 <td>
 	<% if current_user.market_manager? or current_user.admin? or good.created_by?(current_user) %>
 	   <%= link_to toggle_available_good_path(good), class: 'ajax-available', data: { type: 'json' }, remote: true do %><span title="Click to toggle availability of <%= good.name %>" class="label label-<%= good.available ? 'success' : 'important' %>"><i class="icon-ok icon-white"></i></span><% end %>
@@ -57,6 +57,8 @@
 	<% if good.created_by?(current_user) or current_user.admin? or current_user.market_manager? %>
           <%= link_to raw('<i class="icon-edit"></i> Details'), edit_good_path(good), title: "Edit good info", class: "btn btn-small" %>
           <%= link_to raw('<i class="icon-trash"></i> Delete'), good_path(good, full_params.to_hash), data: {confirm: "Are you sure you want to permanently delete this good and all its information?"}, title: "Delete this good from the system", method: :delete, class: "btn btn-small" %>
+					<br/>
+					<div class="btn btn-primary save_line" style="display: none" data-url ="<%= good_path(good) %>">Save</div>
 	<% else %>
 	  <%= link_to "Add to Cart", "#", class: "btn btn-warning" %>
 	<% end %>
