@@ -118,7 +118,7 @@ jQuery(function($){
     ////////////////////////////////////////////////////////////////////////////
     // Rails add/remove js for has_many associated model forms
     // Render fields for an associated object
-    $('form a.add_child').on('click', function() {
+    $('a.add_child').on('click', function() {
 	var assoc = $(this).attr('data-association');
 	var content = $(this).parents('tr').first().find('#' + assoc + '_fields_template').html();
 	if (content == null) {
@@ -129,6 +129,7 @@ jQuery(function($){
 	var new_id = new Date().getTime();
 	content=content.replace(regexp, new_id+'');
 	$(this).parent().parent().before(content);
+
 	//inputPrompts();
 	return false;
     });

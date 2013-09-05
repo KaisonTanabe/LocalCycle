@@ -89,9 +89,12 @@ class GoodsController < ApplicationController
 
 
   def update
-    puts "Goods #{params}"
     respond_to do |format|
       if @good.update_attributes(params[:good])
+        if params[:render] == 'false'
+           render :nothing=> true
+           return
+        end
         format.html { redirect_to goods_url, notice: 'Good was successfully updated.' }
         format.json { head :no_content }
       else

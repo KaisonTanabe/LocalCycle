@@ -42,21 +42,27 @@ $ ->
 		$('#MyModal').modal('hide')
 		$(".buyer_json_"+target).parents(".good").first().find(".save_line").show()
 		
+	
 	$(document).on 'click', '.save_line', (e)->
-		url = $(this).data('url') 
 		self = this
 		e.preventDefault()
 		data = ''
+		url = $(self).data('url') 	
+		
 		$('form').each (i, o) ->
 			if $(o).attr("action") == url
+				bdiv = $(o).parent('tr.good')
+				$(bdiv).children('td').appendTo(o)
 				data = $(o).serialize()
-		$.ajax({
-			type: "PUT",
-			url: $(this).data('url'),
-			data: data,
-			success: (e)->
-				$(self).hide()
+				$(o).children().appendTo(bdiv)
 				
-		})
-		
+				$.ajax({
+					type: "PUT",
+					url: url,
+					data: data + "&render=false",
+					success: (e)->
+						$(self).hide()
+			
+				})
+	
 	

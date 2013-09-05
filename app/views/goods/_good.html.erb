@@ -1,6 +1,8 @@
 <%= content_tag_for :tr, good, class: (current_user.buyer? ? (good.available ? "success" : "error") : "") do %>
 
 <%= form_for(good, html: { multipart: true, class: "form-horizontal" }) do |f| %>
+
+
 <td>
 	<% if current_user.market_manager? or current_user.admin? or good.created_by?(current_user) %>
 	   <%= link_to toggle_available_good_path(good), class: 'ajax-available', data: { type: 'json' }, remote: true do %><span title="Click to toggle availability of <%= good.name %>" class="label label-<%= good.available ? 'success' : 'important' %>"><i class="icon-ok icon-white"></i></span><% end %>
@@ -40,7 +42,7 @@
     <% end %>
     <span class="controls">
 
-      <span class="help-inline", style= "margin-left: -185px;"><%= add_child_link "Price Point", :price_points %></span>
+      <span class="help-inline"><%= add_child_link "Price Point", :price_points %></span>
 			</div>
   </td>
 

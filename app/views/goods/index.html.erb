@@ -15,7 +15,6 @@
 <div class="row">
   <div class="span12">
 
-    <%= form_for(@good, html: { multipart: true, class: "form-horizontal", remote: true }) do |f| %>
     
     	<div id="error-div"></div>
 
@@ -26,17 +25,20 @@
   	    <thead id="sorters">
 					<%= render "sorters" %>
 	      </thead>
+		    <%= form_for(@good, html: { multipart: true, class: "form-horizontal", remote: true }) do |f| %>
 
 	      <% unless current_user.buyer? %>
 	      <thead id="batch">
 	        <%= render partial: "batch_form", locals: {f: f} %>
 	      </thead>
 	      <% end %>
-			
+			  <% end %>
+		  
 	      <tbody id="good-ajax">
 	        <% if @goods.any? %>
 	          <% @goods.each do |good| %>
-		    			<%= render partial: "good", locals: {good: good} %>
+	
+		    				<%= render partial: "good", locals: {good: good} %>
 	          <% end %>
 
 	        <% else %>
@@ -45,7 +47,6 @@
 	      </tbody>
 	    </table>
 
-    <% end %>
 
     <div id="pagination">
       <%= will_paginate @goods %>
