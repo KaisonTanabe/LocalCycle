@@ -62,6 +62,13 @@ $ ->
 					data: data + "&render=false",
 					success: (e)->
 						$(self).hide()
+						old_color = $(self).parents('tr.good').first().children('td').css("background-color")
+						$(self).parents('tr.good').first().children('td').css("background-color", "green")
+						$(self).parents('tr.good').first().children('td').animate({ backgroundColor: old_color }, 'slow')
+					failuer: (e)->
+						old_color = $(self).parents('tr.good').first().children('td').css("background-color")
+						$(self).parents('tr.good').first().children('td').css("background-color", "red")
+						$(self).parents('tr.good').first().children('td').animate({ backgroundColor: old_color }, 'slow');
 			
 				})
 	
