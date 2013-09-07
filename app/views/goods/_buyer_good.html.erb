@@ -23,12 +23,12 @@
 			<%else%>
 				<% if (JSON.parse(pp.buyers)[@network.id.to_s].count == 0 )%>
 					<% # need to check the market here%>
-					<%= pp.quantity %>+ <%= good.selling_unit.name%><%= good.quantity > 1 ? "s" : ''%> <%= pp.price %><br/>
+					<%= number_to_currency(pp.price) %>/<%= good.selling_unit.name%> <%= pp.quantity %>+ <%= good.selling_unit.name%><%= good.quantity > 1 ? "s" : ''%> <br/>
 				
 				<%else%>
 					<% JSON.parse(pp.buyers)[@network.id.to_s].each do |n|%>
 						<% if n.to_s == current_user.id %>
-							<%= pp.quantity %>+ <%= good.selling_unit.name%><%= good.quantity > 1 ? "s" : ''%> <%= pp.price %><br/>
+							<%= number_to_currency(pp.price) %>/<%= good.selling_unit.name%> <%= pp.quantity %>+ <%= good.selling_unit.name%><%= good.quantity > 1 ? "s" : ''%> <br/>
 						<%end%>
 					
 					<%end%>
