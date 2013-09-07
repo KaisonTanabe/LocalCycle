@@ -23,7 +23,7 @@
 		<% price_point = Hash.new %>
 		<% if @market != nil%>
 			<% good.price_points.each do |pp|%>		
-				<% if market.id && JSON.parse(pp.buyers)["#{@market.id.to_s}"] != nil%>
+				<% if @market.id && JSON.parse(pp.buyers)["#{@market.id.to_s}"] != nil%>
 					<% if (JSON.parse(pp.buyers)["#{@market.id.to_s}"].count == 0 )%>
 						<% price_point["#{pp.quantity.to_s}"] = pp if price_point["#{pp.quantity.to_s}"] == nil%>
 					<%else%>
