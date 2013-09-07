@@ -13,3 +13,13 @@ $ ->
 		$('#MyModal').modal('show')
 	.bind 'ajax:failure', (xhr, status, error) ->
 		alert("failure!")
+		
+
+	$(document).on 'ajax:success', "a.good-details-btn", (event, data, xhr)->
+		$('.modal-body').html(data)
+		$('#MyModal').modal('show')
+	.bind 'ajax:failure', (xhr, status, error) ->
+		alert("failure!")
+
+
+	

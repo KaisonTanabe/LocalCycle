@@ -3,6 +3,24 @@
 	min-height: 600px;
 	text_align: center;
 	background-color: #fff;
-	margin-top: 40px
+	margin-top: 40px;
+	padding: 5px;
+}
 
+.underline{
+	width: 100%;
+	border-bottom: 2px solid black;
+	
+}
+
+.checkout-btn{
+	margin-bottom: 10px;
+}
+
+.center{
+	text-align: center;
+}
+
+.price{
+	text-align: right;
 }

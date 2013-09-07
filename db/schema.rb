@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130907011227) do
+ActiveRecord::Schema.define(:version => 20130907191557) do
 
   create_table "agreement_changes", :force => true do |t|
     t.integer  "agreement_id",                                  :null => false
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20130907011227) do
     t.integer  "market_id"
     t.integer  "sort_order"
     t.integer  "good_id"
+    t.float    "price"
   end
 
   create_table "carts", :force => true do |t|
@@ -123,6 +124,11 @@ ActiveRecord::Schema.define(:version => 20130907011227) do
     t.boolean  "audited",    :default => false,      :null => false
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
+  end
+
+  create_table "certifications_goods", :id => false, :force => true do |t|
+    t.integer "certification_id"
+    t.integer "good_id"
   end
 
   create_table "certifications_users", :force => true do |t|

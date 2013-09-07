@@ -34,8 +34,8 @@ class GoodsController < ApplicationController
     @goods = @goods.by_creator(current_user) if current_user.producer?
 
     if current_user.buyer? 
-        puts "FDSAFSA: #{params.has_key?(:network_id) ? params[:network_id] : current_user.networks.first.id}"
         @network = Network.find( params.has_key?(:network_id) ? params[:network_id] : current_user.networks.first.id )
+        @market = params.has_key?(:market_id) ? Market.find(params[:market_id]) : current_user.markets.where(:network_id => @network.id).first
         @goods = @goods.where("goods.start_date <= ?", Date.current).where("goods.end_date >= ?", Date.current)
     end
     
@@ -78,6 +78,7 @@ class GoodsController < ApplicationController
   end
 
   def edit
+    render :layout => false
   end
 
 

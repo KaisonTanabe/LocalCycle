@@ -15,7 +15,8 @@
 
 <div class="row">
   <div class="span9 to_replace">
-
+		Available Markets: <%= select :market, :id, current_user.markets.where(:network_id => @network.id).collect{|n| [n.name, n.id]}, :class=> "buyer_market_select"%>
+			
     
     	<div id="error-div"></div>
 
@@ -30,7 +31,6 @@
 	      <tbody id="good-ajax">
 	        <% if @goods.any? %>
 	          <% @goods.each do |good| %>
-	
 		    				<%= render partial: "buyer_good", locals: {good: good, network_id: @network.id} %>
 	          <% end %>
 

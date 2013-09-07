@@ -4,8 +4,12 @@
 	<td><%= good.creator.name %> <br/><%= image_tag good.creator.pic(:thumb), class: "thumb" %></td>
   <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
 		<div class="row-fluid">
-			<div class="span6"><%= image_tag good.product.best_pic_url(:thumb), class: "thumb" %></div>
-    	<div class="span6"><%= link_to good.product.name, good, data: {target: "#ajax-modal", toggle: "modal", placement: "top", data: "true", remote: "true"} %></div>
+    	<div class="span12"><%= link_to good.product.name, good, data: {target: "#ajax-modal", toggle: "modal", placement: "top", data: "true", remote: "true"} %><br/>
+							<% good.certifications.each do |c|%>
+								<%= c.name%><br/>
+							<%end%>
+			
+			</div>
 			<%= hidden_field_tag :good_id, good.id%>
   		</div>
 		</td>
@@ -15,33 +19,30 @@
 	</td>
 
   <td>
-		<% count =0%>
 	
-		<% good.price_points.each do |pp|%>
-			<% if JSON.parse(pp.buyers)["#{@network.id.to_s}"] == nil%>
-				<% count = count +1%>
-			<%else%>
-				<% if (JSON.parse(pp.buyers)[@network.id.to_s].count == 0 )%>
-					<% # need to check the market here%>
-					<%= number_to_currency(pp.price) %>/<%= good.selling_unit.name%> <%= pp.quantity %>+ <%= good.selling_unit.name%><%= good.quantity > 1 ? "s" : ''%> <br/>
-				
-				<%else%>
-					<% JSON.parse(pp.buyers)[@network.id.to_s].each do |n|%>
-						<% if n.to_s == current_user.id %>
-							<%= number_to_currency(pp.price) %>/<%= good.selling_unit.name%> <%= pp.quantity %>+ <%= good.selling_unit.name%><%= good.quantity > 1 ? "s" : ''%> <br/>
-						<%end%>
-					
-					<%end%>
+		<% price_point = Hash.new %>
+		<% if @market != nil%>
+			<% good.price_points.each do |pp|%>		
+				<% if JSON.parse(pp.buyers)["#{@market.id.to_s}"] != nil%>
+					<% if (JSON.parse(pp.buyers)["#{@market.id.to_s}"].count == 0 )%>
+						<% price_point["#{pp.quantity.to_s}"] = pp if price_point["#{pp.quantity.to_s}"] == nil%>
+					<%else%>
+							<% if (JSON.parse(pp.buyers)["#{@market.id.to_s}"].include? ("#{current_user.id.to_s}"))%>
+									<% price_point["#{pp.quantity.to_s}"] = pp %>
+							<%end%>
+					<%end%>			
 				<%end%>
-				
-			<%end%>
-				
+			<%end%>				
 		<%end%>
-		<%= good.price_points.count == count ? "No Price Point For This Network" : ""%>
+		<%= price_point.keys.count == 0 ? "No Price Point For This Market" : ""%>
+		<%= hidden_field_tag :min_order, price_point.keys.sort.first%>
+		<% price_point.keys.sort.each do |key|%>
+			<% pp = price_point[key]%>
+			<%= number_to_currency(pp.price) %>/<%= good.selling_unit.name%> <%= pp.quantity %>+ <%= good.selling_unit.name%><%= good.quantity > 1 ? "s" : ''%> <br/>
+			
+		<%end%>
   </td>
 
-
- 
   <td>
 	  <%= number_field :cart_item, :quantity, placeholder: "Qty",  style: "width: 50px", min: 0, max: good.quantity %>
   
@@ -50,7 +51,7 @@
     <div class="btn-toolbar">
       <div class="btn-group">
 	
-	  <%= link_to "Add to Cart", add_item_cart_path(current_user.get_cart), class: "btn btn-warning add-to-cart", :disabled => (good.price_points.count == count) %>
+	  <%= link_to "Add to Cart", add_item_cart_path(current_user.get_cart), class: "btn btn-warning add-to-cart", :disabled => ( price_point.keys.count == 0 ) %>
       </div>
     </div>
   </td>

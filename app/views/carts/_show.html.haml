@@ -1,18 +1,51 @@
 .cart_body
 	.row-fluid
 		.span9.offset2
-			%h4 
+			%h4.center
+				- total =0.0
 				="Your Order"
-			-current_user.get_cart.cart_items.collect{|ci| ci.market}.uniq.each do |market|
-				%h5
+	.row-fluid
+		.span12
+			-items = current_user.get_cart.cart_items.sort! { |a,b| a.market.name.downcase <=> b.market.name.downcase }
+			-items.collect{|ci| ci.market}.uniq.each do |market|
+				%h5.center
 					= market.name if market
+				- sub_total = 0.0
+				%br
+				-current_user.get_cart.cart_items.where(:market_id => market.id).collect{|g| g.good.creator}.uniq.each do |farm|
+					="#{farm.name}"
+					.underline
+					- current_user.get_cart.cart_items.includes(:good).where(:market_id => market.id).where('goods.creator_id = ?', farm.id).each do |item|
+						.row-fluid
+							.span6
+								= item.good.name
+							.span6.price
+								= " #{number_to_currency(item.price)} x #{item.quantity}" 
+								- sub_total = sub_total + (item.price * item.quantity)
 					%hr
-			- current_user.get_cart.cart_items.each do |item|
-				.row-fluid
-					.span6
-						= item.good.name
-					.span6
-						= "#{item.quantity} x Free" 
+					.row-fluid
+						.span6
+							="Subtotal:"
+						.span6.price
+							= "#{number_to_currency(sub_total)}"
+							- total = total + sub_total
+					%br
+					
+			.underline
+			.row-fluid
+				.span6
+					="Total:"
+				.span6.price
+					= "#{number_to_currency(total)}"
+		
+	
+
+					
+					
+					
+
 	.row-fluid
 		.span9.offset2
-			= link_to "<div class='btn btn-warning'>Checkout</div>".html_safe, '#'
+			= link_to "<div class='btn btn-warning checkout-btn'>Checkout</div>".html_safe, '#'
+		
+		

@@ -3,6 +3,8 @@ class Certification < ActiveRecord::Base
 
   ## SETUP ASSOCIATIONS
   has_and_belongs_to_many :users
+  has_and_belongs_to_many :goods
+
 
   ## ATTRIBUTE PROTECTION
   attr_accessible :cert_type, :name, :audited

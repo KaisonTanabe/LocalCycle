@@ -4,9 +4,11 @@ class CartsController < ApplicationController
 
 def add_item
    authorize! :update, @cart
-   cart_item = @cart.cart_items.where(:good_id => params[:good_id]).first
+   cart_item = @cart.cart_items.where(:good_id => params[:good_id], :market_id => params[:market_id]).first
+   
    if cart_item.nil? 
-     @cart.cart_items << CartItem.create(:good_id => params[:good_id], :quantity => params[:qty], :market_id => 1)
+     raise "Must be min order" if(params[:qty].to_i < params[:min_order].to_i) 
+     CartItem.create(:good_id => params[:good_id], :quantity => params[:qty], :market_id => params[:market_id], :cart_id => @cart.id)
    else     
      cart_item.quantity = cart_item.quantity + params[:qty].to_i
      cart_item.save

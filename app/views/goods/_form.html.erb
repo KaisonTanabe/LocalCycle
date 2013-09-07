@@ -1,4 +1,4 @@
-<%= form_for(@good, html: { multipart: true, class: "form-horizontal" }) do |f| %>
+<%= semantic_form_for(@good, html: { multipart: true, class: "form-horizontal" }) do |f| %>
 
   <legend></legend>
   <%= render partial: 'partials/errors', locals: {obj: @good} %>
@@ -6,7 +6,15 @@
   <div class="control-group">
     <%= f.label :available, "Available:", class: "control-label" %>
     <div class="controls-row controls">
-      <label class="checkbox"><%= f.check_box :available %></label>
+      <label class="checkbox"><%= f.input :available %></label>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :certifications, "Certifications:", class: "control-label" %>
+    <div class="controls-row controls">
+				<%=f.input :certification_ids, as: :check_boxes, label: "Certifications", collection: Certification.all.collect{|n| [n.name, n.id]}, multiple: true%>
+				
     </div>
   </div>
 
@@ -41,7 +49,7 @@
   <div class="control-group">
     <%= f.label :quantity, "Quantity:", class: "control-label" %>
     <div class="controls-row controls">
-      <%= f.text_field :quantity, placeholder: "Qty", class: "span2" %>
+      <%= f.input :quantity, placeholder: "Qty", class: "span2" %>
       <%= f.select :selling_unit_id, SellingUnit.all.map {|s| [s.name, s.id]}, {prompt: "Unit"}, {class: "span2"} %>
     </div>
   </div>
