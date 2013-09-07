@@ -1,22 +1,35 @@
 $ ->
 	$("select[name='network[id]']").change (e)->
 		self = this
-		$.ajax '/goods?network_id='+ $(self).val(),
+		cat_id = ""
+		view = ""
+		if(typeof $('#product_view').attr('value') != 'undefined') 
+			view = "/marketplace"
+
+		if(typeof $('#cat_id').attr('value') != 'undefined') 
+			cat_id = "&cat_id="+$('#cat_id').attr('value')
+			
+		$.ajax '/goods'+view+ '?network_id='+ $(self).val()+cat_id,
 			type: 'GET',
 			success: (data, textStatus, jqXHR) ->
 				$('.to_replace').html($(data).find('.to_replace').html())
 
-	$("select[name='market[id]']").change (e)->
-		alert("change")
+	$(document).on "change", "select[name='market[id]']", (e)->
 		self = this
-		$.ajax '/goods?market_id='+ $(self).val()+'network_id='+ $(self).val(),
+		cat_id = ""
+		view = ""
+		if(typeof $('#product_view').attr('value') != 'undefined') 
+			view = "/marketplace"
+		
+		if(typeof $('#cat_id').attr('value') != 'undefined') 
+			cat_id = "&cat_id="+$('#cat_id').attr('value')
+		$.ajax '/goods'+view+ '?market_id='+ $(self).val()+'network_id='+ $(self).val()+cat_id,
 			type: 'GET',
 			success: (data, textStatus, jqXHR) ->
 				$('.to_replace').html($(data).find('.to_replace').html())
 
 	$(document).on "click", "a.add-to-cart", (e)->
 		e.preventDefault()
-		
 		self = this
 		if $(this).attr('disabled') == "disabled"
 			return
@@ -25,9 +38,17 @@ $ ->
 			return
 		$.ajax $(this).attr('href'),
 			type: 'POST',
-			data: { good_id: $(self).parents('tr').find('input#good_id').attr("value"),qty: $(self).parents('td').find('input#cart_item_quantity').val(), market_id: $('#market_id').val(), min_order:$(self).parents('tr').find('input#min_order').attr("value")  },
+			data: { good_id: $(self).parents('.base_container').find('input#good_id').attr("value"),qty: $(self).parents('.base_container').find('input#cart_item_quantity').val(), market_id: $('#market_id').val(), min_order:$(self).parents('.base_container').find('input#min_order').attr("value")  },
 			success: (data, textStatus, jqXHR) ->
 				$('.cart_body').parent().html(data)
+				$(self).parents('.base_container').find('input#cart_item_quantity').val(null)
 			error: () ->
-				alert("Minimun order is " + $(self).parents('tr').find('input#min_order').attr("value"))
-				
+				alert("Minimum order is " + $(self).parents('.base_container').find('input#min_order').attr("value"))
+	
+	$(document).on "click", ".filter-toggle", (e)->
+		$('.filter-body').toggle()
+	
+
+	$(document).on "click", ".clear-filters", (e)->
+		$("input[name^='filter[cert_ids]']").prop('checked', false)
+

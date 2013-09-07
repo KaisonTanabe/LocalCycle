@@ -1,3 +1,4 @@
+<%= hidden_field_tag :cat_id, @cat_id if @cat_id != nil%>
 <ul id="cat-nav" class="nav nav-tabs">
   <% Category.roots.order("name ASC").each do |c| %>
   <li class="dropdown <%= (!params['cat_id'].blank? and c.self_and_descendant_ids.include?(params['cat_id'].to_i)) ? 'active' : '' %>"><%= link_to raw(c.name + ' <b class="caret" style="margin-top: 9px;"></b>'), {cat_id: c.id}, class: "dropdown-toggle", id: "dLabel", role: "button" %>

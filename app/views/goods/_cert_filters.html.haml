@@ -1,0 +1,24 @@
+.row-fluid
+	.span6
+		.filter-toggle
+			Show Filter Options
+	.span6
+		= text_field_tag :search
+		.btn.btn-warning.btn-small 
+			Search
+	.row-fluid.filter-body
+		.span12.well
+			.row-fluid
+				- target = Certification.all.count / 3
+				- Certification.all.each_slice(target.to_i+1).to_a.each do |cert|
+					.span4
+						-cert.each do |c|
+							=check_box_tag :certification_ids, c.id, false, :name => 'filter[cert_ids][]'
+							=c.name
+							%br
+			.row-fluid
+				.span2.offset10
+					.btn.btn-primary.btn-small.clear-filters 
+						Clear
+					.btn.btn-warning.btn-small 
+						Filter

@@ -189,21 +189,33 @@ tr.glowing {
 div.products {
     margin: 10px -10px;
     div.product {
-	margin: 10px;
-	float: left;
-	border-radius: 10px;
-	border: 1px solid #efefef;
-	background-color: #fff;
-	background-color: rgba(255,255,255,0.5);
-	width: 260px;
-	text-align: center;
-	padding: 20px;
-	-o-transition: all 0.2s ease-out;
-	-moz-transition: all 0.2s ease-out;
-	-webkit-transition: all 0.2s ease-out;
-	&:hover {
-	    background-color: rgba(255,255,255,1);
-	}
+			position: relative;
+			margin: 10px;
+			float: left;
+			border-radius: 10px;
+			border: 1px solid #efefef;
+			background-color: #fff;
+			background-color: rgba(255,255,255,0.5);
+			width: 230px;
+			text-align: center;
+			padding: 20px;
+			-o-transition: all 0.2s ease-out;
+			-moz-transition: all 0.2s ease-out;
+			-webkit-transition: all 0.2s ease-out;
+			height: 430px;
+			h5{
+				text-align: left;
+			}
+			&:hover {
+			    background-color: rgba(255,255,255,1);
+			}
+			p.centered{
+				position: absolute;
+				bottom: 10px;
+				width: 100%;
+				left: 0px;
+			}
+			
     }
 }
 #agreementTable h5 { 

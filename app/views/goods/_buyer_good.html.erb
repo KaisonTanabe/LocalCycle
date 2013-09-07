@@ -1,4 +1,4 @@
-<%= content_tag_for :tr, good, class: (current_user.buyer? ? (good.available ? "success" : "error") : "") do %>
+<%= content_tag_for :tr, good, class: (current_user.buyer? ? (good.available ? "success base_container" : "error base_container") : "") do %>
 
 
 	<td><%= good.creator.name %> <br/><%= image_tag good.creator.pic(:thumb), class: "thumb" %></td>
@@ -18,7 +18,7 @@
   	<%=good.quantity%> <%= good.selling_unit.name%><%= good.quantity > 1 ? "s" : ''%>
 	</td>
 
-  <td>
+  <td >
 	
 		<% price_point = Hash.new %>
 		<% if @market != nil%>

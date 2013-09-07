@@ -1,14 +1,51 @@
-<div class="product">
+<div class="product base_container">
   <%= image_tag p.best_pic_url(:medium), class: "medium" %>
-  
+  <%= hidden_field_tag :good_id, good.id%>
+	
   <h4><%= good.name %></h4>
-  
+  <h5><%= good.creator.name %></h5>
+  <div class="certs underline">
+		<div class="row-fluid">
+			<div class="span9">
+				<% good.certifications.each do |c|%>
+						<%= c.name%><br/>
+					<%end%><br/>
+				
+			</div>
+			<div class="span3">
+				<%= number_field :cart_item, :quantity, placeholder: "Qty",  style: "width: 50px", min: 0, max: good.quantity %>
+
+				<%= good.selling_unit.name%>(s)<br/>
+			  
+			</div>
+		</div>
+		<br/>
+	</div>
+	
   <p class="details">
-    <% good.price_points.order("quantity ASC").each do |pp| %>
-      <%= number_to_currency(pp.price) %> <strong style="font-size: 15px;">@</strong> &gt;<%= pp.quantity %> <span class='label label-info'><%= pp.selling_unit.short_name.pluralize if pp.selling_unit %></span><br />
-    <% end %>
-    <%= good.quantity %> <span class="label label-info"><%= good.selling_unit.short_name.pluralize %></span> avail.<br />
-    <%= good.duration %>
+		<% price_point = Hash.new %>
+		<% if @market != nil%>
+			<% good.price_points.each do |pp|%>		
+				<% if JSON.parse(pp.buyers)["#{@market.id.to_s}"] != nil%>
+					<% if (JSON.parse(pp.buyers)["#{@market.id.to_s}"].count == 0 )%>
+						<% price_point["#{pp.quantity.to_s}"] = pp if price_point["#{pp.quantity.to_s}"] == nil%>
+					<%else%>
+							<% if (JSON.parse(pp.buyers)["#{@market.id.to_s}"].include? ("#{current_user.id.to_s}"))%>
+									<% price_point["#{pp.quantity.to_s}"] = pp %>
+							<%end%>
+					<%end%>			
+				<%end%>
+			<%end%>				
+		<%end%>
+		<%= price_point.keys.count == 0 ? "No Price Point For This Market" : ""%>
+		<%= hidden_field_tag :min_order, price_point.keys.sort.first%>
+		<% price_point.keys.sort.each do |key|%>
+			<% pp = price_point[key]%>
+			<%= number_to_currency(pp.price) %>/<%= good.selling_unit.name%> <%= pp.quantity %>+ <%= good.selling_unit.name%><%= good.quantity > 1 ? "s" : ''%> <br/>
+			
+		<%end%>
+
+
   </p>
 
   <p class="centered">
@@ -18,7 +55,11 @@
 	<%= link_to raw('<span class="icon-trash"></span> Delete'), good_path(good, full_params.to_hash), data: {confirm: "Are you sure you want to permanently delete this good and all its information?"}, title: "Delete this good from the system", method: :delete, class: "btn btn-small" %>
       </div>
     <% else %>
-      <%= link_to "Add to Cart", "#", class: "btn btn-warning" %>
+    <%= good.quantity %> <span class="label label-info"><%= good.selling_unit.short_name.pluralize %></span> avail.<br />
+		<br/>
+		  <%= link_to "Add to Cart", add_item_cart_path(current_user.get_cart), class: "btn btn-warning add-to-cart", :disabled => ( price_point.keys.count == 0 ) %>
+			
+
     <% end %>
   </p>
 </div>

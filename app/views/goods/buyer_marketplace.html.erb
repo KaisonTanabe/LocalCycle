@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="span12">
+    <div class="btn-group pull-right actions-bar">
+      <%= link_to raw('<span class="icon-list icon-white"></span> Table View'), goods_path, class: "btn btn-primary" %>
+      <%= link_to raw('<span class="icon-question-sign"></span>'), "#", class: "btn" %>
+    </div>
+    <h1><img class="big-icon" src="/assets/icon-mrkt.png" alt="Marketplace Icon" />  <%= params['cat_id'].blank? ? "Produce For Sale" : Category.where(id: params["cat_id"].to_i).first.name %> <%= raw("<small>(" + pluralize(@goods.count, 'result') + ")</small>") %></h1>
+		<%= hidden_field_tag :product_view, 'marketplace'%>
+		Showing supply for: <%= select :network, :id, current_user.networks.collect{|n| [n.name, n.id]}, :class=> "buyer_network_select"%>
+
+  </div>
+</div>
+
+
+<div class="row-fluid">
+  <div class="span9 to_replace">
+		Available Markets: <%= select :market, :id, current_user.markets.where(:network_id => @network.id).collect{|n| [n.name, n.id]}, :class=> "buyer_market_select"%>
+  	<%= render "cert_filters" %>
+
+    <%= render "partials/filters" %>
+    
+    <div class="products">
+      <% if @product_goods.any? %>
+        <% @product_goods.each do |p, goods| %>
+          <% goods.each do |good| %>
+            <%= render partial: "marketplace_good", locals: {p: p, good: good} %>
+	  <% end %>
+        <% end %>
+      <% else %>
+        <p><em>No matching goods...</em></p>
+      <% end %>
+
+      <div id="pagination">
+        <%= will_paginate @goods %>
+      </div>
+
+
+    </div>
+	</div>
+		<div class="span3">
+			<%= render :partial => 'carts/show' %>
+		</div>
+</div>
