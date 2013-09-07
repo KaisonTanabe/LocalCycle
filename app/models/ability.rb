@@ -33,6 +33,7 @@ class Ability
       end
       can :manage, User, id: user.id
       #can [:show, :modal], User, market_id: user.market_id
+      
 
 =begin
       can :manage, Agreement, creator_id: user.id
@@ -41,6 +42,8 @@ class Ability
       can [:show, :chain], AgreementChange
 =end
     end
-
+    if user and (user.buyer?)
+      can :manage, Cart, user_id: user.id
+    end
   end
 end

@@ -1,0 +1,18 @@
+.cart_body
+	.row-fluid
+		.span9.offset2
+			%h4 
+				="Your Order"
+			-current_user.get_cart.cart_items.collect{|ci| ci.market}.uniq.each do |market|
+				%h5
+					= market.name if market
+					%hr
+			- current_user.get_cart.cart_items.each do |item|
+				.row-fluid
+					.span6
+						= item.good.name
+					.span6
+						= "#{item.quantity} x Free" 
+	.row-fluid
+		.span9.offset2
+			= link_to "<div class='btn btn-warning'>Checkout</div>".html_safe, '#'

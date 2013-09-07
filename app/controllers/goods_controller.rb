@@ -32,11 +32,20 @@ class GoodsController < ApplicationController
 
     @goods = Good.includes(:product, :price_points)
     @goods = @goods.by_creator(current_user) if current_user.producer?
+
+    if current_user.buyer? 
+        puts "FDSAFSA: #{params.has_key?(:network_id) ? params[:network_id] : current_user.networks.first.id}"
+        @network = Network.find( params.has_key?(:network_id) ? params[:network_id] : current_user.networks.first.id )
+        @goods = @goods.where("goods.start_date <= ?", Date.current).where("goods.end_date >= ?", Date.current)
+    end
+    
     @goods = filter_and_sort(@goods, params)
     @goods = @goods.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
-
+    
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { render (current_user.role == 'buyer' ? 'buyer_index' : 'index')}
+         
+      
       format.json { render json: @goods }
     end
   end

@@ -1,0 +1,51 @@
+<%= render "partials/ajax-modal" %>
+
+<div class="row">
+  <div class="span12">
+    <div class="btn-group pull-right actions-bar">
+      <%= link_to raw('<span class="icon-th-large icon-white"></span> Product View'), marketplace_goods_path, class: "btn btn-primary" %>
+      <%#= link_to 'New Good', new_good_path, class: "btn btn-primary" %>
+      <%= link_to raw('<span class="icon-question-sign"></span>'), "#", class: "btn" %>
+    </div>
+    <h1><img class="big-icon" src="/assets/icon-agreements-calendar.png" alt="Calendar Icon" /> Goods</h1>
+		Showing supply for: <%= select :network, :id, current_user.networks.collect{|n| [n.name, n.id]}, :class=> "buyer_network_select"%>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="span9 to_replace">
+
+    
+    	<div id="error-div"></div>
+
+    	<%= render "partials/filters" %>
+
+    	<table id="good-table" class="table table-hover table-striped">
+
+  	    <thead id="sorters">
+					<%= render "buyer_sorters" %>
+	      </thead>
+		    
+	      <tbody id="good-ajax">
+	        <% if @goods.any? %>
+	          <% @goods.each do |good| %>
+	
+		    				<%= render partial: "buyer_good", locals: {good: good, network_id: @network.id} %>
+	          <% end %>
+
+	        <% else %>
+	          <tr><td colspan="<%= (current_user.admin? or current_user.market_manager?) ? '7' : '6' %>"><em>No matching Goods...</em> </td></tr>
+	        <% end %>
+	      </tbody>
+	    </table>
+
+
+    <div id="pagination">
+      <%= will_paginate @goods %>
+    </div>
+  </div>
+	<div class="span3">
+		<%= render :partial => 'carts/show' %>
+	</div>
+</div>

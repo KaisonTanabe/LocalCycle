@@ -1,6 +1,7 @@
 class SessionsController < Devise::SessionsController
 
   prepend_before_filter :check_activation!, :only => :create
+  
 
   def create
     super

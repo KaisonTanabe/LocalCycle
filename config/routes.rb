@@ -52,6 +52,13 @@ LOCALCYCLE::Application.routes.draw do
     end
   end
 
+  resources :carts do
+    member do
+      post 'add_item' 
+    end
+    
+  end
+  
   # Temporary model to collect email addresses on BETA page
   resources :leads, only: "create"
 

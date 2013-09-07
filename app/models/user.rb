@@ -34,6 +34,9 @@ class User < ActiveRecord::Base
   has_many :networks, :through=> :user_networks
   accepts_nested_attributes_for :user_networks, :allow_destroy => true
 
+
+  has_one :cart
+  
   ## ATTRIBUTE PROTECTION
   attr_accessible :first_name, :last_name, :email, :notes,
     :attachments_attributes, :role, :name, :phone, :growing_methods,
@@ -187,6 +190,10 @@ class User < ActiveRecord::Base
     "/assets/#{role}_profile_pics/thumb/missing.png"
   end
 
+  def get_cart
+    self.cart ||= Cart.create 
+  end
+  
 
   ############ PRIVATE METHODS ############
   private
