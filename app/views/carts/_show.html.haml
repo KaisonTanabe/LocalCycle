@@ -46,6 +46,6 @@
 
 	.row-fluid
 		.span9.offset2
-			= link_to "<div class='btn btn-warning checkout-btn'>Checkout</div>".html_safe, '#'
+			= link_to "<div class='btn btn-warning checkout-btn'>Checkout</div>".html_safe, checkout_cart_path(current_user.cart)
 		
 		

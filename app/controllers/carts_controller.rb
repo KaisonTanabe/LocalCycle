@@ -17,4 +17,8 @@ def add_item
 
 end
 
+
+def checkout
+end
+
 end

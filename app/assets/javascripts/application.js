@@ -28,6 +28,9 @@
 //= require_tree .
 jQuery(function($){
  
+		$(".print_page").click(function(){
+			window.print();
+		});
 //   $('#cat-nav .dropdown-menu').on('show', function() {
 //       slimScroll({});
 //    });

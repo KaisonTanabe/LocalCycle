@@ -1,0 +1,44 @@
+<%= render "partials/ajax-modal" %>
+
+<div class="row">
+  <div class="span12">
+    <div class="btn-group pull-right actions-bar">
+      <%#= link_to 'New Good', new_good_path, class: "btn btn-primary" %>
+    </div>
+    <h1><img class="big-icon" src="/assets/icon-agreements-calendar.png" alt="Calendar Icon" /> DEMAND</h1>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="span12">
+
+    
+
+
+  	<table id="good-table" class="table table-hover table-striped">
+
+
+	    <thead id="sorters">
+				<%= render "sorters" %>
+      </thead>
+	  
+      <tbody id="good-ajax">
+        <% if @price_points.any? %>
+          <% @price_points.each do |price_point| %>
+
+	    				<%= render partial: "demanded_good", locals: {price_point: price_point} %>
+          <% end %>
+
+        <% else %>
+          <tr><td colspan="<%= (current_user.admin? or current_user.market_manager?) ? '7' : '6' %>"><em>No matching Goods...</em> </td></tr>
+        <% end %>
+
+      </tbody>
+    </table>
+
+
+  </div>
+</div>
+
+

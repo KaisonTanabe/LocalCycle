@@ -10,4 +10,12 @@ def show
   
 end
 
+
+def index 
+  @price_points = PricePoint.where(:producer_id => current_user.id)
+  
+  @goods = @price_points.collect{|p| p.good}
+  
+end
+
 end

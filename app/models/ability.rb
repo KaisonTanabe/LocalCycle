@@ -44,7 +44,12 @@ class Ability
     end
     if user and (user.buyer?)
       can :manage, Cart, user_id: user.id
-      can :manage, Wishlist, user_id: user.id
+      can [:show], Wishlist, user_id: user.id
     end
+    
+    if user and (user.producer?)
+      can [:index], Wishlist
+    end
+    
   end
 end
