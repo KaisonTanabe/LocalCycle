@@ -1,0 +1,75 @@
+<%= semantic_form_for(@wishlist) do |f| %>
+
+  <legend></legend>
+  <%= render partial: 'partials/errors', locals: {obj: @wishlist} %>
+
+  <div class="control-group">
+    <%= f.label :available, "Available:", class: "control-label" %>
+    <div class="controls-row controls">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :certifications, "Certifications:", class: "control-label" %>
+    <div class="controls-row controls">
+				<%=f.input :certification_ids, as: :check_boxes, label: "Certifications", collection: Certification.all.collect{|n| [n.name, n.id]}, multiple: true%>
+				
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :product_id, "Product:", class: "control-label" %>
+    <div class="controls-row controls">
+    </div>
+  </div>
+
+  <% if current_user.market_manager? or current_user.admin? %>
+  <div class="control-group">
+    <%= f.label :producer_id, "Producer:", class: "control-label" %>
+    <div class="controls-row controls">
+      <%= f.select :creator_id, options_from_collection_for_select(User.by_producer.order('name'), :id, :name, (params[:creator_id].blank? ? (@good.creator ? @good.creator.id : "") : params[:creator_id])), {prompt: "-- Select Producer --"}, {class: "select2 span4" } %>
+    </div>
+  </div>
+  <% else %>
+    <%= f.hidden_field :creator_id, value: current_user.id %>
+  <% end %>
+  
+  <% if current_user.admin? %>
+  <div class="control-group">
+    <%= f.label :market_id, "Market:", class: "control-label" %>
+    <div class="controls-row controls">
+      <%= f.select :market_id, options_from_collection_for_select(Market.order('name'), :id, :name), {prompt: "-- Select Market --"}, {style: "width: 180px; margin-bottom: 5px;" } %><br />
+    </div>
+  </div>
+  <% else %>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :quantity, "Quantity:", class: "control-label" %>
+    <div class="controls-row controls">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :price_points, "Price Points:", class: "control-label" %>
+
+		<div class="span4">
+
+	    <div class="controls span4" style="margin-left: 0px">
+	      <span class="help-inline" ><%= add_child_link "Price Point", :price_points %></span>
+	    </div>
+
+		</div>
+  </div><br/>
+
+  <div class="controls-group">
+    <%= f.label :start_date, "Duration:", class: "control-label" %>
+    <div class="control-row controls">
+    </div>
+  </div>
+    
+  <hr style="clear: both;" />
+  
+  <%= render partial: 'partials/submit', locals: {f: f, text: 'Supply' } %>
+
+<% end %>

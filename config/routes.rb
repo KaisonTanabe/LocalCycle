@@ -52,6 +52,8 @@ LOCALCYCLE::Application.routes.draw do
     end
   end
 
+  resources :wishlists
+  
   resources :carts do
     member do
       post 'add_item' 

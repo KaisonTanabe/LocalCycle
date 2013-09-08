@@ -44,6 +44,7 @@ class Ability
     end
     if user and (user.buyer?)
       can :manage, Cart, user_id: user.id
+      can :manage, Wishlist, user_id: user.id
     end
   end
 end

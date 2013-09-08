@@ -1,0 +1,37 @@
+<tr class="wishlist-row">
+  <th></th>
+  <th>
+    <%= f.select :product_id, option_groups_from_collection_for_select(Category.includes(:products).order('name'), :products, :name, :id, :name, (params[:product_id].blank? ? (@good.product ? @good.product.id : "") : params[:product_id])), {prompt: "-- Select Product --"}, {class: "select2", style: "width: 180px;" } %>
+  </th>
+  <% if current_user.admin? or current_user.market_manager? %>
+  <th>
+    <%= f.select :creator_id, options_from_collection_for_select(User.by_producer.order('name'), :id, :name), {prompt: "-- Select Producer --"}, {class: "select2", style: "width: 180px;" } %>
+  </th>
+  <% end %>
+  <th>
+    <%= f.text_field :end_date, placeholder: "Date", data: {behavior: "datepicker"}, style: "width: 90px;" %>
+  </th>
+  <th style="width: 130px;">
+    <div class="controls controls-row">
+      <%= f.text_field :quantity, placeholder: "Qty", style: "width: 30px;" %>
+      <%= f.select :selling_unit_id, SellingUnit.all.collect{|s| [s.short_name, s.id]},{ index: 1 }, {class: "span1", style: "margin-left: 5px;"} %>
+    </div>
+  </th>
+  <th style="width: 450px !important;">
+    <%= f.fields_for :price_points do |fpp| %>
+      <%= render partial: 'price_points/buyer_batch_form', locals: { f: fpp } %>
+      <%= new_child_fields_template(f, :price_points, {partial: "price_points/buyer_batch_form"})%>
+		
+	<% end %>
+    <div class="controls">
+      <span class="help-inline" style="margin-left: -5px;"><%= add_child_link "Price Point", :price_points %></span>
+    </div>
+    <%= f.hidden_field :selling_unit_id, value: SellingUnit.where(short_name: "lb").first.id %>
+  </th>
+
+  <th>
+    <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+    <i class="icon-white icon-plus"></i> Post Demand 
+    <% end %>
+  </th>
+</tr>

@@ -11,7 +11,7 @@
 
   <% if current_user.buyer? %>
   <li><%= link_to raw('<i class="icon-th-large"></i> Available Goods'), marketplace_goods_path %></li>
-  <li><%= link_to raw('<i class="icon-list-alt"></i> Wish List'), "#" %></li>
+  <li><%= link_to raw('<i class="icon-list-alt"></i> Wish List'), wishlist_path(current_user.get_wishlist) %></li>
   <li><%= link_to raw('<i class="icon-shopping-cart"></i> Cart'), "#" %></li>
   <% end %>
   

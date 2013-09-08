@@ -6,9 +6,10 @@ class PricePoint < ActiveRecord::Base
   belongs_to :good
   belongs_to :selling_unit
 
+  belongs_to :producer, class_name: "User", foreign_key: :producer_id
   ## ATTRIBUTE PROTECTION
 
-  attr_accessible :price, :quantity, :selling_unit_id, :buyers
+  attr_accessible :price, :quantity, :selling_unit_id, :buyers, :producer_id
 
   ## ATTRIBUTE VALIDATION
 

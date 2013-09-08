@@ -9,6 +9,7 @@ class Good < ActiveRecord::Base
   belongs_to :producer, class_name: "User", foreign_key: :producer_id
   belongs_to :creator, class_name: "User", foreign_key: :creator_id
   
+  belongs_to :wishlist
   has_and_belongs_to_many :certifications
   has_many :price_points, dependent: :destroy
   accepts_nested_attributes_for :price_points, allow_destroy: true, reject_if: proc { |attrs| attrs['price'].blank? or attrs['quantity'].blank? or attrs['selling_unit_id'].blank? }
@@ -16,7 +17,7 @@ class Good < ActiveRecord::Base
 
   ## ATTRIBUTE PROTECTION  
   
-  attr_accessible :product_id, :quantity, :start_date, :end_date, :creator_id, :market_id, :price_points_attributes, :available, :selling_unit_id, :certification_ids
+  attr_accessible :product_id, :quantity, :start_date, :end_date, :creator_id, :market_id, :price_points_attributes, :available, :selling_unit_id, :certification_ids, :wishlist_id, :producer_id
 
 
   ## ATTRIBUTE VALIDATION

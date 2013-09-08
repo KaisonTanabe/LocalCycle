@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130907191557) do
+ActiveRecord::Schema.define(:version => 20130908062043) do
 
   create_table "agreement_changes", :force => true do |t|
     t.integer  "agreement_id",                                  :null => false
@@ -180,6 +180,7 @@ ActiveRecord::Schema.define(:version => 20130907191557) do
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
     t.boolean  "available",       :default => true, :null => false
+    t.integer  "wishlist_id"
   end
 
   add_index "goods", ["buyer_id"], :name => "index_goods_on_buyer_id"
@@ -275,6 +276,7 @@ ActiveRecord::Schema.define(:version => 20130907191557) do
     t.datetime "updated_at",                     :null => false
     t.integer  "selling_unit_id", :default => 1, :null => false
     t.text     "buyers"
+    t.integer  "producer_id"
   end
 
   add_index "price_points", ["good_id"], :name => "index_price_points_on_good_id"
@@ -398,5 +400,11 @@ ActiveRecord::Schema.define(:version => 20130907191557) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
+
+  create_table "wishlists", :force => true do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end

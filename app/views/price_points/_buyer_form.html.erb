@@ -1,0 +1,24 @@
+<div class="controls controls-row child-field" style="margin-bottom: 5px; width: 400px">
+  <span class="help-inline" style="display: inline;"><%= link_to raw('<span class="icon-white icon-remove"></span> '), 'javascript:void(0)', class: 'remove-old-child btn btn-mini btn-inverse' %></span>
+
+  <%= f.hidden_field :_destroy, class: 'destroy-field', value: '0' %>
+  <%= f.hidden_field :quantity,  value: '1' %>
+  
+	<div class="input-prepend"  style="display: inline;">
+    <span class="add-on">$</span>
+    <%= f.text_field :price, placeholder: "0.00", class: "span1" %>
+  </div>
+	<div class="selling_unit_display span1" style="display: inline-block; margin-left: 5px;"><%=" / #{SellingUnit.find(f.object.selling_unit_id).short_name}"%></div>
+	<%= f.hidden_field :selling_unit_id%>
+	<% users = Array.new%>
+	<% current_user.networks.each do |n|%>
+		<% users = users + n.users.all %>
+	<%end%>
+	
+	<% producers = User.where(:role => "producer").all%>
+	
+	
+	<%= f.select :producer_id, (users.uniq & producers).collect {|s| [s.name, s.id]}, {prompt: "Producer"}, {class: "span2"} %>
+
+
+</div>

@@ -1,0 +1,55 @@
+<%= content_tag_for :tr, good, class: (current_user.buyer? ? (good.available ? "success wishlist-row" : "error wishlist-row") : "") do %>
+
+<%= form_for(good, html: { multipart: true, class: "form-horizontal" }) do |f| %>
+
+<%= f.hidden_field :wishlist_id%>
+
+<td>
+	<% if current_user.market_manager? or current_user.admin? or good.created_by?(current_user) %>
+	   <%= link_to toggle_available_good_path(good), class: 'ajax-available', data: { type: 'json' }, remote: true do %><span title="Click to toggle availability of <%= good.name %>" class="label label-<%= good.available ? 'success' : 'important' %>"><i class="icon-ok icon-white"></i></span><% end %>
+	 <% end %>
+</td>
+  <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
+    <%= image_tag good.product.best_pic_url(:thumb), class: "thumb" %>
+    <%= link_to good.product.name, good, data: {target: "#ajax-modal", toggle: "modal", placement: "top", data: "true", remote: "true"} %>
+  </td>
+
+  <td>
+      <%= f.text_field :end_date, placeholder: "Date", data: {behavior: "datepicker"}, class: "span2", size: 30, style: "width: 90px" %>
+  </td>
+
+
+  <td>
+		<span class="controls controls-row">
+      <%= f.text_field :quantity, placeholder: "Qty", class: "span2", style: "width: 30px" %>
+      <%= f.select :selling_unit_id, SellingUnit.all.map {|s| [s.short_name, s.id]}, {prompt: "Unit"}, {class: "span1", style: "margin-left: 5px;"} %>
+		</div>
+  </td>
+
+  <td>
+    <%= f.fields_for :price_points do |fpp| %>
+      <%= render partial: 'price_points/buyer_form', locals: { f: fpp } %>
+      <%= new_child_fields_template(f, :price_points, {partial: "price_points/buyer_form"})%>
+    <% end %>
+    <span class="controls">
+
+      <span class="help-inline"><%= add_child_link "Price Point", :price_points %></span>
+			</div>
+  </td>
+
+ 
+  <td>
+    <div class="btn-toolbar">
+      <div class="btn-group">
+	<% if good.created_by?(current_user) or current_user.admin? or current_user.market_manager? %>
+          <%= link_to raw('<i class="icon-edit"></i> Details'), edit_good_path(good), title: "Edit good info", remote: true, class: "btn btn-small good-details-btn" %>
+          <%= link_to raw('<i class="icon-trash"></i> Delete'), good_path(good), data: {confirm: "Are you sure you want to permanently delete this good and all its information?"}, title: "Delete this good from the system", method: :delete, class: "btn btn-small" %>
+					<br/>
+					<div class="btn btn-primary save_line" style="display: none" data-url ="<%= good_path(good) %>">Save</div>
+	<% end %>
+      </div>
+    </div>
+  </td>
+
+	<% end %>
+	<% end %>

@@ -11,7 +11,7 @@ class GoodsController < ApplicationController
     # Ensure profile has been created
     redirect_to edit_user_path(current_user) and return unless current_user.complete
 
-    @goods = Good.scoped.includes(:product, :price_points)
+    @goods = Good.scoped.includes(:product, :price_points).where(:wishlist_id => nil)
     @cat_id =  params.has_key?(:cat_id) ? params[:cat_id] : nil
 
     if current_user.buyer? 
@@ -38,7 +38,7 @@ class GoodsController < ApplicationController
     @good.price_points.build()
 
     @cat_id =  params.has_key?(:cat_id) ? params[:cat_id] : nil
-    @goods = Good.includes(:product, :price_points)
+    @goods = Good.includes(:product, :price_points).where(:wishlist_id => nil)
     @goods = @goods.by_creator(current_user) if current_user.producer?
 
     if current_user.buyer? 
@@ -91,12 +91,11 @@ class GoodsController < ApplicationController
 
 
   def create
-
     respond_to do |format|
       if @good.save
         format.html { redirect_to goods_url, notice: 'Good was successfully created.' }
         format.json { render json: @good, status: :created, location: @good }
-        format.js { render :create }
+        format.js { render (params[:good].has_key?(:wishlist_id) ? 'wishlists/create' : :create)}
       else
         format.html { render action: "new" }
         format.json { render json: @good.errors, status: :unprocessable_entity }
@@ -130,10 +129,11 @@ class GoodsController < ApplicationController
   
 
   def destroy
+    wishlist_id = @good.wishlist_id
     @good.destroy
 
     respond_to do |format|
-      format.html { redirect_to goods_url }
+      format.html { redirect_to  (wishlist_id != nil ? wishlist_path(wishlist_id) : goods_url) }
       format.json { head :no_content }
     end
   end

@@ -30,6 +30,8 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :markets
   
+  has_one :wishlist
+  
   has_many :user_networks
   has_many :networks, :through=> :user_networks
   accepts_nested_attributes_for :user_networks, :allow_destroy => true
@@ -194,7 +196,9 @@ class User < ActiveRecord::Base
     self.cart ||= Cart.create 
   end
   
-
+  def get_wishlist
+    self.wishlist ||= Wishlist.create 
+  end
   ############ PRIVATE METHODS ############
   private
 
