@@ -2,17 +2,17 @@ class CartItem < ActiveRecord::Base
   before_save :calculate_price
   after_create :calculate_price
   
-  attr_accessible :quantity, :sort_order, :cart_id, :good_id, :market_id, :price
+  attr_accessible :quantity, :sort_order, :cart_id, :good_id, :market_id, :price, :order_id
   
   belongs_to :market
   belongs_to :good
   belongs_to :cart
-  
+  belongs_to :order
   
   private 
   
   def calculate_price
-    
+    return if cart_id == nil
     price_point = Hash.new 
 		good.price_points.each do |pp|		
 			if JSON.parse(pp.buyers)["#{market.id.to_s}"] != nil

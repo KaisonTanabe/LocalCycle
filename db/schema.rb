@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130908062043) do
+ActiveRecord::Schema.define(:version => 20130909174345) do
+
+  create_table "addresses", :force => true do |t|
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "agreement_changes", :force => true do |t|
     t.integer  "agreement_id",                                  :null => false
@@ -78,12 +88,14 @@ ActiveRecord::Schema.define(:version => 20130908062043) do
     t.integer  "sort_order"
     t.integer  "good_id"
     t.float    "price"
+    t.integer  "order_id"
   end
 
   create_table "carts", :force => true do |t|
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "order_id"
   end
 
   create_table "categories", :force => true do |t|
@@ -251,11 +263,14 @@ ActiveRecord::Schema.define(:version => 20130908062043) do
   end
 
   create_table "orders", :force => true do |t|
-    t.integer  "buyer_id"
     t.float    "total"
-    t.string   "transaction_code"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "address_id"
+    t.integer  "transaction_id"
+    t.string   "status"
+    t.integer  "ip_address"
+    t.integer  "user_id"
   end
 
   create_table "preferred_user_agreements", :force => true do |t|
@@ -325,6 +340,18 @@ ActiveRecord::Schema.define(:version => 20130908062043) do
 
   add_index "selling_units", ["name"], :name => "index_selling_units_on_name", :unique => true
   add_index "selling_units", ["short_name"], :name => "index_selling_units_on_short_name", :unique => true
+
+  create_table "transactions", :force => true do |t|
+    t.string   "card_type"
+    t.string   "name"
+    t.integer  "cvv"
+    t.float    "amount"
+    t.string   "authorization_code"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.string   "exp_month"
+    t.string   "exp_year"
+  end
 
   create_table "user_networks", :force => true do |t|
     t.integer  "network_id"

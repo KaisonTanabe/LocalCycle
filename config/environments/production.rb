@@ -102,4 +102,10 @@ LOCALCYCLE::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   DEBUG = false
+  
+  
+  ANET_API_LOGIN_ID = ""
+  ANET_KEY = ""
+  ANET_GATEWAY = '1300331'
+
 end

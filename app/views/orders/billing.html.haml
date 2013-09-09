@@ -1,0 +1,66 @@
+.row-fluid.well
+	.span8	
+		-@order.errors.full_messages.each do |msg|
+			=msg
+			%br
+	.span4
+		%h1
+			= "Total: #{number_to_currency(@order.cart.total)}"
+
+
+= form_for @order do |f|
+	=f.hidden_field :total, :value=>@order.cart.total
+	= f.fields_for :address do |a|
+		.row-fluid.well
+			.span12
+				%h2 Billing Address
+				.row-fluid
+					.span2
+						Address 1:
+					.span9
+						=a.text_field :address_1
+				.row-fluid
+					.span2
+						Address 2:
+					.span9
+						=a.text_field :address_2
+				.row-fluid	
+					.span2
+						City:
+					.span2
+						=a.text_field :city
+				.row-fluid	
+					.span2
+						State:
+					.span2
+						=a.text_field :state
+				.row-fluid
+					.span2
+						Postal/Zip Code:
+					.span2
+						=a.text_field :zip
+					
+	= f.fields_for :transaction do |t|
+		.row-fluid.well
+			.span12
+				%h2 Payment Information
+			.row-fluid
+				.span2
+					Credit Card Number:
+				.span9
+					=t.text_field :credit_card
+			.row-fluid
+				.span2
+					Exp:
+				.span1
+					=t.select :exp_month, options_for_select((1..12).to_a.map{|s| s.to_s.length == 1 ? "0#{s}" : "#{s}"}), {},{style: "width: 80px;"}
+				.span1
+					=t.text_field :exp_year, {style: "width: 105px;", placeholder: "Year (yyyy)"}
+			.row-fluid
+				.span2
+					=image_tag "logo-authorize.gif"
+	.row-fluid
+		.span12.price
+			=f.submit "Submit Order", :class=>"btn btn-warning"
+		
+			

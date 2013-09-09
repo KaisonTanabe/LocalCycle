@@ -19,6 +19,10 @@ end
 
 
 def checkout
+  if @cart.order == nil
+    @cart.build_order(:user_id => current_user.id) 
+    @cart.save
+  end
 end
 
 end

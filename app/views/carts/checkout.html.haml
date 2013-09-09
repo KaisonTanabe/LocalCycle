@@ -73,6 +73,11 @@
 				=link_to "Continue Shopping", goods_path
 			.span3.price
 				%br
-				= link_to "<div class='btn btn-warning checkout-btn'>Proceed To Checkout</div>".html_safe, '#'
+					-if (current_user.get_cart.cart_items.count == 0)
+						.btn.btn-warning.disabled
+							Add Items to Cart to Checkout
+					-else
+						= link_to "<div class='btn btn-warning checkout-btn'>Proceed To Checkout</div>".html_safe, edit_order_path(@cart.order)
+				
 				
 

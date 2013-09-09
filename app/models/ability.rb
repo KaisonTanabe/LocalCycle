@@ -45,6 +45,8 @@ class Ability
     if user and (user.buyer?)
       can :manage, Cart, user_id: user.id
       can [:show], Wishlist, user_id: user.id
+      can [:edit, :show, :update], Order, user_id: user.id
+      
     end
     
     if user and (user.producer?)
