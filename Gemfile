@@ -16,6 +16,8 @@ gem 'browsernizer'
 gem 'closure_tree'
 gem 'wicked_pdf'
 gem 'haml'
+
+gem 'authorize-net', "1.5.2"
 #gem 'geokit'
 #gem 'jquery-slimscroll-rails'
 #group :development, :test do
