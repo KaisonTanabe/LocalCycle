@@ -187,6 +187,9 @@ class GoodsController < ApplicationController
   private
 
   def filter_and_sort(goods, params)
+    @search = params[:search] if(params.has_key?(:search))
+    @filters = params[:filter] if(params.has_key?(:filter))
+    
     #goods = goods.by_market(current_user.markets.first.id) unless current_user.admin?
     goods = goods.by_market(params[:market]) unless params[:market].blank?
     goods = goods.by_name(params[:name]) unless params[:name].blank?
@@ -194,7 +197,24 @@ class GoodsController < ApplicationController
     goods = goods.by_product(params[:product]) unless params[:product].blank?
     goods = goods.in_category(params[:cat_id]) unless params[:cat_id].blank?
 
-    return goods.order(sort_column + " " + sort_direction)
+    filtered_goods = Good.all
+    
+    if(params.has_key?(:filter))
+      params[:filter].split(',').each do |f|
+        all_certs = Certification.find(f).goods
+        filtered_goods = filtered_goods & all_certs
+      end
+    end
+    
+    filtered_goods = filtered_goods.map{|m| m.id}
+    
+    if(params.has_key?(:search))
+      if(params[:search] != '')
+        goods = goods.includes(:product).where("LOWER(products.name) like LOWER('%#{URI.unescape(params[:search])}%')")
+      end
+    end
+    
+    return goods.where(:id=>filtered_goods).order(sort_column + " " + sort_direction)
   end
   
   def sort_column

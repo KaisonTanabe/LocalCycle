@@ -1,4 +1,36 @@
+filters = () -> 
+	filter = "&filter="
+	$("input:checked[name^='filter[cert_ids]").each (i,w)->
+		if (i > 0)
+			filter = filter + ","
+		filter = filter + $(w).attr("value")
+	if $('input#search').val() != ''
+		filter= filter + "&search=" + encodeURIComponent($('input#search').val())
+	filter
+
+
+
+search_and_filter = () ->
+		cat_id = ""
+		view = ""
+		if(typeof $('#product_view').attr('value') != 'undefined') 
+			view = "/marketplace"
+		
+		if(typeof $('#cat_id').attr('value') != 'undefined') 
+			cat_id = "&cat_id="+$('#cat_id').attr('value')
+		$.ajax '/goods'+view+ '?market_id='+ $("select[name='market[id]']").val()+'network_id='+ $("select[name='network[id]']").val()+cat_id+filters(),
+			type: 'GET',
+			success: (data, textStatus, jqXHR) ->
+				$('.to_replace').html($(data).find('.to_replace').html())
+	
 $ ->
+	
+	$(document).on "click", ".search-btn", (e)->
+		search_and_filter()
+
+	$(document).on "click", ".filter-button", (e)->
+		search_and_filter()
+
 	$("select[name='network[id]']").change (e)->
 		self = this
 		cat_id = ""
@@ -9,7 +41,7 @@ $ ->
 		if(typeof $('#cat_id').attr('value') != 'undefined') 
 			cat_id = "&cat_id="+$('#cat_id').attr('value')
 			
-		$.ajax '/goods'+view+ '?network_id='+ $(self).val()+cat_id,
+		$.ajax '/goods'+view+ '?network_id='+ $(self).val()+cat_id+filters(),
 			type: 'GET',
 			success: (data, textStatus, jqXHR) ->
 				$('.to_replace').html($(data).find('.to_replace').html())
@@ -23,7 +55,7 @@ $ ->
 		
 		if(typeof $('#cat_id').attr('value') != 'undefined') 
 			cat_id = "&cat_id="+$('#cat_id').attr('value')
-		$.ajax '/goods'+view+ '?market_id='+ $(self).val()+'network_id='+ $(self).val()+cat_id,
+		$.ajax '/goods'+view+ '?market_id='+ $(self).val()+'network_id='+ $(self).val()+cat_id+filters(),
 			type: 'GET',
 			success: (data, textStatus, jqXHR) ->
 				$('.to_replace').html($(data).find('.to_replace').html())

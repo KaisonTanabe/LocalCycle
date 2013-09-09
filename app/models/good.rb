@@ -53,6 +53,7 @@ class Good < ActiveRecord::Base
 
   scope :in_month, lambda{|m| {:conditions => ['end_date >= ? AND start_date <= ?', Date.new(Date.today.year, m.to_i, 1), Date.new(Date.today.year, m.to_i, 1).end_of_month]}}
 
+  
   scope :available_supply, where(buyer_id: 0)
   scope :available_demand, where(producer_id: 0)
 
@@ -136,6 +137,12 @@ class Good < ActiveRecord::Base
   def duration
     "Expires " + end_date.strftime("%b %e") if end_date
   end
+
+  def has_certification(c_id)
+    ids = certifications.collect{|cert| cert.id}
+    return ids.include(c_id)
+  end
+  
 
   ############ PRIVATE METHODS ############
   private

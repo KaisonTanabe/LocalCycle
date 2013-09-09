@@ -3,8 +3,8 @@
 		.filter-toggle
 			Show Filter Options
 	.span6
-		= text_field_tag :search
-		.btn.btn-warning.btn-small 
+		= text_field_tag :search, (@search ?  @search : '' )
+		.btn.btn-warning.btn-small.search-btn
 			Search
 	.row-fluid.filter-body
 		.span12.well
@@ -13,12 +13,12 @@
 				- Certification.all.each_slice(target.to_i+1).to_a.each do |cert|
 					.span4
 						-cert.each do |c|
-							=check_box_tag :certification_ids, c.id, false, :name => 'filter[cert_ids][]'
+							=check_box_tag :certification_ids, c.id, @filters && @filters.split(',').include?(c.id.to_s), :name => 'filter[cert_ids][]'
 							=c.name
 							%br
 			.row-fluid
 				.span2.offset10
 					.btn.btn-primary.btn-small.clear-filters 
 						Clear
-					.btn.btn-warning.btn-small 
+					.btn.btn-warning.btn-small.filter-button 
 						Filter
