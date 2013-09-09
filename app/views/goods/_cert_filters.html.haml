@@ -1,7 +1,10 @@
 .row-fluid
 	.span6
 		.filter-toggle
-			Show Filter Options
+			.show
+				Show Filter Options
+			.hide
+				Hide Filter Options
 	.span6
 		= text_field_tag :search, (@search ?  @search : '' )
 		.btn.btn-warning.btn-small.search-btn

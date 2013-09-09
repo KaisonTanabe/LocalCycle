@@ -21,5 +21,15 @@ li.check_boxes{
 
 .filter-toggle{
 	cursor: pointer;
+	.hide{
+		display: none;
+	}
 }
 
+.filter-body{
+	display: none;
+}
+
+.search-btn{
+	margin-top: -8px;
+}

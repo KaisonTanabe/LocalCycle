@@ -79,6 +79,8 @@ $ ->
 	
 	$(document).on "click", ".filter-toggle", (e)->
 		$('.filter-body').toggle()
+		$(this).find('.show').toggle()
+		$(this).find('.hide').toggle()
 	
 
 	$(document).on "click", ".clear-filters", (e)->
