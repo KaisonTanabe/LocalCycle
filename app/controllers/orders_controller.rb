@@ -1,6 +1,8 @@
 class OrdersController < ApplicationController
 load_and_authorize_resource
 
+def show
+end
 
 def edit
   @order.build_transaction
@@ -17,12 +19,12 @@ def update
       :gateway => ANET_GATEWAY)
     credit_card = AuthorizeNet::CreditCard.new(@order.transaction.credit_card, @order.transaction.get_exp)
     response = transaction.purchase( @order.total, credit_card)
-
+    
     if response.success?
       @order.finalize_transaction(response.authorization_code)
       render :success
     else
-      flash.now[:error] = "There was an error while processing your payment. #{response.response_reason_text}"
+      flash.now[:error] = "There was an error while processing your payment. #{response.response_reason_text} #{response.to_yaml}"
       render :billing
     end
   else
