@@ -31,10 +31,6 @@ GEM
     arel (3.0.2)
     authorize-net (1.5.2)
       nokogiri (~> 1.4)
-    aws-sdk (1.14.1)
-      json (~> 1.4)
-      nokogiri (< 1.6.0)
-      uuidtools (~> 2.1)
     bcrypt-ruby (3.1.1)
     bootstrap-datepicker-rails (1.1.1.3)
       railties (>= 3.0)
@@ -84,8 +80,10 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.23)
+    mini_portile (0.5.1)
     multi_json (1.7.7)
-    nokogiri (1.5.10)
+    nokogiri (1.6.0)
+      mini_portile (~> 0.5.0)
     orm_adapter (0.4.0)
     paperclip (3.5.0)
       activemodel (>= 3.0.0)
@@ -142,7 +140,6 @@ GEM
     uglifier (2.1.2)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
-    uuidtools (2.1.4)
     warden (1.2.3)
       rack (>= 1.0)
     wicked_pdf (0.9.6)
@@ -155,8 +152,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  authorize-net (= 1.5.2)
-  aws-sdk
+  authorize-net
   bootstrap-datepicker-rails
   bootstrap-will_paginate
   browsernizer
@@ -169,6 +165,7 @@ DEPENDENCIES
   haml
   jquery-rails
   mail
+  nokogiri
   paperclip
   pg
   rails

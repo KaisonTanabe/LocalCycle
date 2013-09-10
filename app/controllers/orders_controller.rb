@@ -16,7 +16,8 @@ end
 def update
   if @order.update_attributes(params[:order])
     transaction = AuthorizeNet::AIM::Transaction.new(ANET_API_LOGIN_ID, ANET_KEY,
-      :gateway => ANET_GATEWAY, :verify_ssl => true)
+      :gateway => ANET_GATEWAY)
+    puts transaction.to_yaml
     credit_card = AuthorizeNet::CreditCard.new(@order.transaction.credit_card, @order.transaction.get_exp)
     response = transaction.purchase( @order.total, credit_card)
     

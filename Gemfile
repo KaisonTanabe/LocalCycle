@@ -10,7 +10,6 @@ gem 'pg'
 gem 'select2-rails', "3.4.2"
 gem 'date_validator'
 gem 'bootstrap-will_paginate'
-gem 'aws-sdk'
 gem 'paperclip'
 gem 'browsernizer'
 gem 'closure_tree'
@@ -18,7 +17,8 @@ gem 'wicked_pdf'
 gem 'haml'
 gem 'refraction'
 
-gem 'authorize-net', "1.5.2"
+gem 'authorize-net'
+gem "nokogiri"
 #gem 'geokit'
 #gem 'jquery-slimscroll-rails'
 #group :development, :test do
