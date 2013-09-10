@@ -10,6 +10,7 @@ gem 'pg'
 gem 'select2-rails', "3.4.2"
 gem 'date_validator'
 gem 'bootstrap-will_paginate'
+gem 'aws-sdk'
 gem 'paperclip'
 gem 'browsernizer'
 gem 'closure_tree'
