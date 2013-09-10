@@ -119,6 +119,7 @@ GEM
     rake (10.1.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    refraction (0.2.0)
     sass (3.2.10)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -171,6 +172,7 @@ DEPENDENCIES
   paperclip
   pg
   rails
+  refraction
   sass-rails (~> 3.2.3)
   select2-rails (= 3.4.2)
   uglifier (>= 1.0.3)

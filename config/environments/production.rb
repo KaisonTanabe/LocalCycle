@@ -1,6 +1,8 @@
 LOCALCYCLE::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  config.middleware.insert_before(::Rack::Lock, ::Refraction, {})
+  
   # PAYPAL SETTINGS
   PAYPAL_EMAIL = ENV['PAYPAL_EMAIL']
   PAYPAL_SECRET = ENV['PAYPAL_SECRET']
@@ -96,6 +98,7 @@ LOCALCYCLE::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+  config.force_ssl = true
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
@@ -104,8 +107,10 @@ LOCALCYCLE::Application.configure do
   DEBUG = false
   
   
-  ANET_API_LOGIN_ID = ""
-  ANET_KEY = ""
+  ANET_API_LOGIN_ID = "69qqYVQ9CY"
+  ANET_KEY = "59w42BPcqXWS75DA"
   ANET_GATEWAY = '1300331'
+  
+  
 
 end

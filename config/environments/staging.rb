@@ -108,4 +108,13 @@ LOCALCYCLE::Application.configure do
   ANET_KEY = "264KZdxGs936Mq2a"
   ANET_QUESTION = "Simon"
   ANET_GATEWAY = :sandbox #'423541'
+  
+  #Test Cards
+  #- American Express Test Card: 370000000000002
+  #- Discover Test Card: 6011000000000012	
+  #- Visa Test Card: 4007000000027	
+  #- Second Visa Test Card: 4012888818888	
+  #- JCB: 3088000000000017	
+  #- Diners Club/ Carte Blanche: 38000000000006
+  
 end

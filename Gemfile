@@ -16,6 +16,7 @@ gem 'browsernizer'
 gem 'closure_tree'
 gem 'wicked_pdf'
 gem 'haml'
+gem 'refraction'
 
 gem 'authorize-net', "1.5.2"
 #gem 'geokit'
