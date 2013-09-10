@@ -109,7 +109,7 @@ LOCALCYCLE::Application.configure do
   
   ANET_API_LOGIN_ID = "69qqYVQ9CY"
   ANET_KEY = "59w42BPcqXWS75DA"  
-  ANET_GATEWAY = '1300331'
+  ANET_GATEWAY = :production
   
   
 
