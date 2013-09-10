@@ -1,7 +1,7 @@
 LOCALCYCLE::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
-  config.middleware.insert_before(::Rack::Lock, ::Refraction, {})
+  config.middleware.insert_before(::Rack::Lock, ::Refraction)
   
   # PAYPAL SETTINGS
   PAYPAL_EMAIL = ENV['PAYPAL_EMAIL']
