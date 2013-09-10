@@ -105,15 +105,11 @@ LOCALCYCLE::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   DEBUG = false
+
   
-  ANET_API_LOGIN_ID = "99p4s4TTSm"
-  ANET_KEY = "264KZdxGs936Mq2a"
-  ANET_QUESTION = "Simon"
-  ANET_GATEWAY = '423541'
-  
-  #ANET_API_LOGIN_ID = "69qqYVQ9CY"
-  #ANET_KEY = "59w42BPcqXWS75DA"
-  #ANET_GATEWAY = '1300331'
+  ANET_API_LOGIN_ID = "69qqYVQ9CY"
+  ANET_KEY = "59w42BPcqXWS75DA"
+  ANET_GATEWAY = '1300331'
   
   
 
