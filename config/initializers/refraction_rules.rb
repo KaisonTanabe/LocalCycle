@@ -1,3 +1,5 @@
 Refraction.configure do |req|
-  req.permanent! :host => "www.localcycle.org"
+  if req.host == 'localcycle.org'
+    req.rewrite! "https://www.localcycle.org/#{req.path}"
+  end
 end
