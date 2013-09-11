@@ -47,20 +47,21 @@
   <% elsif @user.market_manager? %>
     <%= render partial: 'users/market_manager_fields', locals: {f: f} %>
 	<% end %>
+  <% if current_user.admin? %>
 	<legend> Networks/Markets</legend>
 
-  <div class="control-group">
- 		<div class="controls controls-row">
-		<%= hidden_field_tag "user[market_ids][]" %>
-			<%= f.fields_for :user_networks do |ff|%>
-						<%= render :partial => 'users/user_network_fields', locals:  {f: ff} %>
-			<%end%>
-			<%= link_to_add_user_network "<div class=\"btn\">Add Network</div>".html_safe, f, :user_networks %>
+	  <div class="control-group">
+	 		<div class="controls controls-row">
+			<%= hidden_field_tag "user[market_ids][]" %>
+				<%= f.fields_for :user_networks do |ff|%>
+							<%= render :partial => 'users/user_network_fields', locals:  {f: ff} %>
+				<%end%>
+				<%= link_to_add_user_network "<div class=\"btn\">Add Network</div>".html_safe, f, :user_networks %>
 	    
 		
-			</div>
-	</div>
-	
+				</div>
+		</div>
+	<%end%>
 	
 <%#= render partial: 'users/product_selection_fields', locals: {f: f} %>  
 

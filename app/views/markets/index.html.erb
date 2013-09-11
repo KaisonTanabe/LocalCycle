@@ -29,6 +29,11 @@
 	<%= render "sorters" %>
       </thead>
 
+			<thead id="batch">
+	      <%= render partial: "batch_form", locals: {f: f} %>
+	    </thead>
+	    
+	
       <tbody id="market-ajax">
         <% if @markets.any? %>
           <% @markets.each do |market| %>

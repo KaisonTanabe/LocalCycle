@@ -10,6 +10,14 @@
   <% end %>
   <th>
     <%= f.text_field :end_date, placeholder: "Date", data: {behavior: "datepicker"}, style: "width: 90px;" %>
+		<br/>
+
+			<%= f.radio_button :cycle, "one_time", :checked=>true %>Once Only
+			<br/>
+		<%= f.radio_button :cycle, "weekly"%>Weekly
+		<br/>
+		<%= f.radio_button :cycle, "monthly"%>Monthly
+
   </th>
   <th style="width: 130px;">
     <div class="controls controls-row">

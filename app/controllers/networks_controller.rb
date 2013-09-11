@@ -14,7 +14,7 @@ class NetworksController < ApplicationController
    
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @markets }
+      format.json { render json: @networks }
     end
   end
 

@@ -13,14 +13,11 @@ class Ability
     end
 
     if user and (user.market_manager?)
-      can :manage, Good do |good|
-         user.markets.includes? good.market
-      end
-      can :manage, Market  do |market|
-         user.markets.includes? market
-      end
+      can :manage, Good
+      can :manage, Market, :users=>{:id => user.id}
+      can :create, Market
       can :manage, User, id: user.id
-      #can :manage, User, market_id: user.market_id
+      #can :manage, User, :markets => {:users =>{:id => user.id}}
     end
 
     if user and (user.buyer? or user.producer?)

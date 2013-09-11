@@ -17,7 +17,7 @@ class Good < ActiveRecord::Base
 
   ## ATTRIBUTE PROTECTION  
   
-  attr_accessible :product_id, :quantity, :start_date, :end_date, :creator_id, :market_id, :price_points_attributes, :available, :selling_unit_id, :certification_ids, :wishlist_id, :producer_id
+  attr_accessible :product_id, :quantity, :start_date, :end_date, :creator_id, :market_id, :price_points_attributes, :available, :selling_unit_id, :certification_ids, :wishlist_id, :producer_id, :cycle
 
 
   ## ATTRIBUTE VALIDATION

@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
   has_many :user_networks
   has_many :networks, :through=> :user_networks
   accepts_nested_attributes_for :user_networks, :allow_destroy => true
-
+  accepts_nested_attributes_for :markets
 
   has_one :cart
   

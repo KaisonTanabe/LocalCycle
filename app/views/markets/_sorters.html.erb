@@ -1,10 +1,9 @@
 <tr class="sorters">
   <th><%= sortable "name", "Name", parsed_params %></th>
-  <th><%= sortable "city", "billing_city", parsed_params %></th>
-  <th><%= sortable "state", "State", parsed_params %></th>
-  <th><%= sortable "Day of Week", "day_of_week", parsed_params %></th>
-  <th><%= sortable "Cycle", "cycle", parsed_params %></th>
-  <th><%= sortable "Time", "time_start", parsed_params %></th>
-  <th><%= sortable "Who Can Purchase>", "all_buyers", parsed_params %></th>
+  <th><%= "Address" %></th>
+  <th><%= sortable  "day_of_week" ,"Day of Week", parsed_params %></th>
+  <th ><%= sortable  "cycle", "Cycle", parsed_params %></th>
+  <th ><%= sortable "time_start", "Time", parsed_params %></th>
+  <th><%= sortable "all_buyers", "Who Can Purchase", parsed_params %></th>
   <th><span>Actions</span></th>
 </tr>

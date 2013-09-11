@@ -49,8 +49,15 @@ class MarketsController < ApplicationController
   def create
     respond_to do |format|
       if @market.save
+        if current_user.market_manager?
+          current_user.markets << @market
+          current_user.save
+        end
+        
         format.html { redirect_to  markets_path, notice: 'Market successfully created.' }
         format.json { render json: @market, status: :created, location: @market }
+        format.js { render :create }
+        
       else
         format.html { render action: "new" }
         format.json { render json: @market.errors, status: :unprocessable_entity }

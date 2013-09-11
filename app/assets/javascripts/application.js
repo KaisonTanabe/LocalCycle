@@ -25,9 +25,12 @@
 //= require parsley.min
 //= require form_helpers
 //= require ajax-available
+//= require bootstrap-timepicker
 //= require_tree .
 jQuery(function($){
  
+		$('.timepicker').timepicker();
+
 		$(".print_page").click(function(){
 			window.print();
 		});

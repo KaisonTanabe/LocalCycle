@@ -1,24 +1,41 @@
 <tr>
   <th>
-    <%= f.select :product_id, option_groups_from_collection_for_select(Category.includes(:products).order('name'), :products, :name, :id, :name, (params[:product_id].blank? ? (@good.product ? @good.product.id : "") : params[:product_id])), {prompt: "-- Select Product --"}, {class: "select2", style: "width: 180px;" } %>
-  </th>
-  <% if current_user.admin? %>
-  <th>
-    <%= f.select :creator_id, options_from_collection_for_select(User.by_producer.order('name'), :id, :name), {prompt: "-- Select Owner --"}, {class: "select2", style: "width: 180px;" } %>
-  </th>
-  <% end %>
-  <th>
-    <%= "[Price Points]" %>
-    <%= f.hidden_field :selling_unit, value: "lb" %>
+		<%= f.text_field :name%>
+
   </th>
   <th>
-    <label class="checkbox"><%= f.check_box :indefinite, checked: (@good.new_record? ? false : @good.good_type == "indefinite"), class: "x-toggle-visible", data: {show: "#datepickers", hide: "#datepickers"} %> All the time</label>
-    <%= f.text_field :start_date, placeholder: "First delivery", data: {behavior: "datepicker"}, style: "width: 85px;" %>
-    <%= f.text_field :end_date, placeholder: "Last delivery", data: {behavior: "datepicker"}, style: "width: 85px;" %>
+		    <%= f.text_field :billing_street_address_1, placeholder: "Address 1", class: "span4" %>
+		    <%= f.text_field :billing_street_address_2, placeholder: "Address 2", class: "span4" %>
+		    <%= f.text_field :billing_city, placeholder: "City", class: "span2" %>
+		    <%= f.text_field :billing_state, placeholder: "State", class: "span1" %>
+		    <%= f.text_field :billing_zip, placeholder: "Zip", class: "span1" %>
+	
   </th>
+  <th >
+		  <%= f.select :day_of_week, Date::DAYNAMES.collect{|day| [day, Date::DAYNAMES.index(day)]} ,{}, {:style=> "width: 150px !important"}%>
+	
+  </th>
+  <th>
+	  <%= f.select :cycle, Market::CYCLES.collect{|c| [c, Market::CYCLES.index(c)]},{}, {:style=> "width: 150px !important"}%>
+	
+
+  </th>
+	<th>
+			Start Time:
+			<div class="input-append bootstrap-timepicker">
+			  <%=f.text_field :start_time, :class=>"timepicker input-small"%>
+			  <span class="add-on"><i class="icon-time"></i></span>
+			</div>		
+			End Time:
+			<div class="input-append bootstrap-timepicker">
+			  <%=f.text_field :end_time, :class=>"timepicker input-small"%>
+			  <span class="add-on"><i class="icon-time"></i></span>
+			</div>	  
+	</th>
+	<th></th>
   <th>
     <%= button_tag type: 'submit', class: "btn btn-primary" do %>
-    <i class="icon-white icon-plus"></i> Post Supply
+    <i class="icon-white icon-plus"></i> Create Market
     <% end %>
   </th>
 </tr>

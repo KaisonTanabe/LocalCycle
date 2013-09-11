@@ -8,6 +8,8 @@ class Market < ActiveRecord::Base
   has_and_belongs_to_many :producers, class_name: "User", foreign_key: :market_id, :conditions => proc { "role = 'producer'" }
   has_and_belongs_to_many :buyers, class_name: "User", foreign_key: :market_id, :conditions => proc { "role = 'buyer'" }
 
+  has_and_belongs_to_many :users
+  
   has_many :delivery_windows, as: :deliverable, dependent: :destroy
   accepts_nested_attributes_for :delivery_windows, allow_destroy: true, reject_if: proc { |attrs| attrs['weekday'].blank? or attrs['start_hour'].blank? or attrs['start_hour'].blank? }
 
@@ -20,11 +22,11 @@ class Market < ActiveRecord::Base
   attr_accessible :name, :brief, :description, :pic, :phone,
     :billing_street_address_1, :billing_street_address_2, 
     :billing_city, :billing_state, :billing_country, :billing_zip,
-    :website, :twitter, :facebook, :delivery_windows_attributes, :network_id
+    :website, :twitter, :facebook, :delivery_windows_attributes, :network_id, :day_of_week, :cycle, :start_time, :end_time
 
   ## ATTRIBUTE VALIDATION
 
-  validates :name, :brief, :phone,
+  validates :name,
     :billing_street_address_1,
     :billing_city, :billing_state, :billing_country, :billing_zip,
     presence: true

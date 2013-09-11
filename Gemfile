@@ -17,7 +17,8 @@ gem 'closure_tree'
 gem 'wicked_pdf'
 gem 'haml'
 gem 'refraction'
-
+gem 'bootstrap-timepicker-rails', :require => 'bootstrap-timepicker-rails',
+                              :git => 'git://github.com/tispratik/bootstrap-timepicker-rails.git'
 gem 'authorize-net'
 gem "nokogiri"
 #gem 'geokit'

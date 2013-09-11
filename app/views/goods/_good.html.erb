@@ -19,13 +19,7 @@
   </td>
   <% end %>
 
-  <% if current_user.admin? or current_user.market_manager? %>
 
-  <td>
-      <%= f.select :creator_id, options_from_collection_for_select(User.by_producer.order('name'), :id, :name, (params[:creator_id].blank? ? (@good.creator ? @good.creator.id : "") : params[:creator_id])), {prompt: "-- Select Producer --"}, {class: "select2 span4" } %>
-
-  </td>
-  <%end%>
 
 
   <td>

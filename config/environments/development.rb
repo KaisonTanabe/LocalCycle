@@ -72,7 +72,7 @@ LOCALCYCLE::Application.configure do
   ANET_API_LOGIN_ID = "99p4s4TTSm"
   ANET_KEY = "264KZdxGs936Mq2a"
   ANET_QUESTION = "Simon"
-  ANET_GATEWAY = '423541'
+  ANET_GATEWAY = :test
   
 #Test Cards
 #- American Express Test Card: 370000000000002
