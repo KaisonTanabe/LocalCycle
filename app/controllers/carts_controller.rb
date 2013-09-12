@@ -2,6 +2,15 @@ class CartsController < ApplicationController
   load_resource
 
 
+def clear
+  @cart.cart_items.each do |ci|
+    CartItem.delete(ci.id)
+  end
+  
+  render :partial => 'carts/show', :locals => {cart: @cart}
+  
+end
+
 def add_item
    authorize! :update, @cart
    cart_item = @cart.cart_items.where(:good_id => params[:good_id], :market_id => params[:market_id]).first

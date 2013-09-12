@@ -47,5 +47,7 @@
 	.row-fluid
 		.span9.offset2
 			-if (current_user.get_cart.cart_items.count != 0)
-				= link_to "<div class='btn btn-warning checkout-btn'>Checkout</div>".html_safe, checkout_cart_path(current_user.get_cart)
+				= link_to "Checkout", checkout_cart_path(current_user.get_cart),class: "btn btn-warning checkout-btn"
+				= link_to "Clear Cart", clear_cart_path(current_user.get_cart), class: "btn btn-warning add-to-cart"
+			  
 		

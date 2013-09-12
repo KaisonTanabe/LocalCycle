@@ -38,7 +38,7 @@
 		<%= hidden_field_tag :min_order, price_point.keys.sort.first%>
 		<% price_point.keys.sort.each do |key|%>
 			<% pp = price_point[key]%>
-			<%= number_to_currency(pp.price) %>/<%= good.selling_unit.name%> <%= pp.quantity %>+ <%= good.selling_unit.name%><%= good.quantity > 1 ? "s" : ''%> <br/>
+			<%= number_to_currency(pp.price) %>/<%= good.selling_unit.name%> <br/> Min Order: <%= pp.quantity %>+ <%= good.selling_unit.name%><%= good.quantity > 1 ? "s" : ''%> <br/><br/>
 			
 		<%end%>
   </td>

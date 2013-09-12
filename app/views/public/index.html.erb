@@ -2,37 +2,43 @@
   home
 <% end %>
 
-<div class="row" style="min-height: 350px;">
-  <div class="span6">
 
-  
-<!--
-    <%= form_for("lead", url: leads_path,  html: {class: "form-horizontal", action: "post", remote: true}) do |f| %>
-      <h6>Sign up to get in early.</h6>
-      <p id="response"></p>
-      <div class="input-append">
-	<%= f.email_field :email, placeholder: "Enter your email..." %>
-	<%= f.submit "Notify me", class: "btn-success btn" %>
-      </div>
-      <small>...but don't spam me</small>
-    <% end %>
--->
-  </div>
-  <div class="span6">
-    <h2 id="tagline">
-      <span style="line-height: 1.2em; color: #ffba00; font-size: 20px;">Connecting</span><br />
-      <span style="color: #39b54a;">local producers</span> &<br />
-      <span style="color: #f47f20;">wholesale buyers</span>
-    </h2>
-    <p style=" font-size: 16px;"><span style="font-weight: bold;" title="Click a button below">Sign Up</span> to discover and create local production agreements.</p>
-  </div>
-</div>
+	<div class="row home-overlay" style="min-height: 350px;">
+	  <div class="span12">
+
+	  </div>
+	</div>
+
+
+	<div class="row home-overlay-text" style="min-height: 350px;">
+	  <div class="span12 home-overlay-text">
+	    <h2 id="tagline">
+	      <span style="line-height: 1.2em; color: #ffba00; font-size: 20px;">Connecting</span><br />
+	      <span style="color: #39b54a;">local producers</span> &<br />
+	      <span style="color: #f47f20;">wholesale buyers</span>
+	    </h2>
+	  </div>
+	</div>
+	<div id="this-carousel-id" class="carousel slide"><!-- class of slide for animation -->
+	  <div class="carousel-inner">
+	    	<div class="active item"><%= image_tag "/assets/carousel/1.jpg"%></div>
+
+				<% (2..10).each do |x|%>    
+	    		<div class="item">
+						<%= image_tag "/assets/carousel/#{x}.jpg"%>
+					</div>
+			<%end%>
+
+	  </div>
+	</div>
+
+
 <div class="row">
   <div class="span4">
     <h3><%= link_to raw("<img src='/assets/icon-buyer.png' /><br />Buyers"), new_user_registration_path(role: "buyer"), {class: "tout buyer", remote: true} %></h3>
   </div>
   <div class="span4">
-    <h3><%= link_to raw("<img src='/assets/icon-food-hub.png' /><br />Market Manager"), new_user_registration_path(role: "market_manager"), {class: "tout food-hub", remote: true} %></h3>
+    <h3><%= link_to raw("<img src='/assets/icon-food-hub.png' /><br />Administrator"), new_user_registration_path(role: "market_manager"), {class: "tout food-hub", remote: true} %></h3>
   </div>
   <div class="span4">
     <h3><%= link_to raw("<img src='/assets/icon-producer.png' /><br />Producers"), new_user_registration_path(role: "producer"), {class: "tout producer", remote: true}%></h3>

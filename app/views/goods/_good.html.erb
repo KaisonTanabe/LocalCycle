@@ -31,8 +31,8 @@
 
   <td>
     <%= f.fields_for :price_points do |fpp| %>
-      <%= render partial: 'price_points/form', locals: { f: fpp } %>
-      <%= new_child_fields_template(f, :price_points, {partial: "price_points/form"})%>
+      <%= render partial: 'price_points/form', locals: { f: fpp, good: good } %>
+      <%= new_child_fields_template(f, :price_points, {partial: "price_points/batch_form"})%>
     <% end %>
     <span class="controls">
 

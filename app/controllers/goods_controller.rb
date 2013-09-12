@@ -34,12 +34,14 @@ class GoodsController < ApplicationController
     # Ensure profile has been created
     redirect_to edit_user_path(current_user) and return unless current_user.complete
 
+    
     @good = Good.new()
     @good.price_points.build()
 
     @cat_id =  params.has_key?(:cat_id) ? params[:cat_id] : nil
     @goods = Good.includes(:product, :price_points).where(:wishlist_id => nil)
     @goods = @goods.by_creator(current_user) if current_user.producer?
+
 
     if current_user.buyer? 
         @network = Network.find( params.has_key?(:network_id) ? params[:network_id] : current_user.networks.first.id )
@@ -93,6 +95,7 @@ class GoodsController < ApplicationController
   def create
     respond_to do |format|
       if @good.save
+        @good.update_markets if !current_user.buyer?
         format.html { redirect_to goods_url, notice: 'Good was successfully created.' }
         format.json { render json: @good, status: :created, location: @good }
         format.js { render (params[:good].has_key?(:wishlist_id) ? 'wishlists/create' : :create)}
@@ -108,6 +111,7 @@ class GoodsController < ApplicationController
   def update
     respond_to do |format|
       if @good.update_attributes(params[:good])
+        Good.find(@good.id).update_markets if !current_user.buyer?
         if params[:render] == 'false'
            render :nothing=> true
            return
@@ -122,11 +126,11 @@ class GoodsController < ApplicationController
   end
 
   def buyer_panel
+    puts "IN BUYER PANEL"
     @target_id = params[:target]
     @data = URI.unescape(params[:data])
     render :layout=>false
   end
-  
 
   def destroy
     wishlist_id = @good.wishlist_id
@@ -216,6 +220,7 @@ class GoodsController < ApplicationController
     
     return goods.where(:id=>filtered_goods).order(sort_column + " " + sort_direction)
   end
+  
   
   def sort_column
     sort = params[:sort] || ''

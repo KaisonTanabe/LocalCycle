@@ -14,10 +14,11 @@ class Good < ActiveRecord::Base
   has_many :price_points, dependent: :destroy
   accepts_nested_attributes_for :price_points, allow_destroy: true, reject_if: proc { |attrs| attrs['price'].blank? or attrs['quantity'].blank? or attrs['selling_unit_id'].blank? }
 
+  has_and_belongs_to_many :markets
 
   ## ATTRIBUTE PROTECTION  
   
-  attr_accessible :product_id, :quantity, :start_date, :end_date, :creator_id, :market_id, :price_points_attributes, :available, :selling_unit_id, :certification_ids, :wishlist_id, :producer_id, :cycle
+  attr_accessible :product_id, :quantity, :start_date, :end_date, :creator_id, :market_id, :price_points_attributes, :available, :selling_unit_id, :certification_ids, :wishlist_id, :producer_id, :cycle, :description
 
 
   ## ATTRIBUTE VALIDATION
@@ -66,7 +67,7 @@ class Good < ActiveRecord::Base
   scope :by_producer, lambda {|p| where("producer_id = ?", p)}
   scope :by_creator, lambda {|p| where("creator_id = ?", p)}
   scope :by_product, lambda {|p| where("product_id = ?", p)}
-  scope :by_market, lambda {|m| where("market_id = ?", m)}
+  scope :by_market, lambda {|n| joins(:markets).("market.id = ?", n)}
   scope :in_category, lambda { |c| includes(:product).where("products.category_id IN (?)", Category.where(id: c).first.self_and_descendant_ids) }
 
   #########################################
@@ -75,6 +76,25 @@ class Good < ActiveRecord::Base
 
   ############ CLASS METHODS ##############
 
+
+  
+  def update_markets
+    self.markets.each do |m|
+      self.markets.delete(m)
+    end
+    price_points.each do |pp|
+      puts "#{pp.buyers.to_yaml}"
+      hash = JSON.parse pp.buyers
+      hash.each do |market|
+          mark = Market.find(market[0].to_i)
+          self.markets << mark if !self.markets.include?(mark) 
+      end
+      
+    end
+    
+  end
+  
+  
   #def self.
   def self.csv_header 
     "ID,Category,Name,Description,Selling Unit,Catch Weight,Season Start Date,Season End Date".split(',') 

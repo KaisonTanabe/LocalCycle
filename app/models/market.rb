@@ -3,10 +3,11 @@ class Market < ActiveRecord::Base
  
   ## SETUP ASSOCIATIONS
 
-  has_many :goods
   has_and_belongs_to_many :market_managers, class_name: "User", foreign_key: :market_id, :conditions => proc { "role = 'market_manager'" }
   has_and_belongs_to_many :producers, class_name: "User", foreign_key: :market_id, :conditions => proc { "role = 'producer'" }
   has_and_belongs_to_many :buyers, class_name: "User", foreign_key: :market_id, :conditions => proc { "role = 'buyer'" }
+
+  has_and_belongs_to_many :goods
 
   has_and_belongs_to_many :users
   

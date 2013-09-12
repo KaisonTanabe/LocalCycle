@@ -26,6 +26,7 @@
 @import "partials/parsley";
 @import "products";
 @import "cart";
+@import "home";
 
 @import "shared";
 
@@ -615,7 +616,6 @@ footer {
 }
 
 .home #content {
-    background: url(col-divider.png) 48% 0 no-repeat;
 }
 
 .public {

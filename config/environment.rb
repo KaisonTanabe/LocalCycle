@@ -24,12 +24,12 @@ GENDER = {
 
 ROLES = {
   "admin" => "Admin",
-  "market_manager" => "Market Manager",
+  "market_manager" => "Administrator",
   "buyer" => "Buyer",
   "producer" => "Producer"
 }
 REGISTERABLE_ROLES = {
-  "market_manager" => "Market Manager",
+  "market_manager" => "Administrator",
   "buyer" => "Buyer",
   "producer" => "Producer"
 }

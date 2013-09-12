@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130910223800) do
+ActiveRecord::Schema.define(:version => 20130912162019) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address_1"
@@ -194,6 +194,7 @@ ActiveRecord::Schema.define(:version => 20130910223800) do
     t.boolean  "available",       :default => true, :null => false
     t.integer  "wishlist_id"
     t.string   "cycle"
+    t.text     "description"
   end
 
   add_index "goods", ["buyer_id"], :name => "index_goods_on_buyer_id"
@@ -201,6 +202,11 @@ ActiveRecord::Schema.define(:version => 20130910223800) do
   add_index "goods", ["producer_id"], :name => "index_goods_on_producer_id"
   add_index "goods", ["product_id"], :name => "index_goods_on_product_id"
   add_index "goods", ["selling_unit_id"], :name => "index_goods_on_selling_unit_id"
+
+  create_table "goods_markets", :id => false, :force => true do |t|
+    t.integer "good_id"
+    t.integer "market_id"
+  end
 
   create_table "images", :force => true do |t|
     t.integer  "imageable_id"

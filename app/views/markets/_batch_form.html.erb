@@ -12,11 +12,11 @@
 	
   </th>
   <th >
-		  <%= f.select :day_of_week, Date::DAYNAMES.collect{|day| [day, Date::DAYNAMES.index(day)]} ,{}, {:style=> "width: 150px !important"}%>
+		  <%= f.select :day_of_week, Date::DAYNAMES.collect{|day| [day, Date::DAYNAMES.index(day)]} ,{}, {:style=> "width: 100px !important"}%>
 	
   </th>
   <th>
-	  <%= f.select :cycle, Market::CYCLES.collect{|c| [c, Market::CYCLES.index(c)]},{}, {:style=> "width: 150px !important"}%>
+	  <%= f.select :cycle, Market::CYCLES.collect{|c| [c, Market::CYCLES.index(c)]},{}, {:style=> "width: 100px !important"}%>
 	
 
   </th>

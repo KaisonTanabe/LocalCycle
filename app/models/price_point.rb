@@ -17,7 +17,15 @@ class PricePoint < ActiveRecord::Base
 
   #########################################
 
-
+  def has_market? market
+    hash = JSON.parse buyers
+    hash.each do |networks|
+      networks.each do |m|
+        puts "market #{m}"
+      end
+    end
+    
+  end
 
 
   ############### CALLBACKS ###############

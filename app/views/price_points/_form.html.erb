@@ -14,8 +14,9 @@
   <%= f.select :selling_unit_id, SellingUnit.all.map {|s| [s.short_name, s.id]}, {prompt: "Unit"}, {style: "margin-left: 5px; width: 70px"} %>
 
 	<%- rval= rand(1..9999999999)%>
-	<%=link_to "Edit Buyers", buyer_panel_goods_path(target: rval), :class=>"btn btn-small edit_buyers", :remote=> true, :data =>{:target => "#{rval}"} %>
+	<%=link_to "Edit Buyers", buyer_panel_good_path(good, target: rval), :class=>"btn btn-small edit_buyers", :remote=> true, :data =>{:target => "#{rval}"} %>
 	<div class="show_buyers"></div>
+	<%= f.object.buyers%>
 	<%= f.hidden_field :buyers, :class=> "buyer_json_#{rval}"%>
 
 

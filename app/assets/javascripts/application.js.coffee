@@ -1,4 +1,5 @@
 # this sets up the ajax loader, and it will stay until the method specific js removes it
+
 $('a[data-target=#ajax-modal]').on 'click', ->
    e.preventDefault()
    e.stopPropagation();

@@ -29,6 +29,8 @@
 //= require_tree .
 jQuery(function($){
  
+		$('.carousel').carousel();
+
 		$('.timepicker').timepicker();
 
 		$(".print_page").click(function(){

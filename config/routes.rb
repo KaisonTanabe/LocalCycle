@@ -14,6 +14,8 @@ LOCALCYCLE::Application.routes.draw do
     get 'marketplace', on: :collection
     get 'export', on: :collection
     get 'buyer_panel', on: :collection
+    get 'buyer_panel', on: :member
+
   end
 
   resources :markets do
@@ -60,6 +62,7 @@ LOCALCYCLE::Application.routes.draw do
     member do
       post 'add_item' 
       get 'checkout'
+      post 'clear'
     end
     
   end

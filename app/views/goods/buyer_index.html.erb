@@ -15,8 +15,25 @@
 
 <div class="row">
   <div class="span9 to_replace">
-		Available Markets: <%= select :market, :id, current_user.markets.where(:network_id => @network.id).collect{|n| [n.name, n.id]}, :class=> "buyer_market_select"%>
-			
+		<div class="row-fluid">
+			<div class="span5">
+				Available Markets: <%= select :market, :id, current_user.markets.where(:network_id => @network.id).collect{|n| [n.name, n.id]}, :class=> "buyer_market_select"%>
+			</div>
+			<div class="span7">
+				<%date = Date.today%>
+				<% if @market%>
+					<% if @market.day_of_week%>
+						<%diff = (d - date.wday)%>
+						<% diff = diff + 8 if diff < 0 %>
+						<%date = date.change(:days => diff)%>
+					<%else%>
+						<%date = "TBD"%>
+					<%end%>
+					<h3> <%=@market.name%> - <%=date%></h3>
+					<h5> <%=@market.address%></h5><br/>
+				<%end%>
+			</div>
+		</div>
     
     	<div id="error-div"></div>
     	<%= render "cert_filters" %>
