@@ -70,9 +70,12 @@ $ ->
 			return
 		$.ajax $(this).attr('href'),
 			type: 'POST',
-			data: { good_id: $(self).parents('.base_container').find('input#good_id').attr("value"),qty: $(self).parents('.base_container').find('input#cart_item_quantity').val(), market_id: $('#market_id').val(), min_order:$(self).parents('.base_container').find('input#min_order').attr("value")  },
+			data: { good_id: $(self).parents('.base_container').find('input#good_id').attr("value"),qty: $(self).parents('.base_container').find('input#cart_item_quantity').val(), market_id: $('#market_id').val(), min_order:$(self).parents('.base_container').find('input#min_order').attr("value"), available: $(self).parents('.base_container').find('input#available').attr("value")  },
 			success: (data, textStatus, jqXHR) ->
-				$('.cart_body').parent().html(data)
+				if (data =="Not enough quantity available")
+					alert(data)
+				else
+					$('.cart_body').parent().html(data)
 				$(self).parents('.base_container').find('input#cart_item_quantity').val(null)
 			error: () ->
 				alert("Minimum order is " + $(self).parents('.base_container').find('input#min_order').attr("value"))

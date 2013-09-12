@@ -56,6 +56,7 @@
       </div>
     <% else %>
     <%= good.quantity %> <span class="label label-info"><%= good.selling_unit.short_name.pluralize %></span> avail.<br />
+		<%= hidden_field_tag :available, good.quantity %>
 		<br/>
 		  <%= link_to "Add to Cart", add_item_cart_path(current_user.get_cart), class: "btn btn-warning add-to-cart", :disabled => ( price_point.keys.count == 0 ) %>
 			

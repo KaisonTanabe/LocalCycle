@@ -50,6 +50,7 @@
 	
     <div class="btn-toolbar">
       <div class="btn-group">
+				<%= hidden_field_tag :available, good.quantity %>
 	
 	  <%= link_to "Add to Cart", add_item_cart_path(current_user.get_cart), class: "btn btn-warning add-to-cart", :disabled => ( price_point.keys.count == 0 ) %>
       </div>
