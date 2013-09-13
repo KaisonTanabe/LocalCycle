@@ -1,6 +1,6 @@
 class PricePoint < ActiveRecord::Base
   ############# CONFIGURATION #############
-
+  
   ## SETUP ASSOCIATIONS
 
   belongs_to :good
@@ -37,6 +37,11 @@ class PricePoint < ActiveRecord::Base
   #after_create
   #after_save
   #after_commit
+  
+  def notify_buyers
+    
+  end
+  
 
   #########################################
 

@@ -25,10 +25,6 @@
     <%= f.hidden_field :selling_unit_id, value: SellingUnit.where(short_name: "lb").first.id %>
   </th>
   <th>
-    <%= f.text_field :start_date, placeholder: "First available", data: {behavior: "datepicker"}, style: "width: 90px; margin-bottom: 5px;" %><br />
-    <%= f.text_field :end_date, placeholder: "Last available", data: {behavior: "datepicker"}, style: "width: 90px;" %>
-  </th>
-  <th>
     <%= button_tag type: 'submit', class: "btn btn-primary" do %>
     <i class="icon-white icon-plus"></i> Post Supply 
     <% end %>

@@ -112,6 +112,8 @@ class GoodsController < ApplicationController
     respond_to do |format|
       if @good.update_attributes(params[:good])
         Good.find(@good.id).update_markets if !current_user.buyer?
+          
+        
         if params[:render] == 'false'
            render :nothing=> true
            return

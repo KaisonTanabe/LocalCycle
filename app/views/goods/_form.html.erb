@@ -79,7 +79,7 @@
   </div>
  <br/>
 
-	<% if !current_user.buyer? && !current_user.producer?%>
+	<% if !current_user.buyer? %>
 
   <div class="controls-group">
     <%= f.label :start_date, "Duration:", class: "control-label" %>
