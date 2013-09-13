@@ -11,13 +11,15 @@ class Order < ActiveRecord::Base
    
    accepts_nested_attributes_for :transaction, :address
    
+   default_scope includes(:cart_items)
  
    def finalize_transaction auth
-     transaction.amount = total
-     transaction.authorization_code = auth
-     transaction.save
      
-     cart.cart_items.each do |item|
+     self.transaction.amount = total
+     self.transaction.authorization_code = auth
+     self.transaction.save
+     
+     self.cart.cart_items.each do |item|
        item.order_id = id
        item.cart_id =nil
        item.save
@@ -25,8 +27,9 @@ class Order < ActiveRecord::Base
        
      end
      cart.delete
-     status = "COMPLETE"
-     save
+     self.status = "COMPLETE"
+     self.save
+     
    end
    
    

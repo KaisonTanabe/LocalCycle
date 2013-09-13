@@ -30,6 +30,7 @@ class Ability
       can [:show], Market do |market|
          user.markets.includes? market
       end
+      can :show, User
       can :manage, User, id: user.id
       #can [:show, :modal], User, market_id: user.market_id
       

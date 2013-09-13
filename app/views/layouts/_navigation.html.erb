@@ -15,7 +15,7 @@
   <li><%= link_to raw('<i class="icon-shopping-cart"></i> Cart'), checkout_cart_path(current_user.get_cart) %></li>
   <% end %>
   
-	<% if !current_user.buyer?%>
+	<% if !current_user.buyer? && !current_user.producer?%>
   <li class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog"></i> Manage <b class="caret"></b></a>
     <ul class="dropdown-menu">

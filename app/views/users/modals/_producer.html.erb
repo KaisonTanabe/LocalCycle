@@ -1,6 +1,6 @@
 <%= image_tag user.pic.url(:medium), class: "medium pull-left" %>
 
-<p>Belongs to <strong><%= user.market.name %></strong></p>
+<p>Belongs to <strong><%= user.markets.map{|n| n.name} %></strong></p>
 
 <p class="muted">
   <span class="label label-warning"><%= ACREAGE[user.size] %></span>

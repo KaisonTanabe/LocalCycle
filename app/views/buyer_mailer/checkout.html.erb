@@ -1,0 +1,47 @@
+<%= "Hello #{@user.first_name} #{@user.last_name}"%>
+<br/>
+<br/>
+Thank you for using LocalCycle.  We’d like to let you know that we have received your order, and have notified the producer of your purchase.  Your products will be available on *Date* at *Market*.  If you’d like to make any changes to your order, please contact Kaison@localcycle.org.  
+
+<h5>Order Details</h5>
+<%= "Order # #{@order.transaction.authorization_code}"%> <br/>
+Placed on <%= @order.created_at%><br/><br/>
+
+<% CartItem.where(:order_id => @order.id).each do |item|%>
+	<%= image_tag item.good.product.best_pic_url(:thumb), class: "thumb" %>
+  <br/>
+	<%= item.good.creator.name%>
+	<%= item.good.creator.name%>
+	<%= item.price%>
+	<br/><br/>
+	
+<%end%>
+<br/>
+Item Subtotal: <%=@order.total%><br/>
+Total Before Tax:<%=@order.total%><br/>
+Order Total: <%=@order.total%><br/>
+<br/>
+<br/>
+
+
+For more information or assistance, contact Kaison@LocalCycle.org. 
+<br/>
+<br/>
+
+Thank you for using LocalCycle and supporting the local producers! Let’s get local food systems moving!
+<br/>
+<br/>
+
+Best,<br/>
+
+LocalCycle<br/>
+
+<br/>
+<br/>
+
+
+This email was sent from a notification-only address that cannot accept incoming email. Please do not reply to this message.
+
+
+
+

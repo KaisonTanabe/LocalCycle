@@ -1,0 +1,12 @@
+<%= "Hi #{@producer.name}"%>,
+<br/><br/>
+<%= "#{@user.first_name} #{@user.last_name}"%> has just purchased from you!  See below and attached for an order summary and attached for a packing list.  Also, you can click *link to Manage-Current Sales * to check out all of your pending orders and packing lists.  
+
+<br/><br/><br/>
+<% @order.cart_items.each do |item|%>
+	<%if item.good.creator == @producer%>
+		<%= "#{item.good.name} x #{item.quantity}"%><br/>
+	<%end%>
+<%end%><br/><br/>
+Happy farming!<br/>
+LocalCycle

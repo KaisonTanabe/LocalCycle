@@ -31,12 +31,6 @@
   </div>
 </div>
 
-<div class="control-group">
-  <%= f.label :text_updates, "Text Updates:", class: "control-label" %>
-  <div class="controls control-row">
-    <label class="checkbox"><%= f.check_box :text_updates %> Check this box to receive text message updates about potential production contracts.</label>
-  </div>
-</div>
 
 <div id="shipping-address">
 <div class="control-group">
@@ -73,7 +67,7 @@
 
 <div id="billing-address">
 <div class="control-group">
-  <%= f.label :billing_street_address_1, "Delivery Address: ", class: "req control-label" %>
+  <%= f.label :billing_street_address_1, "Billing Address: ", class: "req control-label" %>
   <div class="controls controls-row">
     <%= f.text_field :billing_street_address_1, placeholder: "Address 1", class: "span4" %>
   </div>

@@ -22,17 +22,17 @@ LOCALCYCLE::Application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = { host: 'localcycle.org' }
 
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    :address              => "smtp.sendgrid.net",
-    :port                 => 587,
-    :domain               => 'localcycle.org',
-    :user_name            => ENV['SENDMAIL_USERNAME'],
-    :password             => ENV['SENDMAIL_PASSWORD'],
-    :authentication       => 'plain',
-    :enable_starttls_auto => true
-  }
-  config.action_mailer.perform_deliveries = false
+#  config.action_mailer.delivery_method = :smtp
+#  config.action_mailer.smtp_settings = {
+#    :address              => "smtp.sendgrid.net",
+#    :port                 => 587,
+#    :domain               => 'localcycle.org',
+#    :user_name            => ENV['SENDMAIL_USERNAME'],
+#    :password             => ENV['SENDMAIL_PASSWORD'],
+#    :authentication       => 'plain',
+#    :enable_starttls_auto => true
+#  }
+#  config.action_mailer.perform_deliveries = false
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
@@ -82,5 +82,7 @@ LOCALCYCLE::Application.configure do
 #- JCB: 3088000000000017	
 #- Diners Club/ Carte Blanche: 38000000000006
 
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
 
 end

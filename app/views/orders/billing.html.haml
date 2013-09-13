@@ -61,6 +61,7 @@
 					=image_tag "logo-authorize.gif"
 	.row-fluid
 		.span12.price
+			= link_to "Edit Order", checkout_cart_path(current_user.get_cart),class: "btn btn-warning checkout-btn"
 			=f.submit "Submit Order", :class=>"btn btn-warning"
 		
 			

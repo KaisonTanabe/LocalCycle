@@ -10,6 +10,8 @@ class CartItem < ActiveRecord::Base
   belongs_to :cart
   belongs_to :order
   
+  default_scope includes(:good)
+  
   private 
   
   def calculate_price

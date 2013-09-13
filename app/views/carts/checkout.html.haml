@@ -83,7 +83,10 @@
 							.btn.btn-warning.disabled
 								Add Items to Cart to Checkout
 						-else
-							= f.submit "Update Cart"
-							= link_to "<div class='btn btn-warning checkout-btn'>Proceed To Checkout</div>".html_safe, edit_order_path(@cart.order)
+							.row-fluid
+								.span4
+									= f.submit "Update Cart", :class=>"btn btn-warning ", :style=>"display:inline;"
+								.span8
+									= link_to "<div class='btn btn-warning checkout-btn'>Proceed To Checkout</div>".html_safe, edit_order_path(@cart.order)
 				
 		
