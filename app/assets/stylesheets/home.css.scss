@@ -6,7 +6,6 @@
 .home-overlay{
 	position: absolute;
 	z-index: 500;
-	opacity: .5;
 }
 
 .home-overlay-text{
@@ -24,7 +23,6 @@
 .carousel{
 	height: 450px !important;
 	overflow: hidden;
-	opacity: .5;
 	img{
 		width: 100%;
 		margin-top: -50px;
