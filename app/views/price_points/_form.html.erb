@@ -16,7 +16,6 @@
 	<%- rval= rand(1..9999999999)%>
 	<%=link_to "Edit Buyers", buyer_panel_good_path(good, target: rval), :class=>"btn btn-small edit_buyers", :remote=> true, :data =>{:target => "#{rval}"} %>
 	<div class="show_buyers"></div>
-	<%= f.object.buyers%>
 	<%= f.hidden_field :buyers, :class=> "buyer_json_#{rval}"%>
 
 

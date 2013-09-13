@@ -142,15 +142,17 @@ jQuery(function($){
 	return false;
     });
     // Remove fields for new object
-    $('form a.remove-new-child').on('click', function() {
+    $(document).on("click", 'form a.remove-new-child', function() {
 	$(this).parents('.child-field').remove();
 	return false;
     });
     // Remove fields for existing object
-    $('a.remove-old-child').on('click', function() {
+    $(document).on("click", 'a.remove-old-child', function() {
 	var hidden_destroy_field = $(this).parent().next('input.destroy-field');
 	hidden_destroy_field.val(1);
 	$(this).parents('.child-field').hide();
+	$(this).parents(".good").first().find(".save_line").show()
+	
 	return false;
     });
     // Toggling fields from a select box

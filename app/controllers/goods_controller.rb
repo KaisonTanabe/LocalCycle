@@ -116,7 +116,7 @@ class GoodsController < ApplicationController
            render :nothing=> true
            return
         end
-        format.html { redirect_to goods_url, notice: 'Good was successfully updated.' }
+        format.html { redirect_to (current_user.buyer? ? wishlist_url(current_user.wishlist) : goods_url), notice: 'Good was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

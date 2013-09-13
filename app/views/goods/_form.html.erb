@@ -12,11 +12,20 @@
 
   <div class="control-group">
     <%= f.label :certifications, "Certifications:", class: "control-label" %>
-    <div class="controls-row controls">
-				<%=f.input :certification_ids, as: :check_boxes, label: "Certifications", collection: Certification.all.collect{|n| [n.name, n.id]}, multiple: true%>
-				
+    <div class="row-fluid">
+			<div class="controls-row controls">
+				<div class="span6">
+				<%Certification.all.each_with_index do |cer, i|%>
+					<%= "</div><div class=\"span6\">".html_safe if i== 15 %>
+					<%= check_box_tag "good[certification_ids][]", cer.id, @good.certifications.include?(cer)%>
+		 
+			  	<%= cer.name%><br/>
+				<%end%>
+				</div>
+			</div>
     </div>
   </div>
+	<% if !current_user.buyer?%>
 
   <div class="control-group">
     <%= f.label :product_id, "Product:", class: "control-label" %>
@@ -36,15 +45,7 @@
     <%= f.hidden_field :creator_id, value: current_user.id %>
   <% end %>
   
-  <% if current_user.admin? %>
-  <div class="control-group">
-    <%= f.label :market_id, "Market:", class: "control-label" %>
-    <div class="controls-row controls">
-      <%= f.select :market_id, options_from_collection_for_select(Market.order('name'), :id, :name), {prompt: "-- Select Market --"}, {style: "width: 180px; margin-bottom: 5px;" } %><br />
-    </div>
-  </div>
-  <% else %>
-  <% end %>
+  
 
   <div class="control-group">
     <%= f.label :quantity, "Quantity:", class: "control-label" %>
@@ -69,6 +70,7 @@
 
 		</div>
   </div><br/>
+<%end%>
 	<div class="controls-group">
     <%= f.label :description, "Description:", class: "control-label" %>
     <div class="control-row controls">
@@ -77,6 +79,8 @@
   </div>
  <br/>
 
+ <% if !current_user.buyer?%>
+
   <div class="controls-group">
     <%= f.label :start_date, "Duration:", class: "control-label" %>
     <div class="control-row controls">
@@ -84,9 +88,13 @@
       <%= f.text_field :end_date, placeholder: "Last delivery", data: {behavior: "datepicker"}, class: "span2", style: "margin-left: 30px;" %>
     </div>
   </div>
-    
+    <%end%>
   <hr style="clear: both;" />
   
-  <%= render partial: 'partials/submit', locals: {f: f, text: 'Supply' } %>
-
+	<% if current_user.buyer?%>
+  	<%= render partial: 'partials/submit', locals: {f: f, text: 'Wishlist' } %>
+	<%else%>
+  	<%= render partial: 'partials/submit', locals: {f: f, text: 'Supply' } %>
+	<%end%>
+	
 <% end %>

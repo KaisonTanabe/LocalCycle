@@ -18,7 +18,7 @@
 	<% producers = User.where(:role => "producer").all%>
 	
 	
-	<%= f.select :producer_id, (users.uniq & producers).collect {|s| [s.name, s.id]}, {prompt: "Producer"}, {class: "span2"} %>
+	<%= f.select :producer_id, (users.uniq & producers).collect {|s| [s.name, s.id]}, {prompt: "All Local Producers"}, {class: "span2"} %>
 
 
 </div>
