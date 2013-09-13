@@ -1,6 +1,7 @@
 class CartItem < ActiveRecord::Base
   before_save :calculate_price
   after_create :calculate_price
+  after_update :calculate_price
   
   attr_accessible :quantity, :sort_order, :cart_id, :good_id, :market_id, :price, :order_id
   

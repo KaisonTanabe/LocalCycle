@@ -63,6 +63,7 @@ LOCALCYCLE::Application.routes.draw do
       post 'add_item' 
       get 'checkout'
       post 'clear'
+      post 'remove_item'
     end
     
   end

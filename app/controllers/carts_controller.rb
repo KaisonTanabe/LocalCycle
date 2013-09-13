@@ -11,6 +11,16 @@ def clear
   
 end
 
+def update
+  if @cart.update_attributes(params[:cart])
+    flash[:notice] = "cart updated"
+  else
+    flash[:error] =" There was an issue updating your cart"
+  end
+  
+  render :checkout
+end
+
 def add_item
    authorize! :update, @cart
    cart_item = @cart.cart_items.where(:good_id => params[:good_id], :market_id => params[:market_id]).first
@@ -29,6 +39,12 @@ def add_item
    end
    render :partial => 'carts/show', :locals => {cart: @cart}
 
+end
+
+def remove_item
+  CartItem.delete(params[:cart_item_id])
+  render :nothing => true
+  
 end
 
 

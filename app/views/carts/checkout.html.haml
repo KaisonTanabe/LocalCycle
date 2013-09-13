@@ -1,83 +1,89 @@
-- total =0.0
+=form_for @cart do |f|
+	- total =0.0
 
-.row
-	.span12
-		%h1
-			=image_tag "/assets/icon-mrkt.png", :alt=>"Calendar Icon", :class=>'big-icon'
-			Your Order
+	.row
+		.span12
+			%h1
+				=image_tag "/assets/icon-mrkt.png", :alt=>"Calendar Icon", :class=>'big-icon'
+				Your Order
 			
-.row
-	.span2.offset6
-		Quantity
-	.span2.price
-		Price
-	.span2.price
-		Subtotal
-%hr
+	.row
+		.span2.offset6
+			Quantity
+		.span2.price
+			Price
+		.span2.price
+			Subtotal
+	%hr
 
-.row
-	.span12
-		-items = current_user.get_cart.cart_items.sort! { |a,b| a.market.name.downcase <=> b.market.name.downcase }
-		-items.collect{|ci| ci.market}.uniq.each do |market|
-			%h3
-				= market.name if market
-			%h5
-				=market.billing_street_address_1
-				=market.billing_street_address_2
-				=", #{market.billing_city} #{market.billing_state}, #{market.billing_zip}"
-				%br
-				= "Pickup #{market.start_time} - #{market.end_time}, #{market.day_of_week}"
+	.row
+		.span12
+			-items = current_user.get_cart.cart_items.sort! { |a,b| a.market.name.downcase <=> b.market.name.downcase }
+			-items.collect{|ci| ci.market}.uniq.each do |market|
+				%h3
+					= market.name if market
+				%h5
+					=market.billing_street_address_1
+					=market.billing_street_address_2
+					=", #{market.billing_city} #{market.billing_state}, #{market.billing_zip}"
+					%br
+					= "Pickup #{market.start_time} - #{market.end_time}, #{market.day_of_week}"
 				
 
-			- sub_total = 0.0
-			%br
-			-current_user.get_cart.cart_items.where(:market_id => market.id).collect{|g| g.good.creator}.uniq.each do |farm|
-				%h4
-					="#{farm.name}"
-				%h5
-					="#{farm.first_name} #{farm.last_name}"
+				- sub_total = 0.0
+				%br
+				-current_user.get_cart.cart_items.where(:market_id => market.id).collect{|g| g.good.creator}.uniq.each do |farm|
+					%h4
+						="#{farm.name}"
+					%h5
+						="#{farm.first_name} #{farm.last_name}"
 
-				.underline
-				- current_user.get_cart.cart_items.includes(:good).where(:market_id => market.id).where('goods.creator_id = ?', farm.id).each do |item|
+					.underline
+					- current_user.get_cart.cart_items.includes(:good).where(:market_id => market.id).where('goods.creator_id = ?', farm.id).each do |item|
+						=f.fields_for :cart_items, item do |g|
+							.row-fluid
+								
+								.span6
+									-url = "/carts/#{@cart.id}/remove_item" 
+									%i.icon-trash.remove_cart_item{:data=>{:url=> "#{url}", :item=>"#{item.id}"}}
+									= "#{item.good.name} (#{SellingUnit.find(item.good.selling_unit_id).name})"
+								.span2
+									= g.text_field :quantity, :style=>"width: 40px"
+								.span2.price
+									= " #{number_to_currency(item.price)}" 
+								.span2.price
+									="#{number_to_currency(item.price * item.quantity)}"
+									- sub_total = sub_total + (item.price * item.quantity)
+					%hr
 					.row-fluid
-						.span6
-							= "#{item.good.name} (#{SellingUnit.find(item.good.selling_unit_id).name})"
-						.span2
-							= item.quantity
-						.span2.price
-							= " #{number_to_currency(item.price)}" 
-						.span2.price
-							="#{number_to_currency(item.price * item.quantity)}"
-							- sub_total = sub_total + (item.price * item.quantity)
-				%hr
-				.row-fluid
-					.span12.price
-						= "#{number_to_currency(sub_total)}"
-						- total = total + sub_total
-				%br
-
-		.underline
-		.row-fluid
-			.span2.offset9
-				%h5
+						.span12.price
+							= "#{number_to_currency(sub_total)}"
+							- total = total + sub_total
 					%br
-					="Order Total:"
-			.span1.price
-				%h5
-					%br
-					= "#{number_to_currency(total)}"
-		.row-fluid
-			.span9
-				=link_to "Print Your Order", '#', :class=> "print_page"
-				%br
-				=link_to "Continue Shopping", goods_path
-			.span3.price
-				%br
-					-if (current_user.get_cart.cart_items.count == 0)
-						.btn.btn-warning.disabled
-							Add Items to Cart to Checkout
-					-else
-						= link_to "<div class='btn btn-warning checkout-btn'>Proceed To Checkout</div>".html_safe, edit_order_path(@cart.order)
-				
-				
 
+			.underline
+			.row-fluid
+				.span2.offset9
+					%h5
+						%br
+						="Order Total:"
+				.span1.price
+					%h5
+						%br
+						= "#{number_to_currency(total)}"
+
+			.row-fluid
+				.span9
+					=link_to "Print Your Order", '#', :class=> "print_page"
+					%br
+					=link_to "Continue Shopping", goods_path
+				.span3.price
+					%br
+						-if (current_user.get_cart.cart_items.count == 0)
+							.btn.btn-warning.disabled
+								Add Items to Cart to Checkout
+						-else
+							= f.submit "Update Cart"
+							= link_to "<div class='btn btn-warning checkout-btn'>Proceed To Checkout</div>".html_safe, edit_order_path(@cart.order)
+				
+		

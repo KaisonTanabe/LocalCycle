@@ -15,6 +15,7 @@
   <li><%= link_to raw('<i class="icon-shopping-cart"></i> Cart'), checkout_cart_path(current_user.get_cart) %></li>
   <% end %>
   
+	<% if !current_user.buyer?%>
   <li class="dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog"></i> Manage <b class="caret"></b></a>
     <ul class="dropdown-menu">
@@ -45,6 +46,6 @@
 -->
     </ul>
   </li>
-  
+  <%end%>
   <li><%= link_to raw('<i class="icon-remove-circle"></i> Logout'), destroy_user_session_path, method: :delete %></li>
 </ul>

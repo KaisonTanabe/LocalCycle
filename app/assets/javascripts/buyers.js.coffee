@@ -88,4 +88,16 @@ $ ->
 
 	$(document).on "click", ".clear-filters", (e)->
 		$("input[name^='filter[cert_ids]']").prop('checked', false)
+	
+	$(document).on "click", ".remove_cart_item", (e)->
+		self = this
+		if confirm "Remove item from cart?"
+			$.ajax $(this).data('url'),
+				type: 'POST',
+				data: {cart_item_id: $(self).data('item')},
+				success: (data, textStatus, jqXHR) ->
+									location.reload()
+				error: () ->
+					alert("unable to remove item from cart")	
+		
 

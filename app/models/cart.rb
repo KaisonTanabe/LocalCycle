@@ -5,6 +5,10 @@ class Cart < ActiveRecord::Base
   
   has_many :cart_items, :dependent => :destroy
   
+  attr_accessible :cart_items_attributes
+  
+  
+  accepts_nested_attributes_for :cart_items
   
   def clear_cart
     
