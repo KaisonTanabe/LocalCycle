@@ -22,9 +22,7 @@ gem 'bootstrap-timepicker-rails', :require => 'bootstrap-timepicker-rails',
 gem 'authorize-net'
 gem "nokogiri"
 
-group :develop do
-  gem "mailcatcher"
-end
+
 
 #gem 'geokit'
 #gem 'jquery-slimscroll-rails'
