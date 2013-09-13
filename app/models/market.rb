@@ -37,6 +37,29 @@ class Market < ActiveRecord::Base
   CYCLES = %w[daily weekly monthly yearly one-time]
 
 
+  def next_market
+    #need to check cycles in the future
+    date = DateTime.current
+		
+    if start_time
+      date = date.change({:hour => self.start_time.strftime('%H').to_i, :min => self.start_time.strftime('%M').to_i, :sec => 0 })
+      
+  			if self.day_of_week
+  				diff = (self.day_of_week - date.wday)
+  			  diff = diff + 8 if diff < 0 
+  				date = date.change(:days => diff)
+  	    else
+  	        #hack until scheme is figured out to calculated market time that isnt weekly
+  	        #date = self.start_time
+  	        date = nil
+  	    end
+    else
+      date = nil
+    end
+	    date
+  end
+  
+  
   ############### CALLBACKS ###############
 
   #before_validation

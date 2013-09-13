@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130912162019) do
+ActiveRecord::Schema.define(:version => 20130913154747) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address_1"
@@ -195,6 +195,7 @@ ActiveRecord::Schema.define(:version => 20130912162019) do
     t.integer  "wishlist_id"
     t.string   "cycle"
     t.text     "description"
+    t.integer  "order_cutoff"
   end
 
   add_index "goods", ["buyer_id"], :name => "index_goods_on_buyer_id"

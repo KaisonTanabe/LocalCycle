@@ -81,6 +81,14 @@
 
 	<% if !current_user.buyer? %>
 
+	
+  <div class="controls-group">
+    <%= f.label :order_cutoff, "Order Cutoff:", class: "control-label" %>
+    <div class="control-row controls">
+			<%=f.number_field :order_cutoff%> Hours
+		</div>
+	</div>
+	<br/><br/>
   <div class="controls-group">
     <%= f.label :start_date, "Duration:", class: "control-label" %>
     <div class="control-row controls">
