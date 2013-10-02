@@ -21,11 +21,7 @@ gem 'bootstrap-timepicker-rails', :require => 'bootstrap-timepicker-rails',
                               :git => 'git://github.com/tispratik/bootstrap-timepicker-rails.git'
 gem 'authorize-net'
 gem "nokogiri"
-gem 'sqlite3'
 
-group :develop do
-  gem "mailcatcher"
-end
 
 #gem 'geokit'
 #gem 'jquery-slimscroll-rails'
