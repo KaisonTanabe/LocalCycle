@@ -1,4 +1,4 @@
-LocalCycle
+LOCALCYCLE
 ==========
 
-Connecting local producers with wholesale buyers
+CONNECTING LOCAL PRODUCERS WITH WHOLESALE BUYERS
