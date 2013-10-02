@@ -215,5 +215,6 @@ DEPENDENCIES
   refraction
   sass-rails (~> 3.2.3)
   select2-rails (= 3.4.2)
+  sqlite3
   uglifier (>= 1.0.3)
   wicked_pdf
