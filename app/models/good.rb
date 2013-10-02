@@ -16,9 +16,11 @@ class Good < ActiveRecord::Base
 
   has_and_belongs_to_many :markets
 
+  has_attached_file :pic, styles: IMAGE_STYLES, default_url: DEFAULT_PAPERCLIP_IMAGE
+
   ## ATTRIBUTE PROTECTION  
   
-  attr_accessible :product_id, :quantity, :start_date, :end_date, :creator_id, :market_id, :price_points_attributes, :available, :selling_unit_id, :certification_ids, :wishlist_id, :producer_id, :cycle, :description, :order_cutoff
+  attr_accessible :product_id, :quantity, :start_date, :end_date, :creator_id, :market_id, :price_points_attributes, :available, :selling_unit_id, :certification_ids, :wishlist_id, :producer_id, :cycle, :description, :order_cutoff, :pic
 
 
   ## ATTRIBUTE VALIDATION
@@ -163,6 +165,9 @@ class Good < ActiveRecord::Base
     return ids.include(c_id)
   end
   
+  def best_pic_url(sym)
+    (pic?) ? pic.url(sym) : product.best_pic_url(sym)
+  end
 
   ############ PRIVATE METHODS ############
   private

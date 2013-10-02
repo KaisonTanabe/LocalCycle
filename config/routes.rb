@@ -50,6 +50,8 @@ LOCALCYCLE::Application.routes.draw do
     get 'export', on: :collection
     member do 
       post 'activate'
+      post 'approve_network'
+      post 'remove_network'
       
     end
   end

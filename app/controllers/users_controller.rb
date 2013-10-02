@@ -120,6 +120,20 @@ class UsersController < ApplicationController
     render :nothing => true
   end
 
+  def approve_network
+    network_id = params[:network_id]
+    @user.user_networks.where(:network_id => network_id).first.update_attribute(:approved, true) 
+    render :nothing => true
+    
+  end
+  
+  def remove_network
+    network_id = params[:network_id]
+    UserNetwork.delete(@user.user_networks.where(:network_id => network_id).first.id)
+    render :nothing => true
+
+  end
+  
 
 
   private

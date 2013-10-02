@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130913154747) do
+ActiveRecord::Schema.define(:version => 20131002212124) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address_1"
@@ -181,21 +181,25 @@ ActiveRecord::Schema.define(:version => 20130913154747) do
   end
 
   create_table "goods", :force => true do |t|
-    t.integer  "creator_id",                        :null => false
-    t.integer  "buyer_id",        :default => 0,    :null => false
-    t.integer  "producer_id",     :default => 0,    :null => false
-    t.integer  "product_id",                        :null => false
-    t.integer  "selling_unit_id",                   :null => false
+    t.integer  "creator_id",                         :null => false
+    t.integer  "buyer_id",         :default => 0,    :null => false
+    t.integer  "producer_id",      :default => 0,    :null => false
+    t.integer  "product_id",                         :null => false
+    t.integer  "selling_unit_id",                    :null => false
     t.integer  "quantity"
     t.date     "start_date"
     t.date     "end_date"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.boolean  "available",       :default => true, :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.boolean  "available",        :default => true, :null => false
     t.integer  "wishlist_id"
     t.string   "cycle"
     t.text     "description"
     t.integer  "order_cutoff"
+    t.string   "pic_file_name"
+    t.string   "pic_content_type"
+    t.integer  "pic_file_size"
+    t.datetime "pic_updated_at"
   end
 
   add_index "goods", ["buyer_id"], :name => "index_goods_on_buyer_id"

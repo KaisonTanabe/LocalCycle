@@ -22,7 +22,9 @@ gem 'bootstrap-timepicker-rails', :require => 'bootstrap-timepicker-rails',
 gem 'authorize-net'
 gem "nokogiri"
 
-
+group :develop do
+  gem "mailcatcher"
+end
 
 #gem 'geokit'
 #gem 'jquery-slimscroll-rails'
@@ -47,6 +49,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

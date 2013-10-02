@@ -19,8 +19,11 @@
   </th>
   <% if current_user.admin? %>
   <th>
+		<%=f.select :network_ids, Network.all.collect{|c| [c.name, c.id]}, {}, { :multiple => true, :class=>"multiselect"}%>
   </th>
-  <th></th>
+  <th>
+  
+  </th>
   <% end %>  
   <th>
     <%= button_tag type: 'submit', class: "btn btn-primary" do %>

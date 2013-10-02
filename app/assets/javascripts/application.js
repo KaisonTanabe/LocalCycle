@@ -15,6 +15,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require jquery.ui.all
 //= require jquery_ujs
 //= require bootstrap/bootstrap
 //= require modernizr-2.0.6.min
@@ -27,8 +28,9 @@
 //= require ajax-available
 //= require bootstrap-timepicker
 //= require_tree .
+
 jQuery(function($){
- 
+ 		$('.multiselect').multiselect(); 
 		$('.carousel').carousel();
 
 		$('.timepicker').timepicker();
@@ -190,7 +192,7 @@ jQuery(function($){
 	});
 
 	$(window).bind("popstate", function() {
-	    $.getScript(location.href);
+	    //$.getScript(location.href);
 	});
     } else {
 	$("#agreementAdminTable select, #agreementAdminTable input:checkbox").on("change", function() {

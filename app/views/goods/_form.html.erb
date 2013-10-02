@@ -80,6 +80,23 @@
  <br/>
 
 	<% if !current_user.buyer? %>
+  
+	<div class="control-group">
+    <label class="control-label">Thumbnail:</label>
+    <% if !f.object.new_record? %>
+      <div class="controls controls-row child-field" style="padding: 5px;" >
+				<% if !f.object.pic.url.match(/missing.png/) %>
+					<%= image_tag f.object.pic.url(:medium) %>      	
+				<%else%>
+        	<%= image_tag f.object.product.best_pic_url(:medium) %>
+				<%end%>
+      </div>
+    <% end %>
+    <div class="controls control-row">
+      <%= f.file_field :pic, class: "span4" %>
+      <span class="help-block">Upload an pic to use instead of the default. 2MB Limit.</span>
+    </div>
+  </div>
 
 	
   <div class="controls-group">
