@@ -24,7 +24,8 @@ class Ability
 
     if user and (user.buyer? or user.producer?)
       can :manage, Good, creator_id: user.id
-      can [:index, :show], Good do |good|
+      can :show, Good
+      can :index, Good do |good|
          (user.markets & good.markets).count > 0
       end
       can [:show], Market do |market|

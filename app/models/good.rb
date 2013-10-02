@@ -32,7 +32,7 @@ class Good < ActiveRecord::Base
 
   validate :must_have_price_point
 
-  validates :end_date, presence: true
+  #validates :end_date, presence: true
   #########################################
 
 
