@@ -55,7 +55,7 @@ $ ->
 		
 		if(typeof $('#cat_id').attr('value') != 'undefined') 
 			cat_id = "&cat_id="+$('#cat_id').attr('value')
-		$.ajax '/goods'+view+ '?market_id='+ $(self).val()+'network_id='+ $(self).val()+cat_id+filters(),
+		$.ajax '/goods'+view+ '?market_id='+ $(self).val()+'&network_id='+ 	$("select[name='network[id]']").val()+cat_id+filters(),
 			type: 'GET',
 			success: (data, textStatus, jqXHR) ->
 				$('.to_replace').html($(data).find('.to_replace').html())

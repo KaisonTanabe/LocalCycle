@@ -1,6 +1,11 @@
 <%= "Dear #{@user.first_name} #{@user.last_name}"%><br/>
+<br/>
+<%= @producer%> has listed a product just for you!  You can purchase the <%= @price_point.good.product.name%> for pickup at 
 
-<%=@price_point.producer.name %> has listed a product just for you!  You can purchase the <%= @price_point.good.product.name%> for pickup at <%= @market.name%> on **Date** at **Time**. Check it out **here** (link).  <br/><br/>
+<%date= @market.next_market%>
+<% date = "TBD" if date == nil%>
+
+<%=@market.name%> - <%= date == "TBD" ? "TDB" : date.to_formatted_s(:long)%>. Check it out at www.localcycle.org   <br/><br/>
 
 Happy sourcing!<br/>
 LocalCycle<br/>

@@ -33,7 +33,13 @@
     <%= f.text_area :description, class: "span4", rows: "4" %>
   </div>
 </div>
+<div class="control-group">
 
+  <%= f.label :order_cutoff, "Default Order Cutoff:", class: "control-label" %>
+  <div class="control-row controls">
+		<%=f.number_field :default_cutoff%> Hours
+	</div>
+</div>
 <legend>Contact Information</legend>
 
 <div class="control-group">
@@ -69,6 +75,7 @@
     <%= f.text_field :state, placeholder: "State", class: "span1" %>
     <%= f.text_field :zip, placeholder: "Zip", class: "span1" %>
   </div>
+
 </div>
 
 <legend>Promotional Information</legend>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131002212124) do
+ActiveRecord::Schema.define(:version => 20131003190317) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address_1"
@@ -433,6 +433,7 @@ ActiveRecord::Schema.define(:version => 20131002212124) do
     t.string   "billing_zip"
     t.string   "institution"
     t.boolean  "activated"
+    t.integer  "default_cutoff"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

@@ -15,8 +15,10 @@ class BuyerMailer < ActionMailer::Base
       @user = user
       @price_point = price_point
       @market = market
+      @producer = User.find(@price_point.good.creator_id).name
       mail(to: @user.email, subject: 'New Price Available to You!')
-    end
+  end
+
 end
 
 
