@@ -11,6 +11,15 @@ $ ->
 		$('.modal-body').html(data)
 		$('.modal-body').find('.network_selector').attr('value', $(this).siblings(".network_value").attr('value'));
 		$('#MyModal').modal('show')
+		$('.multiselect').multiselect({
+			noneSelectedText: "Select Buyers"
+		}) 
+		$("input[name='market_flag']").each (i, e)->
+			if $(this).attr("checked")
+				$(this).parents(".well").first().find(".ui-multiselect").hide()
+			else
+				$(this).parents(".well").first().find(".whole_network").hide()
+				
 	.bind 'ajax:failure', (xhr, status, error) ->
 		alert("failure!")
 		

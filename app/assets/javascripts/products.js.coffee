@@ -11,8 +11,8 @@ $ ->
 	
 	
 	$(document).on 'click', 'input#market_flag', (e)->
-		$(this).parents(".well").first().find("input#buyer_flag").toggle()
-		$(this).parents(".well").first().find('.button_bar').toggle()
+		$(this).parents(".well").first().find(".ui-multiselect").toggle()
+		$(this).parents(".well").first().find('.whole_network').toggle()
 		
 	$(document).on 'click', '.select_all', (e)->	
 		$(this).parents(".well").find('input#buyer_flag').prop('checked', true);
@@ -25,20 +25,26 @@ $ ->
 		e.preventDefault()
 		markets = "{"
 		$("span#modal_form_data").last().find("input[name='market_flag']").each (i, f) ->
+			console.log("market: "+$(f).attr('value'))
 			buyers = new Array()
-			$(f).parents(".well").find("input[id='buyer_flag']:checked").each (ii, b)->
-				  buyers.push($(b).attr("value"))
-			if( buyers.length >0)
-				if markets != "{"
-					markets = markets + ","
-				markets = markets + "\""+$(f).attr("value") + "\":"+ JSON.stringify(buyers)
+			if(!$(f).is(":checked"))
+				console.log("market not checked")
+				ary = $(f).parents(".well").first().find("select#buyer_flag").val()
+				$.each ary, ( ii, b ) ->
+					buyers.push(b)
+				if( buyers.length >0)
+					if markets != "{"
+						markets = markets + ","
+					markets = markets + "\""+$(f).attr("value") + "\":"+ JSON.stringify(buyers)
 			else if $(f).is(":checked")
+				console.log("market checked")
 				if markets != "{"
 					markets = markets + ","
 				markets = markets + "\""+ $(f).attr("value") + "\":[]"
 		markets = markets + "}"
 		target = $(this).attr("data-target")
 		$(".buyer_json_"+target).attr("value",markets)
+		console.log($(".buyer_json_"+target).val())
 		$('#MyModal').modal('hide')
 		$(".buyer_json_"+target).parents(".good").first().find(".save_line").show()
 		

@@ -31,6 +31,7 @@
 
 jQuery(function($){
  		$('.multiselect').multiselect(); 
+
 		$('.carousel').carousel();
 
 		$('.timepicker').timepicker();
