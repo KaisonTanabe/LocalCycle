@@ -6,15 +6,17 @@
     </div>
     <h1><img class="big-icon" src="/assets/icon-mrkt.png" alt="Marketplace Icon" />  <%= params['cat_id'].blank? ? "Produce For Sale" : Category.where(id: params["cat_id"].to_i).first.name %> <%= raw("<small>(" + pluralize(@goods.count, 'result') + ")</small>") %></h1>
 		<%= hidden_field_tag :product_view, 'marketplace'%>
-		Showing supply for: <%= select :network, :id, current_user.networks.collect{|n| [n.name, n.id]}, :class=> "buyer_network_select"%>
-
+		<div <%= " style=visibility:hidden;height:0px !important;" if current_user.networks.count == 1  %> >
+		
+			Showing supply for: <%= select :network, :id, current_user.networks.collect{|n| [n.name, n.id]}, :class=> "buyer_network_select"%>
+		</div>
   </div>
 </div>
 
 
 <div class="row-fluid">
   <div class="span9 to_replace">
-		Available Markets: <%= select :market, :id, current_user.markets.where(:network_id => @network.id).collect{|n| [n.name, n.id]}, :class=> "buyer_market_select"%>
+		Available Distribution Points: <%= select :market, :id, current_user.markets.where(:network_id => @network.id).collect{|n| [n.name, n.id]}, :class=> "buyer_market_select"%>
   	<%= render "cert_filters" %>
 
     <%= render "partials/filters" %>

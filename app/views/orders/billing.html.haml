@@ -18,27 +18,27 @@
 					.span2
 						Address 1:
 					.span9
-						=a.text_field :address_1
+						=a.text_field :address_1, :value=> current_user.street_address_1
 				.row-fluid
 					.span2
 						Address 2:
 					.span9
-						=a.text_field :address_2
+						=a.text_field :address_2, :value=> current_user.street_address_2
 				.row-fluid	
 					.span2
 						City:
 					.span2
-						=a.text_field :city
+						=a.text_field :city, :value=> current_user.city
 				.row-fluid	
 					.span2
 						State:
 					.span2
-						=a.text_field :state
+						=a.text_field :state, :value=> current_user.state
 				.row-fluid
 					.span2
 						Postal/Zip Code:
 					.span2
-						=a.text_field :zip
+						=a.text_field :zip, :value=> current_user.zip
 					
 	= f.fields_for :transaction do |t|
 		.row-fluid.well

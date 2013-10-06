@@ -11,6 +11,7 @@
 </td>
   <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
     <%= image_tag good.best_pic_url(:thumb), class: "thumb" %>
+
     <%= link_to good.product.name, good, data: {target: "#ajax-modal", toggle: "modal", placement: "top", data: "true", remote: "true"} %>
   </td>
 
@@ -33,7 +34,7 @@
 		</div>
   </td>
 
-  <td>
+  <td colspan="2">
     <%= f.fields_for :price_points do |fpp| %>
       <%= render partial: 'price_points/buyer_form', locals: { f: fpp } %>
       <%= new_child_fields_template(f, :price_points, {partial: "price_points/buyer_form"})%>

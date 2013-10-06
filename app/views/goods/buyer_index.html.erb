@@ -8,7 +8,9 @@
       <%= link_to raw('<span class="icon-question-sign"></span>'), "#", class: "btn" %>
     </div>
     <h1><a href="<%= goods_path%>"><img class="big-icon" src="/assets/icon-agreements-calendar.png" alt="Calendar Icon" /> Goods</a></h1>
-		Showing supply for: <%= select :network, :id, current_user.networks.collect{|n| [n.name, n.id]}, :class=> "buyer_network_select"%>
+		<div <%= " style=visibility:hidden;height:0px !important;" if current_user.networks.count == 1  %> >
+			Showing supply for: <%= select :network, :id, current_user.networks.collect{|n| [n.name, n.id]}, :class=> "buyer_network_select"%>
+		</div>
   </div>
 </div>
 
@@ -17,7 +19,7 @@
   <div class="span9 to_replace">
 		<div class="row-fluid">
 			<div class="span5">
-				Available Markets: <%= select :market, :id, current_user.markets.where(:network_id => @network.id).collect{|n| [n.name, n.id]}, :class=> "buyer_market_select"%>
+				Available Distribution Points: <%= select :market, :id, current_user.markets.where(:network_id => @network.id).collect{|n| [n.name, n.id]}, :class=> "buyer_market_select"%>
 			</div>
 			<div class="span7">
 				 <%if @market%>

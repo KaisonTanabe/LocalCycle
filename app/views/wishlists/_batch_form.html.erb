@@ -25,7 +25,7 @@
       <%= f.select :selling_unit_id, SellingUnit.all.collect{|s| [s.short_name, s.id]},{ index: 1 }, {class: "span1", style: "margin-left: 5px;"} %>
     </div>
   </th>
-  <th style="width: 450px !important;">
+  <th style="width: 450px !important;" colspan="2">
     <%= f.fields_for :price_points do |fpp| %>
       <%= render partial: 'price_points/buyer_batch_form', locals: { f: fpp } %>
       <%= new_child_fields_template(f, :price_points, {partial: "price_points/buyer_batch_form"})%>
