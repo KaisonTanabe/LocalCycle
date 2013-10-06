@@ -4,6 +4,8 @@ class ProducerMailer < ActionMailer::Base
 
   default from: reply_to
   default reply_to: reply_to
+  default cc: 'kaisontanabe@gmail.com'
+  
   
   def new_order(user, producer, order)
       @user = user

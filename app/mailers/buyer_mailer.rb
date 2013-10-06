@@ -4,6 +4,7 @@ class BuyerMailer < ActionMailer::Base
 
   default from: reply_to
   default reply_to: reply_to
+  default cc: 'kaisontanabe@gmail.com'
   
   def checkout(user, order)
       @user = user
