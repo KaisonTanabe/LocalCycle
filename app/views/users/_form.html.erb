@@ -48,7 +48,7 @@
     <%= render partial: 'users/market_manager_fields', locals: {f: f} %>
 	<% end %>
   <% if current_user.admin? %>
-	<legend> Networks/Markets</legend>
+	<legend> Networks/Distribution Points</legend>
 	  <div class="control-group">
 	 		<div class="controls controls-row">
 			<%= hidden_field_tag "user[market_ids][]" %>

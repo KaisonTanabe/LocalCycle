@@ -38,7 +38,7 @@
   <div class="control-group">
     <%= f.label :market_id, "Market:", class: "control-label" %>
     <div class="controls-row controls">
-      <%= f.select :market_id, options_from_collection_for_select(Market.order('name'), :id, :name), {prompt: "-- Select Market --"}, {style: "width: 180px; margin-bottom: 5px;" } %><br />
+      <%= f.select :market_id, options_from_collection_for_select(Market.order('name'), :id, :name), {prompt: "-- Select Distribution Point --"}, {style: "width: 180px; margin-bottom: 5px;" } %><br />
     </div>
   </div>
   <% else %>

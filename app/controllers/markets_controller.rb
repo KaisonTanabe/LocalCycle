@@ -98,7 +98,6 @@ class MarketsController < ApplicationController
 
     filename = "markets_#{Date.today.strftime('%d%b%y')}"
     csv_data = CSV.generate do |csv|
-      csv << Market.csv_header
       @markets.each do |s|
         csv << s.to_csv
       end

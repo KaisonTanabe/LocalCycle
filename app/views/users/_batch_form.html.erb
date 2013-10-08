@@ -1,7 +1,11 @@
 <tr>
   <th>
-    <%= f.select :role, REGISTERABLE_ROLES.map{|r| [r.second, r.first]}, {prompt: "Role"}, {style: "width: 70px;" } %>
-    <%= f.hidden_field :complete, value: true %>
+		<% if current_user.market_manager?%>
+			<%= f.select :role, MARKET_ROLES.map{|r| [r.second, r.first]}, {prompt: "Role"}, {style: "width: 70px;" } %>
+    <%else%>
+			<%= f.select :role, REGISTERABLE_ROLES.map{|r| [r.second, r.first]}, {prompt: "Role"}, {style: "width: 70px;" } %>
+    <%end%>
+		<%= f.hidden_field :complete, value: true %>
   </th>
   <th>
     <%= f.text_field :first_name, placeholder: "First Name", style: "width: 81px;" %>

@@ -90,6 +90,10 @@ class Market < ActiveRecord::Base
 
   ############ PUBLIC METHODS #############
 
+  def to_csv
+    [name, brief, description, phone, billing_street_address_1, billing_street_address_2, billing_city, billing_state, billing_country, billing_zip]
+  end
+
   def address
     billing_street_address_1 + " " + billing_street_address_2 + " " + billing_city + ", " + billing_state + ", " + billing_zip
   end
