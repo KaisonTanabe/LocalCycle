@@ -2,8 +2,8 @@
   <%= image_tag good.best_pic_url(:medium), class: "medium" %>
   <%= hidden_field_tag :good_id, good.id%>
 	
-  <h4><%= good.name %></h4>
-  <h5><%= good.creator.name %></h5>
+  <h4><%= link_to good.product.name, good, data: {target: "#ajax-modal", toggle: "modal", placement: "top", data: "true", remote: "true"} %></h4>
+  <h5><a href="/users/<%= good.creator.id%>" data-remote="true"><%= good.creator.name %></a></h5>
   <div class="certs underline">
 		<div class="row-fluid">
 			<div class="span9">

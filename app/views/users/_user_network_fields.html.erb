@@ -9,7 +9,7 @@
 					</div>
 				<%else%>
 					<div class= "span3"> 
-						<%= f.select :network_id, (Network.all - @user.networks).collect{|n| [n.name,  n.id]}, :prompt=> "Select Network"%><br/><br/>
+						<%= f.select :network_id, (Network.all - @user.networks).collect{|n| [n.name,  n.id]}, {:prompt=> "Select Network"},{:class=>"network_change"}%><br/><br/>
 						<%= f.hidden_field :_destroy %>
 						
 						<%= link_to "Remove", "#", :class=>"btn btn-danger remove_field" %>

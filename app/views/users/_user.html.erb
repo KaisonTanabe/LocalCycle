@@ -11,8 +11,8 @@
 
   <% if current_user.admin? %>
   	<td>
-			<% user.networks.each do |n|%>
-				<%= "#{n.name}"%><br/s>
+			<% user.user_networks.where(:approved=>true).each do |n|%>
+				<%= "#{n.network.name}"%><br/s>
 			<%end%>
 	  </td>
   <td class='login <%= (params[:sort] == "current_sign_in_at") ? "sorted" : "" %>'>

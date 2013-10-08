@@ -41,32 +41,32 @@ class PricePoint < ActiveRecord::Base
   
   def notify_buyers
     puts "NOTIFYING BUYERS!"
-    
-    hash = JSON.parse self.buyers
-    hash.each do |market|
-        mark = Market.find(market[0].to_i)
-        puts market.to_yaml
-        market[1].each do |buyer|
+    if(self.buyers != '' && self.buyers != nil)
+      hash = JSON.parse self.buyers
+      hash.each do |market|
+          mark = Market.find(market[0].to_i)
+          puts market.to_yaml
+          market[1].each do |buyer|
           
-            if(buyer.kind_of?(Array))
-              buyer.each do |b|
-                u_buyer = User.find(b.to_i)
-                BuyerMailer.new_pricepoint(u_buyer, self, mark).deliver
+              if(buyer.kind_of?(Array))
+                buyer.each do |b|
+                  u_buyer = User.find(b.to_i)
+                  BuyerMailer.new_pricepoint(u_buyer, self, mark).deliver
 
-              end
+                end
             
-            else
-                u_buyer = User.find(buyer.to_i)
-                BuyerMailer.new_pricepoint(u_buyer, self, mark).deliver
+              else
+                  u_buyer = User.find(buyer.to_i)
+                  BuyerMailer.new_pricepoint(u_buyer, self, mark).deliver
 
               
-            end
+              end
             
             
             
-        end
+          end
+      end
     end
-    
 
 	  
 

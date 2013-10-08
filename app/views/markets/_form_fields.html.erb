@@ -36,6 +36,50 @@
   </div>
 </div>
 
+<div class="control-group">
+  <%= f.label :pic, "Market Pic:", class: "control-label" %>
+  <div class="controls controls-row">
+    <%= (image_tag f.object.pic.url(:medium)) if f.object.pic? %>
+    <%= f.file_field :pic, class: "span4" %>
+    <span class="help-block">Upload an image to represent this market. 4MB Limit.</span>
+  </div>
+</div>
+
+<div class="control-group">
+	<%= f.label :day_of_week, "Day of Week:", class: "control-label" %>
+	
+  <div class="controls controls-row">
+
+	  <%= f.select :day_of_week, Date::DAYNAMES.collect{|day| [day, Date::DAYNAMES.index(day)]} ,{}, {:style=> "width: 100px !important"}%>
+	</div>
+</div>
+
+<div class="control-group">
+	<%= f.label :cycle, "Cycle:", class: "control-label" %>
+  
+  <div class="controls controls-row">
+
+  <%= f.select :cycle, Market::CYCLES.collect{|c| [c, Market::CYCLES.index(c)]},{}, {:style=> "width: 100px !important"}%>
+	</div>
+</div>
+
+<div class="control-group">
+	<%= f.label :start_time, "Start/End Time:", class: "control-label" %>
+	
+  <div class="controls controls-row">
+
+<div class="input-append bootstrap-timepicker">
+  <%=f.text_field :start_time, :class=>"timepicker input-small"%>
+  <span class="add-on"><i class="icon-time"></i></span>
+</div>		
+-
+<div class="input-append bootstrap-timepicker">
+  <%=f.text_field :end_time, :class=>"timepicker input-small"%>
+  <span class="add-on"><i class="icon-time"></i></span>
+</div>	  
+	</div>
+</div>
+
 <legend>Contact Information</legend>
 
 <div class="control-group">

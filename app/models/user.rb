@@ -69,6 +69,8 @@ class User < ActiveRecord::Base
 
   validates_attachment :pic,
     :size => { :in => 0..4.megabytes }
+    
+    
 
   #########################################
 
