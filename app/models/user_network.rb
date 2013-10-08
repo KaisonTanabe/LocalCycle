@@ -4,7 +4,7 @@ class UserNetwork < ActiveRecord::Base
    belongs_to :network
    
    validates :user_id, :network_id,  presence: true
-   validates :network_id,:uniqueness => { scope: :user_id }
+   validates_uniqueness_of :network_id, scope: :user_id 
    
    def destroy
     self.network.markets.each do |market|

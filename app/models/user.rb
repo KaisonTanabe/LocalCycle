@@ -216,6 +216,7 @@ class User < ActiveRecord::Base
     self.name = self.name.strip if self.name
   end
 
+
 =begin
   def set_lat_long
     if complete
