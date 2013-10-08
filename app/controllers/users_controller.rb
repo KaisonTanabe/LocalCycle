@@ -48,8 +48,16 @@ class UsersController < ApplicationController
     @user.skip_confirmation!
     @user.password = "TempPass42"
     @user.password_confirmation = "TempPass42"
+
+    
     respond_to do |format|
       if @user.save
+        if current_user.admin?
+          @user.user_networks.each do |n|
+            n.approved = true
+            n.save
+          end
+        end
         format.html { redirect_to edit_user_path(@user), notice: 'User successfully created.' }
         format.json { render json: @user, status: :created, location: @user }
         format.js { render :create }

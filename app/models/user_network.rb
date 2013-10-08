@@ -13,4 +13,6 @@ class UserNetwork < ActiveRecord::Base
     super
    end
    
+
+   
 end

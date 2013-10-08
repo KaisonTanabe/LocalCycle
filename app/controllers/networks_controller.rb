@@ -59,7 +59,7 @@ class NetworksController < ApplicationController
   def update
 
     respond_to do |format|
-      if @network.update_attributes(params[:market])
+      if @network.update_attributes(params[:network])
         format.html { redirect_to networks_path, notice: 'Netowrk was successfully updated.' }
         format.json { head :no_content }
       else

@@ -59,7 +59,6 @@ class User < ActiveRecord::Base
 
   validates  :name, :phone,
     :street_address_1, :city, :state, :zip, :country,
-    :growing_methods, :size, 
     presence: true,
     :if => lambda { self.role == "producer" and self.complete == true }
 
