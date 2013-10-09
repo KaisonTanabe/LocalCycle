@@ -27,6 +27,9 @@
       <% if @product_goods.any? %>
         <% @product_goods.each do |p, goods| %>
           <% goods.each do |good| %>
+					<% gh =  good.order_cutoff ? good.order_cutoff  : 0%>
+					<% next if @market && @market.start_time  && DateTime.current > @market.start_time - gh.to_i.hours%>
+
             <%= render partial: "marketplace_good", locals: {p: p, good: good} %>
 	  <% end %>
         <% end %>
