@@ -17,7 +17,7 @@ class GoodsController < ApplicationController
     if current_user.buyer? 
         @network = Network.find( params.has_key?(:network_id) ? params[:network_id] : current_user.networks.first.id )
         @market = params.has_key?(:market_id) ? Market.find(params[:market_id]) : current_user.markets.where(:network_id => @network.id).first
-        @goods = @goods.where("goods.start_date <= ?", Date.current).where("goods.end_date is null or goods.end_date >= ?", Date.current)
+        @goods = @goods.where("goods.start_date <= ?", Date.current).where("goods.end_date is null or goods.end_date >= ?", Date.current).where(:available => true)
     end
     @goods = filter_and_sort(@goods, params)
     @goods = @goods.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
@@ -47,7 +47,7 @@ class GoodsController < ApplicationController
     if current_user.buyer? 
         @network = Network.find( params.has_key?(:network_id) ? params[:network_id] : current_user.networks.first.id )
         @market = params.has_key?(:market_id) ? Market.find(params[:market_id]) : current_user.markets.where(:network_id => @network.id).first
-        @goods = @goods.where("goods.start_date <= ?", Date.current).where("goods.end_date is null or goods.end_date >= ?", Date.current)
+        @goods = @goods.where("goods.start_date <= ?", Date.current).where("goods.end_date is null or goods.end_date >= ?", Date.current).where(:available => true)
         
     end
     
