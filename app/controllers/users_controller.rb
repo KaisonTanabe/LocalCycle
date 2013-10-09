@@ -44,7 +44,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-
+    
     @user.skip_confirmation!
     @user.password = "TempPass42"
     @user.password_confirmation = "TempPass42"
@@ -62,7 +62,7 @@ class UsersController < ApplicationController
         format.json { render json: @user, status: :created, location: @user }
         format.js { render :create }
       else
-        format.html { render action: "new" }
+        format.html { redirect_to :back, notice: 'Unable to create User.' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
         format.js { render :create_error }
       end
