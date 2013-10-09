@@ -54,6 +54,8 @@ class GoodsController < ApplicationController
     @goods = filter_and_sort(@goods, params)
     @goods = @goods.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
     
+    @goods = @goods.group_by(&:product)
+    
     respond_to do |format|
       format.html { render (current_user.role == 'buyer' ? 'buyer_index' : 'index')}
          
