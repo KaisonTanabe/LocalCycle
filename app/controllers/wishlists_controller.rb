@@ -12,7 +12,7 @@ end
 
 
 def index 
-  @price_points = PricePoint.where(:producer_id => current_user.id)
+  @price_points = PricePoint.where(:producer_id => current_user.id) + PricePoint.where(:producer_id => -1)
   
   @goods = @price_points.collect{|p| p.good}
   
