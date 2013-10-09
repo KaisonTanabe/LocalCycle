@@ -47,7 +47,7 @@
 	        <% if @goods.any? %>
 	          <% @goods.each do |good| %>
 								<% gh =  good.order_cutoff ? good.order_cutoff  : 0%>
-								<% next if @market && @market.start_time  && DateTime.current > @market.start_time - gh.to_i.hours%>
+								<% next if @market && @market.start_time  && DateTime.current > @market.next_market - gh.to_i.hours%>
 		    				<%= render partial: "buyer_good", locals: {good: good, network_id: @network.id} %>
 	          <% end %>
 
