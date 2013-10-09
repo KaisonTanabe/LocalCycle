@@ -25,19 +25,24 @@ def update
     if response.success?
       @order.finalize_transaction(response.authorization_code)
       
-      @order.cart_items.collect{|ci| ci.good.creator}.uniq.each do |producer|
-     	  ProducerMailer.new_order(current_user, producer, @order).deliver
+      @order.cart_items.includes(:good).collect{|ci| ci.good.creator_id}.uniq.each do |producer|
+     	  ProducerMailer.new_order(current_user, User.find(producer), @order.id).deliver
      	end
      	
      	@order = Order.find(@order.id)
-      BuyerMailer.checkout(current_user, @order).deliver
+     	
+     	@order.cart_items.map{|ci| ci.market_id}.uniq.each do |market|
+     	  BuyerMailer.checkout(current_user, @order.id, Market.find(market)).deliver
+        
+   	  end
+   	  
       
       puts "PROVIDER: #{@order.cart_items.to_yaml}"
      
 
      	
 		
-      render :success
+      render :success 
     else
       flash.now[:error] = "There was an error while processing your payment. #{response.response_reason_text}"
       render :billing

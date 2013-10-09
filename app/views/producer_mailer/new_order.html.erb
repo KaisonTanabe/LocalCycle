@@ -4,7 +4,7 @@
 
 <br/><br/><br/>
 <% @order.cart_items.each do |item|%>
-	<%if item.good.creator == @producer%>
+	<%if item.good.creator_id == @producer.id%>
 		<%= "#{item.good.name} x #{item.quantity}"%><br/>
 	<%end%>
 <%end%><br/><br/>

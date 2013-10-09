@@ -1,7 +1,14 @@
 <%= "Hello #{@user.first_name} #{@user.last_name}"%>
 <br/>
 <br/>
-Thank you for using LocalCycle.  We’d like to let you know that we have received your order, and have notified the producer of your purchase.  Your products will be available on *Date* at *Market*.  If you’d like to make any changes to your order, please contact Kaison@localcycle.org.  
+Thank you for using LocalCycle.  We’d like to let you know that we have received your order, and have notified the producer of your purchase.  Your products will be available on 
+<%date= @market.next_market%>
+<% date = "TBD" if date == nil%>
+
+<%= date == "TBD" ? "TDB" : date.to_formatted_s(:long)%>
+<%=@market.name%> - <%=@market.address%>
+
+.  If you’d like to make any changes to your order, please contact Kaison@localcycle.org.  
 
 <h5>Order Details</h5>
 <%= "Order # #{@order.transaction.authorization_code}"%> <br/>
