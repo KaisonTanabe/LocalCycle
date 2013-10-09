@@ -13,6 +13,11 @@ class ProducerMailer < ActionMailer::Base
       @order = Order.find(order)
       mail(to: @producer.email, subject: "Order Confirmation - Order: #{@order.transaction.authorization_code}")
     end
+    
+  def new_demand(product, qty)
+  
+  end
+  
 end
 
 
