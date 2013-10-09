@@ -77,6 +77,7 @@ class User < ActiveRecord::Base
   #########################################
 
   def skip_conf
+    self.name = self.institution
     self.skip_confirmation_notification!
   end
   
