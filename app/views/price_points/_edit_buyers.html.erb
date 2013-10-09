@@ -1,4 +1,4 @@
-<% json  = (@data == 'undefined') ? Hash.new : ActiveSupport::JSON.decode(@data)  %>
+<% json  = (@data == 'undefined' || @data == nil) ? Hash.new : ActiveSupport::JSON.decode(@data)  %>
 <legend>Select Buyers/Markets </legend>
 <%= form_tag do %>
 	<span id="modal_form_data">
