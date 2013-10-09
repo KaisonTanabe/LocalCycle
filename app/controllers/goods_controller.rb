@@ -39,7 +39,8 @@ class GoodsController < ApplicationController
     @good.price_points.build()
 
     @cat_id =  params.has_key?(:cat_id) ? params[:cat_id] : nil
-    @goods = Good.includes(:product, :price_points).where(:wishlist_id => nil)
+    @goods = Good.scoped.includes(:product, :price_points).where(:wishlist_id => nil)
+    
     @goods = @goods.by_creator(current_user) if current_user.producer?
 
 
@@ -47,6 +48,7 @@ class GoodsController < ApplicationController
         @network = Network.find( params.has_key?(:network_id) ? params[:network_id] : current_user.networks.first.id )
         @market = params.has_key?(:market_id) ? Market.find(params[:market_id]) : current_user.markets.where(:network_id => @network.id).first
         @goods = @goods.where("goods.start_date <= ?", Date.current).where("goods.end_date is null or goods.end_date >= ?", Date.current)
+        
     end
     
     @goods = filter_and_sort(@goods, params)

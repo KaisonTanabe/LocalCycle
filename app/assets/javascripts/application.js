@@ -96,6 +96,17 @@ jQuery(function($){
 
     $('.bar').popover({trigger: 'hover'});
     
+
+	    // Initialize Datepicker on select fields with data-behavior='datepicker' attribute
+	    $("[data-behavior~='datepicker']").datepicker({
+		"format": "yyyy-mm-dd",
+		"weekStart": 1,
+		"autoclose": true
+	    });
+	    ////////////////////////////////////////////////////////////////////////////
+
+
+
     // Initialize Parsley Plugin (javascript validations) on forms with class="parsley"
     $('form.parsley').parsley({
 	errors: {
@@ -115,15 +126,6 @@ jQuery(function($){
 
     // Initialize field errors in popover
     $('.fieldWithErrors').popover()
-
-
-    // Initialize Datepicker on select fields with data-behavior='datepicker' attribute
-    $("[data-behavior~='datepicker']").datepicker({
-	"format": "yyyy-mm-dd",
-	"weekStart": 1,
-	"autoclose": true
-    });
-    ////////////////////////////////////////////////////////////////////////////
 
 
     ////////////////////////////////////////////////////////////////////////////

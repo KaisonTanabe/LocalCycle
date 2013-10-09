@@ -27,6 +27,11 @@ $ ->
 	$(document).on 'ajax:success', "a.good-details-btn", (event, data, xhr)->
 		$('.modal-body').html(data)
 		$('#MyModal').modal('show')
+		$("[data-behavior~='datepicker']").datepicker({
+			"format": "yyyy-mm-dd",
+			"weekStart": 1,
+			"autoclose": true
+		})
 	.bind 'ajax:failure', (xhr, status, error) ->
 		alert("failure!")
 

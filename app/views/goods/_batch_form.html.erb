@@ -24,6 +24,8 @@
     </div>
     <%= f.hidden_field :selling_unit_id, value: SellingUnit.where(short_name: "lb").first.id %>
 		<%= f.hidden_field :order_cutoff, value: current_user.default_cutoff %>
+		<%= f.hidden_field :start_date, value: Date.current()%>
+		
   </th>
   <th>
     <%= button_tag type: 'submit', class: "btn btn-primary" do %>
