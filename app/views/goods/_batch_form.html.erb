@@ -1,7 +1,7 @@
 <tr>
   <th></th>
   <th>
-    <%= f.select :product_id, option_groups_from_collection_for_select(Category.includes(:products).order('name'), :products, :name, :id, :name, (params[:product_id].blank? ? (@good.product ? @good.product.id : "") : params[:product_id])), {prompt: "-- Select Product --"}, {class: "select2", style: "width: 180px;" } %>
+    <%= f.select :product_id, option_groups_from_collection_for_select(Category.includes(:products).order('name'), :products, :name, :id, :name, (params[:product_id].blank? ? (@good.product ? @good.product.id : (params[:post_supply_id] ? params[:post_supply_id] : "") ) : params[:product_id])), {prompt: "-- Select Product --"}, {class: "select2", style: "width: 180px;" } %>
   </th>
   <% if current_user.admin? or current_user.market_manager? %>
   <th>

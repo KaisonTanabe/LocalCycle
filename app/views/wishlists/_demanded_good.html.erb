@@ -25,9 +25,9 @@
  
   <td>
     <div class="btn-toolbar">
-      <div class="btn-group">
-					<div class="btn btn-primary save_line" >Post Supply</div>
-      </div>
+	<%= link_to "
+      <div class='btn-group'>
+					<div class='btn btn-primary ' >Post Supply</div></div>".html_safe, goods_path(:post_supply_id => price_point.good.product.id)%>
     </div>
   </td>
 
