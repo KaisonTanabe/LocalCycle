@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  
+  before_create :skip_conf
   ############# CONFIGURATION #############
 =begin
   require 'geokit'
@@ -74,7 +76,10 @@ class User < ActiveRecord::Base
 
   #########################################
 
-
+  def skip_conf
+    self.skip_confirmation_notification!
+  end
+  
   def full_name
      "#{first_name} #{last_name}"
   end

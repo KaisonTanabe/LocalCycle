@@ -125,6 +125,7 @@ class UsersController < ApplicationController
 
   def activate
     @user.update_attribute(:activated, true);
+    Devise::Mailer.confirmation_instructions(@user).deliver
     render :nothing => true
   end
 
