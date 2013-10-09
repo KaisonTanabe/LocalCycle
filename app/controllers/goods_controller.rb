@@ -51,7 +51,7 @@ class GoodsController < ApplicationController
         
     end
     
-    @goods = filter_and_sort(@goods, params)
+    #@goods = filter_and_sort(@goods, params)
     @goods = @goods.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
     
     
