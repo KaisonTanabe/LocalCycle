@@ -22,6 +22,7 @@ class Order < ActiveRecord::Base
      self.cart.cart_items.each do |item|
        good = item.good
        good.quantity = good.quantity - item.quantity
+       good.available = false if (good.quantity ==0)
        good.save
        item.order_id = id
        item.cart_id =nil
