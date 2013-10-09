@@ -23,7 +23,7 @@ GENDER = {
 }
 
 ROLES = {
-  "admin" => "Admin",
+  "admin" => "Super Admin",
   "market_manager" => "Administrator",
   "buyer" => "Buyer",
   "producer" => "Producer"

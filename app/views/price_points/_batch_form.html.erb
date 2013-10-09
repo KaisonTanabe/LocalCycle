@@ -14,5 +14,12 @@
 	<%- rval= rand(1..9999999999)%>
 	<%=link_to "Edit Buyers", buyer_panel_goods_path(target: rval), :class=>"btn btn-small edit_buyers", :remote=> true, :data =>{:target => "#{rval}"} %>
 	<div class="show_buyers"></div>
-	<%= f.hidden_field :buyers, :class=> "buyer_json_#{rval}"%>
+	<% default_buyers = "{"%>
+	<% current_user.markets.each_with_index do |m, i| %>
+		<% default_buyers = default_buyers + "," if i > 0 %>
+		<% default_buyers = default_buyers + "\"" + m.id.to_s + "\": []"%>
+	<%end%>
+	<% default_buyers = default_buyers + "}" %>
+	
+	<%= f.hidden_field :buyers, :class=> "buyer_json_#{rval}", :value => default_buyers%>
 </div>
