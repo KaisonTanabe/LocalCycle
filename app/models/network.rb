@@ -8,10 +8,7 @@ class Network < ActiveRecord::Base
   
   def associate_with_superadmin
     User.where(:role => 'admin').each do |u|
-      u.networks << self
-      s = u.user_networks.where(:network_id => self.id).first
-      s.approved = true
-      s.save
+      UserNetworks.create(:network_id => self.id, :user_id => u.id, :approved => true)
     end
     
   end
