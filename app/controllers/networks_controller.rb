@@ -75,8 +75,13 @@ class NetworksController < ApplicationController
   end
   
   def destroy
+    id = @network.id
     @network.destroy
 
+    UserNetwork.where(:network_id => id).each do |rm|
+      UserNetwork.delete(rm)
+    end
+    
     respond_to do |format|
       format.html { redirect_to networks_url(params.to_hash) }
       format.json { head :no_content }
