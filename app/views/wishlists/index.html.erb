@@ -27,7 +27,7 @@
         <% if @price_points.any? %>
           <% @price_points.each do |price_point| %>
 
-	    				<%= render partial: "demanded_good", locals: {price_point: price_point} %>
+	    				<%= render partial: "demanded_good", locals: {price_point: price_point} if price_point.good.available %>
           <% end %>
 
         <% else %>

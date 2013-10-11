@@ -44,14 +44,18 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
+    puts "pPAPF"
+    puts params[:user]
+    puts @user.name
     
-    @user.skip_confirmation!
+   # @user.skip_confirmation_notification!
     @user.password = "TempPass42"
     @user.password_confirmation = "TempPass42"
 
-    
     respond_to do |format|
       if @user.save
+        @user.name = params[:user][:name]
+        @user.save
         if current_user.admin?
           @user.user_networks.each do |n|
             n.approved = true

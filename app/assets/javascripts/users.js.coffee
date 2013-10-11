@@ -33,7 +33,7 @@ $ ->
 			success: (data, textStatus, jqXHR) ->
 				location.reload()
 				
-	$('.activate_user').on "ajax:success", (evt, data, status, xhr)->
+	$(document).on "ajax:success", '.activate_user', (evt, data, status, xhr)->
 		$(this).hide()
 	
 		 

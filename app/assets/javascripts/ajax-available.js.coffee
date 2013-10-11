@@ -1,5 +1,5 @@
 jQuery ($) ->
-  $("a.ajax-available").on 'ajax:success', (evt, json) ->
+  $(document).on 'ajax:success', "a.ajax-available", (evt, json) ->
     $a = $(@)
     if json.available
       $a.find('span.label').removeClass('label-important').addClass('label-success')
