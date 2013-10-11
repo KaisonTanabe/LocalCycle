@@ -14,10 +14,12 @@ class GoodsController < ApplicationController
     @goods = Good.scoped.includes(:product, :price_points).where(:wishlist_id => nil)
     @cat_id =  params.has_key?(:cat_id) ? params[:cat_id] : nil
 
-    if current_user.buyer? 
+    if current_user.buyer? && current_user.networks.length >0
         @network = Network.find( params.has_key?(:network_id) ? params[:network_id] : current_user.networks.first.id )
         @market = params.has_key?(:market_id) ? Market.find(params[:market_id]) : current_user.markets.where(:network_id => @network.id).first
         @goods = @goods.where("goods.start_date <= ?", Date.current).where("goods.end_date is null or goods.end_date >= ?", Date.current).where(:available => true)
+    else
+      Good.where(:id => -1)
     end
     @goods = filter_and_sort(@goods, params)
     @goods = @goods.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
