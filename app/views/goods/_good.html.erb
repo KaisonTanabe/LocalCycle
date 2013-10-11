@@ -24,7 +24,7 @@
 
   <td>
 		<span class="controls controls-row">
-      <%= f.text_field :quantity, placeholder: "Qty", class: "span2", style: "width: 30px" %>
+      <%= f.number_field :quantity, placeholder: "Qty", class: "span2", style: "width: 30px" , :min => 0%>
       <%= f.select :selling_unit_id, SellingUnit.all.map {|s| [s.short_name, s.id]}, {prompt: "Unit"}, {class: "span1", style: "width: 75px; margin-left: 5px;"} %>
 		</div>
   </td>

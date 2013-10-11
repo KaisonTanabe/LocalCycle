@@ -10,13 +10,19 @@
   <% end %>
   <th style="width: 130px;">
     <div class="controls controls-row">
-      <%= f.text_field :quantity, placeholder: "Qty", style: "width: 30px;" %>
-      <%= f.select :selling_unit_id, SellingUnit.all.collect(&:short_name), {prompt: "Unit"}, {class: "span1", style: "margin-left: 5px;"} %>
+      <%= f.number_field :quantity, placeholder: "Qty", style: "width: 30px;", :min => 0 %>
+			<% if params[:unit].blank? %>
+				<%= f.select :selling_unit_id, SellingUnit.all.collect(&:short_name), {prompt: "Unit"}, {class: "span1", style: "margin-left: 5px;"} %>
+      
+			<%else%>
+			<%= f.select :selling_unit_id, SellingUnit.all.collect(&:short_name), {prompt: "Unit", :selected => params[:unit]}, {class: "span1", style: "margin-left: 5px;"} %>
+      
+			<%end%>
     </div>
   </th>
   <th style="width: 450px !important;">
     <%= f.fields_for :price_points do |fpp| %>
-      <%= render partial: 'price_points/batch_form', locals: { f: fpp } %>
+      <%= render partial: 'price_points/batch_form', locals: { f: fpp, price: params[:price] ? params[:price] : nil } %>
       <%= new_child_fields_template(f, :price_points, {partial: "price_points/batch_form"})%>
     <% end %>
     <div class="controls">

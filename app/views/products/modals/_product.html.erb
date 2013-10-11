@@ -6,6 +6,11 @@
   <li><strong>Seasonal Availability:</strong> <%= product.availability %></li>
   <li><strong>Common Selling Units:</strong> <%=raw product.possible_units %></li>
   <!--li><strong>Catch Weight:</strong> <%= product.catch_weight ? "Yes" : "No" %></li-->
+	<% if good != nil%>
+		<li><strong>Certifications:</strong> <% good.certifications.each do |c| %> <span class="label label-info"> <i class="icon-white icon-certificate"></i><%= c.name %></span>
+    <%end%></li>
+  
+	<%end%>
 </ul>
 
 <br class="clear" />

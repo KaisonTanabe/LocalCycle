@@ -131,7 +131,7 @@ jQuery(function($){
     ////////////////////////////////////////////////////////////////////////////
     // Rails add/remove js for has_many associated model forms
     // Render fields for an associated object
-    $('a.add_child').on('click', function() {
+    $(document).on('click', 'a.add_child', function() {
 	var assoc = $(this).attr('data-association');
 	var content = $(this).parents('tr').first().find('#' + assoc + '_fields_template').html();
 	if (content == null) {
