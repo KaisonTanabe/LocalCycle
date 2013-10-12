@@ -14,8 +14,15 @@ class ProducerMailer < ActionMailer::Base
       mail(to: @producer.email, subject: "Order Confirmation - Order: #{@order.transaction.authorization_code}")
     end
     
-  def new_demand(product, qty)
-  
+  def new_demand(good, user, price_point, producer_id)
+    @good = Good.find(good)
+    @user = user
+    @producer = User.find(producer_id)
+    
+    @qty = price_point.quantity
+    @price = price_point.price
+    mail(to: @producer.email, subject: "New Demand")
+    
   end
   
 end

@@ -96,9 +96,27 @@ class GoodsController < ApplicationController
 
 
   def create
+    
     respond_to do |format|
       if @good.save
         @good.update_markets if !current_user.buyer?
+        @good.price_points.each do |p|
+          if (p.producer_id != -1)
+            ProducerMailer.new_demand(@good.id, current_user, p, p.producer_id).deliver if params[:good].has_key?(:wishlist_id) 
+          else
+            users = Array.new
+            current_user.networks.each do |n|
+              n.users.where(:role => 'producer').each do |pro|
+                ProducerMailer.new_demand(@good.id, current_user, p, pro.id).deliver if params[:good].has_key?(:wishlist_id) && !users.include?(pro.id)
+                users << pro.id
+              end
+            end
+              
+          end
+          
+        end
+        
+        
         format.html { redirect_to goods_url, notice: 'Good was successfully created.' }
         format.json { render json: @good, status: :created, location: @good }
         format.js { render (params[:good].has_key?(:wishlist_id) ? 'wishlists/create' : :create)}

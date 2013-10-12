@@ -30,8 +30,9 @@ $ ->
 			if(!$(f).is(":checked"))
 				console.log("market not checked")
 				ary = $(f).parents(".well").first().find("select#buyer_flag").val()
-				$.each ary, ( ii, b ) ->
-					buyers.push(b)
+				if (ary != null)
+					$.each ary, ( ii, b ) ->
+						buyers.push(b)
 				if( buyers.length >0)
 					if markets != "{"
 						markets = markets + ","
