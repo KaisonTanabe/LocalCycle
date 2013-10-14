@@ -1,4 +1,4 @@
-<tr class="wishlist-row">
+<tr class="wishlist-row batch-row">
   <th></th>
   <th>
     <%= f.select :product_id, option_groups_from_collection_for_select(Category.includes(:products).order('name'), :products, :name, :id, :name, (params[:product_id].blank? ? (@good.product ? @good.product.id : "") : params[:product_id])), {prompt: "-- Select Product --"}, {class: "select2", style: "width: 180px;" } %>
@@ -27,8 +27,9 @@
   </th>
   <th style="width: 450px !important;" colspan="2">
     <%= f.fields_for :price_points do |fpp| %>
+    	<%= new_child_fields_template(f, :price_points, {partial: "price_points/buyer_batch_form"})%>
+
       <%= render partial: 'price_points/buyer_batch_form', locals: { f: fpp } %>
-      <%= new_child_fields_template(f, :price_points, {partial: "price_points/buyer_batch_form"})%>
 		
 	<% end %>
     <div class="controls">
@@ -38,7 +39,7 @@
   </th>
 
   <th>
-    <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+    <%= button_tag type: 'submit', class: "btn btn-primary batch_submit", :data=>{:url => '/goods'} do %>
     <i class="icon-white icon-plus"></i> Post Demand 
     <% end %>
   </th>

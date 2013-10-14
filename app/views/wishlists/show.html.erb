@@ -23,7 +23,7 @@
   	    <thead id="sorters">
 					<%= render "sorters" %>
 	      </thead>
-		    <%= form_for(@good, html: { multipart: true, class: "form-horizontal", remote: true }) do |f| %>
+		    <%= form_for(@good, html: { multipart: true, class: "form-horizontal batch-form", remote: true }) do |f| %>
 		    <%= f.hidden_field :wishlist_id, value: @wishlist.id %>
 	      <thead id="batch">
 	        <%= render partial: "batch_form", locals: {f: f} %>

@@ -25,7 +25,7 @@
   	    <thead id="sorters">
 					<%= render "sorters" %>
 	      </thead>
-		    <%= form_for(@good, html: { multipart: true, class: "form-horizontal", remote: true }) do |f| %>
+		    <%= form_for(@good, html: { multipart: true, class: "form-horizontal batch-form", remote: true }) do |f| %>
 
 	      <% unless current_user.buyer? %>
 	      <thead id="batch">

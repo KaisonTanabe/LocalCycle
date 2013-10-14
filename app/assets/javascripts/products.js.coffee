@@ -79,4 +79,21 @@ $ ->
 			
 				})
 	
-	
+	$(document).on 'click', '.batch_submit', (e)->
+		self = this
+		e.preventDefault()
+		data = ''
+		url = $(self).data('url') 	
+		o= $('form.batch-form')
+		bdiv = $('tr.batch-row')
+		$(bdiv).children('th').each (m,n)->
+			$(n).appendTo(o)
+		data = $(o).serialize()
+		$(o).children().appendTo(bdiv)
+		console.log($(o))
+		$.ajax({
+			type: "POST",
+			url: url,
+			data: data,
+			dataType: "script"
+		})
