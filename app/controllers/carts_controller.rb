@@ -25,6 +25,11 @@ def add_item
    authorize! :update, @cart
    cart_item = @cart.cart_items.where(:good_id => params[:good_id], :market_id => params[:market_id]).first
    
+   calc_use = 0
+   @cart.cart_items.where(:good_id => params[:good_id]).each do |v|
+    calc_use = calc_use + v.quantity
+   end
+   
    if cart_item.nil? 
      raise "Must be min order" if(params[:qty].to_i < params[:min_order].to_i) 
      if(Good.find(params[:good_id]).quantity.to_i < params[:qty].to_i)
@@ -33,7 +38,7 @@ def add_item
      end
      CartItem.create(:good_id => params[:good_id], :quantity => params[:qty], :market_id => params[:market_id], :cart_id => @cart.id)
    else     
-     if(Good.find(params[:good_id]).quantity.to_i < cart_item.quantity + params[:qty].to_i)
+     if(Good.find(params[:good_id]).quantity.to_i < calc_use + params[:qty].to_i)
        render :text => "Not enough quantity available"
         return
      end
