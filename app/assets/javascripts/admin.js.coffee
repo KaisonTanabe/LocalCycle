@@ -9,8 +9,12 @@ rebuild_network_list = ()->
 		list = list + e.value
 	net_store = list 
 	
+
 	
 $ ->
+
+	$(document).on 'click', ".update_user_btn", (e)->
+		$('.network_change option').prop('disabled', false)		
 
 	$(document).on 'click', ".add_fields", (e)->
 		rebuild_network_list()

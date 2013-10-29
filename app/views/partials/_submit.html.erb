@@ -6,7 +6,7 @@
     <% if f.object.new_record? %>
       <%= f.submit "Create "+text, disable_data_with: "Submitting...", class: "btn btn-primary" %>
     <% else %>
-      <%= f.submit "Update "+text, disable_data_with: "Submitting...", class: "btn btn-primary" %>
+      <%= f.submit "Update "+text, disable_data_with: "Submitting...", class: "btn btn-primary update_#{text.downcase}_btn" %>
     <% end %>
   <% end %>
   &nbsp; <%= link_to 'Go Back', :back %>
