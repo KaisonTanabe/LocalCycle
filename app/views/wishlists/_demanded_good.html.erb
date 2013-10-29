@@ -27,7 +27,7 @@
     <div class="btn-toolbar">
 	<%= link_to "
       <div class='btn-group'>
-					<div class='btn btn-primary ' >Post Supply</div></div>".html_safe, goods_path(:post_supply_id => price_point.good.product.id, :price => price_point.price, :unit => "#{SellingUnit.find(price_point.selling_unit_id).short_name}")%>
+					<div class='btn btn-primary ' >Post Supply</div></div>".html_safe, goods_path(:post_supply_id => price_point.good.product.id, :price => price_point.price, :unit => "#{price_point.selling_unit_id}")%>
     </div>
   </td>
 

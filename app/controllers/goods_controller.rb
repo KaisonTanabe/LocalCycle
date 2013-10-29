@@ -98,6 +98,7 @@ class GoodsController < ApplicationController
   def create
     
     respond_to do |format|
+      puts "HELLo: #{params.to_yaml}"
       if @good.save
         @good.update_markets if !current_user.buyer?
         @good.price_points.each do |p|

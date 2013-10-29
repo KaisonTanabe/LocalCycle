@@ -89,6 +89,7 @@ $ ->
 		$(bdiv).children('th').each (m,n)->
 			$(n).appendTo(o)
 		data = $(o).serialize()
+		console.log(data)
 		$(o).children().appendTo(bdiv)
 		console.log($(o))
 		$.ajax({
