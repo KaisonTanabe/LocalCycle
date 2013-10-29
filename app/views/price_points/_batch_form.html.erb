@@ -14,7 +14,14 @@
 </div>
 	
   <%= f.text_field :quantity, placeholder: "Qty", class: "span1", style: "margin-left: 5px;" %>
-  <%= f.select :selling_unit_id, SellingUnit.all.map {|s| [s.short_name, s.id]}, {prompt: "Unit"}, {class: "span1", style: "margin-left: 5px;"} %>
+
+	<% if params[:unit].blank? %>
+  	<%= f.select :selling_unit_id, SellingUnit.all.map {|s| [s.short_name, s.id]}, {prompt: "Unit"}, {class: "span1", style: "margin-left: 5px;"} %> 
+  
+	<%else%>
+		<%= f.select :selling_unit_id,SellingUnit.all.map {|s| [s.short_name, s.id]}, {prompt: "Unit", :selected => params[:unit]}, {class: "span1", style: "margin-left: 5px;"} %>
+  
+	<%end%>
 
 	<%- rval= rand(1..9999999999)%>
 	<%=link_to "Edit Buyers", buyer_panel_goods_path(target: rval), :class=>"btn btn-small edit_buyers", :remote=> true, :data =>{:target => "#{rval}"} %>
