@@ -15,7 +15,7 @@
 		</td>
 	
   <td>
-  	<%=good.quantity%> <%= good.selling_unit.name%><%= good.quantity > 1 ? "s" : ''%>
+  	<%=good.quantity%> <%= good.selling_unit.name%><%= good.quantity.to_i > 1 ? "s" : ''%>
 	</td>
 
   <td >
