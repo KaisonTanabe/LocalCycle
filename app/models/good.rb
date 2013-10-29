@@ -99,7 +99,7 @@ class Good < ActiveRecord::Base
   
   #def self.
   def self.csv_header 
-    "ID,Category,Name,Description,Selling Unit,Catch Weight,Season Start Date,Season End Date".split(',') 
+    "ID,Name,Description,Season Start Date,Season End Date".split(',') 
   end
 
   def self.build_from_csv(row)
@@ -125,7 +125,7 @@ class Good < ActiveRecord::Base
   end
 
   def to_csv
-    [id, cat_name, name, description, unit_type, catch_weight, start_date, end_date]
+    [id, name, description, start_date, end_date]
   end
 
   def quantity

@@ -150,7 +150,7 @@ class User < ActiveRecord::Base
   ############ PUBLIC METHODS #############
 
   def to_csv
-    [first_name, last_name, email]
+    [first_name, last_name, name, email]
   end
 
 

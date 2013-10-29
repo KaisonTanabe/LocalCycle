@@ -28,6 +28,9 @@
 		    <%= form_for(@good, html: { multipart: true, class: "form-horizontal batch-form", remote: true }) do |f| %>
 
 	      <% unless current_user.buyer? %>
+				    <thead id="query">
+							<%= render "query_form" %>
+			      </thead>
 	      <thead id="batch">
 	        <%= render partial: "batch_form", locals: {f: f} %>
 	      </thead>

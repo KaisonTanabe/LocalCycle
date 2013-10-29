@@ -185,7 +185,7 @@ class GoodsController < ApplicationController
     filename = "goods_#{Date.today.strftime('%b-%d-%y')}"
     csv_data = CSV.generate do |csv|
       csv << Good.csv_header
-      goods.each do |t|
+      goods.includes(:product).each do |t|
         csv << t.to_csv
       end
     end
