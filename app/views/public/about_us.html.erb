@@ -6,12 +6,19 @@
 
 <div class="row">
   <div class="span4">
-    <h3><%= link_to raw("<img src='/assets/icon-buyer.png' /><br />Buyers"), new_user_registration_path(role: "buyer"), {class: "tout buyer"} %></h3>
+    <h3><%= link_to raw("<img src='/assets/icon-buyer.png' /><br />Buyers"), new_user_registration_path(role: "buyer"), {class: "tout buyer", remote: true} %></h3>
   </div>
   <div class="span4">
-    <h3><%= link_to raw("<img src='/assets/icon-food-hub.png' /><br />Food Hub"), new_user_registration_path(role: "foodhub"), {class: "tout food-hub"} %></h3>
+    <h3><%= link_to raw("<img src='/assets/icon-food-hub.png' /><br />Administrator"), new_user_registration_path(role: "market_manager"), {class: "tout food-hub", remote: true} %></h3>
   </div>
   <div class="span4">
-    <h3><%= link_to raw("<img src='/assets/icon-producer.png' /><br />Producers"), new_user_registration_path(role: "producer"), {class: "tout producer"} %></h3>
+    <h3><%= link_to raw("<img src='/assets/icon-producer.png' /><br />Producers"), new_user_registration_path(role: "producer"), {class: "tout producer", remote: true}%></h3>
   </div>
 </div>
+
+<div class="row home-overlay" style="min-height: 350px;">
+  <div class="span12">
+
+  </div>
+</div>
+
