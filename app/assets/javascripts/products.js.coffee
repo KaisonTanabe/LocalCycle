@@ -3,6 +3,10 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
+	$(document).on 'change', "select[id$='selling_unit_id']", (e)->
+		self = $(this).val()
+		$(this).parents('tr').first().find("select[id$='selling_unit_id']").val(self)
+		
 	$(document).on 'change', "input[id^='good_']", (e)->
 		$(this).parents(".good").first().find(".save_line").show()
 	

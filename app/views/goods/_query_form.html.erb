@@ -1,5 +1,6 @@
 <tr class="input-row">
-  <td colspan=5></td>
+	<% span = current_user.producer? ? 4 : 5%>
+  <td colspan=<%= span %>></td>
     <td>
       <div id="buttons">
 	<div class="btn-group">
