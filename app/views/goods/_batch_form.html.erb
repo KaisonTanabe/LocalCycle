@@ -12,10 +12,10 @@
     <div class="controls controls-row">
       <%= f.number_field :quantity, placeholder: "Qty", style: "width: 30px;", :min => 0 %>
 			<% if params[:unit].blank? %>
-				<%= f.select :selling_unit_id, SellingUnit.all.collect(&:short_name), {prompt: "Unit"}, {class: "span1", style: "margin-left: 5px;"} %>
+				<%= f.select :selling_unit_id, SellingUnit.all.map {|s| [s.short_name, s.id]}, {prompt: "Unit"}, {class: "span1", style: "margin-left: 5px;"} %>
       
 			<%else%>
-			<%= f.select :selling_unit_id, SellingUnit.all.collect(&:short_name), {prompt: "Unit", :selected => params[:unit]}, {class: "span1", style: "margin-left: 5px;"} %>
+				<%= f.select :selling_unit_id,SellingUnit.all.map {|s| [s.short_name, s.id]}, {prompt: "Unit", :selected => params[:unit]}, {class: "span1", style: "margin-left: 5px;"} %>
       
 			<%end%>
     </div>
