@@ -1,6 +1,6 @@
 filters = () -> 
 	filter = "&filter="
-	$("input:checked[name^='filter[cert_ids]").each (i,w)->
+	$("input:checked[name^='filter[cert_ids]'").each (i,w)->
 		if (i > 0)
 			filter = filter + ","
 		filter = filter + $(w).attr("value")

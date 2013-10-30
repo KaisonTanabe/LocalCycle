@@ -43,7 +43,7 @@
 			 <div class="control-group">
 				<div class="controls controls-row">
 	      
-					<%=f.input :network_ids, as: :check_boxes, label: "Requested Networks", collection: Network.all.collect{|n| [n.name, n.id]}, multiple: true%>
+					<%=f.input :network_ids, as: :check_boxes, label: "Are you affiliated with any of these networks?", collection: Network.all.collect{|n| [n.name, n.id]}, multiple: true%>
 	    
 		     </div>
 		    </div>
