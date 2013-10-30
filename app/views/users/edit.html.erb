@@ -2,7 +2,7 @@
 
 <div class="row">
   <div class="span12">
-    <% if current_user.admin? %>
+    <% if current_user.admin? || current_user.market_manager?%>
       <div class="btn-group pull-right">
         <%= link_to raw('<i class="icon-eye-open icon-white"></i> View ' + @user.role.capitalize), user_path(@user), class: "btn btn-primary ", :remote=>true %>
         <%= link_to raw('<i class="icon-list"></i> List Users'), users_path(params), class: "btn" %>

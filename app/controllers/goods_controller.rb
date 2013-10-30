@@ -52,6 +52,17 @@ class GoodsController < ApplicationController
     end
     
     @goods = filter_and_sort(@goods, params)
+    
+    if current_user.market_manager?
+      remove_goods = Array.new
+      current_user.markets.each do |m|
+        remove_goods = remove_goods + m.goods
+      end
+      remove_goods = remove_goods.map{|m| m.id}
+      
+      @goods = @goods.where(:id=>remove_goods)
+    end
+    
     @goods = @goods.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
     
     

@@ -13,7 +13,7 @@ class Ability
     end
 
     if user and (user.market_manager?)
-      can :manage, Good, :markets=>{:market_managers =>{:id => user.id}}
+      can :manage, Good 
       can :read, Market, :users=>{:id => user.id}
       can :create, Market
       can :update, Market, :users=>{:id => user.id}
