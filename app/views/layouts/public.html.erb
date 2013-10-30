@@ -52,14 +52,20 @@
 
 			      <div class="control-group">
 				<%= f.label :password, "Password:", class: "control-label" %>
-				<div class="controls"><%= f.password_field :password %></div>
+				<div class="controls"><%= f.password_field :password %>
+					<p id="devise-links">
+					<%= link_to "Forgot your password?", new_password_path(:user) %>
+					</p>
+				</div>
 			      </div>
 
 			      <div class="control-group">
 				<div class="controls">
 				  <%= f.submit "Sign in", disable_data_with: "Signing in...", class: "btn btn-success" %> &nbsp;
-				  <label tabindex="2" class="checkbox" style="display: inline-block;width: 100px;"><%= f.check_box :remember_me %> Remember Me</label>
+				  <label tabindex="2" class="checkbox" style="display: inline-block;width: 100px;"><%= f.check_box :remember_me %> Remember Me</label><br/>
+				
 				</div>
+			  
 			      </div>
 			    <% end %>
       </div>
