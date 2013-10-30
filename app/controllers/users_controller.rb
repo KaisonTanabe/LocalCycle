@@ -10,6 +10,17 @@ class UsersController < ApplicationController
     @user = User.new()
 
     @users = filter_and_sort(@users, params)
+   
+    if current_user.market_manager?
+      remove_users = Array.new
+      current_user.markets.each do |m|
+        remove_users = remove_users + m.users
+      end
+      remove_users = remove_users.map{|m| m.id}
+      
+      @users = @users.where(:id=>remove_users)
+    end
+    
     @users = @users.paginate(page: params[:page], per_page: (params[:per_page] || DEFAULT_PER_PAGE))
 
     @first_login = (params[:first_login] == "true")
