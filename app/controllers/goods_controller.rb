@@ -250,17 +250,17 @@ class GoodsController < ApplicationController
     
     if(params.has_key?(:search))
       if(params[:search] != '')
-        goods = goods.includes(:product).where("LOWER(products.name) like LOWER('%#{URI.unescape(params[:search])}%')")
+        goods = goods.includes(:product).includes(:creator).where("LOWER(products.name) like LOWER('%#{URI.unescape(params[:search])}%')")
       end
     end
     
-    return goods.where(:id=>filtered_goods).order(sort_column + " " + sort_direction)
+    return goods.includes(:creator).where(:id=>filtered_goods).order(sort_column + " " + sort_direction)
   end
   
   
   def sort_column
     sort = params[:sort] || ''
-    (Good.column_names.include?(sort) || sort == "selling_units.name") ? sort : "products.name"
+    (sort !='' || sort == "selling_units.name") ? sort : "products.name"
   end
 
   def sort_direction
