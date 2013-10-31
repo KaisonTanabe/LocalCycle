@@ -230,9 +230,16 @@ jQuery(function($){
 	return num;
     }
 
+		$('input#user_growing_methods').click(function() {
+				var t = $(this).prop("checked")
+				$('input#user_growing_methods').prop("checked", false);
+				$(this).prop("checked", t);
+				toggleActive();
+		});
+		
     function toggleActive() {
-	$(".growing_methods").removeClass("active"); // Show currently selected
-	$(".growing_methods input:checked").parent().parent().addClass("active");
+			$(".growing_methods").removeClass("active"); // Show currently selected
+			$(".growing_methods input:checked").parent().parent().addClass("active");
     }
     $(".growing_methods input").on("change", function() {toggleActive()}); // Show currently selected
     toggleActive();
