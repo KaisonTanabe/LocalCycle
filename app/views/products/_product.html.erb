@@ -20,7 +20,7 @@
   <div class="btn-toolbar">
     <div class="btn-group">
       <%= link_to raw('<i class="icon-edit"></i> Edit'), edit_product_path(product), title: "Edit product info", class: "btn btn-small" %>
-      <%= (link_to raw('<i class="icon-trash"></i> Delete'), product_path(product, full_params.to_hash), data: {confirm: "Are you sure you want to permanently delete this product and all its information?"}, title: "Delete this product from the system", method: :delete, class: "btn btn-small") %>
+      <%= (link_to raw('<i class="icon-trash"></i> Delete'), product_path(product, full_params.to_hash), data: {confirm: "Are you sure you want to permanently delete this product and all its information?"}, title: "Delete this product from the system", method: :delete, class: "btn btn-small") if !current_user.producer?%>
     </div>
   </div>
 </td>
