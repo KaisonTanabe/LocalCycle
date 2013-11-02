@@ -20,6 +20,7 @@
     <%= f.label :name, "Name:", class: "control-label" %>
     <div class="controls controls-row">
       <%= f.text_field :name, class: "span4" %>
+			<%= f.hidden_field :created_by, :value=> current_user.id%>
     </div>
   </div>
 

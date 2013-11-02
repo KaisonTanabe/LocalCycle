@@ -52,6 +52,7 @@ class Ability
     
     if user and (user.producer?)
       can [:index], Wishlist
+      can :manage, Product, {:created_by => user.id}
     end
     
   end
