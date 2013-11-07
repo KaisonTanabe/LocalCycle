@@ -1,0 +1,28 @@
+= render "partials/ajax-modal" 
+.row
+	.span12
+		%h1
+			%a{href: "#{orders_path}"}
+				%img{class: "big-icon", src: "/assets/icon-agreements-calendar.png", alt: "Calendar Icon"} 
+				Orders
+				
+%table{id: "order-table", class: "table table-hover table-striped"}
+	%thead{id: "sorters"}
+		= render "sorters"
+	%tbody
+		-@sub_orders.each do |sub_order|	
+			%tr
+				%td
+					=link_to "#{sub_order.order_id}__#{ ('a'..'z').to_a[sub_order.key] }".upcase, sub_order
+				%td
+					="#{sub_order.created_at.to_formatted_s(:long)}"
+				- if !current_user.producer?
+					%td
+						-if sub_order.user !=nil
+							="#{sub_order.user.full_name}"
+				%td
+					-if sub_order.order.user !=nil
+						="#{sub_order.order.user.full_name}"
+
+				%td
+					="#{number_to_currency(sub_order.total)}"

@@ -1,6 +1,6 @@
 class CartsController < ApplicationController
   load_resource
-
+include ActionView::Helpers::NumberHelper
 
 def clear
   @cart.cart_items.each do |ci|
@@ -57,6 +57,21 @@ end
 
 
 def checkout
+  items = current_user.get_cart.cart_items.sort! { |a,b| a.market.name.downcase <=> b.market.name.downcase }
+	items.collect{|ci| ci.market}.uniq.each do |market|
+	  
+	  market_total = 0.0
+		@cart.cart_items.where(:market_id => market.id).each do |item|
+			 market_total = market_total + (item.price * item.quantity)
+		end
+		if market_total < (market.order_min == nil ? 0 : market.order_min)
+	    flash[:error] = "#{market.name} minimum order is #{number_to_currency(market.order_min)}. Please add more to your cart to checkout." 
+	    redirect_to :back
+	  end
+	  
+	end
+	
+    
   if @cart.order == nil
     @cart.build_order(:user_id => current_user.id) 
     @cart.save

@@ -1,0 +1,12 @@
+%tr{class: "sorters"}
+	%th
+		=  sortable "key", "Order", parsed_params
+	%th
+		= sortable "created_at", "Order Date", parsed_params
+	- if !current_user.producer?
+		%th
+			= sortable "producer_id", "Producer", parsed_params
+	%th
+		= sortable "orders.user_id", "Buyer", parsed_params
+	%th
+		= sortable "total", "Amount", parsed_params

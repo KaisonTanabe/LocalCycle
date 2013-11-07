@@ -141,7 +141,14 @@ jQuery(function($){
 	var regexp = new RegExp('new_' + assoc, 'g');
 	var new_id = new Date().getTime();
 	content=content.replace(regexp, new_id+'');
-	$(this).parent().parent().before(content);
+	if(assoc =='delivery_windows'){
+		$(this).parent().before(content);
+		
+	}
+	else{
+		$(this).parent().parent().before(content);
+		
+	}
 	$(this).parents('tr').first().find("select[id$='selling_unit_id']").val($(this).parents('tr').first().find("select[id='good_selling_unit_id']").val());
 	
 

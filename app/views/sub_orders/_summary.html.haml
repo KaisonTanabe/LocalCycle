@@ -1,0 +1,74 @@
+%br
+=link_to "Print This Page", '#', :class=> "print_page"
+
+%br
+
+-total=0
+-dist_fees =0
+-market = sub_order.market
+%br
+.row
+	.span12{:style=> "border:1px solid black; padding-top: 5px; padding-bottom: 5px"}
+		%b
+			="Distribution Point: #{market.name}"
+			%br
+			="Distribution Point Date: #{sub_order.market_date.to_formatted_s(:long)}"
+			%br
+			="Delivery Window: "
+			-if sub_order.delivery_window_day != -1
+				="#{WEEKDAYS[sub_order.delivery_window_day] }  -   #{NORMAL_HOURS[sub_order.delivery_window_start]}  to  #{NORMAL_HOURS[sub_order.delivery_window_end]}"
+			%br
+			="Buyer: "
+			="#{sub_order.user.full_name}"
+		%hr
+		%br
+		.row
+			.span12
+				%h5
+					%b
+						= "Sub Order #{sub_order.order_id}_#{ ('a'..'z').to_a[sub_order.key] }".upcase
+				-sub_total =0
+				-items = sub_order.cart_items.sort! { |a,b| a.market.name.downcase <=> b.market.name.downcase }
+				-sub_order.cart_items.where(:market_id => market.id).collect{|g| g.good.creator}.uniq.each do |farm|
+					.row-fluid			
+						.span6
+							="#{farm.name}"
+						.span2
+							= "Quantity" 
+						.span2.price
+							= "Item Price" 
+						.span2.price
+							="Total"
+					.underline
+					- sub_order.cart_items.includes(:good).where(:market_id => market.id).where('goods.creator_id = ?', farm.id).each do |item|
+						.row-fluid			
+							.span6
+								= "#{item.good.name} (#{SellingUnit.find(item.good.selling_unit_id).name})"
+							.span2
+								="#{ item.quantity}"
+							.span2.price
+								= " #{number_to_currency(item.price)}" 
+							.span2.price
+								="#{number_to_currency(item.price * item.quantity)}"
+								- sub_total = sub_total + (item.price * item.quantity)
+		%hr
+		.row
+			.span12
+				.row-fluid			
+					.span6
+						%b
+							Subtotal
+					.span2.price
+					.span2.price
+					.span2.price
+						="#{number_to_currency(sub_total)}"
+						-total = total + sub_total
+%br
+%br				
+.row
+	.span12{:style=> "border:1px solid black; padding-top: 5px; padding-bottom: 5px"}
+		Subtotal: 
+		= "#{number_to_currency(total)}"
+		%br
+		Total:
+		= "#{number_to_currency(dist_fees + total)}"

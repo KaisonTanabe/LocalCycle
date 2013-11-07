@@ -25,6 +25,12 @@
 					%hr
 					.row-fluid
 						.span6
+							="Distribution Fee:"
+						.span6.price
+							= "#{number_to_currency(market.distribution_fee)}"
+							-sub_total = sub_total +(market.distribution_fee == nil ? 0 : market.distribution_fee )
+					.row-fluid
+						.span6
 							="Subtotal:"
 						.span6.price
 							= "#{number_to_currency(sub_total)}"

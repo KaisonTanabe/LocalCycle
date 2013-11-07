@@ -76,7 +76,39 @@
 <div class="input-append bootstrap-timepicker">
   <%=f.text_field :end_time, :class=>"timepicker input-small"%>
   <span class="add-on"><i class="icon-time"></i></span>
-</div>	  
+</div>	 
+
+ 
+	</div><br/>
+	<div class="control-group">
+		<%= f.label :order_min, "Order Minumum:", class: "control-label" %>
+
+		<div class="controls controls-row">
+			$<%=f.text_field :order_min, :value => "0.0"%>
+
+	  </div>
+	</div>
+	<br/>
+
+	<div class="control-group">
+		<%= f.label :distribution_fee, "Distribution Fee:", class: "control-label" %>
+
+		<div class="controls controls-row">
+			$<%=f.text_field :distribution_fee, :value => "0.0"%>
+
+	  </div>
+	</div>
+	
+		
+	<div class="control-group">
+		<%= f.label :delivery_windows, "Delivery Window:", class: "control-label" %>
+
+
+			<%= f.fields_for :delivery_windows do |fd| %>
+			  <%= render partial: 'delivery_windows/delivery_window', locals: { f: fd } %>
+			    <%= new_child_fields_template(f, :delivery_windows, {partial: "delivery_windows/delivery_window"})%>
+			  <% end %>
+			  <span class="help-inline"><%= add_child_link "Add Window", :delivery_windows %></span>
 	</div>
 </div>
 

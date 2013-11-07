@@ -1,5 +1,21 @@
 class OrdersController < ApplicationController
 load_and_authorize_resource
+helper_method :sort_column, :sort_direction
+
+def index
+  if current_user.buyer?
+    @orders = Order.where(:user_id => current_user.id)
+    @sub_orders = Array.new
+    @orders.each do |o|
+      @sub_orders = @sub_orders + o.sub_orders
+    end
+  elsif current_user.admin?
+    @orders = Order.where('id > -1')
+    @sub_orders = SubOrder.where('id > -1')
+  end
+  @orders = filter_and_sort(@orders, params)
+
+end
 
 def show
 end
@@ -54,6 +70,21 @@ def update
     
 end
 
+private
 
+def filter_and_sort(orders, params)
+  
+  return orders.order(sort_column + " " + sort_direction)
+end
+
+def sort_column
+  sort = params[:sort] || ''
+  (sort !='') ? sort : "created_at"
+end
+
+def sort_direction
+  direction = params[:direction] || ''
+  "ASC DESC".include?(direction) ? direction : "ASC"
+end
 
 end

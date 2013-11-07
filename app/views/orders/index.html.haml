@@ -1,0 +1,24 @@
+= render "partials/ajax-modal" 
+.row
+	.span12
+		%h1
+			%a{href: "#{orders_path}"}
+				%img{class: "big-icon", src: "/assets/icon-agreements-calendar.png", alt: "Calendar Icon"} 
+				Orders
+				
+%table{id: "order-table", class: "table table-hover table-striped"}
+	%thead{id: "sorters"}
+		= render "sorters"
+	%tbody
+		-@orders.each do |order|	
+			%tr
+				%td
+					=link_to "Order ##{order.id}" , order_path(order.id)
+				%td
+					="#{order.created_at.to_formatted_s(:long)}"
+				-if current_user.admin?
+					%td
+						-if order.user !=nil
+							="#{order.user.full_name}"
+				%td
+					="#{number_to_currency(order.total)}"

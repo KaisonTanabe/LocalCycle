@@ -8,6 +8,7 @@
         <%= link_to raw('<i class="icon-list"></i> List Users'), users_path(params), class: "btn" %>
       </div>
       <h1>Editing <%= @user.full_name %>'s Profile</h1>
+
       <h6></h6>
     <% else %>
       <h1>Your <%= ROLES[current_user.role] %> Profile</h1>

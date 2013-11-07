@@ -3,13 +3,15 @@ class CartItem < ActiveRecord::Base
   after_create :calculate_price
   after_update :calculate_price
   
-  attr_accessible :quantity, :sort_order, :cart_id, :good_id, :market_id, :price, :order_id
+  attr_accessible :quantity, :sort_order, :cart_id, :good_id, :market_id, :price, :order_id, :sub_order_id
   
   belongs_to :market
   belongs_to :good
   belongs_to :cart
   belongs_to :order
+  has_one :sub_order
   
+  has_one :created_by, :through => :good
   default_scope includes(:good)
   
   private 

@@ -1,6 +1,12 @@
 Thank you! Your order has been approved. 
 %br
-= "Your order number is #{@order.transaction.authorization_code}"
+= "Your order number is #{@order.id}"
 %br
 %br
 Want to publicize your purchases?  Browse and print the following PDFs profiling the farms and goods you just purchased!
+
+%br
+%br
+Order Summary:
+=render :partial => 'summary', locals: {order: @order}
+
