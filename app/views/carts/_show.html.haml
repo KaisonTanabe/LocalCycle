@@ -8,9 +8,9 @@
 		.span12
 			-items = current_user.get_cart.cart_items.sort! { |a,b| a.market.name.downcase <=> b.market.name.downcase }
 			-items.collect{|ci| ci.market}.uniq.each do |market|
+				- sub_total = 0.0
 				%h5.center
 					= market.name if market
-				- sub_total = 0.0
 				%br
 				-current_user.get_cart.cart_items.where(:market_id => market.id).collect{|g| g.good.creator}.uniq.each do |farm|
 					="#{farm.name}"
@@ -22,20 +22,20 @@
 							.span6.price
 								= " #{number_to_currency(item.price)} x #{item.quantity}" 
 								- sub_total = sub_total + (item.price * item.quantity)
-					%hr
-					.row-fluid
-						.span6
-							="Distribution Fee:"
-						.span6.price
-							= "#{number_to_currency(market.distribution_fee)}"
-							-sub_total = sub_total +(market.distribution_fee == nil ? 0 : market.distribution_fee )
-					.row-fluid
-						.span6
-							="Subtotal:"
-						.span6.price
-							= "#{number_to_currency(sub_total)}"
-							- total = total + sub_total
-					%br
+				%hr
+				.row-fluid
+					.span6
+						="Distribution Fee:"
+					.span6.price
+						= "#{number_to_currency(market.distribution_fee)}"
+						-sub_total = sub_total +(market.distribution_fee == nil ? 0 : market.distribution_fee )
+				.row-fluid
+					.span6
+						="Subtotal:"
+					.span6.price
+						= "#{number_to_currency(sub_total)}"
+						- total = total + sub_total
+				%br
 					
 			.underline
 			.row-fluid
