@@ -9,7 +9,6 @@
   <%= f.label :network, "Network:", class: "req control-label" %>
   <div class="controls controls-row">
     <%= f.select :network_id, Network.all.collect{|n|  [n.name, n.id]}, class: "span4", rows: "2" %>
-    <span class="help-block">Limited to 120 characters.</span>
   </div>
 </div>
 
@@ -36,14 +35,6 @@
   </div>
 </div>
 
-<div class="control-group">
-  <%= f.label :pic, "Distribution Point Pic:", class: "control-label" %>
-  <div class="controls controls-row">
-    <%= (image_tag f.object.pic.url(:medium)) if f.object.pic? %>
-    <%= f.file_field :pic, class: "span4" %>
-    <span class="help-block">Upload an image to represent this distribution point. 4MB Limit.</span>
-  </div>
-</div>
 
 <div class="control-group">
 	<%= f.label :day_of_week, "Day of Week:", class: "control-label" %>
