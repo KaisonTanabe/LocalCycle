@@ -23,7 +23,7 @@
 				-dist_fees = dist_fees + (order.sub_orders.where(:market_id => market.id).first.dist_cost == nil ? 0 : order.sub_orders.where(:market_id => market.id).first.dist_cost)
 			%hr
 			%br
-			-order.sub_orders.where(:market_id => market.id).each do |sub_order|
+			-order.sub_orders.where(:market_id => market.id).uniq.each do |sub_order|
 				.row
 					.span12
 						%h5
