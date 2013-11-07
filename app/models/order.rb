@@ -41,7 +41,7 @@ class Order < ActiveRecord::Base
        sub_key = "#{item.good.creator_id}_#{item.market_id}"
        if(sub_order_hash.keys.include?(sub_key))
          item.sub_order_id = SubOrder.where(:order_id => id, :market_id => item.market_id, :producer_id => item.good.creator_id).first.id
-         sub_order_totals[item.sub_order_id] =  sub_order_totals[s_o.id] + (item.quantity * item.price)
+         sub_order_totals[item.sub_order_id] =  sub_order_totals[item.sub_order_id] + (item.quantity * item.price)
          
       else
         s_o= SubOrder.create(:order_id => id, :market_id => item.market_id, :producer_id => item.good.creator_id, :key =>sub_id.index(sub_key), :dist_cost => item.market.distribution_fee, :market_date=> item.market.next_market, :delivery_window_day => (item.market.delivery_windows.first == nil ? -1 : item.market.delivery_windows.first.weekday),:delivery_window_start => (item.market.delivery_windows.first == nil ? -1 : item.market.delivery_windows.first.start_hour), :delivery_window_end => (item.market.delivery_windows.first == nil ? -1 : item.market.delivery_windows.first.end_hour))
