@@ -31,17 +31,14 @@
 				<%end%>
 			</div>
 		</div>
-    <% if date !=nil && @market.start_orders != nil %>
-			<% if Date.current < date-@market.start_orders.hours || Date.current > date-(@market.end_orders == nil ? 0 : @market.end_orders.hours) %>
-				<h5><%= "Orders are not currently being taken for this market." %><br/><%="This market will open again for orders from <b>#{(date-@market.start_orders.hours).to_formatted_s(:long)} to #{(date-(@market.end_orders == nil ? 0 : @market.end_orders.hours)).to_formatted_s(:long)}</b>".html_safe%></h5>
-			<%end%>
-		<%else%>
 		
     	<div id="error-div"></div>
     	<%= render "cert_filters" %>
 
     	<%= render "partials/filters" %>
-
+			<% if date !=nil && @market.start_orders != nil && Date.current < date-@market.start_orders.hours || Date.current > date-(@market.end_orders == nil ? 0 : @market.end_orders.hours) %>
+				<h5><%= "Orders are not currently being taken for this market." %><br/><%="This market will open again for orders from <b>#{(date-@market.start_orders.hours).to_formatted_s(:long)} to #{(date-(@market.end_orders == nil ? 0 : @market.end_orders.hours)).to_formatted_s(:long)}</b>".html_safe%></h5>
+			<%else%>
     	<table id="good-table" class="table table-hover table-striped">
 
   	    <thead id="sorters">
@@ -67,6 +64,7 @@
       <%= will_paginate @goods %>
     </div>
 <%end%>
+
   </div>
 	<div class="span3">
 		<%= render :partial => 'carts/show' %>

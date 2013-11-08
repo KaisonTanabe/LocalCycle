@@ -20,15 +20,14 @@
   <div class="span9 to_replace">
 		Available Distribution Points: <%= select :market, :id, current_user.markets.where(:network_id => @network.id).collect{|n| [n.name, n.id]}, :class=> "buyer_market_select"%>
 		<% date =@market.next_market%>
-		<% if date !=nil && @market.start_orders != nil %>
-			<% if Date.current < date-@market.start_orders.hours || Date.current > date-(@market.end_orders == nil ? 0 : @market.end_orders.hours) %>
-				<h5><%= "Orders are not currently being taken for this market." %><br/><%="This market will open again for orders from <b>#{(date-@market.start_orders.hours).to_formatted_s(:long)} to #{(date-(@market.end_orders == nil ? 0 : @market.end_orders.hours)).to_formatted_s(:long)}</b>".html_safe%></h5>
-			<%end%>
-		<%else%>
-		
+	
+			
   	<%= render "cert_filters" %>
 
     <%= render "partials/filters" %>
+		<% if date !=nil && @market.start_orders != nil && Date.current < date-@market.start_orders.hours || Date.current > date-(@market.end_orders == nil ? 0 : @market.end_orders.hours) %>
+			<h5><%= "Orders are not currently being taken for this market." %><br/><%="This market will open again for orders from <b>#{(date-@market.start_orders.hours).to_formatted_s(:long)} to #{(date-(@market.end_orders == nil ? 0 : @market.end_orders.hours)).to_formatted_s(:long)}</b>".html_safe%></h5>
+		<%else%>
     <div class="products">
       <% if @product_goods.any? %>
         <% @product_goods.each do |p, goods| %>
@@ -49,7 +48,8 @@
 
 			
     </div>
-<%end%>
+		<%end%>
+
 	</div>
 		<div class="span3">
 			<%= render :partial => 'carts/show' %>
