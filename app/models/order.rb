@@ -18,6 +18,10 @@ class Order < ActiveRecord::Base
     producers =cart_items.collect{|i| i.created_by}.uniq
    end
   
+   def markets
+    markets = sub_orders.collect{|s| s.market}.uniq
+   end
+   
    def finalize_transaction auth
      
      self.transaction.amount = total

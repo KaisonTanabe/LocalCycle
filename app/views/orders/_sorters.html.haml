@@ -3,7 +3,7 @@
 		=  sortable "id", "Order #", parsed_params
 	%th
 		= sortable "created_at", "Order Date", parsed_params
-	-if current_user.admin?
+	-if current_user.admin? || current_user.market_manager?
 		%th
 			= sortable "user", "Buyer", parsed_params
 	%th

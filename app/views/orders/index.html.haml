@@ -10,15 +10,31 @@
 	%thead{id: "sorters"}
 		= render "sorters"
 	%tbody
-		-@orders.each do |order|	
-			%tr
-				%td
-					=link_to "Order ##{order.id}" , order_path(order.id)
-				%td
-					="#{order.created_at.to_formatted_s(:long)}"
-				-if current_user.admin?
+		-@orders.each do |order|
+			- if current_user.market_manager?
+				-order.markets.each do |m|
+					-if current_user.markets.include?(m)
+						-mark = Market.find(m)
+						%tr
+							%td
+								=link_to "Order ##{order.id}_#{mark.name}" , order_path(order.id, :set_market=> mark.id)
+							%td
+								="#{order.created_at.to_formatted_s(:long)}"
+							-if current_user.admin? || current_user.market_manager?
+								%td
+									-if order.user !=nil
+										="#{order.user.full_name}"
+							%td
+								="#{number_to_currency(order.total)}"
+			-else				
+				%tr
 					%td
-						-if order.user !=nil
-							="#{order.user.full_name}"
-				%td
-					="#{number_to_currency(order.total)}"
+						=link_to "Order ##{order.id}" , order_path(order.id)
+					%td
+						="#{order.created_at.to_formatted_s(:long)}"
+					-if current_user.admin? || current_user.market_manager?
+						%td
+							-if order.user !=nil
+								="#{order.user.full_name}"
+					%td
+						="#{number_to_currency(order.total)}"

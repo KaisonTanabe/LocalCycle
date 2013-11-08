@@ -13,6 +13,10 @@ def index
   elsif current_user.admin?
     @orders = Order.where('id > -1')
     @sub_orders = SubOrder.where('id > -1')
+  elsif current_user.market_manager?
+    @sub_orders = SubOrder.where("market_id in (#{current_user.market_ids.map(&:inspect).join(', ')})")
+    @orders = Order.where("id in (#{@sub_orders.collect{|c| c.order.id}.map(&:inspect).join(', ')})")
+  
   end
   @orders = filter_and_sort(@orders, params)
 

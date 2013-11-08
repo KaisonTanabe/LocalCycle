@@ -6,11 +6,14 @@ def index
     
   if current_user.producer?
     @sub_orders = SubOrder.where(:producer_id => current_user.id)
-  elsif current_user.market_manager?
-    @sub_orders = SubOrder.where("market_id in #{current.user.market_ids}" )
-  else
+  elsif current_user.admin?
     @orders = Order.where('orders.id > -1')
     @sub_orders = SubOrder.where('sub_orders.id > -1')
+  elsif current_user.market_manager?
+    @sub_orders = SubOrder.where("market_id in (#{current_user.market_ids.map(&:inspect).join(', ')})")
+    @orders = Order.where("id in (#{@sub_orders.collect{|c| c.order.id}.map(&:inspect).join(', ')})")
+
+  
   end
   @sub_orders = filter_and_sort(@sub_orders, params)
 

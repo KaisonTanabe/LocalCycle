@@ -14,7 +14,14 @@
   <li><%= link_to raw('<i class="icon-th-large"></i> Fresh this Week'), marketplace_goods_path %></li>
   <li><%= link_to raw('<i class="icon-list-alt"></i> Wish List'), wishlist_path(current_user.get_wishlist) %></li>
   <li><%= link_to raw('<i class="icon-shopping-cart"></i> Cart'), checkout_cart_path(current_user.get_cart) %></li>
-  <li><%= link_to raw(' My Orders'), orders_path %></li>
+	<li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog"></i> My Orders <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+		  <li><%= link_to raw(' Orders'), orders_path %></li>
+		  <li><%= link_to raw(' Sub Orders'), sub_orders_path %></li>
+
+	    </ul>
+	  </li>
 
   <% end %>
   
@@ -50,7 +57,7 @@
 -->
     </ul>
   </li>
-  <% if current_user.admin? %>
+  <% if current_user.admin? || current_user.market_manager?%>
 
   	<li class="dropdown">
 	    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog"></i> Order History <b class="caret"></b></a>
