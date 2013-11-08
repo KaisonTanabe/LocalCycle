@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
 load_and_authorize_resource
 helper_method :sort_column, :sort_direction
+include ActionView::Helpers::NumberHelper
 
 def index
   if current_user.buyer?
@@ -21,6 +22,22 @@ def show
 end
 
 def edit
+  @cart = current_user.get_cart
+  items = current_user.get_cart.cart_items.sort! { |a,b| a.market.name.downcase <=> b.market.name.downcase }
+	items.collect{|ci| ci.market}.uniq.each do |market|
+	  
+	  market_total = 0.0
+		current_user.get_cart.cart_items.where(:market_id => market.id).each do |item|
+			 market_total = market_total + (item.price * item.quantity)
+		end
+		if market_total < (market.order_min == nil ? 0 : market.order_min)
+	    flash[:error] = "#{market.name} minimum order is #{number_to_currency(market.order_min)}. Please add more to your cart to checkout." 
+	    render 'carts/checkout'
+	    return
+	  end
+	  
+	end
+	
   @order.build_transaction
   if (@order.address == nil)
     @order.build_address
