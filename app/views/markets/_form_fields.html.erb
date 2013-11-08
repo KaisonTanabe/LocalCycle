@@ -93,7 +93,7 @@
 		<%= f.label :order_min, "Order Minumum:", class: "control-label" %>
 
 		<div class="controls controls-row">
-			$<%=f.text_field :order_min, :value => "0.0"%>
+			$<%=f.text_field :order_min, :value => (f.object.order_min ? f.object.order_min : "0.0")%>
 
 	  </div>
 	</div>
@@ -103,7 +103,7 @@
 		<%= f.label :distribution_fee, "Distribution Fee:", class: "control-label" %>
 
 		<div class="controls controls-row">
-			$<%=f.text_field :distribution_fee, :value => "0.0"%>
+			$<%=f.text_field :distribution_fee, :value => (f.object.distribution_fee ? f.object.distribution_fee : "0.0")%>
 
 	  </div>
 	</div>
