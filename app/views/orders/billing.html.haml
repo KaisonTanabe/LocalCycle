@@ -5,11 +5,11 @@
 			%br
 	.span4
 		%h1
-			= "Total: #{number_to_currency(@order.cart.total)}"
+			= "Total: #{number_to_currency(@order.cart.total + @order.cart.dist_fees)}"
 
 
 = form_for @order do |f|
-	=f.hidden_field :total, :value=>@order.cart.total
+	=f.hidden_field :total, :value=>@order.cart.total+ @order.cart.dist_fees
 	= f.fields_for :address do |a|
 		.row-fluid.well
 			.span12

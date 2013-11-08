@@ -30,9 +30,10 @@
 					= "Pickup #{market.start_time} - #{market.end_time}, #{market.day_of_week}"
 				
 
-				- sub_total = 0.0
 				%br
 				-current_user.get_cart.cart_items.where(:market_id => market.id).collect{|g| g.good.creator}.uniq.each do |farm|
+					- sub_total = 0.0
+				
 					%h4
 						="#{farm.name}"
 					%h5
@@ -66,11 +67,20 @@
 				.span2.offset9
 					%h5
 						%br
+						="Distribution Fee:"
+				.span1.price
+					%h5
+						%br
+						= "#{number_to_currency(current_user.get_cart.dist_fees)}"
+			.row-fluid
+				.span2.offset9
+					%h5
+						%br
 						="Order Total:"
 				.span1.price
 					%h5
 						%br
-						= "#{number_to_currency(total)}"
+						= "#{number_to_currency(total +current_user.get_cart.dist_fees)}"
 
 			.row-fluid
 				.span9

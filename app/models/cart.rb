@@ -23,6 +23,15 @@ class Cart < ActiveRecord::Base
     total
   end
   
+  def dist_fees
+    fee =0
+    cart_items.collect{|c| c.market}.uniq.each do |m|
+      fee = fee + m.distribution_fee
+    end
+    fee
+    
+  end
+  
   private 
   
   
