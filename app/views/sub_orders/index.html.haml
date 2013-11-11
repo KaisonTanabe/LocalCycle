@@ -15,7 +15,7 @@
 				%td
 					=link_to "#{sub_order.order_id}__#{ ('a'..'z').to_a[sub_order.key] }".upcase, sub_order
 				%td
-					="#{sub_order.created_at.to_formatted_s(:long)}"
+					="#{sub_order.created_at.strftime('%B %e, %Y %l:%M:%p')}"
 				- if !current_user.producer?
 					%td
 						-if sub_order.user !=nil
@@ -26,6 +26,6 @@
 				%td
 					="#{sub_order.market.name}"
 				%td
-					="#{sub_order.market_date.to_formatted_s(:long)}"
+					="#{sub_order.market_date.strftime('%B %e, %Y %l:%M:%p')  if sub_order.market_date} "
 				%td
 					="#{number_to_currency(sub_order.total)}"
