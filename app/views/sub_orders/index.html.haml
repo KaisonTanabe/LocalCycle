@@ -23,6 +23,9 @@
 				%td
 					-if sub_order.order.user !=nil
 						="#{sub_order.order.user.full_name}"
-
+				%td
+					="#{sub_order.market.name}"
+				%td
+					="#{sub_order.market_date.to_formatted_s(:long)}"
 				%td
 					="#{number_to_currency(sub_order.total)}"
