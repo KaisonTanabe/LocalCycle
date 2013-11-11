@@ -14,6 +14,12 @@ class GoodsController < ApplicationController
     @goods = Good.scoped.includes(:product, :price_points).where(:wishlist_id => nil)
     @cat_id =  params.has_key?(:cat_id) ? params[:cat_id] : nil
 
+    #toggle off good
+    @goods.where("goods.start_date > ? or goods.end_date < ?", Date.current,Date.current).each do |g|
+      g.available = false
+      g.save
+    end
+    
     if current_user.buyer? && current_user.networks.length >0
         @network = Network.find( params.has_key?(:network_id) ? params[:network_id] : current_user.networks.first.id )
         @market = params.has_key?(:market_id) ? Market.find(params[:market_id]) : current_user.markets.where(:network_id => @network.id).first
@@ -43,6 +49,11 @@ class GoodsController < ApplicationController
     
     @goods = @goods.by_creator(current_user) if current_user.producer?
 
+    #toggle off good
+    @goods.where("goods.start_date > ? or goods.end_date < ?", Date.current,Date.current).each do |g|
+      g.available = false
+      g.save
+    end
 
     if current_user.buyer? 
         @network = Network.find( params.has_key?(:network_id) ? params[:network_id] : current_user.networks.first.id )
