@@ -7,7 +7,7 @@
       <%= link_to raw('<span class="icon-question-sign"></span>'), "#", class: "btn" %>
     </div>
     
-		<h1><a href="<%= goods_path%>"><img class="big-icon" src="/assets/icon-mrkt.png" alt="Marketplace Icon" />  <%= params['cat_id'].blank? ? "Produce For Sale" : Category.where(id: params["cat_id"].to_i).first.name %> <%= raw("<small>(" + pluralize(@goods.count, 'result') + ")</small>") %></a></h1>
+		<h1><a href="<%= marketplace_goods_path%>"><img class="big-icon" src="/assets/icon-mrkt.png" alt="Marketplace Icon" />  <%= params['cat_id'].blank? ? "Produce For Sale" : Category.where(id: params["cat_id"].to_i).first.name %> <%= raw("<small>(" + pluralize(@goods.count, 'result') + ")</small>") %></a></h1>
 		<%= hidden_field_tag :product_view, 'marketplace'%>
 		<div <%= " style=visibility:hidden;height:0px !important;" if current_user.networks.count == 1  %> >
 		
