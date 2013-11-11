@@ -51,6 +51,7 @@ class Ability
       can [:show], Wishlist, user_id: user.id
       can [:edit, :show, :update], Order, user_id: user.id
       can [:index, :show], Order
+      can [:index, :show], SubOrder
       
     end
     
