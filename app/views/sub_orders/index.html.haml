@@ -28,4 +28,7 @@
 				%td
 					="#{sub_order.market_date.strftime('%B %e, %Y %l:%M:%p')  if sub_order.market_date} "
 				%td
-					="#{number_to_currency(sub_order.total)}"
+					-if current_user.producer?
+						="#{number_to_currency(sub_order.producer_total)}"
+					-else
+						="#{number_to_currency(sub_order.total)}"

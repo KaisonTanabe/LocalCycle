@@ -35,6 +35,13 @@
   </div>
 </div>
 
+<div class="control-group">
+  <%= f.label :markup, "Good Markup", class: "control-label" %>
+  <div class="controls controls-row">
+    <%=f.number_field :markup, :min => 0, :max=> 100, :step => 0.01, :value => (f.object.markup ? f.object.markup : "0.0")%>%
+	  
+  </div>
+</div>
 
 <div class="control-group">
 	<%= f.label :day_of_week, "Day of Week:", class: "control-label" %>

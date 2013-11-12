@@ -36,7 +36,7 @@ def add_item
        render :text => "Not enough quantity available"
         return
      end
-     CartItem.create(:good_id => params[:good_id], :quantity => params[:qty], :market_id => params[:market_id], :cart_id => @cart.id)
+     CartItem.create(:good_id => params[:good_id], :quantity => params[:qty], :market_id => params[:market_id], :cart_id => @cart.id, :markup=> (Market.find(params[:market_id]).markup == nil ? 0 : Market.find(params[:market_id]).markup))
    else     
      if(Good.find(params[:good_id]).quantity.to_i < calc_use + params[:qty].to_i)
        render :text => "Not enough quantity available"
@@ -62,7 +62,7 @@ def checkout
 	  
 	  market_total = 0.0
 		@cart.cart_items.where(:market_id => market.id).each do |item|
-			 market_total = market_total + (item.price * item.quantity)
+			 market_total = market_total + ((item.price+ (item.price*item.markup/100)) * item.quantity)
 		end
 		if market_total < (market.order_min == nil ? 0 : market.order_min)
 	    flash[:error] = "#{market.name} minimum order is #{number_to_currency(market.order_min)}. Please add more to your cart to checkout." 

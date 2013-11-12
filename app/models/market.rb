@@ -24,7 +24,7 @@ class Market < ActiveRecord::Base
   attr_accessible :name, :brief, :description, :pic, :phone,
     :billing_street_address_1, :billing_street_address_2, 
     :billing_city, :billing_state, :billing_country, :billing_zip,
-    :website, :twitter, :facebook, :delivery_windows_attributes, :network_id, :day_of_week, :cycle, :start_time, :end_time, :distribution_fee, :order_min, :start_orders, :end_orders
+    :website, :twitter, :facebook, :delivery_windows_attributes, :network_id, :day_of_week, :cycle, :start_time, :end_time, :distribution_fee, :order_min, :start_orders, :end_orders, :markup
 
   ## ATTRIBUTE VALIDATION
 

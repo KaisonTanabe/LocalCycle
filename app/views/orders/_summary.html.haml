@@ -51,10 +51,10 @@
 									.span2
 										="#{ item.quantity}"
 									.span2.price
-										= " #{number_to_currency(item.price)}" 
+										= " #{number_to_currency( (item.price+(item.price*item.markup/100))  )}" 
 									.span2.price
-										="#{number_to_currency(item.price * item.quantity)}"
-										- sub_total = sub_total + (item.price * item.quantity)
+										="#{number_to_currency((item.price+(item.price*item.markup/100))   * item.quantity)}"
+										- sub_total = sub_total + ((item.price+(item.price*item.markup/100)) * item.quantity)
 				%hr
 				.row
 					.span12

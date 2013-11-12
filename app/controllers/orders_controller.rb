@@ -32,7 +32,7 @@ def edit
 	  
 	  market_total = 0.0
 		current_user.get_cart.cart_items.where(:market_id => market.id).each do |item|
-			 market_total = market_total + (item.price * item.quantity)
+			 market_total = market_total + ((item.price + (item.price*item.markup/100))* item.quantity)
 		end
 		if market_total < (market.order_min == nil ? 0 : market.order_min)
 	    flash[:error] = "#{market.name} minimum order is #{number_to_currency(market.order_min)}. Please add more to your cart to checkout." 

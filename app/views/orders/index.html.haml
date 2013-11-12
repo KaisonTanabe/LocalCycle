@@ -25,7 +25,10 @@
 									-if order.user !=nil
 										="#{order.user.full_name}"
 							%td
-								="#{number_to_currency(order.total)}"
+								- if current_user.producer? 
+									="#{number_to_currency(order.producer_total)}"
+								-else
+									="#{number_to_currency(order.total)}"
 			-else				
 				%tr
 					%td

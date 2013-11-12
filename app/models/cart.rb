@@ -18,10 +18,19 @@ class Cart < ActiveRecord::Base
   def total
      total =0.0
 		cart_items.includes(:good).each do |item|
+	    total = total + ((item.price+ (item.price*item.markup/100)) * item.quantity)
+	  end
+    total
+  end
+  
+  def producer_total
+     total =0.0
+		cart_items.includes(:good).each do |item|
 	    total = total + (item.price * item.quantity)
 	  end
     total
   end
+  
   
   def dist_fees
     fee =0
