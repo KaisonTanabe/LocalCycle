@@ -17,19 +17,21 @@ class Order < ActiveRecord::Base
    def producer_total_by_market(market_id)
      total =0 
      cart_items.each do |item|
-       total = total + item.price  if item.market_id == market_id
+       total = total + item.price*item.quantity  if item.market_id == market_id
      end
-
+     total = total + (sub_orders.where(:market_id => market_id).first.dist_cost ? sub_orders.where(:market_id => market_id).first.dist_cost : 0)
+     
   end
  
-   def total_by_market(market_id)
+  def total_by_market(market_id)
     total =0 
     cart_items.each do |item|
-      if item.market_id == market_id
-        total = total + (item.price + (item.price *item.markup/100)) 
-      end
-    end 
-   end
+      markup = item.markup == nil ? 0 : item.markup
+      total = total + (item.price+(item.price*markup/100))*item.quantity  if item.market_id == market_id
+    end
+    total = total + (sub_orders.where(:market_id => market_id).first.dist_cost ? sub_orders.where(:market_id => market_id).first.dist_cost : 0)
+  end
+
    
    def producers
     producers =cart_items.collect{|i| i.created_by}.uniq
