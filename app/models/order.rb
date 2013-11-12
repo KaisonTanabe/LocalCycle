@@ -25,7 +25,9 @@ class Order < ActiveRecord::Base
    def total_by_market(market_id)
     total =0 
     cart_items.each do |item|
-      total = total + (item.price + (item.price *(item.markup /100))) if item.market_id == market_id
+      if item.market_id == market_id
+        total = total + (item.price + (item.price *item.markup/100)) 
+      end
     end 
    end
    
