@@ -7,8 +7,8 @@ class Order < ActiveRecord::Base
    belongs_to :user
    
    has_one :cart
-   has_many :cart_items
-   has_many :sub_orders
+   has_many :cart_items, :dependent => :destroy
+   has_many :sub_orders, :dependent => :destroy
    
    accepts_nested_attributes_for :transaction, :address
    

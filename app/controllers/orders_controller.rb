@@ -94,6 +94,11 @@ def update
     
 end
 
+def destroy
+  @order.destroy
+  redirect_to :back
+end
+
 private
 
 def filter_and_sort(orders, params)
@@ -110,5 +115,8 @@ def sort_direction
   direction = params[:direction] || ''
   "ASC DESC".include?(direction) ? direction : "ASC"
 end
+
+
+
 
 end

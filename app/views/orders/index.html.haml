@@ -17,6 +17,7 @@
 						-mark = Market.find(m)
 						%tr
 							%td
+								= link_to "<i class='icon-trash'></i>".html_safe, order, :method =>:delete, :confirm=>"Are you sure you want to delete this order?"
 								=link_to "Order ##{order.id}_#{mark.name}" , order_path(order.id, :set_market=> mark.id)
 							%td
 								="#{order.created_at.to_formatted_s(:long)}"
@@ -37,6 +38,8 @@
 			-else				
 				%tr
 					%td
+						= link_to "<i class='icon-trash'></i>".html_safe, order, :method =>:delete, :confirm=>"Are you sure you want to delete this order?" if current_user.admin?
+						
 						=link_to "Order ##{order.id}" , order_path(order.id)
 					%td
 						="#{order.created_at.to_formatted_s(:long)}"
