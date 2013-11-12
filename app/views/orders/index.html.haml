@@ -24,11 +24,14 @@
 								%td
 									-if order.user !=nil
 										="#{order.user.full_name}"
+								%td
+									="#{number_to_currency(order.producer_total_by_market(mark.id))}"
+								%td
+									- pt = order.producer_total == nil ? 0 : order.producer_total
+									- t = order.total == nil ? 0 : order.total
+									="#{number_to_currency(t - pt)}"
 							%td
-								- if current_user.producer? 
-									="#{number_to_currency(order.producer_total)}"
-								-else
-									="#{number_to_currency(order.total)}"
+								="#{number_to_currency(order.total_by_market(mark.id))}"
 			-else				
 				%tr
 					%td
@@ -39,5 +42,12 @@
 						%td
 							-if order.user !=nil
 								="#{order.user.full_name}"
+						%td
+							="#{number_to_currency(order.producer_total)}"
+						%td
+							- pt = order.producer_total == nil ? 0 : order.producer_total
+							- t = order.total == nil ? 0 : order.total
+
+							="#{number_to_currency(t - pt)}"
 					%td
 						="#{number_to_currency(order.total)}"

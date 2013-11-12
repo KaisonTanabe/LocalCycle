@@ -14,6 +14,21 @@ class Order < ActiveRecord::Base
    
    default_scope includes(:cart_items)
  
+   def producer_total_by_market(market_id)
+     total =0 
+     cart_items.each do |item|
+       total = total + item.price  if item.market_id == market_id
+     end
+
+  end
+ 
+   def total_by_market(market_id)
+    total =0 
+    cart_items.each do |item|
+      total = total + (item.price + (item.price *(item.markup /100))) if item.market_id == market_id
+    end 
+   end
+   
    def producers
     producers =cart_items.collect{|i| i.created_by}.uniq
    end

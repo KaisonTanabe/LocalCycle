@@ -27,6 +27,13 @@
 					="#{sub_order.market.name}"
 				%td
 					="#{sub_order.market_date.strftime('%B %e, %Y %l:%M:%p')  if sub_order.market_date} "
+				-if current_user.admin? || current_user.market_manager?
+					%td
+						="#{number_to_currency(sub_order.producer_total)}"
+					%td
+						- pt = sub_order.producer_total == nil ? 0 : sub_order.producer_total
+						- t = sub_order.total == nil ? 0 : sub_order.total
+						="#{number_to_currency(t-pt)}"
 				%td
 					-if current_user.producer?
 						="#{number_to_currency(sub_order.producer_total)}"

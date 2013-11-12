@@ -12,5 +12,11 @@
 		= sortable "market.name", "Distribution Point", parsed_params
 	%th
 		= sortable "market_date", "Distribution Point Date", parsed_params
+	-if current_user.admin? || current_user.market_manager?
+		%th
+			= sortable "producer_total", "Producer Total", parsed_params
+		%th
+			=  "Markup ($)"
+	
 	%th
-		= sortable "total", "Amount", parsed_params
+		= sortable "total", "Total", parsed_params
