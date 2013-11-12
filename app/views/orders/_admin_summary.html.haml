@@ -52,6 +52,7 @@
 
 							.underline
 							- sub_order.cart_items.includes(:good).where(:market_id => market.id).where('goods.creator_id = ?', farm.id).each do |item|
+								-markup = item.markup == nil ? 0 : item.markup
 								.row-fluid			
 									.span3
 										= "#{item.good.name} (#{SellingUnit.find(item.good.selling_unit_id).name})"
@@ -60,13 +61,13 @@
 									.span2.price
 										= " #{number_to_currency( item.price)}" 
 									.span2.price
-										= " #{number_to_currency( (item.price+(item.price*item.markup/100))  )}" 
+										= " #{number_to_currency( (item.price+(item.price*markup/100))  )}" 
 									.span2.price
-										="#{number_to_currency((item.price+(item.price*item.markup/100))   * item.quantity)}"
-										- sub_total = sub_total + ((item.price+(item.price*item.markup/100)) * item.quantity)
+										="#{number_to_currency((item.price+(item.price*markup/100))   * item.quantity)}"
+										- sub_total = sub_total + ((item.price+(item.price*markup/100)) * item.quantity)
 									.span2.price
-										="#{number_to_currency(((item.price+(item.price*item.markup/100)) * item.quantity)-item.price*item.quantity)}"
-										-markup_total = markup_total +(((item.price+(item.price*item.markup/100)) * item.quantity)-item.price*item.quantity)
+										="#{number_to_currency(((item.price+(item.price*markup/100)) * item.quantity)-item.price*item.quantity)}"
+										-markup_total = markup_total +(((item.price+(item.price*markup/100)) * item.quantity)-item.price*item.quantity)
 									
 				%hr
 				.row
