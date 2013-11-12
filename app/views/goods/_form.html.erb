@@ -50,7 +50,7 @@
   <div class="control-group">
     <%= f.label :quantity, "Quantity:", class: "control-label" %>
     <div class="controls-row controls">
-      <%= f.input :quantity, placeholder: "Qty", class: "span2" %>
+      <%= f.number_field :quantity, placeholder: "Qty", class: "span2" %>
       <%= f.select :selling_unit_id, SellingUnit.all.map {|s| [s.name, s.id]}, {prompt: "Unit"}, {class: "span2"} %>
     </div>
   </div>
