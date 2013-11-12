@@ -41,6 +41,7 @@
 							="Total"
 					.underline
 					- sub_order.cart_items.includes(:good).where(:market_id => market.id).where('goods.creator_id = ?', farm.id).each do |item|
+						-markup = item.markup == nil ? 0 : item.markup
 						.row-fluid			
 							.span6
 								= "#{item.good.name} (#{SellingUnit.find(item.good.selling_unit_id).name})"
@@ -50,13 +51,12 @@
 								- if current_user.producer?
 									= " #{number_to_currency(item.price)}" 
 								-else
-									= " #{number_to_currency((item.price+(item.price*item.markup/100))  )}" 
+									= " #{number_to_currency((item.price+(item.price*markup/100))  )}" 
 							.span2.price
 								- if current_user.producer?
 									="#{number_to_currency(item.price * item.quantity)}"
 									- sub_total = sub_total + (item.price * item.quantity)
 								-else
-									-markup = item.markup == nil ? 0 : item.markup
 									="#{number_to_currency((item.price+(item.price*markup/100))* item.quantity  )}"
 									- sub_total = sub_total + ((item.price+(item.price*markup/100))* item.quantity)
 								
