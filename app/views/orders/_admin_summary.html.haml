@@ -1,0 +1,99 @@
+%br
+=link_to "Print This Page", '#', :class=> "print_page"
+
+%br
+
+-total=0
+-dist_fees =0
+-order.sub_orders.map{|o| o.market_id}.uniq.each do |m|
+
+	- next if params.has_key?(:set_market)  && params[:set_market] != m.to_s
+	-market = Market.find(m)
+	%br
+	.row
+		.span12{:style=> "border:1px solid black; padding-top: 5px; padding-bottom: 5px"}
+			%b
+				="Distribution Point: #{market.name}"
+				%br
+				="Distribution Point Date: #{order.sub_orders.where(:market_id => market.id).first.market_date.to_formatted_s(:long)}"
+				%br
+				="Delivery Window: "
+				-if order.sub_orders.where(:market_id => market.id).first.delivery_window_day != -1
+					="#{WEEKDAYS[order.sub_orders.where(:market_id => market.id).first.delivery_window_day] }  -   #{NORMAL_HOURS[order.sub_orders.where(:market_id => market.id).first.delivery_window_start]}  to  #{NORMAL_HOURS[order.sub_orders.where(:market_id => market.id).first.delivery_window_end]}"
+				%br
+				="Distribution Fee: #{number_to_currency(order.sub_orders.where(:market_id => market.id).first.dist_cost)}"
+				-dist_fees = dist_fees + (order.sub_orders.where(:market_id => market.id).first.dist_cost == nil ? 0 : order.sub_orders.where(:market_id => market.id).first.dist_cost)
+			%hr
+			%br
+			-order.sub_orders.where(:market_id => market.id).uniq.each do |sub_order|
+				.row
+					.span12
+						%h5
+							%b
+								= "Sub Order #{sub_order.order_id}_#{ ('a'..'z').to_a[sub_order.key] }".upcase
+						-sub_total =0
+						-markup_total =0
+
+						-items = sub_order.cart_items.sort! { |a,b| a.market.name.downcase <=> b.market.name.downcase }
+						-sub_order.cart_items.where(:market_id => market.id).collect{|g| g.good.creator}.uniq.each do |farm|
+							.row-fluid			
+								.span3
+									="#{farm.name}"
+								.span1
+									= "Quantity" 
+								.span2.price
+									= "Producer Price" 
+								.span2.price
+									= "Item Price" 
+								.span2.price
+									="Total"
+								.span2.price
+									="Total Markup"
+
+							.underline
+							- sub_order.cart_items.includes(:good).where(:market_id => market.id).where('goods.creator_id = ?', farm.id).each do |item|
+								.row-fluid			
+									.span3
+										= "#{item.good.name} (#{SellingUnit.find(item.good.selling_unit_id).name})"
+									.span1
+										="#{ item.quantity}"
+									.span2.price
+										= " #{number_to_currency( item.price)}" 
+									.span2.price
+										= " #{number_to_currency( (item.price+(item.price*item.markup/100))  )}" 
+									.span2.price
+										="#{number_to_currency((item.price+(item.price*item.markup/100))   * item.quantity)}"
+										- sub_total = sub_total + ((item.price+(item.price*item.markup/100)) * item.quantity)
+									.span2.price
+										="#{number_to_currency(((item.price+(item.price*item.markup/100)) * item.quantity)-item.price*item.quantity)}"
+										-markup_total = markup_total +(((item.price+(item.price*item.markup/100)) * item.quantity)-item.price*item.quantity)
+									
+				%hr
+				.row
+					.span12
+						.row-fluid			
+							.span4
+								%b
+									Subtotal
+							.span2.price
+							.span2.price
+							.span2.price
+								="#{number_to_currency(sub_total)}"
+								-total = total + sub_total
+							.span2.price
+								="#{number_to_currency(markup_total)}"
+								
+%br
+%br				
+.row
+	.span12{:style=> "border:1px solid black; padding-top: 5px; padding-bottom: 5px"}
+		Distribution Fees: 
+		= "#{number_to_currency(dist_fees)}"
+		%br
+		Subtotal: 
+		= "#{number_to_currency(total)}"
+		%br
+		Total:
+		= "#{number_to_currency(dist_fees + total)}"
+		%br
+		= "** Totals do not reflect total order. This summary is only for #{Market.find(params[:set_market]).name}" if params.has_key?(:set_market)

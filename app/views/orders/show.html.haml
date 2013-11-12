@@ -1,1 +1,4 @@
-= render :partial =>'summary', :locals=>{:order => @order}
+-if current_user.admin? || current_user.market_manager?
+	= render :partial =>'admin_summary', :locals=>{:order => @order} 
+-else
+	= render :partial =>'summary', :locals=>{:order => @order}

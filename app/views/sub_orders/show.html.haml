@@ -1,1 +1,5 @@
-= render :partial=>'summary', :locals =>{:sub_order => @sub_order}
+
+-if current_user.admin? || current_user.market_manager?
+	= render :partial =>'admin_summary', :locals=>{:sub_order => @sub_order} 
+-else
+	= render :partial=>'summary', :locals =>{:sub_order => @sub_order} 
