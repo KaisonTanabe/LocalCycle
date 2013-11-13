@@ -64,6 +64,7 @@ def checkout
 		@cart.cart_items.where(:market_id => market.id).each do |item|
 			 market_total = market_total + ((item.price+ (item.price*item.markup/100)) * item.quantity)
 		end
+		market_total = market_total + market.distribution_fee
 		if market_total < (market.order_min == nil ? 0 : market.order_min)
 	    flash[:error] = "#{market.name} minimum order is #{number_to_currency(market.order_min)}. Please add more to your cart to checkout." 
 	    redirect_to :back
