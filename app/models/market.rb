@@ -58,6 +58,8 @@ class Market < ActiveRecord::Base
   			  diff = diff + 7 if diff < 0
   			  puts "DIFF: #{diff}" 
   				date = date + diff.days #.change(:days => diff)
+  				date = date.change({:hour => self.start_time.strftime('%H').to_i, :min => self.start_time.strftime('%M').to_i, :sec => 0 })
+          
   	    else
   	        #hack until scheme is figured out to calculated market time that isnt weekly
   	        #date = self.start_time
