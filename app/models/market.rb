@@ -43,7 +43,7 @@ class Market < ActiveRecord::Base
     date = DateTime.current
 		
 		if end_time && date > date.change({:hour => self.end_time.strftime('%H').to_i, :min => self.end_time.strftime('%M').to_i, :sec => 0 })
-	    date = date.change({:hour => self.end_time.strftime('%H').to_i+1, :min => self.end_time.strftime('%M').to_i, :sec => 0 })
+	    date = (date + 1.day)change({:hour => 0, :min => 0, :sec => 0 })
 	  elsif start_time
         date = date.change({:hour => self.start_time.strftime('%H').to_i, :min => self.start_time.strftime('%M').to_i, :sec => 0 })
       	    
