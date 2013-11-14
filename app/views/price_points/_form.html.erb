@@ -9,7 +9,7 @@
     <span class="add-on">$</span>
     <%= f.text_field :price, placeholder: "0.00", value: f.object.price , class: "span1" %>
   </div>
-	
+	for min. order of
   <%= f.text_field :quantity, placeholder: "Qty", value:  f.object.quantity, class: "span1", style: "margin-left: 5px;" %>
   <%= f.select :selling_unit_id, SellingUnit.all.map {|s| [s.short_name, s.id]}, {prompt: "Unit"}, {style: "margin-left: 5px; width: 70px"} %>
 
