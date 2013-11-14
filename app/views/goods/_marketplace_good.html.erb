@@ -42,7 +42,7 @@
 		<% price_point.keys.sort.each do |key|%>
 			<% pp = price_point[key]%>
 			<%markup = @market.markup==nil ? 0 : @market.markup%>
-			<%= number_to_currency(pp.price + (pp.price*markup/100)) %>/<%= good.selling_unit.name%> min <%= pp.quantity %> <%= good.selling_unit.name%><%= good.quantity.to_i > 1 ? "s" : ''%> <br/>
+			<%= number_to_currency(pp.price + (pp.price*markup/100)) %>/<%= good.selling_unit.name%> for min order of <%= pp.quantity %> <%= good.selling_unit.name%><%= good.quantity.to_i > 1 ? "s" : ''%> <br/>
 			
 		<%end%>
 
