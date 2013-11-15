@@ -102,3 +102,14 @@ $ ->
 			data: data,
 			dataType: "script"
 		})
+	
+	$("input[name='good[no_qty]']:checked").each (e)->
+		$(this).siblings('#good_quantity').attr("readonly", true)
+		
+	$(document).on 'click', "input[name='good[no_qty]']", (e)->
+		v= true
+		if $(this).siblings('#good_quantity').is('[readonly]') 
+			v=false
+		$(this).siblings('#good_quantity').attr('readonly', v) 
+
+		

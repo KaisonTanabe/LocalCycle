@@ -19,6 +19,8 @@
 				<%= f.select :selling_unit_id,SellingUnit.all.map {|s| [s.short_name, s.id]}, {prompt: "Unit", :selected => params[:unit]}, {class: "span1", style: "margin-left: 5px;"} %>
       
 			<%end%>
+			<br/>
+			<%= f.check_box :no_qty%><div style="font-size: 10px; line-height:10px; margin-top: -10px; margin-left: 13px">Unknown/Unlimited Qty</div>
     </div>
   </th>
   <th style="width: 450px !important;">

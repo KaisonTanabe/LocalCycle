@@ -32,13 +32,13 @@ def add_item
    
    if cart_item.nil? 
      raise "Must be min order" if(params[:qty].to_i < params[:min_order].to_i) 
-     if(Good.find(params[:good_id]).quantity.to_i < params[:qty].to_i)
+     if(!Good.find(params[:good_id]).no_qty && Good.find(params[:good_id]).quantity.to_i < params[:qty].to_i)
        render :text => "Not enough quantity available"
         return
      end
      CartItem.create(:good_id => params[:good_id], :quantity => params[:qty], :market_id => params[:market_id], :cart_id => @cart.id, :markup=> (Market.find(params[:market_id]).markup == nil ? 0 : Market.find(params[:market_id]).markup))
    else     
-     if(Good.find(params[:good_id]).quantity.to_i < calc_use + params[:qty].to_i)
+     if(!Good.find(params[:good_id]).no_qty && Good.find(params[:good_id]).quantity.to_i < calc_use + params[:qty].to_i)
        render :text => "Not enough quantity available"
         return
      end

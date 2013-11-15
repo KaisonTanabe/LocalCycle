@@ -56,7 +56,7 @@
 	<%= link_to raw('<span class="icon-trash"></span> Delete'), good_path(good, full_params.to_hash), data: {confirm: "Are you sure you want to permanently delete this good and all its information?"}, title: "Delete this good from the system", method: :delete, class: "btn btn-small" %>
       </div>
     <% else %>
-    <%= good.quantity %> <span class="label label-info"><%= good.selling_unit.short_name.pluralize %></span> avail.<br />
+    <%= good.no_qty ? "unlimited" : good.quantity %> <span class="label label-info"><%= good.selling_unit.short_name.pluralize %></span> avail.<br />
 		<%= hidden_field_tag :available, good.quantity %>
 		<br/>
 		  <%= link_to "Add to Cart", add_item_cart_path(current_user.get_cart), class: "btn btn-warning add-to-cart", :disabled => ( price_point.keys.count == 0 ) %>

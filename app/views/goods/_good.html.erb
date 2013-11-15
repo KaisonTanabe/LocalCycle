@@ -26,7 +26,9 @@
 		<span class="controls controls-row">
       <%= f.number_field :quantity, placeholder: "Qty", class: "span2", style: "width: 30px" , :min => 0%>
       <%= f.select :selling_unit_id, SellingUnit.all.map {|s| [s.short_name, s.id]}, {prompt: "Unit"}, {class: "span1", style: "width: 75px; margin-left: 5px;"} %>
-		</div>
+		</div><br/>
+		<%= f.check_box :no_qty%><div style="font-size: 10px; line-height:10px; margin-top: -10px; margin-left: 13px">Unknown/Unlimited Qty</div>
+
   </td>
 
   <td>
