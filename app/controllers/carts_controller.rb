@@ -68,8 +68,20 @@ def checkout
 		if market_total < (market.order_min == nil ? 0 : market.order_min)
 	    flash[:error] = "#{market.name} minimum order is #{number_to_currency(market.order_min)}. Please add more to your cart to checkout." 
 	    redirect_to :back
+	  else
+	    producer_hash = Hash.new
+  	  items.each do |i|
+  	    producer_hash[i.good.creator_id] =0 if(!producer_hash.keys.include?(i.good.creator_id))
+        producer_hash[i.good.creator_id] = producer_hash[i.good.creator_id] + (i.price+ (i.price*i.markup/100)) * i.quantity
+      end
+      producer_hash.keys.each do |key|
+        if producer_hash[key] < ( User.find(key).producer_min_order ? User.find(key).producer_min_order : 0)
+          flash[:error] = "#{User.find(key).name} requires a minimum order of #{number_to_currency(User.find(key).producer_min_order )}." 
+    	    redirect_to :back
+        
+        end
+      end
 	  end
-	  
 	end
 	
     

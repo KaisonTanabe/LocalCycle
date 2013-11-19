@@ -40,7 +40,21 @@ def edit
 	    flash[:error] = "#{market.name} minimum order is #{number_to_currency(market.order_min)}. Please add more to your cart to checkout." 
 	    render 'carts/checkout'
 	    return
-	  end
+	   else
+  	    producer_hash = Hash.new
+    	  items.each do |i|
+    	    producer_hash[i.good.creator_id] =0 if(!producer_hash.keys.include?(i.good.creator_id))
+          producer_hash[i.good.creator_id] = producer_hash[i.good.creator_id] + (i.price+ (i.price*i.markup/100)) * i.quantity
+        end
+        producer_hash.keys.each do |key|
+          if producer_hash[key] < ( User.find(key).producer_min_order ? User.find(key).producer_min_order : 0)
+            flash[:error] = "#{User.find(key).name} requires a minimum order of #{number_to_currency(User.find(key).producer_min_order )}." 
+      	    render 'carts/checkout'
+      	    return
+
+          end
+        end
+  	  end
 	  
 	end
 	

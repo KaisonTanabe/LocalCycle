@@ -40,6 +40,13 @@
 		<%=f.number_field :default_cutoff%> Hours
 	</div>
 </div>
+<div class="control-group">
+
+  <%= f.label :producer_min_order, "Minimum Order:", class: "control-label" %>
+  <div class="control-row controls">
+		$<%=f.text_field :producer_min_order, :value => (f.object.producer_min_order ? f.object.producer_min_order : 0.00)%> 
+	</div>
+</div>
 <legend>Contact Information</legend>
 
 <div class="control-group">

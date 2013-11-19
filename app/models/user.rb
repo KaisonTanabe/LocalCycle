@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
     :certification_ids, :text_updates, :complete,
     :has_eggs, :has_dairy, :has_livestock, :has_pantry, 
     :custom_growing_methods, :delivery_windows_attributes, :size,
-    :market_ids, :market_attributes, :product_ids, :category_ids, :institution, :activated, :user_networks_attributes, :network_ids,:default_cutoff
+    :market_ids, :market_attributes, :product_ids, :category_ids, :institution, :activated, :user_networks_attributes, :network_ids,:default_cutoff,:producer_min_order
 
 
   ## ATTRIBUTE VALIDATION
