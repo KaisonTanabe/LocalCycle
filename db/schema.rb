@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131003190317) do
+ActiveRecord::Schema.define(:version => 20131119001400) do
 
   create_table "addresses", :force => true do |t|
     t.string   "address_1"
@@ -82,13 +82,15 @@ ActiveRecord::Schema.define(:version => 20131003190317) do
   create_table "cart_items", :force => true do |t|
     t.integer  "cart_id"
     t.integer  "quantity"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.integer  "market_id"
     t.integer  "sort_order"
     t.integer  "good_id"
     t.float    "price"
     t.integer  "order_id"
+    t.integer  "sub_order_id"
+    t.float    "markup"
   end
 
   create_table "carts", :force => true do |t|
@@ -200,6 +202,7 @@ ActiveRecord::Schema.define(:version => 20131003190317) do
     t.string   "pic_content_type"
     t.integer  "pic_file_size"
     t.datetime "pic_updated_at"
+    t.boolean  "no_qty"
   end
 
   add_index "goods", ["buyer_id"], :name => "index_goods_on_buyer_id"
@@ -261,6 +264,11 @@ ActiveRecord::Schema.define(:version => 20131003190317) do
     t.time     "start_time"
     t.time     "end_time"
     t.boolean  "all_buyers"
+    t.float    "order_min"
+    t.float    "distribution_fee"
+    t.integer  "start_orders"
+    t.integer  "end_orders"
+    t.float    "markup"
   end
 
   create_table "markets_users", :id => false, :force => true do |t|
@@ -283,6 +291,7 @@ ActiveRecord::Schema.define(:version => 20131003190317) do
     t.string   "status"
     t.integer  "ip_address"
     t.integer  "user_id"
+    t.float    "producer_total"
   end
 
   create_table "preferred_user_agreements", :force => true do |t|
@@ -323,6 +332,7 @@ ActiveRecord::Schema.define(:version => 20131003190317) do
     t.integer  "pic_file_size"
     t.datetime "pic_updated_at"
     t.boolean  "greenhouse_grown", :default => false,        :null => false
+    t.integer  "created_by"
   end
 
   add_index "products", ["category_id"], :name => "index_products_on_category_id"
@@ -352,6 +362,22 @@ ActiveRecord::Schema.define(:version => 20131003190317) do
 
   add_index "selling_units", ["name"], :name => "index_selling_units_on_name", :unique => true
   add_index "selling_units", ["short_name"], :name => "index_selling_units_on_short_name", :unique => true
+
+  create_table "sub_orders", :force => true do |t|
+    t.integer  "order_id"
+    t.integer  "key"
+    t.integer  "market_id"
+    t.integer  "producer_id"
+    t.float    "dist_cost"
+    t.float    "total"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
+    t.datetime "market_date"
+    t.integer  "delivery_window_day"
+    t.integer  "delivery_window_start"
+    t.integer  "delivery_window_end"
+    t.float    "producer_total"
+  end
 
   create_table "transactions", :force => true do |t|
     t.string   "card_type"
@@ -434,6 +460,7 @@ ActiveRecord::Schema.define(:version => 20131003190317) do
     t.string   "institution"
     t.boolean  "activated"
     t.integer  "default_cutoff"
+    t.float    "producer_min_order"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

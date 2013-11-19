@@ -7,6 +7,7 @@ user = User.create(
                    last_name: 'Admin',
                    email: 'admin@admin.asdf',
                    role: 'admin',
+                   activated: true,
                    password: "AdminFF",
                    password_confirmation: "AdminFF",
                    )
@@ -36,6 +37,7 @@ b = User.create(
                    last_name: 'Buyer',
                    email: 'buyer@buyer.asdf',
                    role: 'buyer',
+                   activated: true,
                    password: "BuyerFF",
                    password_confirmation: "BuyerFF",
                    name: "Williams College",
@@ -54,6 +56,7 @@ p = User.create(
                    last_name: 'Producer',
                    email: 'producer@producer.asdf',
                    role: 'producer',
+                   activated: true,
                    password: "ProducerFF",
                    password_confirmation: "ProducerFF",
                    name: "Bellview Farms",
