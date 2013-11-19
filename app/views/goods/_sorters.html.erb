@@ -4,7 +4,7 @@
   <% if current_user.admin? or current_user.market_manager? %>
   <th style="width: 160px;"><%= sortable "users.name", "Producer", parsed_params %></th>
   <% end %>
+  <th><%=  "'Price by Min. Amount"%></th>
   <th><%= sortable "quantity", "Qty Avail", parsed_params %></th>
-  <th><%=  "Price Points"%></th>
   <th><span>Actions</span></th>
 </tr>

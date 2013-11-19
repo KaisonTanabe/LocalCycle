@@ -46,17 +46,6 @@
   <% end %>
   
   
-
-  <div class="control-group">
-    <%= f.label :quantity, "Quantity:", class: "control-label" %>
-    <div class="controls-row controls">
-      <%= f.number_field :quantity, placeholder: "Qty", class: "span2" %>
-      <%= f.select :selling_unit_id, SellingUnit.all.map {|s| [s.name, s.id]}, {prompt: "Unit"}, {class: "span2"} %>
-    </div>
-		<%= f.check_box :no_qty%><div style="font-size: 10px; line-height:10px; margin-top: -10px; margin-left: 13px">Unknown/Unlimited Qty</div>
-
-  </div>
-
   <div class="control-group">
     <%= f.label :price_points, "Price Points:", class: "control-label" %>
 
@@ -72,6 +61,18 @@
 
 		</div>
   </div><br/>
+
+  <div class="control-group">
+    <%= f.label :quantity, "Quantity:", class: "control-label" %>
+    <div class="controls-row controls">
+      <%= f.number_field :quantity, placeholder: "Qty", class: "span2" %>
+      <%= f.select :selling_unit_id, SellingUnit.all.map {|s| [s.name, s.id]}, {prompt: "Unit"}, {class: "span2"} %><br/>
+			<%= f.check_box :no_qty%><div style="font-size: 10px; line-height:10px; margin-top: -10px; margin-left: 13px">Unknown/Unlimited Qty</div>
+
+    </div>
+
+  </div>
+
 <%end%>
 	<div class="controls-group">
     <%= f.label :description, "Description:", class: "control-label" %>

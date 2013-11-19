@@ -13,7 +13,7 @@
   	<%end%>
 </div>
 	
-  <%= f.text_field :quantity, placeholder: "Qty", class: "span1", style: "margin-left: 5px;" %>
+  <%= f.text_field :quantity, placeholder: "Min", class: "span1", style: "margin-left: 5px;" %>
 
 	<% if params[:unit].blank? %>
   	<%= f.select :selling_unit_id, SellingUnit.all.map {|s| [s.short_name, s.id]}, {prompt: "Unit"}, {class: "span1", style: "margin-left: 5px;"} %> 
