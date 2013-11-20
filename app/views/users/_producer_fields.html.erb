@@ -40,13 +40,6 @@
 		<%=f.number_field :default_cutoff%> Hours
 	</div>
 </div>
-<div class="control-group">
-
-  <%= f.label :producer_min_order, "Minimum Order:", class: "control-label" %>
-  <div class="control-row controls">
-		$<%=f.text_field :producer_min_order, :value => (f.object.producer_min_order ? f.object.producer_min_order : 0.00)%> 
-	</div>
-</div>
 <legend>Contact Information</legend>
 
 <div class="control-group">
@@ -114,3 +107,15 @@
 <%= render partial: "users/certifications", locals: {f: f} %>
 
 <%#= render partial: "users/delivery_options", locals: {f: f} %>
+<legend> Minimum Orders</legend>
+  <div class="control-group">
+ 		<div class="controls controls-row">
+			<%= f.fields_for :minimum_orders do |ff|%>
+						<% if f.object.market_ids.include?(ff.object.market_id) %>
+							<%= render :partial => 'users/min_order_fields', locals:  {f: ff} %>
+						<%end%>
+			<%end%>
+    
+	
+			</div>
+	</div>

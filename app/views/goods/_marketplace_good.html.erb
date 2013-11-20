@@ -3,7 +3,8 @@
   <%= hidden_field_tag :good_id, good.id%>
 	
   <h4><%= link_to good.product.name, good, data: {target: "#ajax-modal", toggle: "modal", placement: "top", data: "true", remote: "true"} %></h4>
-  <h5><a href="/users/<%= good.creator.id%>" data-remote="true"><%= good.creator.name %></a></h5>
+  <h5><a href="/users/<%= good.creator.id%>" data-remote="true"><%= good.creator.name %></a><br/>
+	<%= "min. order for producer: #{number_to_currency(good.creator.minimum_orders.where(:market_id=>@market.id).first ? good.creator.minimum_orders.where(:market_id=>@market.id).first.min_order : 0)}"%></h5>
   <div class="certs underline">
 		<div class="row-fluid">
 			<div class="span9">

@@ -1,7 +1,7 @@
 <%= content_tag_for :tr, good, class: (current_user.buyer? ? (good.available ? "success base_container" : "error base_container") : "") do %>
 
 
-	<td><a href="/users/<%= good.creator.id%>" data-remote="true"><%= good.creator.name %> <br/><%= image_tag good.creator.pic(:thumb), class: "thumb" %></a></td>
+	<td><a href="/users/<%= good.creator.id%>" data-remote="true"><%= good.creator.name %> <br/><%= "min. order for producer: #{number_to_currency(good.creator.minimum_orders.where(:market_id=>@market.id).first ? good.creator.minimum_orders.where(:market_id=>@market.id).first.min_order : 0)}"%><br/><%= image_tag good.creator.pic(:thumb), class: "thumb" %></a></td>
   <td class='name <%= (params[:sort] == "name") ? "sorted" : "" %>'>
 		<div class="row-fluid">
     	<div class="span12"><div class="span4"><%= image_tag good.best_pic_url(:thumb)%></div><div class="span8"> <%= link_to good.product.name, good, data: {target: "#ajax-modal", toggle: "modal", placement: "top", data: "true", remote: "true"} %><br/>

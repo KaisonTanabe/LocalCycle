@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
 
   ## SETUP ASSOCIATIONS
   has_many :attachments, as: :attachable, dependent: :destroy
+  has_many :minimum_orders
+  
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
   has_and_belongs_to_many :certifications
@@ -38,6 +40,7 @@ class User < ActiveRecord::Base
   has_many :networks, :through=> :user_networks
   accepts_nested_attributes_for :user_networks, :allow_destroy => true
   accepts_nested_attributes_for :markets
+  accepts_nested_attributes_for :minimum_orders
 
   has_one :cart
   
@@ -52,7 +55,7 @@ class User < ActiveRecord::Base
     :certification_ids, :text_updates, :complete,
     :has_eggs, :has_dairy, :has_livestock, :has_pantry, 
     :custom_growing_methods, :delivery_windows_attributes, :size,
-    :market_ids, :market_attributes, :product_ids, :category_ids, :institution, :activated, :user_networks_attributes, :network_ids,:default_cutoff,:producer_min_order
+    :market_ids, :market_attributes, :product_ids, :category_ids, :institution, :activated, :user_networks_attributes, :network_ids,:default_cutoff,:producer_min_order, :minimum_orders_attributes
 
 
   ## ATTRIBUTE VALIDATION

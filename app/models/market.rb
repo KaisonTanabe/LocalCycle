@@ -8,6 +8,7 @@ class Market < ActiveRecord::Base
   has_and_belongs_to_many :buyers, class_name: "User", foreign_key: :market_id, :conditions => proc { "role = 'buyer'" }
 
   has_and_belongs_to_many :goods
+  has_many :minimum_orders
 
   has_and_belongs_to_many :users
   has_many :sub_orders

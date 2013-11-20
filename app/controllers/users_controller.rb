@@ -85,6 +85,11 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @user.markets.each do |m|
+      next if @user.minimum_orders.map{|m| m.market_id}.include?(m.id)
+      @user.minimum_orders.create(:market_id => m.id, :min_order=>0)
+    end
+    
     # Create dummy market to update if market manager
 
     # Initialize 4 delivery windows to encourage multiple options
