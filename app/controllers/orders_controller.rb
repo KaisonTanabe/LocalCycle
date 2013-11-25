@@ -40,25 +40,24 @@ def edit
 	    flash[:error] = "#{market.name} minimum order is #{number_to_currency(market.order_min)}. Please add more to your cart to checkout." 
 	    render 'carts/checkout'
 	    return
-	   else
-       producer_hash = Hash.new
-   	  items.each do |i|
-
-   	    producer_hash[i.good.creator_id] = Hash.new if(!producer_hash.keys.include?(i.good.creator_id))
-   	    producer_hash[i.good.creator_id][i.market_id] = 0 if(!producer_hash[i.good.creator_id].keys.include?(i.market_id))
-         producer_hash[i.good.creator_id][i.market_id] = producer_hash[i.good.creator_id][i.market_id] + (i.price+ (i.price*i.markup/100)) * i.quantity
-       end
-       producer_hash.keys.each do |key|
-         producer_hash[key].keys.each do |market|
-           if producer_hash[key][market] < ( User.find(key).minimum_orders.where(:market_id=>market).first ? User.find(key).minimum_orders.where(:market_id=>market).first.min_order : 0)+ (( User.find(key).minimum_orders.where(:market_id=>market).first ? User.find(key).minimum_orders.where(:market_id=>market).first.min_order : 0)*Market.find(market).markup/100)
-             flash[:error] = "#{User.find(key).name} requires a minimum order of #{number_to_currency(( User.find(key).minimum_orders.where(:market_id=>market).first ? User.find(key).minimum_orders.where(:market_id=>market).first.min_order : 0)+ (( User.find(key).minimum_orders.where(:market_id=>market).first ? User.find(key).minimum_orders.where(:market_id=>market).first.min_order : 0)*Market.find(market).markup/100) )} for #{Market.find(market).name}." 
-       	    redirect_to :back
-
-           end
-          end
+   else
+     producer_hash = Hash.new
+ 	   items.each do |i|
+ 	     producer_hash[i.good.creator_id] = Hash.new if(!producer_hash.keys.include?(i.good.creator_id))
+ 	     producer_hash[i.good.creator_id][i.market_id] = 0 if(!producer_hash[i.good.creator_id].keys.include?(i.market_id))
+       producer_hash[i.good.creator_id][i.market_id] = producer_hash[i.good.creator_id][i.market_id] + (i.price+ (i.price*i.markup/100)) * i.quantity
+     end
+     producer_hash.keys.each do |key|
+       producer_hash[key].keys.each do |market|
+         if producer_hash[key][market] < ( User.find(key).minimum_orders.where(:market_id=>market).first ? User.find(key).minimum_orders.where(:market_id=>market).first.min_order : 0)+ (( User.find(key).minimum_orders.where(:market_id=>market).first ? User.find(key).minimum_orders.where(:market_id=>market).first.min_order : 0)*Market.find(market).markup/100)
+           flash[:error] = "#{User.find(key).name} requires a minimum order of #{number_to_currency(( User.find(key).minimum_orders.where(:market_id=>market).first ? User.find(key).minimum_orders.where(:market_id=>market).first.min_order : 0)+ (( User.find(key).minimum_orders.where(:market_id=>market).first ? User.find(key).minimum_orders.where(:market_id=>market).first.min_order : 0)*Market.find(market).markup/100) )} for #{Market.find(market).name}." 
+     	     redirect_to :back
+           return
+         end
         end
-  	  end
-	  
+      end
+  	end
+  
 	end
 	
   @order.build_transaction
