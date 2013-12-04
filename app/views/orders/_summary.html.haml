@@ -13,9 +13,9 @@
 	.row
 		.span12{:style=> "border:1px solid black; padding-top: 5px; padding-bottom: 5px"}
 			%b
-				="Distribution Point: #{market.name}"
+				="#{market.name}"
 				%br
-				="Distribution Point Date: #{order.sub_orders.where(:market_id => market.id).first.market_date.to_formatted_s(:long)}"
+				="#{order.sub_orders.where(:market_id => market.id).first.market_date.to_formatted_s(:long)}"
 				%br
 				="Delivery Window: "
 				-if order.sub_orders.where(:market_id => market.id).first.delivery_window_day != -1
