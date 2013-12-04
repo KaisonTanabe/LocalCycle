@@ -6,11 +6,10 @@ class BuyerMailer < ActionMailer::Base
   default reply_to: reply_to
   default cc: 'kaisontanabe@gmail.com'
   
-  def checkout(user, order, market)
+  def checkout(user, order)
       @user = user
       @order = Order.find(order)
-      @market = Market.find(market)
-      mail(to: @user.email, subject: "Order Confirmation - Order: #{@order.transaction.authorization_code}")
+      mail(to: @user.email, subject: "Order Confirmation - Order: #{@order.id}")
     end
 
   def new_pricepoint(user, price_point, market)

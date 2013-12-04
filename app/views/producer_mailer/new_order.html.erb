@@ -1,12 +1,108 @@
 <%= "Hi #{@producer.name}"%>,
 <br/><br/>
-<%= "#{@user.first_name} #{@user.last_name}"%> has just purchased from you!  See below and attached for an order summary and attached for a packing list.  Also, you can click *link to Manage-Current Sales * to check out all of your pending orders and packing lists.  
+<%= "#{@user.first_name} #{@user.last_name}"%> has just purchased from you!  See below and attached for an order summary and attached for a packing list. 
 
-<br/><br/><br/>
-<% @order.cart_items.each do |item|%>
-	<%if item.good.creator_id == @producer.id%>
-		<%= "#{item.good.name} x #{item.quantity}"%><br/>
-	<%end%>
-<%end%><br/><br/>
+
+<%total=0%>
+<%dist_fees =0%>
+<%market = @sub_order.market%>
+<br>
+<div class="row">
+	<div class="span12" style= "border:1px solid black; padding-top: 5px; padding-bottom: 5px">
+		<b>
+			<%="Distribution Point: #{market.name}"%>
+			<br/>
+			<%="Distribution Point Date: #{@sub_order.market_date.to_formatted_s(:long)}"%>
+			<br/>
+			<%="Delivery Window: "%>
+			<%if @sub_order.delivery_window_day != -1%>
+				<%="#{WEEKDAYS[@sub_order.delivery_window_day] }  -   #{NORMAL_HOURS[@sub_order.delivery_window_start]}  to  #{NORMAL_HOURS[@sub_order.delivery_window_end]}"%>
+			<%end%>
+			<br/>
+			<%="Buyer: "%>
+			<%="#{@sub_order.user.full_name}"%>
+		</b>
+		<hr/>
+		<br/>
+		<div class="row">
+			<div class="span12">
+				<h5>
+					<b>
+						<%= "Sub Order #{@sub_order.order_id}_#{ ('a'..'z').to_a[@sub_order.key] }".upcase%>
+					</b>
+				<%sub_total =0%>
+				<%items = @sub_order.cart_items.sort! { |a,b| a.market.name.downcase <=> b.market.name.downcase }%>
+				<%@sub_order.cart_items.where(:market_id => market.id).collect{|g| g.good.creator}.uniq.each do |farm|%>
+					<table style="width: 100%">	
+						<tr>			
+							<th style="width: 40%; text-align: left">
+								<%="#{farm.name}"%>
+							</th>
+							<th style="width: 20%; text-align: left">
+								<%= "Quantity" %>
+							</th>
+							<th style="width: 20%; text-align: left">
+								<%= "Item Price" %>
+							</th>
+							<th style="width: 20%; text-align: left">
+								<%="Total"%>
+							</th>
+						</tr>
+						<% @sub_order.cart_items.includes(:good).where(:market_id => market.id).where('goods.creator_id = ?', farm.id).each do |item|%>
+							<%markup = item.markup == nil ? 0 : item.markup%>
+							<tr>			
+								<td>
+									<%= "#{item.good.name} (#{SellingUnit.find(item.good.selling_unit_id).name})"%>
+								</td>
+								<td>
+									<%="#{ item.quantity}"%>
+								</td>
+								<td>
+										<%= " #{number_to_currency(item.price)}" %>
+								</td>
+								<td>
+										<%="#{number_to_currency(item.price * item.quantity)}"%>
+										<% sub_total = sub_total + (item.price * item.quantity)%>
+								</td>
+							</tr>
+						</table>
+					<%end%>				
+				<%end%>
+			</div>
+		</div>					
+		<hr/>
+		<div class="row">
+			<div class="span12">
+				<div class="row-fluid">			
+					<div class="span6">
+						<b>
+							Subtotal
+						</b>
+					<div class="span2 price"></div>
+					<div class="span2 price"></div>
+					<div class="span2 price">
+						<%="#{number_to_currency(sub_total)}"%>
+						<%total = total + sub_total%>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>	
+<br/>
+<br/>				
+<div class="row">
+	<div class="span12" style= "border:1px solid black; padding-top: 5px; padding-bottom: 5px">
+		Subtotal: 
+		<%= "#{number_to_currency(total)}"%>
+		<br/>
+		Total:
+		<%= "#{number_to_currency(dist_fees + total)}"%>
+	</div>
+</div>
+		
+		
+<br/>
+
 Happy farming!<br/>
 LocalCycle

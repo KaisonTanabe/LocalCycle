@@ -1,35 +1,120 @@
 <%= "Hello #{@user.first_name} #{@user.last_name}"%>
 <br/>
 <br/>
-Thank you for using LocalCycle.  We’d like to let you know that we have received your order, and have notified the producer of your purchase.  Your products will be available on 
-<%date= @market.next_market%>
-<% date = "TBD" if date == nil%>
+Thank you for using LocalCycle.  We’d like to let you know that we have received your order, and have notified the producer of your purchase.   
 
-<%= date == "TBD" ? "TDB" : date.to_formatted_s(:long)%>
-<%=@market.name%> - <%=@market.address%>
+<br/>
+<%total=0%>
+<%dist_fees =0%>
+<%@order.sub_orders.map{|o| o.market_id}.uniq.each do |m|%>
 
-.  If you’d like to make any changes to your order, please contact Kaison@localcycle.org.  
-
-<h5>Order Details</h5>
-<%= "Order # #{@order.transaction.authorization_code}"%> <br/>
-Placed on <%= @order.created_at%><br/><br/>
-
-<% CartItem.where(:order_id => @order.id).each do |item|%>
-	<%= image_tag item.good.product.best_pic_url(:thumb), class: "thumb" %>
-  <br/>
-	<%= item.good.creator.name%>
-	<%= item.good.creator.name%>
-	<%= item.price%>
-	<br/><br/>
-	
+	<%market = Market.find(m)%>
+	<br/>
+	<div class="row">
+		<div class="span12" style= "border:1px solid black; padding-top: 5px; padding-bottom: 5px">
+			<b>
+				<%="Distribution Point: #{market.name}"%>
+				<br/>
+				<%="Distribution Point Date: #{@order.sub_orders.where(:market_id => market.id).first.market_date.to_formatted_s(:long)}"%>
+				<br/>
+				<%="Delivery Window: "%>
+				<%if @order.sub_orders.where(:market_id => market.id).first.delivery_window_day != -1%>
+					<%="#{WEEKDAYS[@order.sub_orders.where(:market_id => market.id).first.delivery_window_day] }  -   #{NORMAL_HOURS[@order.sub_orders.where(:market_id => market.id).first.delivery_window_start]}  to  #{NORMAL_HOURS[@order.sub_orders.where(:market_id => market.id).first.delivery_window_end]}"%>
+				<%end%>
+				<br/>
+				<%="Distribution Fee: #{number_to_currency(@order.sub_orders.where(:market_id => market.id).first.dist_cost)}"%>
+				<%dist_fees = dist_fees + (@order.sub_orders.where(:market_id => market.id).first.dist_cost == nil ? 0 : @order.sub_orders.where(:market_id => market.id).first.dist_cost)%>
+			</b>
+			<hr/>
+			<br/>
+			<%@order.sub_orders.where(:market_id => market.id).uniq.each do |sub_order|%>
+				<div class="row">
+					<div class="span12">
+						<h5>
+							<b>
+								<%= "Sub Order #{sub_order.order_id}_#{ ('a'..'z').to_a[sub_order.key] }".upcase%>
+							</b>
+						</h5>
+						<%sub_total =0%>
+						<%items = sub_order.cart_items.sort! { |a,b| a.market.name.downcase <=> b.market.name.downcase }%>
+						<%sub_order.cart_items.where(:market_id => market.id).collect{|g| g.good.creator}.uniq.each do |farm|%>
+							<table style="width: 100%">	
+								<tr>		
+									<th style="width: 40%; text-align: left">
+										<%="#{farm.name}"%>
+									</th>
+									<th style="width: 20%; text-align: left">
+										<%= "Quantity"%> 
+									</th>
+									<th class= "price"  style="width: 20%; text-align: left">
+										<%= "Item Price"%> 
+									</th>
+									<th class=" price"  style="width: 20%; text-align: left">
+										<%="Total"%>
+									</th>
+							</tr>
+							
+							<%sub_order.cart_items.includes(:good).where(:market_id => market.id).where('goods.creator_id = ?', farm.id).each do |item|%>
+								<%markup = item.markup == nil ? 0 : item.markup%>
+								<tr>			
+									<td>
+										<%= "#{item.good.name} (#{SellingUnit.find(item.good.selling_unit_id).name})"%>
+									</td>
+									<td >
+										<%="#{ item.quantity}"%>
+									</td>
+									<td class="price">
+										<%= " #{number_to_currency( (item.price+(item.price*markup/100))  )}" %>
+									</td>
+									<td class="price">
+										<%="#{number_to_currency((item.price+(item.price*markup/100))   * item.quantity)}"%>
+										<% sub_total = sub_total + ((item.price+(item.price*markup/100)) * item.quantity)%>
+									</td>
+								</tr>
+								
+							<%end%>
+							</table>
+						<%end%>
+					</div>
+				</div>
+				<hr/>
+				<div class="row">
+					<div class="span12">
+						<div class="row-fluid">			
+							<div class="span6">
+								<b>
+									Subtotal
+								</b>
+							</div>
+							<div class="span2 price"></div>
+							<div class="span2 price"></div>
+							<div class="span2 price">
+								<%="#{number_to_currency(sub_total)}"%>
+								<%total = total + sub_total%>
+							</div>
+						</div>
+					</div>
+				</div>
+			<%end%>
+		</div>
+	</div>
 <%end%>
 <br/>
-Item Subtotal: <%=@order.total%><br/>
-Total Before Tax:<%=@order.total%><br/>
-Order Total: <%=@order.total%><br/>
+<br/>				
+<div class="row">
+	<div class="span12" style= "border:1px solid black; padding-top: 5px; padding-bottom: 5px">
+		Distribution Fees: 
+		<%= "#{number_to_currency(dist_fees)}"%>
+		<br/>
+		Subtotal: 
+		<%= "#{number_to_currency(total)}"%>
+		<br/>
+		Total:
+		<%= "#{number_to_currency(dist_fees + total)}"%>
+		<br/>
+	</div>
+</div>
 <br/>
-<br/>
-
 
 For more information or assistance, contact Kaison@LocalCycle.org. 
 <br/>

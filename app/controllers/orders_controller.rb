@@ -89,19 +89,16 @@ def update
     if response.success?
       @order.finalize_transaction(response.authorization_code)
       
-      @order.cart_items.includes(:good).collect{|ci| ci.good.creator_id}.uniq.each do |producer|
-     	  ProducerMailer.new_order(current_user, User.find(producer), @order.id).deliver
+      @order.sub_orders.each do |sub_order|
+     	  ProducerMailer.new_order(current_user, User.find(sub_order.producer_id), sub_order.id).deliver
      	end
      	
      	@order = Order.find(@order.id)
      	
-     	@order.cart_items.map{|ci| ci.market_id}.uniq.each do |market|
-     	  BuyerMailer.checkout(current_user, @order.id, Market.find(market)).deliver
+     	BuyerMailer.checkout(current_user, @order.id).deliver
         
-   	  end
    	  
       
-      puts "PROVIDER: #{@order.cart_items.to_yaml}"
      
 
      	

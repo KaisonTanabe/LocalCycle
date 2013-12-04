@@ -7,11 +7,11 @@ class ProducerMailer < ActionMailer::Base
   default cc: 'kaisontanabe@gmail.com'
   
   
-  def new_order(user, producer, order)
+  def new_order(user, producer, sub_order)
       @user = user
       @producer = producer
-      @order = Order.find(order)
-      mail(to: @producer.email, subject: "Order Confirmation - Order: #{@order.transaction.authorization_code}")
+      @sub_order = SubOrder.find(sub_order)
+      mail(to: @producer.email, subject: "Order Confirmation - Sub Order: #{@sub_order.order_id}_#{ ('a'..'z').to_a[@sub_order.key].upcase }")
     end
     
   def new_demand(good, user, price_point, producer_id)
