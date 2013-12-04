@@ -69,6 +69,12 @@ def edit
 end
 
 def update
+  if @order.cart == nil 
+    flash[:error] ="Could not process transaction. You have no items in your cart."
+    redirect_to marketplace_goods_path
+    return
+  end
+  
   if @order.update_attributes(params[:order])
     transaction = AuthorizeNet::AIM::Transaction.new(ANET_API_LOGIN_ID, ANET_KEY,
       :gateway => ANET_GATEWAY)

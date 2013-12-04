@@ -12,6 +12,45 @@ def clear
 end
 
 def update
+  authorize! :update, @cart
+  @cart.assign_attributes(params[:cart])
+  
+  @cart.cart_items.each do |item|
+    
+      price_point = Hash.new 
+  		item.good.price_points.each do |pp|		
+  			if JSON.parse(pp.buyers)["#{item.market.id.to_s}"] != nil
+  				 if (JSON.parse(pp.buyers)["#{item.market.id.to_s}"].count == 0 )
+  					 price_point["#{pp.quantity.to_s}"] = pp if price_point["#{pp.quantity.to_s}"] == nil
+  				else
+  						 if (JSON.parse(pp.buyers)["#{item.market.id.to_s}"].include? ("#{@cart.user.id.to_s}"))
+  								 price_point["#{pp.quantity.to_s}"] = pp 
+  						end
+  				end			
+  			end
+  		end				
+	
+		  price_holder = nil
+  		 price_point.keys.sort.each do |key|
+  			 pp = price_point[key]
+  			 if (item.quantity >= key.to_i)
+  			   price_holder = pp.price 
+  		   end
+  		end
+    
+      if(price_holder == nil ) 
+        flash[:error] = "Must have min order of #{price_point.keys.sort.first} for #{item.good.name}"
+        redirect_to :back
+        return
+      end
+    
+      if(!Good.find(item.good_id).no_qty && Good.find(item.good_id).quantity.to_i < item.quantity)
+          flash[:error] =  "Not enough quantity available for #{item.good.name}"
+          redirect_to :back
+         return
+      end
+  end
+  
   if @cart.update_attributes(params[:cart])
     flash[:notice] = "cart updated"
   else
