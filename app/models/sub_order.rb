@@ -4,4 +4,10 @@ class SubOrder < ActiveRecord::Base
   belongs_to :market
   belongs_to :user, :foreign_key => 'producer_id'
   has_many :cart_items
+
+
+  def producer
+    User.find(producer_id)
+  end
+
 end

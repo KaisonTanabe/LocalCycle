@@ -18,8 +18,13 @@
 			-if sub_order.delivery_window_day != -1
 				="#{WEEKDAYS[sub_order.delivery_window_day] }  -   #{NORMAL_HOURS[sub_order.delivery_window_start]}  to  #{NORMAL_HOURS[sub_order.delivery_window_end]}"
 			%br
-			="Buyer: "
-			="#{sub_order.user.full_name}"
+			-if current_user.buyer?
+				="Producer:"
+				="#{sub_order.producer.full_name}"
+			-else
+				="Buyer: "
+				="#{sub_order.order.user.full_name}"
+				
 		%hr
 		%br
 		.row
