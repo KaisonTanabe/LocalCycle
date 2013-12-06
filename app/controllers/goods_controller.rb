@@ -120,7 +120,6 @@ class GoodsController < ApplicationController
   def create
     
     respond_to do |format|
-      puts "HELLo: #{params.to_yaml}"
       if @good.save
         @good.update_markets if !current_user.buyer?
         @good.price_points.each do |p|
@@ -149,15 +148,17 @@ class GoodsController < ApplicationController
         format.js { render :create_error }
       end
     end
-  end
+  end 
 
 
   def update
     respond_to do |format|
       if @good.update_attributes(params[:good])
         Good.find(@good.id).update_markets if !current_user.buyer?
-        
-
+        if !current_user.buyer? && (@good.order_cutoff == nil || @good.order_cutoff == '')
+          @good.order_cutoff = @good.creator.default_cutoff
+          @good.save
+        end
         
         if params[:render] == 'false'
            render :nothing=> true
