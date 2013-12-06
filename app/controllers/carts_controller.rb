@@ -96,6 +96,13 @@ end
 
 
 def checkout
+  if @cart == nil 
+    flash[:error] ="Could not process transaction. You have no items in your cart."
+    redirect_to marketplace_goods_path
+    return
+  end
+  
+  
   items = current_user.get_cart.cart_items.sort! { |a,b| a.market.name.downcase <=> b.market.name.downcase }
 	items.collect{|ci| ci.market}.uniq.each do |market|
 	  
