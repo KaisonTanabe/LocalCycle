@@ -1,5 +1,6 @@
 class CartsController < ApplicationController
-  load_resource
+    load_resource :except => :checkout
+
 include ActionView::Helpers::NumberHelper
 
 def clear
@@ -96,13 +97,9 @@ end
 
 
 def checkout
-  if @cart == nil 
-    flash[:error] ="Could not process transaction. You have no items in your cart."
-    redirect_to marketplace_goods_path
-    return
-  end
-  
-  
+
+  begin
+  @cart = Cart.find(params[:id])
   items = current_user.get_cart.cart_items.sort! { |a,b| a.market.name.downcase <=> b.market.name.downcase }
 	items.collect{|ci| ci.market}.uniq.each do |market|
 	  
@@ -140,6 +137,13 @@ def checkout
     @cart.build_order(:user_id => current_user.id) 
     @cart.save
   end
+  rescue
+    flash[:error] ="Could not process transaction. You have no items in your cart."
+    redirect_to marketplace_goods_path
+    return
+  
+  end
+  
 end
 
 end
